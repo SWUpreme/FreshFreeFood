@@ -35,10 +35,10 @@ class AuthActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         if (FFFroject.checkAuth()) {
-            changeVisibility("login")
+            //changeVisibility("login")
             startActivity(Intent(this, MainActivity::class.java))
         } else {
-            changeVisibility("logout")
+            //changeVisibility("logout")
         }
 
         val requestLauncher = registerForActivityResult(
@@ -68,28 +68,28 @@ class AuthActivity : AppCompatActivity() {
                                 firestore?.collection("user")?.document(user.uid)
                                     ?.set(hashMapOf("email" to user?.email, "userid" to user?.uid))
                             }
-                            changeVisibility("login")
+                            //changeVisibility("login")
                             moveMainPage(task.result?.user)
                         } else {
                             // 구글 로그인 실패
-                            changeVisibility("logout")
+                            //changeVisibility("logout")
                         }
                     }
             } catch (e: ApiException) {
-                changeVisibility("logout")
+                //changeVisibility("logout")
             }
         }
 
-        binding.btnLogout.setOnClickListener {
-            // 구글 계정 로그아웃
-            Toast.makeText(
-                baseContext, "로그아웃 누름",
-                Toast.LENGTH_SHORT
-            ).show()
-            FFFroject.auth.signOut()
-            FFFroject.email = null
-            changeVisibility("logout")
-        }
+//        binding.btnLogout.setOnClickListener {
+//            // 구글 계정 로그아웃
+//            Toast.makeText(
+//                baseContext, "로그아웃 누름",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            FFFroject.auth.signOut()
+//            FFFroject.email = null
+//            changeVisibility("logout")
+//        }
 
         binding.btnLoginGoogle.setOnClickListener {
             // 구글 로그인
@@ -116,7 +116,7 @@ class AuthActivity : AppCompatActivity() {
         } else if (mode === "logout") {
             binding.run {
                 texLoginCheck.text = "로그인 해 주세요!"
-                btnLogout.visibility = View.GONE
+                //btnLogout.visibility = View.GONE
                 btnLoginGoogle.visibility = View.VISIBLE
             }
         }
