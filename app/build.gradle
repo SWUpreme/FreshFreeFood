@@ -18,6 +18,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
+        // Vector Assets 사용을 위한 지원 허용
+        vectorDrawables.useSupportLibrary = true
     }
 
     // My add
@@ -48,14 +51,19 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.mediarouter:mediarouter:1.3.0'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    // My add
+    // Minyoung add
     implementation platform('com.google.firebase:firebase-bom:29.3.1')
 
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
+
+    // bottom navigation view
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:29.0.0'
 }
