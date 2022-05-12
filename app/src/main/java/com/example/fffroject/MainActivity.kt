@@ -2,12 +2,9 @@ package com.example.fffroject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import com.example.fffroject.fragment.DivideFragment
 import com.example.fffroject.fragment.FridgeFragment
 import com.example.fffroject.fragment.MypageFragment
+import com.example.fffroject.fragment.ShareFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -30,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         // bottomNavigationView 설정
         bottom_navigation.setOnItemSelectedListener { item->
             when(item.itemId){
-                R.id.tab_divide -> {
-                    val divideFragment = DivideFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.main_content, divideFragment).commit()
+                R.id.tab_share -> {                    val shareFragment = ShareFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_content, shareFragment).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.tab_fridge -> {
