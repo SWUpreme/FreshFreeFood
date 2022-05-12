@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.fffroject.R
 
-class DivideFragment : Fragment() {
-    fun newInstance() : DivideFragment {
-        return DivideFragment()
+class ShareFragment : Fragment() {
+    fun newInstance() : ShareFragment {
+        return ShareFragment()
     }
 
 
@@ -19,6 +19,6 @@ class DivideFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_divide, container, false)
+        return inflater.inflate(R.layout.fragment_share, container, false)
     }
 }
