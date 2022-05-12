@@ -7,7 +7,7 @@
         android:title="나눔"/>
 
     <item
-        android:id="@+id/tab_refregerator"
+        android:id="@+id/tab_fridge"
         android:enabled="true"
         android:icon="@drawable/ic_refregerator_gray"
         android:title="냉장고"/>

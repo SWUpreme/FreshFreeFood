@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.fffroject.R
 
-class RefregeratorFragment : Fragment() {
-    fun newInstance() : RefregeratorFragment {
-        return RefregeratorFragment()
+class FridgeFragment : Fragment() {
+    fun newInstance() : FridgeFragment {
+        return FridgeFragment()
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,6 +19,6 @@ class RefregeratorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_refregerator, container, false)
+        return inflater.inflate(R.layout.fragment_fridge, container, false)
     }
 }
