@@ -81,7 +81,7 @@ class FridgeFragment : Fragment() {
                     if (user != null) {
                         fridgeuid = UUID.randomUUID().toString()
                         firestore?.collection("fridge")?.document("$fridgeuid")
-                            ?.set(hashMapOf("fuid" to fridgeuid))
+                            ?.set(hashMapOf("fuid" to fridgeuid, "fridgename" to edt_fridgename.text.toString()))
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                     }
