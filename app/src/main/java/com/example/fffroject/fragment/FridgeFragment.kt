@@ -33,7 +33,7 @@ class FridgeFragment : Fragment() {
     lateinit var edt_fridgename: EditText
     lateinit var spinner: Spinner
     lateinit var select_fridge: String
-    lateinit var fridgeuid: String
+    lateinit var fridgeid: String
     lateinit var recyclerview_fridge : RecyclerView
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
@@ -79,14 +79,14 @@ class FridgeFragment : Fragment() {
             .setPositiveButton("등록") { dialogInterFace, i ->
                 if (edt_fridgename.text.toString() != null) {
                     if (user != null) {
-                        fridgeuid = UUID.randomUUID().toString()
-                        firestore?.collection("fridge")?.document("$fridgeuid")
-                            ?.set(hashMapOf("fuid" to fridgeuid, "fridgename" to edt_fridgename.text.toString()))
+                        fridgeid = UUID.randomUUID().toString()
+                        firestore?.collection("fridge")?.document("$fridgeid")
+                            ?.set(hashMapOf("fid" to fridgeid, "fridgename" to edt_fridgename.text.toString()))
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                         firestore?.collection("user")?.document(user!!.uid)?.collection("userfridge")
-                            ?.document("$fridgeuid")
-                            ?.set(hashMapOf("fuid" to fridgeuid))
+                            ?.document("$fridgeid")
+                            ?.set(hashMapOf("fid" to fridgeid))
                             ?.addOnSuccessListener {  }
                             ?.addOnFailureListener {  }
                     }
