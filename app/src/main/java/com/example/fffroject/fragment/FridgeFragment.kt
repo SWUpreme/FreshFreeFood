@@ -98,7 +98,7 @@ class FridgeFragment : Fragment() {
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
 
             // 리사이클러뷰 아이템 정보
-            fridgename.text = fridgelist!![position].fridgename
+            fridgename.text = fridgelist!![position].name
         }
 
         override fun getItemCount(): Int {
@@ -120,12 +120,12 @@ class FridgeFragment : Fragment() {
                     if (user != null) {
                         fridgeid = UUID.randomUUID().toString()
                         firestore?.collection("fridge")?.document("$fridgeid")
-                            ?.set(hashMapOf("fid" to fridgeid, "fridgename" to edt_fridgename.text.toString()))
+                            ?.set(hashMapOf("index" to fridgeid, "name" to edt_fridgename.text.toString(), "owner" to user?.uid))
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
-                        firestore?.collection("user")?.document(user!!.uid)?.collection("userfridge")
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("fridge")
                             ?.document("$fridgeid")
-                            ?.set(hashMapOf("fridgename" to edt_fridgename.text.toString()))
+                            ?.set(hashMapOf("index" to fridgeid, "name" to edt_fridgename.text.toString()))
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                     }
@@ -143,7 +143,7 @@ class FridgeFragment : Fragment() {
         // 냉장고 리스트 불러오기
         if (user != null) {
             firestore?.collection("user")?.document(user!!.uid)
-                ?.collection("userfridge")
+                ?.collection("fridge")
                 ?.addSnapshotListener{ value, error ->
                     fridgelist.clear()
                     for (snapshot in value!!.documents){

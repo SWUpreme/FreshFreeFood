@@ -67,7 +67,7 @@ class AuthActivity : AppCompatActivity() {
                                 ).show()
                                 var nickname = user?.email?.split("@")?.get(0)
                                 firestore?.collection("user")?.document(user.uid)
-                                    ?.set(hashMapOf("email" to user?.email, "userid" to user?.uid, "nickname" to nickname))
+                                    ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname))
                             }
                             //changeVisibility("login")
                             moveMainPage(task.result?.user)
