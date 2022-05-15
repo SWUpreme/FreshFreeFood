@@ -84,6 +84,11 @@ class FridgeFragment : Fragment() {
                             ?.set(hashMapOf("fuid" to fridgeuid, "fridgename" to edt_fridgename.text.toString()))
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("userfridge")
+                            ?.document("$fridgeuid")
+                            ?.set(hashMapOf("fuid" to fridgeuid))
+                            ?.addOnSuccessListener {  }
+                            ?.addOnFailureListener {  }
                     }
                 }
                 else {
