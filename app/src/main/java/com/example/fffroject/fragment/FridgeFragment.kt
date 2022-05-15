@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.AuthActivity
 import com.example.fffroject.FFFroject
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -27,7 +29,9 @@ class FridgeFragment : Fragment() {
 
     lateinit var binding: FragmentFridgeBinding
 
-    lateinit var recyclerviewFridge: RecyclerView
+    // Data에 있는 MyFridge랑 해줘야해
+    lateinit var fridgelist : ArrayList<MyFridge>
+
 
     lateinit var btn_addFridge: Button
     lateinit var edt_fridgename: EditText
@@ -35,6 +39,7 @@ class FridgeFragment : Fragment() {
     lateinit var select_fridge: String
     lateinit var fridgeid: String
     lateinit var recyclerview_fridge : RecyclerView
+
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
 //    }
@@ -47,18 +52,25 @@ class FridgeFragment : Fragment() {
     ): View? {
         var view = LayoutInflater.from(activity).inflate(R.layout.fragment_fridge, container, false)
 
+        fridgelist = arrayListOf<MyFridge>()
+
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
 
+        // 파이어베이스에서 냉장고 값 불러오기
+        loadData()
+
         recyclerview_fridge = view.findViewById(R.id.recyclerviewFridge)
+        recyclerview_fridge.adapter = RecyclerViewAdapter()
+        recyclerview_fridge.layoutManager = LinearLayoutManager(activity)
 
         binding = FragmentFridgeBinding.inflate(layoutInflater)
         btn_addFridge = view.findViewById(R.id.btnFridgeAdd)
 
-        // 로그아웃 처리
+        // 냉장고 추가+
         btn_addFridge?.setOnClickListener {
             Toast.makeText(context,"냉장고 추가 누름", Toast.LENGTH_SHORT).show()
             addFridge()
@@ -66,6 +78,33 @@ class FridgeFragment : Fragment() {
 
         return view
 //        return inflater.inflate(R.layout.fragment_fridge, container, false)
+    }
+
+    // 리사이클러뷰 사용
+    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            var view = LayoutInflater.from(parent.context).inflate(R.layout.item_fridgelist, parent, false)
+            return ViewHolder(view)
+        }
+
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+        // view와 실제 데이터 연결결
+       override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            var viewHolder = (holder as ViewHolder).itemView
+            var fridgename : TextView
+
+            fridgename = viewHolder.findViewById(R.id.textFridgeName)
+
+            // 리사이클러뷰 아이템 정보
+            fridgename.text = fridgelist!![position].fridgename
+        }
+
+        override fun getItemCount(): Int {
+            return fridgelist.size
+        }
+
     }
 
     // 냉장고 추가
@@ -86,9 +125,9 @@ class FridgeFragment : Fragment() {
                             ?.addOnFailureListener { }
                         firestore?.collection("user")?.document(user!!.uid)?.collection("userfridge")
                             ?.document("$fridgeid")
-                            ?.set(hashMapOf("fid" to fridgeid))
-                            ?.addOnSuccessListener {  }
-                            ?.addOnFailureListener {  }
+                            ?.set(hashMapOf("fridgename" to edt_fridgename.text.toString()))
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
                     }
                 }
                 else {
@@ -97,6 +136,25 @@ class FridgeFragment : Fragment() {
             }
             .setNegativeButton("취소", null)
             .show()
+    }
+
+    // 파이어베이스에서 데이터 불러오는 함수
+    fun loadData(){
+        // 냉장고 리스트 불러오기
+        if (user != null) {
+            firestore?.collection("user")?.document(user!!.uid)
+                ?.collection("userfridge")
+                ?.addSnapshotListener{ value, error ->
+                    fridgelist.clear()
+                    for (snapshot in value!!.documents){
+                        var item = snapshot.toObject(MyFridge::class.java)
+                        if (item != null) {
+                            fridgelist.add(item)
+                        }
+                    }
+                    recyclerview_fridge.adapter?.notifyDataSetChanged()
+                }
+        }
     }
 
 }
