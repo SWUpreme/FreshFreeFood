@@ -32,6 +32,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <Button
+                android:id="@+id/btnFridgeDelete"
+                android:layout_width="60dp"
+                android:layout_height="46dp"
+                android:text="Button"
+                tools:layout_editor_absoluteX="271dp"
+                tools:layout_editor_absoluteY="20dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
