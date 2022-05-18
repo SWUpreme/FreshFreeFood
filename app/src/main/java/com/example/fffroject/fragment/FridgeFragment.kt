@@ -27,10 +27,10 @@ class FridgeFragment : Fragment() {
     var firestore: FirebaseFirestore? = null
     var user: FirebaseUser? = null
 
-    lateinit var binding: FragmentFridgeBinding
+    //lateinit var binding: FragmentFridgeBinding
 
     // Data에 있는 MyFridge랑 해줘야해
-    lateinit var fridgelist : ArrayList<MyFridge>
+    lateinit var fridgelist: ArrayList<MyFridge>
 
 
     lateinit var btn_addFridge: Button
@@ -38,7 +38,7 @@ class FridgeFragment : Fragment() {
     lateinit var spinner: Spinner
     lateinit var select_fridge: String
     lateinit var fridgeid: String
-    lateinit var recyclerview_fridge : RecyclerView
+    lateinit var recyclerview_fridge: RecyclerView
 
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
@@ -67,38 +67,53 @@ class FridgeFragment : Fragment() {
         recyclerview_fridge.adapter = RecyclerViewAdapter()
         recyclerview_fridge.layoutManager = LinearLayoutManager(activity)
 
-        binding = FragmentFridgeBinding.inflate(layoutInflater)
+        //binding = FragmentFridgeBinding.inflate(layoutInflater)
         btn_addFridge = view.findViewById(R.id.btnFridgeAdd)
 
-        // 냉장고 추가+
+        // 냉장고 추가
         btn_addFridge?.setOnClickListener {
-            Toast.makeText(context,"냉장고 추가 누름", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
             addFridge()
         }
+
 
         return view
 //        return inflater.inflate(R.layout.fragment_fridge, container, false)
     }
 
     // 리사이클러뷰 사용
-    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context).inflate(R.layout.item_fridgelist, parent, false)
+            var view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_fridgelist, parent, false)
             return ViewHolder(view)
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
         // view와 실제 데이터 연결결
-       override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             var viewHolder = (holder as ViewHolder).itemView
-            var fridgename : TextView
+            var fridgename: TextView
+            var btn_fridge_delete: Button
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
 
             // 리사이클러뷰 아이템 정보
             fridgename.text = fridgelist!![position].name
+
+            // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
+            btn_fridge_delete = viewHolder.findViewById(R.id.btnFridgeDelete)
+
+            // 냉장고 삭제
+            var index = fridgelist!![position].index
+            btn_fridge_delete.setOnClickListener {
+                if (index != null) {
+                    deleteFridge(index)
+                }
+            }
+
         }
 
         override fun getItemCount(): Int {
@@ -120,17 +135,27 @@ class FridgeFragment : Fragment() {
                     if (user != null) {
                         fridgeid = UUID.randomUUID().toString()
                         firestore?.collection("fridge")?.document("$fridgeid")
-                            ?.set(hashMapOf("index" to fridgeid, "name" to edt_fridgename.text.toString(), "owner" to user?.uid))
+                            ?.set(
+                                hashMapOf(
+                                    "index" to fridgeid,
+                                    "name" to edt_fridgename.text.toString(),
+                                    "owner" to user?.uid
+                                )
+                            )
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                         firestore?.collection("user")?.document(user!!.uid)?.collection("fridge")
                             ?.document("$fridgeid")
-                            ?.set(hashMapOf("index" to fridgeid, "name" to edt_fridgename.text.toString()))
+                            ?.set(
+                                hashMapOf(
+                                    "index" to fridgeid,
+                                    "name" to edt_fridgename.text.toString()
+                                )
+                            )
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(activity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -138,15 +163,39 @@ class FridgeFragment : Fragment() {
             .show()
     }
 
+    // 냉장고 삭제
+    fun deleteFridge(index: String) {
+        val builder = AlertDialog.Builder(activity)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_deletefridge, null)
+        var findex = index
+
+        builder.setView(dialogView)
+            .setPositiveButton("확인") { dialogInterFace, i ->
+                firestore?.collection("fridge")?.document(findex)
+                    ?.delete()
+                    ?.addOnSuccessListener { }
+                    ?.addOnFailureListener { }
+                firestore?.collection("user")?.document(user!!.uid)?.collection("fridge")
+                    ?.document(findex)
+                    ?.delete()
+                    ?.addOnSuccessListener {
+                        Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    ?.addOnFailureListener { }
+            }
+            .setNegativeButton("취소", null)
+            .show()
+    }
+
     // 파이어베이스에서 데이터 불러오는 함수
-    fun loadData(){
+    fun loadData() {
         // 냉장고 리스트 불러오기
         if (user != null) {
             firestore?.collection("user")?.document(user!!.uid)
                 ?.collection("fridge")
-                ?.addSnapshotListener{ value, error ->
+                ?.addSnapshotListener { value, error ->
                     fridgelist.clear()
-                    for (snapshot in value!!.documents){
+                    for (snapshot in value!!.documents) {
                         var item = snapshot.toObject(MyFridge::class.java)
                         if (item != null) {
                             fridgelist.add(item)

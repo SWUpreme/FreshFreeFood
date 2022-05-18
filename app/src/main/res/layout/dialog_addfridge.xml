@@ -24,9 +24,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
         android:layout_marginTop="84dp"
+        android:layout_marginEnd="30dp"
         android:text="냉장고 이름"
+        app:layout_constraintEnd_toStartOf="@+id/edtFridgeName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
