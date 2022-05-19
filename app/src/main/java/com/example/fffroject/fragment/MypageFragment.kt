@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.fffroject.AuthActivity
 import com.example.fffroject.FFFroject
@@ -42,9 +44,11 @@ class MypageFragment : Fragment() {
         // 로그아웃 처리
         btn_logout.setOnClickListener {
             Toast.makeText(context,"로그아웃누름", Toast.LENGTH_SHORT).show()
-            FFFroject.auth.signOut()
-            FFFroject.email = null
-            startActivity(Intent(activity, AuthActivity::class.java))
+            auth?.signOut()
+            // FFFroject.email = null
+            val intent = Intent(activity, AuthActivity::class.java)
+            activity?.let { ContextCompat.startActivity(it, intent, null) }
+            // startActivity(Intent(activity, AuthActivity::class.java))
         }
 
 
