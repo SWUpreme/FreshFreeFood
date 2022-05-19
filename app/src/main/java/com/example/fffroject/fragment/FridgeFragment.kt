@@ -145,7 +145,7 @@ class FridgeFragment : Fragment() {
                             )
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
-                        firestore?.collection("user")?.document(user!!.uid)?.collection("fridge")
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                             ?.document("$fridgeid")
                             ?.set(
                                 hashMapOf(
@@ -176,7 +176,7 @@ class FridgeFragment : Fragment() {
                     ?.delete()
                     ?.addOnSuccessListener { }
                     ?.addOnFailureListener { }
-                firestore?.collection("user")?.document(user!!.uid)?.collection("fridge")
+                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                     ?.document(findex)
                     ?.delete()
                     ?.addOnSuccessListener {
@@ -193,7 +193,7 @@ class FridgeFragment : Fragment() {
         // 냉장고 리스트 불러오기
         if (user != null) {
             firestore?.collection("user")?.document(user!!.uid)
-                ?.collection("fridge")
+                ?.collection("myfridge")
                 ?.addSnapshotListener { value, error ->
                     fridgelist.clear()
                     if (value != null) {
