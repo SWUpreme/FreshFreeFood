@@ -6,3 +6,8 @@ data class MyFridge(
     var index : String? = null,
     var name : String? = null
 )
+
+// 나눔 전체 게시글 리스트
+data class PostAll(
+    var index :  String? =  null
+)

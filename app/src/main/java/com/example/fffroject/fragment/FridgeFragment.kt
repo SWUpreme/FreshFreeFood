@@ -72,7 +72,7 @@ class FridgeFragment : Fragment() {
         btn_addFridge = view.findViewById(R.id.btnFridgeAdd)
 
         // 냉장고 추가
-        btn_addFridge?.setOnClickListener {
+        btn_addFridge.setOnClickListener {
             Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
             addFridge()
         }
