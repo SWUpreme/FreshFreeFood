@@ -5,30 +5,19 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
-import com.example.fffroject.databinding.ActivityMainBinding
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.jakewharton.threetenabp.AndroidThreeTen
-import java.io.InputStream
-//import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.*
 import java.util.*
-
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.temporal.ChronoUnit;
 
@@ -83,9 +72,9 @@ class SharePostActivity : AppCompatActivity() {
             } else return false
         }
 
-        // 완료버튼
+        // 완료버튼-post db 저장
         binding.btnSharepost.setOnClickListener(View.OnClickListener {
-            if(checkAllWritten()==true){
+            if(checkAllWritten()){
                 // editText -> string
                 var title = binding.title.text.toString()
                 var deadline = binding.deadline.text.toString()
@@ -96,7 +85,7 @@ class SharePostActivity : AppCompatActivity() {
                 var context = binding.context.text.toString()
                 // db 저장
                 addPostDB(title, deadline, purchasedAt, name, region, location, context)
-            } else{
+            } else {
                 //양식 작성 안되어 있을 시
                 val toast = Toast.makeText(this, "양식을 모두 작성해주세요", Toast.LENGTH_SHORT)
                 toast.show()
@@ -150,7 +139,6 @@ class SharePostActivity : AppCompatActivity() {
         //유저가 존재한다면
         if (user != null){
             postId = UUID.randomUUID().toString()
-            //var date = LocalDateTime.now().format(ofPattern("yyyy-MM-dd HH:mm:ss"))
             //게시글 등록 날짜
             date = LocalDate.now()
             createdAt = date.toString()
