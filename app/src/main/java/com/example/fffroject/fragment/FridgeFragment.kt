@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.AuthActivity
 import com.example.fffroject.FFFroject
+import com.example.fffroject.FoodListActivity
 import com.example.fffroject.R
 import com.example.fffroject.databinding.FragmentFridgeBinding
 import com.example.fffroject.databinding.FragmentMypageBinding
@@ -45,6 +46,7 @@ class FridgeFragment : Fragment() {
 //        return FridgeFragment()
 //    }
 
+    lateinit var toolbar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +79,17 @@ class FridgeFragment : Fragment() {
             addFridge()
         }
 
+//        toolbar = view.findViewById(R.id.btnPlus)
+//        toolbar.inflateMenu(R.menu.main_top_plus)
+//        toolbar.setOnMenuItemClickListener {
+//            when(it.itemId) {
+//                R.id.toolbMainPlus -> {
+//                    startActivity(Intent(context, FoodListActivity::class.java))
+//                    true
+//                }
+//                else  -> false
+//            }
+//        }
 
         return view
 //        return inflater.inflate(R.layout.fragment_fridge, container, false)
