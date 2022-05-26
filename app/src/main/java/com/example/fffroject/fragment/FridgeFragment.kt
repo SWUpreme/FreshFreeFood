@@ -24,6 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import kotlin.collections.ArrayList
 
+import androidx.appcompat.widget.Toolbar
+
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
@@ -42,11 +44,11 @@ class FridgeFragment : Fragment() {
     lateinit var fridgeid: String
     lateinit var recyclerview_fridge: RecyclerView
 
+    lateinit var toolbar_fridge: Toolbar
+
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
 //    }
-
-    lateinit var toolbar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,6 +92,22 @@ class FridgeFragment : Fragment() {
 //                else  -> false
 //            }
 //        }
+
+        // 툴바
+        toolbar_fridge = view.findViewById(R.id.toolbFridge)    // 상단바
+        toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
+
+        // 상단바 메뉴 클릭시
+        toolbar_fridge.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.btnPlus -> {
+                    Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
+                    addFridge()
+                    true
+                }
+                else -> false
+            }
+        }
 
         return view
 //        return inflater.inflate(R.layout.fragment_fridge, container, false)

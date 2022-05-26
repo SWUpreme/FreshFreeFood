@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbMainPlus"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        app:menu="@menu/main_top_plus"
-        />
-
     <!--    <LinearLayout-->
 <!--        android:id="@+id/mainpage"-->
 <!--        android:layout_width="0dp"-->
@@ -30,25 +16,15 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="98dp"
-        android:layout_height="35dp"
-        android:text="FFFroject"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp"
-        android:textColor="@color/white"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
         android:layout_width="0dp"
-        android:layout_height="571dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbMainPlus"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
