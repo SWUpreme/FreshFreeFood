@@ -15,8 +15,8 @@ import com.example.fffroject.AuthActivity
 import com.example.fffroject.FFFroject
 import com.example.fffroject.FoodListActivity
 import com.example.fffroject.R
-import com.example.fffroject.databinding.FragmentFridgeBinding
-import com.example.fffroject.databinding.FragmentMypageBinding
+//import com.example.fffroject.databinding.FragmentFridgeBinding
+//import com.example.fffroject.databinding.FragmentMypageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -95,7 +95,7 @@ class FridgeFragment : Fragment() {
 
         // 툴바
         toolbar_fridge = view.findViewById(R.id.toolbFridge)    // 상단바
-        toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
+        //toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
 
         // 상단바 메뉴 클릭시
         toolbar_fridge.setOnMenuItemClickListener {

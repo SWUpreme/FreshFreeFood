@@ -13,7 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
     //lateinit var binding: ActivityMainBinding
     lateinit var bottom_navigation: BottomNavigationView
-    lateinit var toolbar : Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
