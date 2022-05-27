@@ -55,6 +55,19 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation"/>
+
+        <!--MINJEONG ADD-->
+        <!--카메라 앱과 파일 정보를 공유하기 위한 프로바이더-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.fffroject.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
     </application>
 
 </manifest>

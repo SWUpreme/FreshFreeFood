@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--MINJEONG ADD-->
+<!--카메라용-->
+<!--파일 프로바이더용 XML-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="myfiles"
+        path="Android/data/com.example.fffroject/files/Pictures" />
+</paths>
