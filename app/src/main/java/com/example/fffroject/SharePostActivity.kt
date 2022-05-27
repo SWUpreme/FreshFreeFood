@@ -1,11 +1,15 @@
 package com.example.fffroject
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -66,10 +70,8 @@ class SharePostActivity : AppCompatActivity() {
 
         // 양식 작성 여부
         fun checkAllWritten(): Boolean{
-            if (binding.title.length()>0 && binding.deadline.length()>0 && binding.purchasedAt.length()>0 && binding.name.length()>0
-                && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0){
-                return true
-            } else return false
+            return (binding.title.length()>0 && binding.deadline.length()>0 && binding.purchasedAt.length()>0 && binding.name.length()>0
+                    && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
         }
 
         // 완료버튼-post db 저장
@@ -129,6 +131,11 @@ class SharePostActivity : AppCompatActivity() {
             intent.type = MediaStore.Images.Media.CONTENT_TYPE
             requestGalleryLauncher.launch(intent)
         }
+//        // 앨범 버튼
+//        binding.btnCamera.setOnClickListener{
+//            val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//            val rootView = inflater.inflate(R.layout.activity_one, null)
+//        }
 
 
     }
