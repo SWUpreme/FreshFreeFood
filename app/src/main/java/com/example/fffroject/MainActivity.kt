@@ -1,7 +1,10 @@
 package com.example.fffroject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toolbar
 import com.example.fffroject.fragment.FridgeFragment
 import com.example.fffroject.fragment.MypageFragment
 import com.example.fffroject.fragment.ShareFragment
@@ -47,6 +50,14 @@ class MainActivity : AppCompatActivity() {
         val fridgeFragment = FridgeFragment()
         supportFragmentManager.beginTransaction().add(R.id.main_content, fridgeFragment).commit()
     }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        var fragment = supportFragmentManager.getFragments()
+//        R.id.btnPlus -> {
+//            if (fragment == [0])
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
 //    fun setFragment(fragment: Fragment){
 //        val manager: FragmentManager = supportFragmentManager

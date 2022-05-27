@@ -13,15 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.AuthActivity
 import com.example.fffroject.FFFroject
+import com.example.fffroject.FoodListActivity
 import com.example.fffroject.R
-import com.example.fffroject.databinding.FragmentFridgeBinding
-import com.example.fffroject.databinding.FragmentMypageBinding
+//import com.example.fffroject.databinding.FragmentFridgeBinding
+//import com.example.fffroject.databinding.FragmentMypageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import kotlin.collections.ArrayList
+
+import androidx.appcompat.widget.Toolbar
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -41,10 +44,11 @@ class FridgeFragment : Fragment() {
     lateinit var fridgeid: String
     lateinit var recyclerview_fridge: RecyclerView
 
+    lateinit var toolbar_fridge: Toolbar
+
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
 //    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +81,33 @@ class FridgeFragment : Fragment() {
             addFridge()
         }
 
+//        toolbar = view.findViewById(R.id.btnPlus)
+//        toolbar.inflateMenu(R.menu.main_top_plus)
+//        toolbar.setOnMenuItemClickListener {
+//            when(it.itemId) {
+//                R.id.toolbMainPlus -> {
+//                    startActivity(Intent(context, FoodListActivity::class.java))
+//                    true
+//                }
+//                else  -> false
+//            }
+//        }
+
+        // 툴바
+        toolbar_fridge = view.findViewById(R.id.toolbFridge)    // 상단바
+        //toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
+
+        // 상단바 메뉴 클릭시
+        toolbar_fridge.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.btnPlus -> {
+                    Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
+                    addFridge()
+                    true
+                }
+                else -> false
+            }
+        }
 
         return view
 //        return inflater.inflate(R.layout.fragment_fridge, container, false)
