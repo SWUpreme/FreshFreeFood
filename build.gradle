@@ -12,7 +12,7 @@ buildscript {
         // in the individual module build.gradle files
 
         // My add   이거 오류날 경우 4.3.8로 바꾸기
-        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.gms:google-services:4.3.10'
     }
 }
 

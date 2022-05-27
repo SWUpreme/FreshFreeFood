@@ -11,3 +11,11 @@ data class MyFridge(
 data class PostAll(
     var index :  String? =  null
 )
+
+//입력
+data class food(
+    var name :String? = null,
+    var deadline : String? = null,
+    var purchasedAt : String? = null,
+    var count : String? = null
+)

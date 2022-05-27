@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fffroject">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 -->
 
     <application
         android:name=".FFFroject"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FFFroject">
         <activity
-            android:name=".AuthActivity"
+            android:name=".FoodListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".WriteActivity"
+            android:parentActivityName=".FoodListActivity"
             android:exported="true">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -33,9 +39,22 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".FoodListActivity"
+            android:name=".MainActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".AuthActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".BarCodeActivity"
+            android:exported="true"
+            tools:ignore="DuplicateActivity">
+        </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>

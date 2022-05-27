@@ -36,10 +36,28 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_fridgelist.xml" value="0.11730072463768115" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/xml/file_paths.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/drawable-v24/rounded_corner.xml" value="0.1875" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/drawable-v24/rounded_corner_box.xml" value="0.1805" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_auth.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_barcode.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_custom_scanner.xml" value="0.22" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_sharepost.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/activity_write.xml" value="0.1" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/custom_barcode_scanner.xml" value="0.1368106028217187" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/custom_dialog.xml" value="0.22" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/dialog_addfridge.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/dialog_deletefridge.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/fragment_fridge.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/fragment_mypage.xml" value="0.1470713980333476" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.1466438648995297" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/layout/item_fridgelist.xml" value="0.1" />
+        <entry key="..\:/Users/smj95/AndroidStudioProjects/FreshFreeFood/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.13723813595553655" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

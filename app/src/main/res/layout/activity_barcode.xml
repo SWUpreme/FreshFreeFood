@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="50dp"
+    android:paddingTop="50dp"
+    tools:context=".BarCodeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="제품명" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:hint="제품명을 입력해주세요."
+            android:text=""
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="유통기한" />
+
+        <EditText
+            android:id="@+id/deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="유통기한을 입력해주세요."
+            android:inputType="date"
+            android:text=""
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="구매일" />
+
+        <EditText
+            android:id="@+id/purchasedAt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="구매일을 입력해주세요."
+            android:inputType="date"
+            android:text=""
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="개수" />
+
+        <EditText
+            android:id="@+id/count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="제품 개수를 입력해주세요."
+            android:inputType="number"
+            android:text=""
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/upload_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="107dp"
+        android:text="업로드" />
+
+    <Button
+        android:id="@+id/scan_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+        android:text="스캔하기" />
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="209dp"
+        android:text="바코드 번호" />
+
+
+</RelativeLayout>
