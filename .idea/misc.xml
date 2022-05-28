@@ -25,6 +25,7 @@
         <entry key="..\:/Users/MinY/AndroidStudioProjects/FFFroject/app/src/main/res/menu/menu_login.xml" value="0.3125" />
         <entry key="app/src/main/res/drawable/btn_fridge_list.xml" value="0.211" />
         <entry key="app/src/main/res/drawable/ic_food_gray.xml" value="0.211" />
+        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.3191170291624208" />
         <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.1265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.2006340579710145" />

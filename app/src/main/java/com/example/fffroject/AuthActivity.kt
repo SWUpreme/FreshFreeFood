@@ -116,7 +116,7 @@ class AuthActivity : AppCompatActivity() {
             }
         } else if (mode === "logout") {
             binding.run {
-                texLoginCheck.text = "로그인 해 주세요!"
+                //texLoginCheck.text = "로그인 해 주세요!"
                 //btnLogout.visibility = View.GONE
                 btnLoginGoogle.visibility = View.VISIBLE
             }
