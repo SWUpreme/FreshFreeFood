@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -21,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.widget.addTextChangedListener
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -43,6 +45,8 @@ class SharePostActivity : AppCompatActivity() {
     lateinit var binding: ActivitySharepostBinding
 
     lateinit var filePath: String
+
+    var eraseHyphen : Boolean = false
 
     val REQ_GALLERY = 12
 
@@ -78,12 +82,6 @@ class SharePostActivity : AppCompatActivity() {
         // 파이어스토어 인스턴스 초기화
         db = FirebaseFirestore.getInstance()
 
-        // 양식 작성 여부
-        fun checkAllWritten(): Boolean{
-            return (binding.title.length()>0 && binding.deadline.length()>0 && binding.purchasedAt.length()>0 && binding.name.length()>0
-                    && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
-        }
-
         // 완료버튼-post db 저장
         binding.btnSharepost.setOnClickListener(View.OnClickListener {
             if(checkAllWritten()){
@@ -104,16 +102,63 @@ class SharePostActivity : AppCompatActivity() {
             }
         })
 
+        //하이픈 자동 입력
+        addAutoHyphen()
 
         // 이미지 삽입 버튼
         binding.btnCamera.setOnClickListener{
             showDialogAddimage()
         }
 
+    }
+    //Edittext Hyphen(-) 자동 입력
+    private fun addAutoHyphen(){
+        binding.deadline.addTextChangedListener(object : TextWatcher{
+            var textlength = 0
+            override fun afterTextChanged(s: Editable?) {
 
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                var textlength = 0
+//                if(binding.deadline.isFocusable() && !s.toString().equals("")){
+//                    try {
+//                        textlength = binding.deadline.text.toString().length
+//                    } catch (e : NumberFormatException){
+//                        e.printStackTrace()
+//                        return
+//                    }
+//
+//                    if(textlength == 4 && before != 1){
+//                        binding.deadline.setText(binding.deadline.text.toString()+"-")
+//                        binding.deadline.setSelection(binding.deadline.text.length)
+//                    }else if (textlength == 7 && before != 1){
+//                        binding.deadline.setText(binding.deadline.text.toString()+"-")
+//                        binding.deadline.setSelection(binding.deadline.text.length)
+//                    }else if (textlength == 5 && !binding.deadline.text.toString().contains("-")){
+//                        binding.deadline.setText(binding.deadline.text.toString().substring(0,4)+"-"+binding.deadline.text.toString().substring(4))
+//                        binding.deadline.setSelection(binding.deadline.text.length)
+//                    }else if (textlength == 8 && !binding.deadline.text.toString().substring(7,8).equals(".")){
+//                        binding.deadline.setText(binding.deadline.text.toString().substring(0,7)+"-"+binding.deadline.text.toString().substring(7))
+//                        binding.deadline.setSelection(binding.deadline.text.length)
+//                    }
+//                }
+
+
+            }
+        })
     }
 
-    // 사진 삽입 dialog를 디자인하는 함수
+
+
+    // 양식 작성 여부 확인
+    private fun checkAllWritten(): Boolean{
+        return (binding.title.length()>0 && binding.deadline.length()>0 && binding.purchasedAt.length()>0 && binding.name.length()>0
+                && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
+    }
+
+    // 사진 삽입 dialog를 디자인
     private fun showDialogAddimage() {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val dialogBinding = DialogAddimageBinding.inflate(layoutInflater)
@@ -165,8 +210,7 @@ class SharePostActivity : AppCompatActivity() {
 
     }
 
-    //이미지 불러오는 코드
-    //gallery request launcher..................
+    //이미지 불러오기(gallery request launcher)
     val requestGalleryLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult())
     {
@@ -194,8 +238,7 @@ class SharePostActivity : AppCompatActivity() {
         }
     }
 
-    //카메라 불러오는 코드
-    //camera request launcher.................
+    //카메라 불러오기(camera request launcher)
     val requestCameraFileLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult())
     {

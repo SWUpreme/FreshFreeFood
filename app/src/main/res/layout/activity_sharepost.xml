@@ -75,12 +75,13 @@
             android:backgroundTint="#BDBDBD"
             android:hint="유통기한"
             android:inputType="date"
-            android:maxLength="50"
-            android:singleLine="true"
+            android:maxLength="5"
             android:minHeight="48dp"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
+
 
         <EditText
             android:id="@+id/purchasedAt"
@@ -88,11 +89,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="#BDBDBD"
-            android:hint="구매일"
+            android:hint="구매일 ex)2022-05-28"
             android:inputType="date"
             android:maxLength="50"
-            android:singleLine="true"
             android:minHeight="48dp"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deadline" />
