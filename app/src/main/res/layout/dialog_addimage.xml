@@ -5,46 +5,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btnCamera2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="55dp"
-        android:layout_weight="1"
-        android:backgroundTint="#00FFFFFF"
-        android:scaleType="fitCenter"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/dialog_background_round"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_camera_blue"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent">
+        <!--모서리 둥글게-->
 
-    <ImageButton
-        android:id="@+id/btnAlbum"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="50dp"
-        android:layout_weight="1"
-        android:backgroundTint="#00FFFFFF"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnCamera2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_album_blue"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:backgroundTint="#00FFFFFF"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_x"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+            <Button
+                android:id="@+id/btnEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Button"
+                android:visibility="invisible" />
 
+            <ImageButton
+                android:id="@+id/btnClose"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_x"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnCameraOn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_camera_blue"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+            <ImageButton
+                android:id="@+id/btnAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_album_blue"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

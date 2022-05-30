@@ -3,27 +3,38 @@ package com.example.fffroject
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.widget.addTextChangedListener
 import com.example.fffroject.databinding.ActivitySharepostBinding
+import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.threetenabp.AndroidThreeTen
 import java.util.*
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.ChronoUnit;
+import java.io.File
+import java.text.SimpleDateFormat
 
 class SharePostActivity : AppCompatActivity() {
     //파이어스토어
@@ -33,8 +44,7 @@ class SharePostActivity : AppCompatActivity() {
 
     // 바인딩 객체
     lateinit var binding: ActivitySharepostBinding
-
-    val REQ_GALLERY = 12
+    lateinit var filePath: String
 
     // 파이어스토어 게시글 리스트
     lateinit var title : EditText
@@ -48,7 +58,8 @@ class SharePostActivity : AppCompatActivity() {
 
 
     lateinit var postId: String
-    lateinit var date: LocalDate
+    lateinit var nowdate: LocalDate
+    lateinit var date : String
     lateinit var createdAt: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,19 +79,13 @@ class SharePostActivity : AppCompatActivity() {
         // 파이어스토어 인스턴스 초기화
         db = FirebaseFirestore.getInstance()
 
-        // 양식 작성 여부
-        fun checkAllWritten(): Boolean{
-            return (binding.title.length()>0 && binding.deadline.length()>0 && binding.purchasedAt.length()>0 && binding.name.length()>0
-                    && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
-        }
-
         // 완료버튼-post db 저장
         binding.btnSharepost.setOnClickListener(View.OnClickListener {
             if(checkAllWritten()){
                 // editText -> string
                 var title = binding.title.text.toString()
-                var deadline = binding.deadline.text.toString()
-                var purchasedAt = binding.purchasedAt.text.toString()
+                var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
+                var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
                 var name = binding.name.text.toString()
                 var region = binding.region.text.toString()
                 var location = binding.location.text.toString()
@@ -94,61 +99,131 @@ class SharePostActivity : AppCompatActivity() {
             }
         })
 
-
-        //이미지 불러오는 코드
-        //gallery request launcher..................
-        val requestGalleryLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult())
-        {
-            try {
-                // inSampleSize 비율 계산, 지정
-                val calRatio = calculateInSampleSize(
-                    it.data!!.data!!,
-                    resources.getDimensionPixelSize(R.dimen.imgSize),
-                    resources.getDimensionPixelSize(R.dimen.imgSize)
-                )
-                val option = BitmapFactory.Options()
-                option.inSampleSize = calRatio
-                // 이미지 로딩
-                var inputStream = contentResolver.openInputStream(it.data!!.data!!)
-                val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-                inputStream!!.close()
-                inputStream = null
-                bitmap?.let {
-                    binding.imgFood.setImageBitmap(bitmap)
-                } ?: let {
-                    Log.d("kkang", "bitmap null")
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        // 이미지 삽입 버튼
+        binding.btnCamera.setOnClickListener{
+            showDialogAddimage()
         }
 
-        // 앨범 버튼
-        binding.btnCamera.setOnClickListener{
+    }
+
+    // 양식 작성 여부 확인
+    private fun checkAllWritten(): Boolean{
+        return (binding.title.length()>0 && binding.deadlineYear.length()>0 && binding.deadlineMonth.length()>0 && binding.deadlineDate.length()>0
+                && binding.purchasedAtYear.length()>0 && binding.purchasedAtMonth.length()>0 && binding.purchasedAtDate.length()>0
+                && binding.name.length()>0 && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
+    }
+
+    // 사진 삽입 dialog를 디자인
+    private fun showDialogAddimage() {
+        //뷰 바인딩을 적용한 XML 파일 초기화
+        val dialogBinding = DialogAddimageBinding.inflate(layoutInflater)
+        val alertDialog =AlertDialog.Builder(this).run {
+            setView(dialogBinding.root)
+            show()
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        //닫기 버튼
+        dialogBinding.btnClose.setOnClickListener(View.OnClickListener {
+            alertDialog.dismiss()
+        })
+
+        //카메라 버튼
+        dialogBinding.btnCameraOn.setOnClickListener{
+            // 카메라 앱
+            // 파일 준비
+            val timeStamp: String =
+                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir: File? =
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val file = File.createTempFile(
+                "JPEG_${timeStamp}_",
+                ".jpg",
+                storageDir
+            )
+            filePath = file.absolutePath
+            val photoURI: Uri = FileProvider.getUriForFile(
+                this,
+                "com.example.fffroject.fileprovider", file
+            )
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            requestCameraFileLauncher.launch(intent)
+            alertDialog.dismiss()
+        }
+
+        //앨범 버튼
+        dialogBinding.btnAlbum.setOnClickListener{
             // 갤러리 열기
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = MediaStore.Images.Media.CONTENT_TYPE
             requestGalleryLauncher.launch(intent)
+            alertDialog.dismiss()
         }
-//        // 앨범 버튼
-//        binding.btnCamera.setOnClickListener{
-//            val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//            val rootView = inflater.inflate(R.layout.activity_one, null)
-//        }
-
 
     }
 
+    //이미지 불러오기(gallery request launcher)
+    val requestGalleryLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult())
+    {
+        try {
+            // inSampleSize 비율 계산, 지정
+            val calRatio = calculateInSampleSize(
+                it.data!!.data!!,
+                resources.getDimensionPixelSize(R.dimen.imgSize),
+                resources.getDimensionPixelSize(R.dimen.imgSize)
+            )
+            val option = BitmapFactory.Options()
+            option.inSampleSize = calRatio
+            // 이미지 로딩
+            var inputStream = contentResolver.openInputStream(it.data!!.data!!)
+            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+            inputStream!!.close()
+            inputStream = null
+            bitmap?.let {
+                binding.imgFood.setImageBitmap(bitmap)
+                binding.imgFood.visibility = View.VISIBLE
+            } ?: let {
+                Log.d("kkang", "bitmap null")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    //카메라 불러오기(camera request launcher)
+    val requestCameraFileLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult())
+    {
+        // 카메라 앱
+        val calRatio = calculateInSampleSize(
+            Uri.fromFile(File(filePath)),
+            resources.getDimensionPixelSize(R.dimen.imgSize),
+            resources.getDimensionPixelSize(R.dimen.imgSize)
+        )
+        val option = BitmapFactory.Options()
+        option.inSampleSize = calRatio
+        val bitmap = BitmapFactory.decodeFile(filePath, option)
+        bitmap?.let {
+            binding.imgFood.setImageBitmap(bitmap)
+            binding.imgFood.visibility = View.VISIBLE
+        }
+    }
+
     // 데이터 저장
-    private fun addPostDB(title: String, name: String, deadline: String, purchasedAt: String, region: String,
+    private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
     location: String, context: String){
         //유저가 존재한다면
         if (user != null){
             postId = UUID.randomUUID().toString()
             //게시글 등록 날짜
-            date = LocalDate.now()
+            nowdate = LocalDate.now()
+            date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
+            //db 전송
             db?.collection("post")?.document("$postId")
                 ?.set(
                     hashMapOf(

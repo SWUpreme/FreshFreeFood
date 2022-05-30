@@ -9,7 +9,12 @@ data class MyFridge(
 
 // 나눔 전체 게시글 리스트
 data class PostAll(
-    var index :  String? =  null
+    var index :  String? =  null,
+    var title : String? = null,
+    var location : String? = null,
+    var name : String? = null,
+    var deadline : String? = null,
+    var createdAt : String? = null
 )
 
 // 식품 리스트 데이터
