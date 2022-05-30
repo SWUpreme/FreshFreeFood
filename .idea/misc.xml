@@ -23,20 +23,6 @@
         <entry key="..\:/Users/MinY/AndroidStudioProjects/FFFroject/app/src/main/res/layout/item_fridgelist.xml" value="0.3203125" />
         <entry key="..\:/Users/MinY/AndroidStudioProjects/FFFroject/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/MinY/AndroidStudioProjects/FFFroject/app/src/main/res/menu/menu_login.xml" value="0.3125" />
-        <entry key="app/src/main/res/drawable/btn_fridge_list.xml" value="0.211" />
-        <entry key="app/src/main/res/drawable/ic_food_gray.xml" value="0.211" />
-        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.3191170291624208" />
-        <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.314080810546875" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.2006340579710145" />
-        <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_share.xml" value="0.3781890869140625" />
-        <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.4495752970377604" />
-        <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.2006340579710145" />
-        <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.24048913043478262" />
-        <entry key="app/src/main/res/menu/food_top_plus.xml" value="0.27395833333333336" />
-        <entry key="app/src/main/res/menu/main_top_plus.xml" value="0.27708333333333335" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.211" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1525" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable-v24/rounded_corner.xml" value="0.1465" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable-v24/rounded_corner_box.xml" value="0.1465" />
@@ -55,7 +41,7 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_mypage.xml" value="0.1953125" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_fridgelist.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_sharelist.xml" value="0.264" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_sharelist.xml" value="0.4" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/xml/file_paths.xml" value="0.23385416666666667" />
       </map>
     </option>
