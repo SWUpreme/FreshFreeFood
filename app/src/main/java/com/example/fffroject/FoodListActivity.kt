@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+//import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.activity_write.*
 
+import androidx.appcompat.widget.Toolbar
+
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     var auth : FirebaseAuth? = null
@@ -29,6 +32,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // Data에 있는 FoodList와 연결
     lateinit var foodlist: ArrayList<FoodList>
     lateinit var recyclerview_foodlist: RecyclerView
+    lateinit var toolbar_foodlist: Toolbar
 
     var name : String? = null
     var index : String? = null
@@ -53,6 +57,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         name = intent.getStringExtra("name")    // 냉장고 이름
         index = intent.getStringExtra("index")  // 냉장고 id
 
+        toolbar_foodlist = findViewById(R.id.toolbFoodlist)
+        //toolbar_foodlist.setTitle(name)
 
         // 파이어베이스에서 식품 리스트 값 불러오기
         loadData()

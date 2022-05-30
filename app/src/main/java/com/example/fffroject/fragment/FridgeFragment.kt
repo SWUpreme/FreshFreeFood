@@ -3,7 +3,6 @@ package com.example.fffroject.fragment
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +10,12 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fffroject.AuthActivity
-import com.example.fffroject.FFFroject
 import com.example.fffroject.FoodListActivity
 import com.example.fffroject.R
 //import com.example.fffroject.databinding.FragmentFridgeBinding
 //import com.example.fffroject.databinding.FragmentMypageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import kotlin.collections.ArrayList
