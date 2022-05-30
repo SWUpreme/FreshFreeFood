@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.threetenabp.AndroidThreeTen
 import java.util.*
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.ChronoUnit;
 import java.io.File
 import java.text.SimpleDateFormat
@@ -43,12 +44,7 @@ class SharePostActivity : AppCompatActivity() {
 
     // 바인딩 객체
     lateinit var binding: ActivitySharepostBinding
-
     lateinit var filePath: String
-
-    var eraseHyphen : Boolean = false
-
-    val REQ_GALLERY = 12
 
     // 파이어스토어 게시글 리스트
     lateinit var title : EditText
@@ -62,7 +58,8 @@ class SharePostActivity : AppCompatActivity() {
 
 
     lateinit var postId: String
-    lateinit var date: LocalDate
+    lateinit var nowdate: LocalDate
+    lateinit var date : String
     lateinit var createdAt: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,8 +84,8 @@ class SharePostActivity : AppCompatActivity() {
             if(checkAllWritten()){
                 // editText -> string
                 var title = binding.title.text.toString()
-                var deadline = binding.deadline.text.toString()
-                var purchasedAt = binding.purchasedAt.text.toString()
+                var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
+                var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
                 var name = binding.name.text.toString()
                 var region = binding.region.text.toString()
                 var location = binding.location.text.toString()
@@ -102,60 +99,18 @@ class SharePostActivity : AppCompatActivity() {
             }
         })
 
-        //하이픈 자동 입력
-        addAutoHyphen()
-
         // 이미지 삽입 버튼
         binding.btnCamera.setOnClickListener{
             showDialogAddimage()
         }
 
     }
-    //Edittext Hyphen(-) 자동 입력
-    private fun addAutoHyphen(){
-        binding.deadline.addTextChangedListener(object : TextWatcher{
-            var textlength = 0
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                var textlength = 0
-//                if(binding.deadline.isFocusable() && !s.toString().equals("")){
-//                    try {
-//                        textlength = binding.deadline.text.toString().length
-//                    } catch (e : NumberFormatException){
-//                        e.printStackTrace()
-//                        return
-//                    }
-//
-//                    if(textlength == 4 && before != 1){
-//                        binding.deadline.setText(binding.deadline.text.toString()+"-")
-//                        binding.deadline.setSelection(binding.deadline.text.length)
-//                    }else if (textlength == 7 && before != 1){
-//                        binding.deadline.setText(binding.deadline.text.toString()+"-")
-//                        binding.deadline.setSelection(binding.deadline.text.length)
-//                    }else if (textlength == 5 && !binding.deadline.text.toString().contains("-")){
-//                        binding.deadline.setText(binding.deadline.text.toString().substring(0,4)+"-"+binding.deadline.text.toString().substring(4))
-//                        binding.deadline.setSelection(binding.deadline.text.length)
-//                    }else if (textlength == 8 && !binding.deadline.text.toString().substring(7,8).equals(".")){
-//                        binding.deadline.setText(binding.deadline.text.toString().substring(0,7)+"-"+binding.deadline.text.toString().substring(7))
-//                        binding.deadline.setSelection(binding.deadline.text.length)
-//                    }
-//                }
-
-
-            }
-        })
-    }
-
-
 
     // 양식 작성 여부 확인
     private fun checkAllWritten(): Boolean{
-        return (binding.title.length()>0 && binding.deadline.length()>0 && binding.purchasedAt.length()>0 && binding.name.length()>0
-                && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
+        return (binding.title.length()>0 && binding.deadlineYear.length()>0 && binding.deadlineMonth.length()>0 && binding.deadlineDate.length()>0
+                && binding.purchasedAtYear.length()>0 && binding.purchasedAtMonth.length()>0 && binding.purchasedAtDate.length()>0
+                && binding.name.length()>0 && binding.region.length()>0 && binding.location.length()>0 && binding.context.length()>0)
     }
 
     // 사진 삽입 dialog를 디자인
@@ -259,14 +214,16 @@ class SharePostActivity : AppCompatActivity() {
     }
 
     // 데이터 저장
-    private fun addPostDB(title: String, name: String, deadline: String, purchasedAt: String, region: String,
+    private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
     location: String, context: String){
         //유저가 존재한다면
         if (user != null){
             postId = UUID.randomUUID().toString()
             //게시글 등록 날짜
-            date = LocalDate.now()
+            nowdate = LocalDate.now()
+            date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
+            //db 전송
             db?.collection("post")?.document("$postId")
                 ?.set(
                     hashMapOf(

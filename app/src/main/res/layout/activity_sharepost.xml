@@ -88,7 +88,7 @@
                 android:textColor="#30353D"
                 android:textColorHint="#E9E9E9"
                 android:textSize="15sp"
-                android:nextFocusDown="@+id/deadline"
+                android:nextFocusDown="@+id/deadlineYear"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -106,7 +106,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/deadline"
+                    android:id="@+id/deadlineYear"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -176,7 +176,7 @@
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/purchasedAt"
+                    android:nextFocusDown="@+id/purchasedAtYear"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -204,7 +204,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/purchasedAt"
+                    android:id="@+id/purchasedAtYear"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"

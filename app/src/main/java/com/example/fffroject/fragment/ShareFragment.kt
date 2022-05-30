@@ -13,19 +13,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.AuthActivity
 import com.example.fffroject.R
 import com.example.fffroject.SharePostActivity
+import com.example.fffroject.databinding.ActivitySharepostBinding
+import com.example.fffroject.databinding.FragmentShareBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ShareFragment : Fragment() {
+    // 파이어스토어
     var auth: FirebaseAuth? = null
-    var firestore: FirebaseFirestore? = null
+    var db: FirebaseFirestore? = null
     var user: FirebaseUser? = null
+
+    // 바인딩 객체
+    lateinit var binding: FragmentShareBinding
 
     // Data에 있는 PostAll이랑 해줘야해
     lateinit var postalllist: ArrayList<PostAll>
 
-    lateinit var btn_addShare: Button
     lateinit var recyclerview_share: RecyclerView
 
     override fun onCreateView(
@@ -39,21 +44,19 @@ class ShareFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
-        firestore = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         postalllist = arrayListOf<PostAll>()
 
-        btn_addShare = view.findViewById(R.id.btnShareAdd)
 
         recyclerview_share = view.findViewById(R.id.recyclerviewShare)
         recyclerview_share.adapter = RecyclerViewAdapter()
         recyclerview_share.layoutManager = LinearLayoutManager(activity)
 
         // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
-        btn_addShare.setOnClickListener {
+        binding.btnShareAdd.setOnClickListener {
             val intent = Intent(activity, SharePostActivity::class.java)
             startActivity(intent)
-            //activity?.let { ContextCompat.startActivity(it, intent, null) }
         }
 
 
