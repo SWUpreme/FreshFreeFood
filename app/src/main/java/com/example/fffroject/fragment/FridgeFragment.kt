@@ -152,7 +152,7 @@ class FridgeFragment : Fragment() {
             // 클릭이벤트(해당 냉장고로 넘어감)
             viewHolder.setOnClickListener{
                 val intent = Intent(viewHolder.context, FoodListActivity::class.java)
-                intent.putExtra("index", fridgeid)
+                intent.putExtra("index", index)
                 intent.putExtra("name", fridgename.text.toString())
                 ContextCompat.startActivity(viewHolder.context, intent, null)
             }

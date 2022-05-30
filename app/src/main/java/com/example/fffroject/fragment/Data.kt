@@ -14,7 +14,7 @@ data class PostAll(
 
 // 식품 리스트 데이터
 data class FoodList(
-    var index : String? = null
+    var name : String? = null
 )
 
 //입력
