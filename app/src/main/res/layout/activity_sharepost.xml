@@ -20,151 +20,391 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btnCamera"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:background="#00FFFFFF"
-        android:scaleType="fitCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_camera"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-    <ImageView
-        android:id="@+id/imgFood"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toEndOf="@+id/btnCamera"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_noimg" />
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line">
+        app:layout_constraintTop_toBottomOf="@+id/btnSharepost">
 
-        <EditText
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="글 제목"
-            android:maxLength="50"
-            android:singleLine="true"
-            android:minHeight="48dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <EditText
-            android:id="@+id/deadline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="유통기한"
-            android:inputType="date"
-            android:maxLength="5"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSharepost">
+
+                <ImageButton
+                    android:id="@+id/btnCamera"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_camera"
+                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                <ImageView
+                    android:id="@+id/imgFood"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/ic_noimg" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="제목"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/txt_background_round"
+                android:hint="게시글 제목을 입력해주세요."
+                android:maxLength="50"
+                android:minHeight="38dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#30353D"
+                android:textColorHint="#E9E9E9"
+                android:textSize="15sp"
+                android:nextFocusDown="@+id/deadline"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/txtDeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="유통기한"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/deadline"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:inputType="date"
+                    android:maxLength="4"
+                    android:minHeight="38dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:nextFocusDown="@+id/deadlineMonth"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/txtYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="년"
+                    android:textColor="#30353D"
+                    android:textSize="17sp" />
+
+                <EditText
+                    android:id="@+id/deadlineMonth"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:inputType="date"
+                    android:maxLength="2"
+                    android:minHeight="38dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:nextFocusDown="@+id/deadlineDate"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/txtMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="월"
+                    android:textColor="#30353D"
+                    android:textSize="17sp" />
+
+                <EditText
+                    android:id="@+id/deadlineDate"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:inputType="date"
+                    android:maxLength="2"
+                    android:minHeight="38dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:nextFocusDown="@+id/purchasedAt"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="일"
+                    android:textColor="#30353D"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtPurchasedAt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="구매일"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/purchasedAt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:inputType="date"
+                    android:maxLength="4"
+                    android:minHeight="38dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:nextFocusDown="@+id/purchasedAtMonth"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/txtYear2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="년"
+                    android:textColor="#30353D"
+                    android:textSize="17sp" />
+
+                <EditText
+                    android:id="@+id/purchasedAtMonth"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:inputType="date"
+                    android:maxLength="2"
+                    android:minHeight="38dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:nextFocusDown="@+id/purchasedAtDate"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/txtMonth2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="월"
+                    android:textColor="#30353D"
+                    android:textSize="17sp" />
+
+                <EditText
+                    android:id="@+id/purchasedAtDate"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:inputType="date"
+                    android:maxLength="2"
+                    android:minHeight="38dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:nextFocusDown="@+id/name"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/txtDate2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="일"
+                    android:textColor="#30353D"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="제품명"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/txt_background_round"
+                android:hint="제품명을 입력해주세요."
+                android:maxLength="50"
+                android:minHeight="38dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#30353D"
+                android:textColorHint="#E9E9E9"
+                android:textSize="15sp"
+                android:nextFocusDown="@+id/region"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/txtRegion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="지역"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/region"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/txt_background_round"
+                android:hint="지역을 입력해주세요."
+                android:maxLength="50"
+                android:minHeight="38dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#30353D"
+                android:textColorHint="#E9E9E9"
+                android:textSize="15sp"
+                android:nextFocusDown="@+id/location"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/txtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="거래 희망 위치"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/txt_background_round"
+                android:hint="거래 희망 위치를 입력해주세요."
+                android:maxLength="50"
+                android:minHeight="38dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="#30353D"
+                android:textColorHint="#E9E9E9"
+                android:textSize="15sp"
+                android:nextFocusDown="@+id/context"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/txtContext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="게시글 내용"
+                android:textColor="#C2C2C2"
+                android:textSize="17sp" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <EditText
+                    android:id="@+id/context"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:gravity="top"
+                    android:hint="게시글 내용을 작성해주세요."
+                    android:inputType="textMultiLine"
+                    android:maxLength="150"
+                    android:maxLines="20"
+                    android:minHeight="38dp"
+                    android:minLines="3"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:scrollbars="vertical"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="15sp"
+                    android:imeOptions="actionDone"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
-        <EditText
-            android:id="@+id/purchasedAt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="구매일 ex)2022-05-28"
-            android:inputType="date"
-            android:maxLength="50"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/deadline" />
-
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="제품명"
-            android:maxLength="50"
-            android:singleLine="true"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchasedAt" />
-
-        <EditText
-            android:id="@+id/region"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="지역"
-            android:maxLength="50"
-            android:singleLine="true"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
-
-        <EditText
-            android:id="@+id/location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="거래 희망 위치"
-            android:maxLength="50"
-            android:singleLine="true"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/region" />
-
-        <EditText
-            android:id="@+id/context"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#BDBDBD"
-            android:hint="게시글 내용을 작성해주세요"
-            android:maxLength="200"
-            android:maxLines="5"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
-    </LinearLayout>
-
-
-    <ImageView
-        android:id="@+id/line"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/line_gray" />
 </androidx.constraintlayout.widget.ConstraintLayout>

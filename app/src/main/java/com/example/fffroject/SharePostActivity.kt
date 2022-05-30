@@ -230,6 +230,7 @@ class SharePostActivity : AppCompatActivity() {
             inputStream = null
             bitmap?.let {
                 binding.imgFood.setImageBitmap(bitmap)
+                binding.imgFood.visibility = View.VISIBLE
             } ?: let {
                 Log.d("kkang", "bitmap null")
             }
@@ -253,6 +254,7 @@ class SharePostActivity : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeFile(filePath, option)
         bitmap?.let {
             binding.imgFood.setImageBitmap(bitmap)
+            binding.imgFood.visibility = View.VISIBLE
         }
     }
 
