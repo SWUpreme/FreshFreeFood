@@ -26,11 +26,12 @@
         <entry key="app/src/main/res/drawable/btn_fridge_list.xml" value="0.211" />
         <entry key="app/src/main/res/drawable/ic_food_gray.xml" value="0.211" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.3191170291624208" />
-        <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.1549285888671875" />
+        <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.314080810546875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.2006340579710145" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.3781890869140625" />
+        <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.2006340579710145" />
         <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.24048913043478262" />
         <entry key="app/src/main/res/menu/main_top_plus.xml" value="0.27708333333333335" />
