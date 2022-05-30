@@ -25,6 +25,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -134,6 +135,7 @@ class FridgeFragment : Fragment() {
 
             // 리사이클러뷰 아이템 정보
             fridgename.text = fridgelist!![position].name
+            fridgeid = fridgelist!![position].index!!
 
             // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
             btn_fridge_delete = viewHolder.findViewById(R.id.btnFridgeDelete)
@@ -144,6 +146,14 @@ class FridgeFragment : Fragment() {
                 if (index != null) {
                     deleteFridge(index)
                 }
+            }
+
+            // 클릭이벤트(해당 냉장고로 넘어감)
+            viewHolder.setOnClickListener{
+                val intent = Intent(viewHolder.context, FoodListActivity::class.java)
+                intent.putExtra("index", fridgeid)
+                intent.putExtra("name", fridgename.text.toString())
+                ContextCompat.startActivity(viewHolder.context, intent, null)
             }
 
         }
