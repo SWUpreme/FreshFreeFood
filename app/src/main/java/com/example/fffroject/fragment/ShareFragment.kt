@@ -106,7 +106,7 @@ class ShareFragment : Fragment() {
             var listName: TextView = viewHolder.findViewById(R.id.listName)
             var listDeadline: TextView = viewHolder.findViewById(R.id.listDeadline)
             var listCreatedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
-            var listImage: ImageView = viewHolder.findViewById(R.id.listImage)
+            //var listImage: ImageView = viewHolder.findViewById(R.id.listImage)
 
             //뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
             listTitle.text = postAllList!![position].title
