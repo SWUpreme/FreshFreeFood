@@ -17,9 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.AuthActivity
 import com.example.fffroject.R
 import com.example.fffroject.SharePostActivity
-import com.example.fffroject.databinding.ActivitySharepostBinding
-import com.example.fffroject.databinding.FragmentShareBinding
-import com.example.fffroject.databinding.ItemSharelistBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -67,6 +64,7 @@ class ShareFragment : Fragment() {
         recyclerviewShare.layoutManager = LinearLayoutManager(activity)
         // 리사이클러 뷰 어댑터 등록
         recyclerviewShare.adapter = ShareViewAdapter()
+        // 리사이클러 뷰 구분선
         recyclerviewShare.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
 
 
