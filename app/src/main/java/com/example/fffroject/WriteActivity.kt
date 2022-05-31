@@ -73,7 +73,7 @@ class WriteActivity : AppCompatActivity() {
                             "name" to name.text.toString(),
                             "deadline" to deadline.text.toString(),
                             "purchaseAt" to purchasedAt.text.toString(),
-                            "count" to count.inputType
+                            "count" to count.text.toString().toInt()
                         )
                     )
                     ?.addOnSuccessListener {  }
@@ -92,7 +92,7 @@ class WriteActivity : AppCompatActivity() {
 //                .addOnFailureListener { exception -> Log.d("DatabaseTest", exception.message!!) }
 //
 //
-            Toast.makeText(this, name.text.toString() + count.text.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, name.text.toString() + count.inputType.toInt(), Toast.LENGTH_SHORT).show()
         }
     }
 

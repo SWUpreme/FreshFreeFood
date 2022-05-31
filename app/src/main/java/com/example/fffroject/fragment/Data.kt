@@ -23,7 +23,7 @@ data class FoodList(
     var name : String? = null,
     var deadline : String? = null,
     var purchaseAt : String? = null,
-    var count : Int? = null
+    var count : Int = 0
 )
 
 //입력
