@@ -236,8 +236,8 @@ class SharePostActivity : AppCompatActivity() {
                         "location" to location,
                         "context" to context,
                         "createdAt" to createdAt,
-                        "flag" to "false",
-                        "done" to "false"
+                        "flag" to false,
+                        "done" to false
                     )
                 )
                 ?.addOnSuccessListener {

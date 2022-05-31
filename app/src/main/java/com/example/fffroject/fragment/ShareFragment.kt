@@ -1,6 +1,11 @@
 package com.example.fffroject.fragment
 
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.TransitionDrawable
 import android.media.Image
 import android.os.Bundle
 import android.text.Layout
@@ -9,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -59,14 +65,14 @@ class ShareFragment : Fragment() {
         // 파이어베이스에서 냉장고 값 불러오기
         loadData()
 
-
         // 레이아웃 매니저 등록
         recyclerviewShare.layoutManager = LinearLayoutManager(activity)
         // 리사이클러 뷰 어댑터 등록
         recyclerviewShare.adapter = ShareViewAdapter()
-        // 리사이클러 뷰 구분선
-        recyclerviewShare.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-
+        // 리사이클러 뷰 구분선_커스텀 diver
+        //recyclerviewShare.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
+        recyclerviewShare.addItemDecoration(customDecoration)
 
 
         // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
@@ -99,22 +105,38 @@ class ShareFragment : Fragment() {
 
         // 뷰 홀더의 뷰에 데이터 호출 (실제 데이터 출력)
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
             // 바인딩
             val viewHolder = (holder as ShareViewHolder).itemView
             var listTitle: TextView = viewHolder.findViewById(R.id.listTitle)
+            var listRegion: TextView = viewHolder.findViewById(R.id.listRegion)
             var listLocation: TextView = viewHolder.findViewById(R.id.listLocation)
             var listName: TextView = viewHolder.findViewById(R.id.listName)
             var listDeadline: TextView = viewHolder.findViewById(R.id.listDeadline)
             var listCreatedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
-            //var listImage: ImageView = viewHolder.findViewById(R.id.listImage)
 
-            //뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
+            // 냉장고에서 넘기기 여부 확인 후 색상 변경
+            var flag = postAllList!![position].flag
+            if(flag==true){
+                listRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
+                listLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
+                listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                listLocation.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+            }else{
+                listRegion.setBackgroundResource(R.drawable.txt_background_round2_white)
+                listLocation.setBackgroundResource(R.drawable.txt_background_round2_white)
+                listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
+                listLocation.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
+            }
+
+            // 뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
             listTitle.text = postAllList!![position].title
+            listRegion.text = postAllList!![position].region
             listLocation.text = postAllList!![position].location
             listName.text = postAllList!![position].name
             listDeadline.text = postAllList!![position].deadline
             listCreatedAt.text = postAllList!![position].createdAt
-            //listImage.drawable = ContextCompat.getDrawable(this, R.drawable.ic_noimg)
+
         }
     }
 
@@ -138,4 +160,34 @@ class ShareFragment : Fragment() {
         }
     }
 
+}
+
+// 커스텀 divider 추가
+class CustomDiverItemDecoration(
+    private val height: Float,
+    private val padding: Float,
+    @ColorInt
+    private val color: Int
+) : RecyclerView.ItemDecoration() {
+
+    private val paint = Paint()
+
+    init {
+        paint.color = color
+    }
+
+    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+        val left = parent.paddingStart + padding
+        val right = parent.width - parent.paddingEnd - padding
+
+        for (i in 0 until parent.childCount) {
+            val child = parent.getChildAt(i)
+            val params = child.layoutParams as RecyclerView.LayoutParams
+
+            val top = (child.bottom + params.bottomMargin).toFloat()
+            val bottom = top + height
+
+            c.drawRect(left, top, right, bottom, paint)
+        }
+    }
 }

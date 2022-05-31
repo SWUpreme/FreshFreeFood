@@ -11,10 +11,12 @@ data class MyFridge(
 data class PostAll(
     var index :  String? =  null,
     var title : String? = null,
+    var region : String? = null,
     var location : String? = null,
     var name : String? = null,
     var deadline : String? = null,
-    var createdAt : String? = null
+    var createdAt : String? = null,
+    var flag : Boolean? = null
 )
 
 // 식품 리스트 데이터
