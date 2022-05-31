@@ -91,7 +91,7 @@ class FridgeFragment : Fragment() {
 //        }
 
         // 툴바
-        toolbar_fridge = view.findViewById(R.id.toolbFridge)    // 상단바
+        toolbar_fridge = view.findViewById(R.id.toolbShare)    // 상단바
         //toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
         //toolbar_fridge.setTitle(user!!.uid)
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7FBFE"
+    android:background="#FFFFFF"
     tools:context=".SharePostActivity">
 
     <Button
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:background="#F7FBFE"
+        android:background="#FFFFFF"
         android:outlineProvider="none"
         android:text="완료"
         android:textColor="#2196F3"
@@ -26,8 +26,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSharepost">
+        app:layout_constraintTop_toBottomOf="@+id/btnSharepost"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +74,7 @@
                 android:layout_marginTop="15dp"
                 android:text="제목"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/title"
@@ -83,12 +85,12 @@
                 android:hint="게시글 제목을 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
+                android:nextFocusDown="@+id/deadlineYear"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="#30353D"
                 android:textColorHint="#E9E9E9"
                 android:textSize="15sp"
-                android:nextFocusDown="@+id/deadlineYear"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -98,7 +100,7 @@
                 android:layout_marginTop="15dp"
                 android:text="유통기한"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,17 +112,18 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
                     android:inputType="date"
                     android:maxLength="4"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/deadlineMonth"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textAlignment="viewEnd"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/deadlineMonth"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -130,7 +133,7 @@
                     android:layout_marginTop="4dp"
                     android:text="년"
                     android:textColor="#30353D"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/deadlineMonth"
@@ -138,17 +141,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/deadlineDate"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textAlignment="viewEnd"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/deadlineDate"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -158,7 +162,7 @@
                     android:layout_marginTop="4dp"
                     android:text="월"
                     android:textColor="#30353D"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/deadlineDate"
@@ -166,17 +170,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/purchasedAtYear"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textAlignment="viewEnd"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/purchasedAtYear"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -186,7 +191,7 @@
                     android:layout_marginTop="4dp"
                     android:text="일"
                     android:textColor="#30353D"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <TextView
@@ -196,7 +201,7 @@
                 android:layout_marginTop="15dp"
                 android:text="구매일"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,17 +213,18 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
                     android:inputType="date"
                     android:maxLength="4"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/purchasedAtMonth"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textAlignment="viewEnd"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/purchasedAtMonth"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -228,7 +234,7 @@
                     android:layout_marginTop="4dp"
                     android:text="년"
                     android:textColor="#30353D"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/purchasedAtMonth"
@@ -236,17 +242,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/purchasedAtDate"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textAlignment="viewEnd"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/purchasedAtDate"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -256,7 +263,7 @@
                     android:layout_marginTop="4dp"
                     android:text="월"
                     android:textColor="#30353D"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/purchasedAtDate"
@@ -264,17 +271,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/name"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textAlignment="viewEnd"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:nextFocusDown="@+id/name"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
@@ -284,7 +292,7 @@
                     android:layout_marginTop="4dp"
                     android:text="일"
                     android:textColor="#30353D"
-                    android:textSize="17sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <TextView
@@ -294,7 +302,7 @@
                 android:layout_marginTop="15dp"
                 android:text="제품명"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/name"
@@ -305,12 +313,12 @@
                 android:hint="제품명을 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
+                android:nextFocusDown="@+id/region"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="#30353D"
                 android:textColorHint="#E9E9E9"
                 android:textSize="15sp"
-                android:nextFocusDown="@+id/region"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -320,7 +328,7 @@
                 android:layout_marginTop="15dp"
                 android:text="지역"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/region"
@@ -331,12 +339,12 @@
                 android:hint="지역을 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
+                android:nextFocusDown="@+id/location"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="#30353D"
                 android:textColorHint="#E9E9E9"
                 android:textSize="15sp"
-                android:nextFocusDown="@+id/location"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -346,7 +354,7 @@
                 android:layout_marginTop="15dp"
                 android:text="거래 희망 위치"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/location"
@@ -357,12 +365,12 @@
                 android:hint="거래 희망 위치를 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
+                android:nextFocusDown="@+id/context"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="#30353D"
                 android:textColorHint="#E9E9E9"
                 android:textSize="15sp"
-                android:nextFocusDown="@+id/context"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -372,7 +380,7 @@
                 android:layout_marginTop="15dp"
                 android:text="게시글 내용"
                 android:textColor="#C2C2C2"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -387,6 +395,7 @@
                     android:background="@drawable/txt_background_round"
                     android:gravity="top"
                     android:hint="게시글 내용을 작성해주세요."
+                    android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
                     android:maxLength="150"
                     android:maxLines="20"
@@ -398,7 +407,6 @@
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="15sp"
-                    android:imeOptions="actionDone"
                     tools:ignore="TouchTargetSizeCheck" />
             </androidx.core.widget.NestedScrollView>
 

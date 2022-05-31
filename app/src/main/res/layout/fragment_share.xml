@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F7FBFE">
 
+
     <ImageButton
         android:id="@+id/btnShareAdd"
         android:layout_width="50dp"
@@ -13,6 +14,7 @@
         android:layout_marginEnd="5dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_btn_plus"
