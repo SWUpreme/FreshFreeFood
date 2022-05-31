@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.ColorInt
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -38,6 +39,7 @@ class ShareFragment : Fragment() {
     // 바인딩
     lateinit var btnShareAdd: ImageButton
     lateinit var recyclerviewShare: RecyclerView
+    lateinit var toolbar_sharepost: Toolbar
 
 
     // Data에 있는 PostAll이랑 해줘야해
@@ -61,6 +63,7 @@ class ShareFragment : Fragment() {
         // 바인딩
         btnShareAdd= view.findViewById(R.id.btnShareAdd)
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)
+        toolbar_sharepost = view.findViewById(R.id.toolbShare)
 
         // 파이어베이스에서 냉장고 값 불러오기
         loadData()
@@ -76,9 +79,22 @@ class ShareFragment : Fragment() {
 
 
         // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
+        /*
         btnShareAdd.setOnClickListener {
             val intent = Intent(activity, SharePostActivity::class.java)
             startActivity(intent)
+        }*/
+
+        // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
+        toolbar_sharepost.setOnMenuItemClickListener{
+            when(it.itemId) {
+                R.id.btnPlus -> {
+                    val intent = Intent(activity, SharePostActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
 
         return view
