@@ -3,12 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF"
+    android:backgroundTint="#00FFFFFF"
+    android:foregroundTint="#00FFFFFF">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:foregroundTint="#00FFFFFF"
         android:paddingRight="20dp"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -16,6 +24,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
@@ -24,7 +34,7 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/listImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -36,6 +46,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:backgroundTint="#00FFFFFF"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -51,7 +63,7 @@
                         android:layout_marginBottom="10dp"
                         android:text="제목입니당"
                         android:textColor="#30353D"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -61,7 +73,7 @@
                         android:text="05.30"
                         android:textAlignment="viewEnd"
                         android:textColor="#95979B"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
 
@@ -71,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="거래장소요"
                     android:textColor="#30353D"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/listName"
@@ -79,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:text="사과"
                     android:textColor="#30353D"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:text="2022.05.30"
                         android:textColor="#30353D"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txtNotify"
@@ -100,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:text=" 까지"
                         android:textColor="#30353D"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
