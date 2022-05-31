@@ -6,10 +6,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.fffroject.fragment.FoodList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
+import kotlin.collections.ArrayList
 
 class WriteActivity : AppCompatActivity() {
 
@@ -24,9 +26,16 @@ class WriteActivity : AppCompatActivity() {
     lateinit var count: EditText
     lateinit var upload_btn: Button
 
+    lateinit var foodlist: ArrayList<FoodList>
+    lateinit var foodindex: String
+
+    var fridgeindex : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
+
+        foodlist = arrayListOf<FoodList>()
 
         food = arrayListOf<food>()
         auth = FirebaseAuth.getInstance()
@@ -40,29 +49,50 @@ class WriteActivity : AppCompatActivity() {
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.upload_btn)
 
+        fridgeindex = intent.getStringExtra("index")  // 냉장고 id
+        Toast.makeText(this, fridgeindex, Toast.LENGTH_SHORT).show()
 
         // 데이터 추가
         upload_btn.setOnClickListener {
 
-            val food = hashMapOf(
-                "name" to name.text.toString(),
-                "deadline" to deadline.text.toString(),
-                "purchasedAt" to purchasedAt.text.toString(),
-                "count" to count.text.toString(),
-            )
+//            val food = hashMapOf(
+//                "name" to name.text.toString(),
+//                "deadline" to deadline.text.toString(),
+//                "purchasedAt" to purchasedAt.text.toString(),
+//                "count" to count.text.toString(),
+//            )
 
-            firestore!!.collection("food")
-                .add(food)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(
-                        "DatabaseTest",
-                        documentReference.id
+            // 민영 추가 파이어스토어 코드
+            if (user != null) {
+                foodindex = UUID.randomUUID().toString()
+                firestore?.collection("fridge")?.document("$fridgeindex")
+                    ?.collection("food")?.document("$foodindex")
+                    ?.set(
+                        hashMapOf(
+                            "index" to foodindex,
+                            "name" to name.text.toString(),
+                            "deadline" to deadline.text.toString(),
+                            "purchaseAt" to purchasedAt.text.toString(),
+                            "count" to count.inputType
+                        )
                     )
-                }
-                .addOnFailureListener { exception -> Log.d("DatabaseTest", exception.message!!) }
+                    ?.addOnSuccessListener {  }
+                    ?.addOnFailureListener {  }
+            }
 
 
-            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+//            firestore!!.collection("food")
+//                .add(food)
+//                .addOnSuccessListener { documentReference ->
+//                    Log.d(
+//                        "DatabaseTest",
+//                        documentReference.id
+//                    )
+//                }
+//                .addOnFailureListener { exception -> Log.d("DatabaseTest", exception.message!!) }
+//
+//
+            Toast.makeText(this, name.text.toString() + count.text.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

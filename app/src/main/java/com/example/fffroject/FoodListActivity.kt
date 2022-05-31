@@ -91,6 +91,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     override fun onWriteBtnClicked() {
         Log.d(TAG, "FoodListActivity - onWriteBtnClicked() called")
         val intent = Intent(applicationContext, WriteActivity::class.java)
+        intent.putExtra("index", index)
         startActivity(intent)
     }
 
