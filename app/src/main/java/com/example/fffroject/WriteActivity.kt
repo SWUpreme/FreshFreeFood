@@ -37,7 +37,7 @@ class WriteActivity : AppCompatActivity() {
 
         foodlist = arrayListOf<FoodList>()
 
-        food = arrayListOf<food>()
+        //food = arrayListOf<food>()
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         firestore = FirebaseFirestore.getInstance()
@@ -50,7 +50,6 @@ class WriteActivity : AppCompatActivity() {
         upload_btn = findViewById(R.id.upload_btn)
 
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
-        Toast.makeText(this, fridgeindex, Toast.LENGTH_SHORT).show()
 
         // 데이터 추가
         upload_btn.setOnClickListener {
@@ -76,7 +75,7 @@ class WriteActivity : AppCompatActivity() {
                             "count" to count.text.toString().toInt()
                         )
                     )
-                    ?.addOnSuccessListener {  }
+                    ?.addOnSuccessListener { finish() }
                     ?.addOnFailureListener {  }
             }
 
@@ -92,7 +91,7 @@ class WriteActivity : AppCompatActivity() {
 //                .addOnFailureListener { exception -> Log.d("DatabaseTest", exception.message!!) }
 //
 //
-            Toast.makeText(this, name.text.toString() + count.inputType.toInt(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
         }
     }
 
