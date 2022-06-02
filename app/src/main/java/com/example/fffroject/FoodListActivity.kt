@@ -1,5 +1,6 @@
 package com.example.fffroject
 
+import android.app.ProgressDialog.show
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -57,8 +58,21 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         name = intent.getStringExtra("name")    // 냉장고 이름
         index = intent.getStringExtra("index")  // 냉장고 id
 
+        // 상단 툴바 사용
         toolbar_foodlist = findViewById(R.id.toolbFoodlist)
-        //toolbar_foodlist.setTitle(name)
+        toolbar_foodlist.setTitle(name)
+
+        // 상단 툴바 +버튼 클릭시
+        toolbar_foodlist.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.btnPlus -> {
+                    val inputDialog = MyCustomDialog(this, this)
+                    inputDialog.show()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // 파이어베이스에서 식품 리스트 값 불러오기
         loadData()
@@ -91,6 +105,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     override fun onWriteBtnClicked() {
         Log.d(TAG, "FoodListActivity - onWriteBtnClicked() called")
         val intent = Intent(applicationContext, WriteActivity::class.java)
+        intent.putExtra("index", index)
         startActivity(intent)
     }
 
