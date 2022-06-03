@@ -7,6 +7,30 @@
     android:background="#FFFFFF"
     tools:context=".SharePostActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbSharepostUpload"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:background="@drawable/background_top"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/sharepost_top_plus">
+
+        <TextView
+            android:id="@+id/txtToolbarWritePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="게시글 쓰기"
+            android:textColor="#30353D"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <Button
         android:id="@+id/btnSharepost"
         android:layout_width="wrap_content"
@@ -17,6 +41,7 @@
         android:text="완료"
         android:textColor="#2196F3"
         android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,11 +49,12 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSharepost"
+        app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout

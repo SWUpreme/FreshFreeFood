@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -16,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
@@ -23,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.threetenabp.AndroidThreeTen
+import kotlinx.android.synthetic.main.activity_sharepost.*
 import java.util.*
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter
@@ -49,6 +53,8 @@ class SharePostActivity : AppCompatActivity() {
     lateinit var context : EditText
     lateinit var imgFood : ImageView
 
+    lateinit var toolbar_sharepost: Toolbar
+
 
     lateinit var postId: String
     lateinit var nowdate: LocalDate
@@ -63,8 +69,21 @@ class SharePostActivity : AppCompatActivity() {
 
         // 바인딩 객체 획득
         binding = ActivitySharepostBinding.inflate(layoutInflater)
+
         // 액티비티 화면 출력
         setContentView(binding.root)
+
+        // 툴바 뒤로가기 버튼 활성화
+        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
+        setSupportActionBar(toolbar_sharepost)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)      // 뒤로가기 버튼 default로 만들기
+//        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_x_rec)
+//        supportActionBar?.setDisplayShowTitleEnabled(false)    // 기본 타이틀 숨기기
+
+//        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)      // 뒤로가기 버튼 default로 만들기
+//        getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.ic_x_rec)
+//        getSupportActionBar()?.setDisplayShowTitleEnabled(false)    // 기본 타이틀 숨기기
+
 
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
@@ -273,6 +292,18 @@ class SharePostActivity : AppCompatActivity() {
             }
         }
         return inSampleSize
+    }
+
+    // 뒤로가기 버튼 클릭
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            android.R.id.home -> {      //툴바 백키 동작
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
