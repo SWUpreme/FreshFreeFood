@@ -16,7 +16,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/main_top_plus" />
+        app:menu="@menu/main_top_plus" >
+        <TextView
+            android:id="@+id/txtToolbarShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="무료나눔"
+            android:layout_gravity="center"
+            android:textColor="#30353D"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <ImageButton
         android:id="@+id/btnShareAdd"

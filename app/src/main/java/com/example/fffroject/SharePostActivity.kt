@@ -1,6 +1,5 @@
 package com.example.fffroject
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -9,11 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -22,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.widget.addTextChangedListener
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -32,7 +26,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import java.util.*
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.temporal.ChronoUnit;
 import java.io.File
 import java.text.SimpleDateFormat
 

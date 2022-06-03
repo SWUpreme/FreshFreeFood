@@ -78,12 +78,6 @@ class ShareFragment : Fragment() {
         recyclerviewShare.addItemDecoration(customDecoration)
 
 
-        // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
-        /*
-        btnShareAdd.setOnClickListener {
-            val intent = Intent(activity, SharePostActivity::class.java)
-            startActivity(intent)
-        }*/
 
         // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
         toolbar_sharepost.setOnMenuItemClickListener{
