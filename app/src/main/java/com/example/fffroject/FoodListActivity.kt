@@ -84,14 +84,14 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
 
 
-    fun onDialogBtnClicked(view: View){
-        Log.d(TAG, "FoodListActivity - onDialogBtnClicked() called")
-
-        val myCustomDialog = MyCustomDialog(this, this)
-
-        myCustomDialog.show()
-
-    }
+//    fun onDialogBtnClicked(view: View){
+//        Log.d(TAG, "FoodListActivity - onDialogBtnClicked() called")
+//
+//        val myCustomDialog = MyCustomDialog(this, this)
+//
+//        myCustomDialog.show()
+//
+//    }
 
 
     // 바코드 버튼 클릭
