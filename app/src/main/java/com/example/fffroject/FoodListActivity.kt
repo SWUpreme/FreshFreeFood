@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
+import org.w3c.dom.Text
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
@@ -123,12 +124,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // view와 실제 데이터 연결
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             var viewHolder = (holder as ViewHolder).itemView
-            var foodname: TextView
+            var food_name: TextView
+            var food_count: TextView
 
-            foodname = viewHolder.findViewById(R.id.textFoodName)
+            food_name = viewHolder.findViewById(R.id.textFoodName)
+            food_count = viewHolder.findViewById(R.id.textFoodCount)
 
             // 리사이클러뷰 아이템 정보
-            foodname.text = foodlist!![position].name
+            food_name.text = foodlist!![position].name
+            food_count.text = foodlist!![position].count.toString()
         }
 
         override fun getItemCount(): Int {

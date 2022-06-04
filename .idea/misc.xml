@@ -49,6 +49,9 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/menu/main_top_plus.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/xml/file_paths.xml" value="0.23385416666666667" />
         <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.29177290322124094" />
+        <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.23007246376811594" />
+        <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.55" />
+        <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.23007246376811594" />
       </map>
     </option>
   </component>
