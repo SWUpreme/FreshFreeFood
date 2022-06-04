@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
+import com.example.fffroject.fragment.CustomDiverItemDecoration
 import org.w3c.dom.Text
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
@@ -81,6 +82,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         recyclerview_foodlist = findViewById(R.id.recyclerviewFoodlist)
         recyclerview_foodlist.adapter = RecyclerviewAdapter()
         recyclerview_foodlist.layoutManager = LinearLayoutManager(this)
+        // 구분선 추가
+        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
+        recyclerview_foodlist.addItemDecoration(customDecoration)
     }
 
 
