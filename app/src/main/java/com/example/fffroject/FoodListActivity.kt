@@ -130,13 +130,16 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var viewHolder = (holder as ViewHolder).itemView
             var food_name: TextView
             var food_count: TextView
+            var food_deadline: TextView
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
+            food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
             food_count.text = foodlist!![position].count.toString()
+            food_deadline.text = foodlist!![position].deadline
         }
 
         override fun getItemCount(): Int {
