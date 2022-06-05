@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import com.example.fffroject.fragment.CustomDiverItemDecoration
+import com.google.firebase.firestore.Query
 import org.w3c.dom.Text
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
@@ -153,6 +154,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     fun loadData(){
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
+            ?.orderBy("deadline", Query.Direction.ASCENDING)
             ?.addSnapshotListener { value, error ->
                 foodlist.clear()
                 if (value != null) {
