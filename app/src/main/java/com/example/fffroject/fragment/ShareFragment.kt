@@ -2,14 +2,8 @@ package com.example.fffroject.fragment
 
 import android.content.Intent
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.TransitionDrawable
-import android.media.Image
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +12,13 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fffroject.AuthActivity
 import com.example.fffroject.R
 import com.example.fffroject.SharePostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sharepost.*
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ShareFragment : Fragment() {
     // 파이어스토어
@@ -99,8 +89,7 @@ class ShareFragment : Fragment() {
     inner class ShareViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     // 뷰 어댑터
-    inner class ShareViewAdapter():
-        RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    inner class ShareViewAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         // 항목 개수를 판단
         override fun getItemCount(): Int {
             return postAllList.size
@@ -147,7 +136,11 @@ class ShareFragment : Fragment() {
             listDeadline.text = postAllList!![position].deadline
             listCreatedAt.text = postAllList!![position].createdAt
 
+
         }
+
+
+
     }
 
     // 파이어베이스에서 데이터 불러오는 함수

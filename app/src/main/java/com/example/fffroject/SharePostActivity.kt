@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kotlinx.android.synthetic.main.activity_sharepost.*
 import java.util.*
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter
@@ -97,7 +96,7 @@ class SharePostActivity : AppCompatActivity() {
         // 완료버튼-post db 저장
         toolbar_sharepost.setOnMenuItemClickListener {
             when(it.itemId) {
-                R.id.btnSharepost -> {
+                R.id.btnPostUpload -> {
                     if(checkAllWritten()){
                         // editText -> string
                         var title = binding.title.text.toString()

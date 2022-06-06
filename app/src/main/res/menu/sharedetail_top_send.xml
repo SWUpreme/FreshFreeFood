@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group>
         <item
-            android:id = "@+id/btnPostUpload"
-            android:icon="@drawable/ic_complete"
+            android:id = "@+id/btnGotoMessage"
+            android:icon="@drawable/ic_send"
             android:orderInCategory="1"
             android:title="plus"
             app:showAsAction="always" />
