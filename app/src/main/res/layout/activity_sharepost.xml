@@ -15,6 +15,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/sharepost_top_plus">
@@ -32,7 +33,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <Button
-        android:id="@+id/btnSharepost"
+        android:id="@+id/btnSharepost33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -75,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnSharepost">
+                app:layout_constraintTop_toBottomOf="@+id/btnSharepost33">
 
                 <ImageButton
                     android:id="@+id/btnCamera"

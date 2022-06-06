@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -53,6 +52,7 @@ class SharePostActivity : AppCompatActivity() {
     lateinit var context : EditText
     lateinit var imgFood : ImageView
 
+    // 툴바
     lateinit var toolbar_sharepost: Toolbar
 
 
@@ -74,8 +74,8 @@ class SharePostActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // 툴바 뒤로가기 버튼 활성화
-        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
-        setSupportActionBar(toolbar_sharepost)
+//        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
+//        setSupportActionBar(toolbar_sharepost)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)      // 뒤로가기 버튼 default로 만들기
 //        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_x_rec)
 //        supportActionBar?.setDisplayShowTitleEnabled(false)    // 기본 타이틀 숨기기
@@ -91,25 +91,34 @@ class SharePostActivity : AppCompatActivity() {
         // 파이어스토어 인스턴스 초기화
         db = FirebaseFirestore.getInstance()
 
+        // 상단 툴바 사용
+        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
+
         // 완료버튼-post db 저장
-        binding.btnSharepost.setOnClickListener(View.OnClickListener {
-            if(checkAllWritten()){
-                // editText -> string
-                var title = binding.title.text.toString()
-                var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
-                var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
-                var name = binding.name.text.toString()
-                var region = binding.region.text.toString()
-                var location = binding.location.text.toString()
-                var context = binding.context.text.toString()
-                // db 저장
-                addPostDB(title, deadline, purchasedAt, name, region, location, context)
-            } else {
-                //양식 작성 안되어 있을 시
-                val toast = Toast.makeText(this, "양식을 모두 작성해주세요", Toast.LENGTH_SHORT)
-                toast.show()
+        toolbar_sharepost.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.btnSharepost -> {
+                    if(checkAllWritten()){
+                        // editText -> string
+                        var title = binding.title.text.toString()
+                        var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
+                        var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
+                        var name = binding.name.text.toString()
+                        var region = binding.region.text.toString()
+                        var location = binding.location.text.toString()
+                        var context = binding.context.text.toString()
+                        // db 저장
+                        addPostDB(title, deadline, purchasedAt, name, region, location, context)
+                    } else {
+                        //양식 작성 안되어 있을 시
+                        val toast = Toast.makeText(this, "양식을 모두 작성해주세요", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                    true
+                }
+                else -> false
             }
-        })
+        }
 
         // 이미지 삽입 버튼
         binding.btnCamera.setOnClickListener{
