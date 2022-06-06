@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 //import android.widget.Toolbar
@@ -77,6 +78,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
         }
 
+
         // 파이어베이스에서 식품 리스트 값 불러오기
         loadData()
 
@@ -132,6 +134,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_name: TextView
             var food_count: TextView
             var food_deadline: TextView
+            var btn_eat: Button
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
@@ -168,4 +171,16 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 recyclerview_foodlist.adapter?.notifyDataSetChanged()
             }
     }
+
+//    // 먹은 식품 삭제
+//    fun deleteFood(index: String) {
+//        var findex = index
+//        firestore?.collection("fridge")?.document(index.toString())
+//            ?.collection("food")?.document(findex)
+//            ?.delete()
+//            ?.addOnSuccessListener {
+//                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//            }
+//            ?.addOnFailureListener {  }
+//    }
 }
