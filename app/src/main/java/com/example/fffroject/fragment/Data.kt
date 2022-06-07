@@ -36,3 +36,9 @@ data class food(
     var count : String? = null
 
 )
+
+data class Chat(
+    val nickname: String,
+    val contents: String,
+
+)

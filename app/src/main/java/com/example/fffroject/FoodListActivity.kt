@@ -106,6 +106,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     override fun onBarcodeBtnClicked() {
         Log.d(TAG, "FoodListActivity - onBarcodeBtnClicked() called")
         val intent = Intent(applicationContext, BarCodeActivity::class.java)
+        intent.putExtra("index", index)
         startActivity(intent)
     }
 
