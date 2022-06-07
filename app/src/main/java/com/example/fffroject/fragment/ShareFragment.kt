@@ -14,7 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fffroject.FoodListActivity
 import com.example.fffroject.R
+import com.example.fffroject.ShareDetailActivity
 import com.example.fffroject.SharePostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -32,7 +34,7 @@ class ShareFragment : Fragment() {
     lateinit var toolbar_sharepost: Toolbar
 
 
-    // Data에 있는 PostAll이랑 해줘야해
+    // Data에 있는 PostAll
     lateinit var postAllList: ArrayList<PostAll>
 
     override fun onCreateView(
@@ -55,7 +57,7 @@ class ShareFragment : Fragment() {
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)
         toolbar_sharepost = view.findViewById(R.id.toolbShare)
 
-        // 파이어베이스에서 냉장고 값 불러오기
+        // 파이어베이스에서 게시글 불러오기
         loadData()
 
         // 레이아웃 매니저 등록
@@ -66,8 +68,6 @@ class ShareFragment : Fragment() {
         //recyclerviewShare.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
         recyclerviewShare.addItemDecoration(customDecoration)
-
-
 
         // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
         toolbar_sharepost.setOnMenuItemClickListener{
@@ -114,9 +114,21 @@ class ShareFragment : Fragment() {
             var listDeadline: TextView = viewHolder.findViewById(R.id.listDeadline)
             var listCreatedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
 
+            // 뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
+            listTitle.text = postAllList!![position].title
+            listRegion.text = postAllList!![position].region
+            listLocation.text = postAllList!![position].location
+            listName.text = postAllList!![position].name
+            listDeadline.text = postAllList!![position].deadline
+            listCreatedAt.text = postAllList!![position].createdAt
+
+            // 출력 외 게시글 요소
+            var listFlag = postAllList!![position].flag
+            var listIndex = postAllList!![position].index
+            var listWriter = postAllList!![position].writer
+
             // 냉장고에서 넘기기 여부 확인 후 색상 변경
-            var flag = postAllList!![position].flag
-            if(flag==true){
+            if(listFlag==true){
                 listRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
                 listLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
                 listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.white))
@@ -128,14 +140,14 @@ class ShareFragment : Fragment() {
                 listLocation.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
             }
 
-            // 뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
-            listTitle.text = postAllList!![position].title
-            listRegion.text = postAllList!![position].region
-            listLocation.text = postAllList!![position].location
-            listName.text = postAllList!![position].name
-            listDeadline.text = postAllList!![position].deadline
-            listCreatedAt.text = postAllList!![position].createdAt
-
+            // 객체 클릭 이벤트
+            viewHolder.setOnClickListener{
+                val intent = Intent(viewHolder.context, ShareDetailActivity::class.java)
+                intent.putExtra("detailIndex", listIndex.toString())
+                intent.putExtra("detailFlag", listFlag.toString())
+                intent.putExtra("detailWriter", listWriter.toString())
+                ContextCompat.startActivity(viewHolder.context, intent, null)
+            }
 
         }
 
@@ -144,8 +156,8 @@ class ShareFragment : Fragment() {
     }
 
     // 파이어베이스에서 데이터 불러오는 함수
-    fun loadData() {
-        // 냉장고 리스트 불러오기
+    private fun loadData() {
+        // 게시글 리스트 불러오기
         if (user != null) {
             db?.collection("post")
                 ?.addSnapshotListener { value, error ->

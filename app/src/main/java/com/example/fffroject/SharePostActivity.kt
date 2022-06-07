@@ -105,9 +105,9 @@ class SharePostActivity : AppCompatActivity() {
                         var name = binding.name.text.toString()
                         var region = binding.region.text.toString()
                         var location = binding.location.text.toString()
-                        var context = binding.context.text.toString()
+                        var content = binding.context.text.toString()
                         // db 저장
-                        addPostDB(title, deadline, purchasedAt, name, region, location, context)
+                        addPostDB(title, deadline, purchasedAt, name, region, location, content)
                     } else {
                         //양식 작성 안되어 있을 시
                         val toast = Toast.makeText(this, "양식을 모두 작성해주세요", Toast.LENGTH_SHORT)
@@ -235,7 +235,7 @@ class SharePostActivity : AppCompatActivity() {
 
     // 데이터 저장
     private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
-    location: String, context: String){
+    location: String, content: String){
         //유저가 존재한다면
         if (user != null){
             postId = UUID.randomUUID().toString()
@@ -248,13 +248,14 @@ class SharePostActivity : AppCompatActivity() {
                 ?.set(
                     hashMapOf(
                         "index" to postId,
+                        "writer" to user?.uid,
                         "title" to title,
                         "name" to name,
                         "deadline" to deadline,
                         "purchasedAt" to purchasedAt,
                         "region" to region,
                         "location" to location,
-                        "context" to context,
+                        "content" to content,
                         "createdAt" to createdAt,
                         "flag" to false,
                         "done" to false
