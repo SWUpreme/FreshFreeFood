@@ -4,27 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.fffroject.fragment.FoodList
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_barcode.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
-import org.jsoup.Jsoup
-import org.jsoup.select.Elements
-import java.util.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
-
-
+import org.jsoup.Jsoup
+import org.jsoup.select.Elements
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class BarCodeActivity : AppCompatActivity() {
@@ -32,7 +30,7 @@ class BarCodeActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var user: FirebaseUser? = null
-    lateinit var food: ArrayList<food>
+    var fridgeindex : String? = null
 
     lateinit var name: TextView
     lateinit var deadline: EditText
@@ -41,20 +39,25 @@ class BarCodeActivity : AppCompatActivity() {
     lateinit var upload_btn: Button
     lateinit var scan_btn: Button
 
+    lateinit var foodlist: ArrayList<FoodList>
+    lateinit var foodindex: String
+
+
+
     //qr code scanner object
     //private var integrator: IntentIntegrator? = null
     val TAG: String = "로그"
-    val errMsg: String = "유통물류 DB에 등록되지 않은 코드입니다."
-    private val tvResult: TextView? = null
+    val errMsg: String = "등록되지 않은 코드입니다."
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_barcode)
 
-        food = arrayListOf<food>()
+
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         firestore = FirebaseFirestore.getInstance()
-
+        foodlist = arrayListOf<FoodList>()
 
         name = findViewById(R.id.name)
         deadline = findViewById(R.id.deadline)
@@ -62,9 +65,12 @@ class BarCodeActivity : AppCompatActivity() {
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.upload_btn)
         scan_btn = findViewById(R.id.scan_btn)
+        fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 
         //바코드 스캔버튼
         scan_btn.setOnClickListener(View.OnClickListener {
+            name.text = ""
+            barcodode.text = ""
             val integrator = IntentIntegrator(this@BarCodeActivity)
             integrator.setBeepEnabled(false)
             integrator.setOrientationLocked(false)
@@ -74,34 +80,33 @@ class BarCodeActivity : AppCompatActivity() {
         // 데이터 추가
         upload_btn.setOnClickListener {
 
-            val food = hashMapOf(
-                "name" to name.text.toString(),
-                "deadline" to deadline.text.toString(),
-                "purchasedAt" to purchasedAt.text.toString(),
-                "count" to count.text.toString(),
-            )
-
-            firestore!!.collection("food")
-                .add(food)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(
-                        "DatabaseTest",
-                        documentReference.id
+            if (user != null) {
+                foodindex = UUID.randomUUID().toString()
+                firestore?.collection("fridge")?.document("$fridgeindex")
+                    ?.collection("food")?.document("$foodindex")
+                    ?.set(
+                        hashMapOf(
+                            "index" to foodindex,
+                            "name" to name.text.toString(),
+                            "deadline" to deadline.text.toString(),
+                            "purchaseAt" to purchasedAt.text.toString(),
+                            "count" to count.text.toString().toInt()
+                        )
                     )
-                }
-                .addOnFailureListener { exception -> Log.d("DatabaseTest", exception.message!!) }
+                    ?.addOnSuccessListener { finish() }
+                    ?.addOnFailureListener {  }
+            }
 
 
             Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
+
     // 상품정보 크롤링
     private fun setProductInfo(code: String) {
         Log.d(TAG, "getProductInfo: called")
         suspend fun getResultFromApi(): String {
-            // do something
-//            val code = txtProductName.text.toString()
             val url = "http://www.koreannet.or.kr/home/hpisSrchGtin.gs1?gtin=${code}"
             val doc = Jsoup.connect(url).timeout(1000 * 10).get()  //타임아웃 10초
             val contentData : Elements = doc.select("div.productTit")
@@ -109,13 +114,10 @@ class BarCodeActivity : AppCompatActivity() {
             var rtnValue : String = ""
             if ( productName.toString().trim() !="" ) {
                 rtnValue = productName.toString().trim()
-//                IsFindProduct = true
             }
             else {
                 rtnValue = errMsg //"유통물류 DB에 등록되지 않은 코드입니다."
-//                IsFindProduct = false
             }
-//            Log.d(TAG, "getProductInfo: called -IsFindProduct = $IsFindProduct")
             return rtnValue
         }
 
@@ -123,13 +125,17 @@ class BarCodeActivity : AppCompatActivity() {
             val resultStr = withTimeoutOrNull(10000) {
                 getResultFromApi()
             }
+
             if (resultStr != null) {
-                withContext(Dispatchers.Main) {
+                withContext(Main) {
                     name.text = resultStr
                 }
             }
         }
     }
+
+
+
     // QR/바코드 스캔 결과
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d(TAG, "onActivityResult: called")
@@ -137,8 +143,12 @@ class BarCodeActivity : AppCompatActivity() {
         if (result != null) {
             if (result.contents != null) {
                 Log.d(TAG, "onActivityResult: result - ${result.contents}")
-                tvResult?.text = result.contents
-                    setProductInfo(result.contents)
+                barcodode.text = result.contents
+                    if (result.contents.startsWith("97")){
+                    } else {
+                        // 상품정보 크롤링 호출
+                        setProductInfo(result.contents)
+                    }
 
             } else {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
@@ -149,5 +159,8 @@ class BarCodeActivity : AppCompatActivity() {
 
     }
 
-}
+    override fun onResume() {
+        super.onResume()
+    }
 
+}

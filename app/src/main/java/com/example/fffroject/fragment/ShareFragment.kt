@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sharepost.*
-import kotlinx.coroutines.NonDisposableHandle.parent
+
 
 class ShareFragment : Fragment() {
     // 파이어스토어
