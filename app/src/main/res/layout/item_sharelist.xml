@@ -11,8 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:background="#00FFFFFF"
         android:backgroundTint="#00FFFFFF"
         android:foregroundTint="#00FFFFFF"
@@ -25,8 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="17dp"
             android:background="#00FFFFFF"
             android:backgroundTint="#00FFFFFF"
             android:gravity="center_vertical"
@@ -52,8 +52,7 @@
                         android:layout_height="match_parent"
                         android:text="제목입니당"
                         android:textColor="#30353D"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/listCreatedAt"
@@ -62,7 +61,7 @@
                         android:text="05.30"
                         android:textAlignment="viewEnd"
                         android:textColor="#95979B"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
 
@@ -72,13 +71,12 @@
                     android:layout_height="wrap_content"
                     android:text="사과"
                     android:textColor="#B4B4B4"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="7dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -87,8 +85,7 @@
                         android:layout_height="wrap_content"
                         android:text="2022.05.30"
                         android:textColor="#B4B4B4"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/txtNotify"
@@ -96,8 +93,7 @@
                         android:layout_height="wrap_content"
                         android:text=" 까지"
                         android:textColor="#B4B4B4"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,7 +113,7 @@
                         android:paddingBottom="3dp"
                         android:text="공릉동"
                         android:textColor="#fff"
-                        android:textSize="11sp" />
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/listLocation"
@@ -130,7 +126,7 @@
                         android:paddingBottom="3dp"
                         android:text="태릉입구역"
                         android:textColor="#fff"
-                        android:textSize="11sp" />
+                        android:textSize="10sp" />
 
 
                 </LinearLayout>

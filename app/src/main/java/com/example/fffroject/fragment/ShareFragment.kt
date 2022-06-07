@@ -21,6 +21,7 @@ import com.example.fffroject.SharePostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class ShareFragment : Fragment() {
     // 파이어스토어
@@ -66,7 +67,7 @@ class ShareFragment : Fragment() {
         recyclerviewShare.adapter = ShareViewAdapter()
         // 리사이클러 뷰 구분선_커스텀 diver
         //recyclerviewShare.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
+        val customDecoration = CustomDiverItemDecoration(4f, 10f, resources.getColor(R.color.diver_gray))
         recyclerviewShare.addItemDecoration(customDecoration)
 
         // 나눔 게시글 추가(게시글 추가 액티비티로 이동)
@@ -160,6 +161,7 @@ class ShareFragment : Fragment() {
         // 게시글 리스트 불러오기
         if (user != null) {
             db?.collection("post")
+                ?.orderBy("dateTime", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     postAllList.clear()
                     if (value != null) {

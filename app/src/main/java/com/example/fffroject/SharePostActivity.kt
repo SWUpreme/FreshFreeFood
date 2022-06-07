@@ -19,15 +19,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
+import com.example.fffroject.fragment.ShareFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.threetenabp.AndroidThreeTen
 import java.util.*
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.DateTimeFormatter.*
 import java.io.File
 import java.text.SimpleDateFormat
 
@@ -108,6 +112,8 @@ class SharePostActivity : AppCompatActivity() {
                         var content = binding.context.text.toString()
                         // db 저장
                         addPostDB(title, deadline, purchasedAt, name, region, location, content)
+                        // 전체 게시글로 되돌아가기
+                        finish()
                     } else {
                         //양식 작성 안되어 있을 시
                         val toast = Toast.makeText(this, "양식을 모두 작성해주세요", Toast.LENGTH_SHORT)
@@ -241,8 +247,16 @@ class SharePostActivity : AppCompatActivity() {
             postId = UUID.randomUUID().toString()
             //게시글 등록 날짜
             nowdate = LocalDate.now()
-            date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+            date = nowdate.format(ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
+
+//            nowDateTime = LocalDateTime.now()
+//            val formatter = DateTimeFormatter.ISO_DATE
+//            dateTime = nowDateTime.format(formatter)
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
+            val dateTime = timeformatter.format(nowTime)
+
             //db 전송
             db?.collection("post")?.document("$postId")
                 ?.set(
@@ -257,6 +271,7 @@ class SharePostActivity : AppCompatActivity() {
                         "location" to location,
                         "content" to content,
                         "createdAt" to createdAt,
+                        "dateTime" to dateTime,
                         "flag" to false,
                         "done" to false
                     )

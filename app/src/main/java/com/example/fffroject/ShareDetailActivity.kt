@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.example.fffroject.databinding.ActivitySharedetailBinding
 import com.example.fffroject.fragment.FoodList
 import com.example.fffroject.fragment.PostAll
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_sharedetail.*
 import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.fragment_share.*
+import kotlinx.android.synthetic.main.item_sharelist.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -83,6 +85,19 @@ class ShareDetailActivity: AppCompatActivity()  {
         detailIndex = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
         detailWriter = intent.getStringExtra("detailWriter")!!    // 게시글 냉장고 넘김 여부
         detailFlag = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
+
+        // 냉장고에서 넘기기 여부 확인 후 색상 변경
+        if(detailFlag=="true"){
+            binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
+            binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
+            binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.detailLocation.setTextColor(ContextCompat.getColor(this, R.color.white))
+        }else{
+            binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_white)
+            binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_white)
+            binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.blueblack))
+            binding.detailLocation.setTextColor(ContextCompat.getColor(this, R.color.blueblack))
+        }
 
         // 세부 게시글 내용 불러오기
         loadData()
