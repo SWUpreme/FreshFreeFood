@@ -25,7 +25,9 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import com.example.fffroject.fragment.CustomDiverItemDecoration
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.toObject
 import org.w3c.dom.Text
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
@@ -140,11 +142,19 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
             food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
+            btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
             food_count.text = foodlist!![position].count.toString()
             food_deadline.text = foodlist!![position].deadline
+            var food_index = foodlist!![position].index.toString()
+
+            // 먹었음 버튼 눌렀을 경우
+            btn_eat.setOnClickListener {
+                eatDone(food_index)
+            }
+
         }
 
         override fun getItemCount(): Int {
@@ -155,7 +165,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
 
     // 냉장고별 식품 리스트 불러오기
-    fun loadData(){
+    fun loadData() {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
             ?.orderBy("deadline", Query.Direction.ASCENDING)
@@ -163,15 +173,46 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 foodlist.clear()
                 if (value != null) {
                     for (snapshot in value.documents) {
+                        var done = firestore?.collection("fridge")?.document(index.toString())
+                            ?.collection("food")?.document("done")?.get().toString().toBoolean()
+                        //Toast.makeText(this, done.toString(), Toast.LENGTH_SHORT).show()
+//                        firestore?.collection("fridge")?.document(index.toString())
+//                            ?.collection("food")
+//                            ?.whereEqualTo("done", "false")
+//                            ?.get()
+//                            ?.addOnSuccessListener {
+//                                var item = snapshot.toObject(FoodList::class.java)
+//                                if (item != null) {
+//                                    foodlist.add(item)
+//                                }
                         var item = snapshot.toObject(FoodList::class.java)
-                        if (item != null) {
+                        if (item != null && done == false) {
                             foodlist.add(item)
-                        }
+//                        }
+                            }
                     }
+                    recyclerview_foodlist.adapter?.notifyDataSetChanged()
                 }
-                recyclerview_foodlist.adapter?.notifyDataSetChanged()
             }
+
     }
+
+    fun eatDone(foodindex: String) {
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)?.update("done", true)
+        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+    }
+
+//    fun eatDone(foodindex: String){
+//        firestore?.collection("fridge")?.document(index.toString())
+//            ?.collection("food")?.document(foodindex)?.update("done", true)
+//        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+//    }
+
+//    fun search(){
+//        var done = firestore?.collection("fridge")?.document(index.toString())
+//            ?.collection("food")?.document("done")?.get()
+//    }
 
 //    // 먹은 식품 삭제
 //    fun deleteFood(index: String) {
