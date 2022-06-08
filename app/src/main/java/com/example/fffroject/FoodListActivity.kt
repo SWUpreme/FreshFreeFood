@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import com.example.fffroject.fragment.CustomDiverItemDecoration
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import org.w3c.dom.Text

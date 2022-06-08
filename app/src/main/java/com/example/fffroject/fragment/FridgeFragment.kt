@@ -70,13 +70,13 @@ class FridgeFragment : Fragment() {
         recyclerview_fridge.layoutManager = LinearLayoutManager(activity)
 
         //binding = FragmentFridgeBinding.inflate(layoutInflater)
-        btn_addFridge = view.findViewById(R.id.btnFridgeAdd)
+        //btn_addFridge = view.findViewById(R.id.btnFridgeAdd)
 
         // 냉장고 추가
-        btn_addFridge.setOnClickListener {
-            Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
-            addFridge()
-        }
+//        btn_addFridge.setOnClickListener {
+//            Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
+//            addFridge()
+//        }
 
 //        toolbar = view.findViewById(R.id.btnPlus)
 //        toolbar.inflateMenu(R.menu.main_top_plus)
@@ -93,7 +93,7 @@ class FridgeFragment : Fragment() {
         // 툴바
         toolbar_fridge = view.findViewById(R.id.toolbShare)    // 상단바
         //toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
-        //toolbar_fridge.setTitle(user!!.uid)
+        toolbar_fridge.setTitle("냉장고 페이지")
 
         // 상단바 메뉴 클릭시
         toolbar_fridge.setOnMenuItemClickListener {
