@@ -2,17 +2,15 @@ package com.example.fffroject.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.fffroject.AuthActivity
-import com.example.fffroject.FFFroject
-import com.example.fffroject.R
+import com.example.fffroject.*
 import com.example.fffroject.databinding.FragmentMypageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -27,7 +25,7 @@ class MypageFragment : Fragment() {
     var user : FirebaseUser? = null
 
     lateinit var btn_logout: Button
-
+    lateinit var detailbtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +38,7 @@ class MypageFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         binding = FragmentMypageBinding.inflate(layoutInflater)
         btn_logout = view.findViewById(R.id.btnLogout)
+        detailbtn = view.findViewById(R.id.detailbtn)
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {
@@ -51,6 +50,12 @@ class MypageFragment : Fragment() {
             // startActivity(Intent(activity, AuthActivity::class.java))
         }
 
+
+        // 채팅 버튼 클릭
+        detailbtn.setOnClickListener{
+            val intent = Intent(activity, Main2Activity::class.java)
+            startActivity(intent)
+        }
 
 
 

@@ -21,6 +21,8 @@ import com.example.fffroject.SharePostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_sharepost.*
+
 import com.google.firebase.firestore.Query
 
 class ShareFragment : Fragment() {
@@ -151,9 +153,6 @@ class ShareFragment : Fragment() {
             }
 
         }
-
-
-
     }
 
     // 파이어베이스에서 데이터 불러오는 함수
