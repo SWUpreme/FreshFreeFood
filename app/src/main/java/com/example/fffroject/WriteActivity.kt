@@ -30,6 +30,7 @@ class WriteActivity : AppCompatActivity() {
     lateinit var foodindex: String
 
     var fridgeindex : String? = null
+    var done = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +73,8 @@ class WriteActivity : AppCompatActivity() {
                             "name" to name.text.toString(),
                             "deadline" to deadline.text.toString(),
                             "purchaseAt" to purchasedAt.text.toString(),
-                            "count" to count.text.toString().toInt()
+                            "count" to count.text.toString().toInt(),
+                            "done" to done
                         )
                     )
                     ?.addOnSuccessListener { finish() }
