@@ -21,8 +21,12 @@ class WriteActivity : AppCompatActivity() {
     lateinit var food: ArrayList<food>
 
     lateinit var name: EditText
-    lateinit var deadline: EditText
-    lateinit var purchasedAt: EditText
+    lateinit var deadline_year:EditText
+    lateinit var deadline_month: EditText
+    lateinit var deadline_day: EditText
+    lateinit var purchasedAt_year: EditText
+    lateinit var purchasedAt_month: EditText
+    lateinit var purchasedAt_day: EditText
     lateinit var count: EditText
     lateinit var upload_btn: Button
 
@@ -45,8 +49,12 @@ class WriteActivity : AppCompatActivity() {
 
 
         name = findViewById(R.id.name)
-        deadline = findViewById(R.id.deadline)
-        purchasedAt = findViewById(R.id.purchasedAt)
+        deadline_year = findViewById(R.id.fdeadlineYear)
+        deadline_month = findViewById(R.id.fdeadlineMonth)
+        deadline_day = findViewById(R.id.fdeadlineDate)
+        purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
+        purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
+        purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.upload_btn)
 
@@ -64,6 +72,8 @@ class WriteActivity : AppCompatActivity() {
 
             // 민영 추가 파이어스토어 코드
             if (user != null) {
+                var food_deadline = deadline_year.text.toString()+"."+deadline_month.text.toString()+"."+deadline_day.text.toString()
+                var purchasedAt = purchasedAt_year.text.toString()+"."+ purchasedAt_month.text.toString()+"."+ purchasedAt_day.text.toString()
                 foodindex = UUID.randomUUID().toString()
                 firestore?.collection("fridge")?.document("$fridgeindex")
                     ?.collection("food")?.document("$foodindex")
@@ -71,8 +81,8 @@ class WriteActivity : AppCompatActivity() {
                         hashMapOf(
                             "index" to foodindex,
                             "name" to name.text.toString(),
-                            "deadline" to deadline.text.toString(),
-                            "purchaseAt" to purchasedAt.text.toString(),
+                            "deadline" to food_deadline,
+                            "purchaseAt" to purchasedAt,
                             "count" to count.text.toString().toInt(),
                             "done" to done
                         )
