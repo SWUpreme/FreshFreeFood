@@ -2,6 +2,7 @@ package com.example.fffroject
 
 import android.app.ProgressDialog.show
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 //import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,9 +27,16 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import com.example.fffroject.fragment.CustomDiverItemDecoration
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
+import org.threeten.bp.format.DateTimeFormatter
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter.ofPattern
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
@@ -137,17 +146,20 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_count: TextView
             var food_deadline: TextView
             var btn_eat: Button
+            var food_dday: TextView
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
             food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
             btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
+            food_dday = viewHolder.findViewById(R.id.textDday)
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
             food_count.text = foodlist!![position].count.toString()
             food_deadline.text = foodlist!![position].deadline
             var food_index = foodlist!![position].index.toString()
+            //food_dday.text = foodlist!![position].dday.toString()
 
             // 먹었음 버튼 눌렀을 경우
             btn_eat.setOnClickListener {
@@ -197,9 +209,22 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     }
 
     fun eatDone(foodindex: String) {
-        firestore?.collection("fridge")?.document(index.toString())
-            ?.collection("food")?.document(foodindex)?.update("done", true)
+        firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
         recyclerview_foodlist.adapter?.notifyDataSetChanged()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun dDayCount(foodindex: String) {
+        var enddate = firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document("deadline")?.get().toString()
+        var nowdate = LocalDate.now()
+        var startDate = nowdate.format(ofPattern("yyyyMMdd"))
+        var endDate = enddate.format(ofPattern("yyyyMMdd"))
+        var d_day = (startDate.toInt() - endDate.toInt()) / (60 * 60 * 24 * 1000)
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)?.update("dday", d_day)
+        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+
     }
 
 //    fun eatDone(foodindex: String){
