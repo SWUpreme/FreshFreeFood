@@ -141,6 +141,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
         // view와 실제 데이터 연결
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             var viewHolder = (holder as ViewHolder).itemView
             var food_name: TextView
@@ -155,12 +156,29 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
             food_dday = viewHolder.findViewById(R.id.textDday)
 
+
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
             food_count.text = foodlist!![position].count.toString()
             food_deadline.text = foodlist!![position].deadline
             var food_index = foodlist!![position].index.toString()
-            //food_dday.text = foodlist!![position].dday.toString()
+            var deadline = foodlist!![position].deadline
+
+            var formatter = SimpleDateFormat("yyyy.MM.dd")
+            var nowdate = LocalDate.now().format(ofPattern("yyyy.MM.dd"))
+            var date = formatter.parse(deadline).time
+            var day = formatter.parse(nowdate).time
+            var d_day = (date - day)/ (60 * 60 * 24 * 1000)
+            if (d_day.toInt() > 0){
+                food_dday.text = "D - " + d_day.toString()
+            }
+            else if (d_day.toInt() == 0){
+                food_dday.text = "D - Day"
+            }
+            else {
+                food_dday.text = "D + " + (d_day.toInt()*(-1)).toString()
+            }
+
 
             // 먹었음 버튼 눌렀을 경우
             btn_eat.setOnClickListener {
@@ -216,44 +234,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
             ?.delete()
-            ?.addOnSuccessListener { Toast.makeText(this, "음식을 다 먹었어요!", Toast.LENGTH_SHORT).show() }
+            ?.addOnSuccessListener { Toast.makeText(this, "환경 기여도가 상승했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun dDayCount(foodindex: String) {
-        var enddate = firestore?.collection("fridge")?.document(index.toString())
-            ?.collection("food")?.document("deadline")?.get().toString()
-        var nowdate = LocalDate.now()
-        var startDate = nowdate.format(ofPattern("yyyyMMdd"))
-        var endDate = enddate.format(ofPattern("yyyyMMdd"))
-        var d_day = (startDate.toInt() - endDate.toInt()) / (60 * 60 * 24 * 1000)
-        firestore?.collection("fridge")?.document(index.toString())
-            ?.collection("food")?.document(foodindex)?.update("dday", d_day)
-        recyclerview_foodlist.adapter?.notifyDataSetChanged()
-
-    }
-
-//    fun eatDone(foodindex: String){
-//        firestore?.collection("fridge")?.document(index.toString())
-//            ?.collection("food")?.document(foodindex)?.update("done", true)
-//        recyclerview_foodlist.adapter?.notifyDataSetChanged()
-//    }
-
-//    fun search(){
-//        var done = firestore?.collection("fridge")?.document(index.toString())
-//            ?.collection("food")?.document("done")?.get()
-//    }
-
-//    // 먹은 식품 삭제
-//    fun deleteFood(index: String) {
-//        var findex = index
-//        firestore?.collection("fridge")?.document(index.toString())
-//            ?.collection("food")?.document(findex)
-//            ?.delete()
-//            ?.addOnSuccessListener {
-//                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//            ?.addOnFailureListener {  }
-//    }
 }
