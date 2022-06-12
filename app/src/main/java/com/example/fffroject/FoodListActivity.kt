@@ -1,5 +1,6 @@
 package com.example.fffroject
 
+import android.app.AlertDialog
 import android.app.ProgressDialog.show
 import android.content.Intent
 import android.os.Build
@@ -208,9 +209,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
+    // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
         firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
-        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+        //recyclerview_foodlist.adapter?.notifyDataSetChanged()
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)
+            ?.delete()
+            ?.addOnSuccessListener { Toast.makeText(this, "음식을 다 먹었어요!", Toast.LENGTH_SHORT).show() }
+            ?.addOnFailureListener { }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
