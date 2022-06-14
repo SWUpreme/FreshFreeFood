@@ -27,11 +27,12 @@
 
             <TextView
                 android:id="@+id/textFoodName"
-                android:layout_width="240dp"
+                android:layout_width="180dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:text="TextView"
+                android:textAlignment="textStart"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@
 
             <TextView
                 android:id="@+id/textFoodCount"
-                android:layout_width="40dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="27dp"
@@ -51,7 +52,7 @@
 
             <TextView
                 android:id="@+id/textFoodDeadline"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
@@ -73,13 +74,13 @@
 
             <TextView
                 android:id="@+id/textDday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="29dp"
-                android:layout_marginEnd="40dp"
+                android:layout_width="70dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
                 android:text="TextView"
-                android:textAlignment="textStart"
-                android:textSize="16sp"
+                android:textAlignment="textEnd"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFoodName" />

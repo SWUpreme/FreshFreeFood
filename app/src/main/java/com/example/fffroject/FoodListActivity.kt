@@ -3,6 +3,7 @@ package com.example.fffroject
 import android.app.AlertDialog
 import android.app.ProgressDialog.show
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -159,8 +160,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
-            food_count.text = foodlist!![position].count.toString()
-            food_deadline.text = foodlist!![position].deadline
+            food_count.text = foodlist!![position].count.toString() + " 개"
+            food_deadline.text = foodlist!![position].deadline + " 까지"
             var food_index = foodlist!![position].index.toString()
             var deadline = foodlist!![position].deadline
 
@@ -171,12 +172,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var d_day = (date - day)/ (60 * 60 * 24 * 1000)
             if (d_day.toInt() > 0){
                 food_dday.text = "D - " + d_day.toString()
+                food_dday.setTextColor(Color.parseColor("#71ABFF"))
             }
             else if (d_day.toInt() == 0){
                 food_dday.text = "D - Day"
+                food_dday.setTextColor(Color.parseColor("#FEC10A"))
             }
             else {
                 food_dday.text = "D + " + (d_day.toInt()*(-1)).toString()
+                food_dday.setTextColor(Color.parseColor("#ED6C3C"))
             }
 
 
