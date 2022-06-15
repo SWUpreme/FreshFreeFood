@@ -62,6 +62,7 @@
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.5516169230143229" />
         <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.23007246376811594" />
       </map>
     </option>
