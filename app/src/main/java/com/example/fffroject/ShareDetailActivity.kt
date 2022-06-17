@@ -1,5 +1,6 @@
 package com.example.fffroject
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,6 +16,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_sharedetail.*
 import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.fragment_share.*
@@ -32,6 +35,7 @@ class ShareDetailActivity: AppCompatActivity()  {
     var auth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
     var user: FirebaseUser? = null
+    var storage: FirebaseStorage? = null
 
     // 바인딩 객체
     lateinit var binding: ActivitySharedetailBinding
@@ -66,6 +70,8 @@ class ShareDetailActivity: AppCompatActivity()  {
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         db = FirebaseFirestore.getInstance()
+        // 파이어스토리지 인스턴스 초기화
+        storage = FirebaseStorage.getInstance()
         // 상단 툴바 사용
         toolbar_sharedetail = findViewById(R.id.toolbSharedetail)
         // postDetail 초기화
@@ -101,9 +107,6 @@ class ShareDetailActivity: AppCompatActivity()  {
 
         // 세부 게시글 내용 불러오기
         loadData()
-
-
-
     }
 
     // 세부 게시글 내용 불러오기
@@ -124,6 +127,7 @@ class ShareDetailActivity: AppCompatActivity()  {
                     binding.detailPurchasedAt.text = item?.purchasedAt!!
                     binding.detailContent.text = item?.content!!
 
+                    downloadImage(detailIndex)
                 }
                 ?.addOnFailureListener {
                     val toast = Toast.makeText(this, "게시글 가져오기 실패", Toast.LENGTH_SHORT)
@@ -133,4 +137,20 @@ class ShareDetailActivity: AppCompatActivity()  {
         }
 
     }
+
+    private fun downloadImage(imgId: String){
+        // 스토리지를 참조하는 StorageReference 생성
+        val storageRef: StorageReference? = storage?.reference
+        // 실제 업로드하는 파일을 참조하는 StorageReference 생성
+        val imgRef: StorageReference? = storageRef?.child("images/${imgId}.jpg")
+        val ONE_MEGABYTE: Long = 1024*1024
+        imgRef?.getBytes(ONE_MEGABYTE)
+            ?.addOnSuccessListener {
+            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+            binding.detailimageView.setImageBitmap(bitmap)
+        }?.addOnFailureListener{
+            Log.d("download", "fail")
+        }
+    }
+
 }

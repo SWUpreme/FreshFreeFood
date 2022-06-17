@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".FFFroject"
@@ -15,7 +16,8 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="false"
         android:theme="@style/Theme.FFFroject"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".fragment.EnterFragment"
             android:exported="false"

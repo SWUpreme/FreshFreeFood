@@ -1,6 +1,7 @@
 package com.example.fffroject
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -26,12 +27,17 @@ import com.example.fffroject.fragment.ShareFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.jakewharton.threetenabp.AndroidThreeTen
 import java.util.*
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatter.*
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 
@@ -40,6 +46,9 @@ class SharePostActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
     var user: FirebaseUser? = null
+    var storage: FirebaseStorage? = null
+
+    lateinit var bitmap: Bitmap
 
     // 바인딩 객체
     lateinit var binding: ActivitySharepostBinding
@@ -93,6 +102,8 @@ class SharePostActivity : AppCompatActivity() {
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         db = FirebaseFirestore.getInstance()
+        // 파이어스토리지 인스턴스 초기화
+        storage = FirebaseStorage.getInstance()
 
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
@@ -130,6 +141,43 @@ class SharePostActivity : AppCompatActivity() {
             showDialogAddimage()
         }
 
+    }
+
+    // 스토리지에 이미지 업로드
+    private fun uploadImage(postId: String){
+
+        // 스토리지를 참조하는 StorageReference 생성
+        val storageRef: StorageReference? = storage?.reference
+        // 실제 업로드하는 파일을 참조하는 StorageReference 생성
+        val imgRef: StorageReference? = storageRef?.child("images/${postId}.jpg")
+
+        // 이미지를 바이트값으로 읽기
+        val baos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        //바이트값을 스토리지에 저장하기
+        var UploadTask = imgRef?.putBytes(data)
+        UploadTask?.addOnFailureListener{
+            Log.d("error", "upload fail....")
+        }?.addOnCompleteListener{
+            Log.d("error", "upload success....")
+        }
+
+
+//        // 스토리지를 참조하는 StorageReference 생성
+//        val storageRef: StorageReference? = storage?.reference
+//        // 실제 업로드하는 파일을 참조하는 StorageReference 생성
+//        val imgRef: StorageReference? = storageRef?.child("images/${postId}.jpg")
+//        // 파일 업로드
+//        var file = Uri.fromFile(File(filePath))
+//        imgRef?.putFile(file)
+//            ?.addOnFailureListener {
+//                Log.d("storage"," failure............."+it)
+//            }?.addOnSuccessListener {
+//                Log.d("storage"," Success............."+it)
+//                finish()
+//            }
     }
 
     // 양식 작성 여부 확인
@@ -206,7 +254,7 @@ class SharePostActivity : AppCompatActivity() {
             option.inSampleSize = calRatio
             // 이미지 로딩
             var inputStream = contentResolver.openInputStream(it.data!!.data!!)
-            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+            bitmap = BitmapFactory.decodeStream(inputStream, null, option)!!
             inputStream!!.close()
             inputStream = null
             bitmap?.let {
@@ -232,7 +280,7 @@ class SharePostActivity : AppCompatActivity() {
         )
         val option = BitmapFactory.Options()
         option.inSampleSize = calRatio
-        val bitmap = BitmapFactory.decodeFile(filePath, option)
+        bitmap = BitmapFactory.decodeFile(filePath, option)!!
         bitmap?.let {
             binding.imgFood.setImageBitmap(bitmap)
             binding.imgFood.visibility = View.VISIBLE
@@ -277,6 +325,8 @@ class SharePostActivity : AppCompatActivity() {
                     )
                 )
                 ?.addOnSuccessListener {
+                    //  스토리지에 데이터 저장 후 postId값으로 스토리지에 이미지 업로드
+                    uploadImage(postId)
                     val toast = Toast.makeText(this, "게시글 작성 완료", Toast.LENGTH_SHORT)
                     toast.show()
                 }

@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/detailimageView"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:cropToPadding="false"
