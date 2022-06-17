@@ -62,7 +62,7 @@ class AuthActivity : AppCompatActivity() {
 
                             if (user != null) {
                                 Toast.makeText(
-                                    baseContext, user?.uid + user?.email,
+                                    this, "로그인 되었습니다.",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 var nickname = user?.email?.split("@")?.get(0)
@@ -128,6 +128,7 @@ class AuthActivity : AppCompatActivity() {
     fun moveMainPage(user:FirebaseUser?){
         if(user != null){
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }

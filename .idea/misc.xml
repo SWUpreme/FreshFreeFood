@@ -58,6 +58,7 @@
         <entry key="app/src/main/res/layout/activity_sharepost.xml" value="0.49941603066264717" />
         <entry key="app/src/main/res/layout/activity_write.xml" value="0.375" />
         <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.23007246376811594" />
+        <entry key="app/src/main/res/layout/dialog_addimage.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/dialog_deletefridge.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
