@@ -1,4 +1,6 @@
 package com.example.fffroject.fragment
+import java.util.*
+import kotlin.collections.HashMap
 
 
 // 나의 냉장고 리스트
@@ -56,8 +58,7 @@ data class food(
 
 )
 
-data class Chat(
-    val nickname: String,
-    val contents: String,
-
-)
+data class ChatModel (val user: HashMap<String, Boolean> = HashMap(),
+                      val comments : HashMap<String, Comment> = HashMap()){
+    class Comment(val uid: String? = null, val chat: String? = null, val time: String? = null)
+}

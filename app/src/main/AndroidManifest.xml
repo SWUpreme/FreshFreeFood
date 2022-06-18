@@ -10,14 +10,17 @@
     <application
         android:name=".FFFroject"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".fragment.EnterFragment"
             android:exported="false"
@@ -46,8 +49,7 @@
             android:exported="true" />
         <activity
             android:name=".ShareDetailActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />

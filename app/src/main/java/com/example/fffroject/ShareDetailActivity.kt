@@ -1,19 +1,16 @@
 package com.example.fffroject
 
 import android.graphics.BitmapFactory
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.example.fffroject.databinding.ActivitySharedetailBinding
-import com.example.fffroject.fragment.FoodList
-import com.example.fffroject.fragment.PostAll
 import com.example.fffroject.fragment.PostDetail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
@@ -22,9 +19,6 @@ import kotlinx.android.synthetic.main.activity_sharedetail.*
 import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.fragment_share.*
 import kotlinx.android.synthetic.main.item_sharelist.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class ShareDetailActivity: AppCompatActivity()  {

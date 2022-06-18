@@ -1,14 +1,11 @@
 package com.example.fffroject.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.example.fffroject.Main2Activity
 import com.example.fffroject.databinding.FragmentEnterBinding
 class EnterFragment : Fragment() {
     private var _binding: FragmentEnterBinding? = null

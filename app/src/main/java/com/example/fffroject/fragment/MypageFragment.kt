@@ -38,7 +38,6 @@ class MypageFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         binding = FragmentMypageBinding.inflate(layoutInflater)
         btn_logout = view.findViewById(R.id.btnLogout)
-        detailbtn = view.findViewById(R.id.detailbtn)
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {
@@ -51,11 +50,6 @@ class MypageFragment : Fragment() {
         }
 
 
-        // 채팅 버튼 클릭
-        detailbtn.setOnClickListener{
-            val intent = Intent(activity, Main2Activity::class.java)
-            startActivity(intent)
-        }
 
 
 
