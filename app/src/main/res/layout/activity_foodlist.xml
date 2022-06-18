@@ -8,6 +8,7 @@
     tools:context=".FoodListActivity"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     >
 
     <androidx.appcompat.widget.Toolbar

@@ -1,7 +1,10 @@
 package com.example.fffroject
 
+import android.app.AlertDialog
 import android.app.ProgressDialog.show
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 //import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +29,16 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import com.example.fffroject.fragment.CustomDiverItemDecoration
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
+import org.threeten.bp.format.DateTimeFormatter
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter.ofPattern
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
@@ -132,23 +142,47 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
         // view와 실제 데이터 연결
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             var viewHolder = (holder as ViewHolder).itemView
             var food_name: TextView
             var food_count: TextView
             var food_deadline: TextView
             var btn_eat: Button
+            var food_dday: TextView
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
             food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
             btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
+            food_dday = viewHolder.findViewById(R.id.textDday)
+
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
-            food_count.text = foodlist!![position].count.toString()
-            food_deadline.text = foodlist!![position].deadline
+            food_count.text = foodlist!![position].count.toString() + " 개"
+            food_deadline.text = foodlist!![position].deadline + " 까지"
             var food_index = foodlist!![position].index.toString()
+            var deadline = foodlist!![position].deadline
+
+            var formatter = SimpleDateFormat("yyyy.MM.dd")
+            var nowdate = LocalDate.now().format(ofPattern("yyyy.MM.dd"))
+            var date = formatter.parse(deadline).time
+            var day = formatter.parse(nowdate).time
+            var d_day = (date - day)/ (60 * 60 * 24 * 1000)
+            if (d_day.toInt() > 0){
+                food_dday.text = "D - " + d_day.toString()
+                food_dday.setTextColor(Color.parseColor("#71ABFF"))
+            }
+            else if (d_day.toInt() == 0){
+                food_dday.text = "D - Day"
+                food_dday.setTextColor(Color.parseColor("#FEC10A"))
+            }
+            else {
+                food_dday.text = "D + " + (d_day.toInt()*(-1)).toString()
+                food_dday.setTextColor(Color.parseColor("#ED6C3C"))
+            }
+
 
             // 먹었음 버튼 눌렀을 경우
             btn_eat.setOnClickListener {
@@ -197,32 +231,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
+    // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
+        firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
+        //recyclerview_foodlist.adapter?.notifyDataSetChanged()
         firestore?.collection("fridge")?.document(index.toString())
-            ?.collection("food")?.document(foodindex)?.update("done", true)
-        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+            ?.collection("food")?.document(foodindex)
+            ?.delete()
+            ?.addOnSuccessListener { Toast.makeText(this, "환경 기여도가 상승했습니다.", Toast.LENGTH_SHORT).show() }
+            ?.addOnFailureListener { }
     }
 
-//    fun eatDone(foodindex: String){
-//        firestore?.collection("fridge")?.document(index.toString())
-//            ?.collection("food")?.document(foodindex)?.update("done", true)
-//        recyclerview_foodlist.adapter?.notifyDataSetChanged()
-//    }
-
-//    fun search(){
-//        var done = firestore?.collection("fridge")?.document(index.toString())
-//            ?.collection("food")?.document("done")?.get()
-//    }
-
-//    // 먹은 식품 삭제
-//    fun deleteFood(index: String) {
-//        var findex = index
-//        firestore?.collection("fridge")?.document(index.toString())
-//            ?.collection("food")?.document(findex)
-//            ?.delete()
-//            ?.addOnSuccessListener {
-//                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//            ?.addOnFailureListener {  }
-//    }
 }

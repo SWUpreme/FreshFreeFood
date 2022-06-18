@@ -62,12 +62,13 @@ class AuthActivity : AppCompatActivity() {
 
                             if (user != null) {
                                 Toast.makeText(
-                                    baseContext, user?.uid + user?.email,
+                                    this, "로그인 되었습니다.",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 var nickname = user?.email?.split("@")?.get(0)
                                 firestore?.collection("user")?.document(user.uid)
-                                    ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname))
+                                    ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
+                                        "contribution" to 0))
                             }
                             //changeVisibility("login")
                             moveMainPage(task.result?.user)
@@ -127,6 +128,7 @@ class AuthActivity : AppCompatActivity() {
     fun moveMainPage(user:FirebaseUser?){
         if(user != null){
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }
