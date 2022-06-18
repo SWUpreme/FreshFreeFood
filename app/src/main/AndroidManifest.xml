@@ -16,6 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FFFroject"
+        android:usesCleartextTraffic="true">
+
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         <activity
@@ -23,10 +25,6 @@
             android:exported="false" />
         <activity
             android:name=".fragment.EnterFragment"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".fragment.ChatFragment"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
@@ -53,9 +51,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity
-            android:name=".Main2Activity"
-            android:exported="true" />
+
         <activity
             android:name=".AuthActivity"
             android:exported="true">

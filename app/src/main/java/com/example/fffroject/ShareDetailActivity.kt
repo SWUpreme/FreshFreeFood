@@ -75,6 +75,11 @@ class ShareDetailActivity: AppCompatActivity()  {
         toolbSharedetail.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.btnGotoMessage -> {
+                    /*val intent = Intent(this@ShareDetailActivity, ChatActivity::class.java)
+                    intent.putExtra("detailIndex", detailIndex.toString())
+                    intent.putExtra("detailWriter", detailWriter.toString())*/
+
+
                     true
                 }
                 else -> false
