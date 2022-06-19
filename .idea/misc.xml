@@ -67,10 +67,12 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable/txt_background_round2_blue.xml" value="0.2355" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable/txt_background_round2_white.xml" value="0.254" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_auth.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_barcode.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.109375" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_sharedetail.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_sharepost.xml" value="0.264" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/custom_dialog.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_addfridge.xml" value="0.109375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_addimage.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_background_round.xml" value="0.2484375" />
