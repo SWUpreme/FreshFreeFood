@@ -13,30 +13,20 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@drawable/rounded_corner"
         android:padding="40dp"
         >
 
-        <Button
+        <ImageButton
             android:id="@+id/barcode_btn"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="바코드"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:layout_marginVertical="10dp"
-            android:background="@drawable/rounded_corner_box"
-            />
-        <Button
+            android:layout_width="251dp"
+            android:layout_height="101dp"
+            android:background="@drawable/ic_barcode_btn" />
+
+        <ImageButton
             android:id="@+id/write_btn"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="직접 입력"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_box"
-            />
+            android:layout_width="251dp"
+            android:layout_height="101dp"
+            android:background="@drawable/ic_write_btn" />
     </LinearLayout>
 
 

@@ -3,7 +3,6 @@ package com.example.fffroject
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,9 +11,6 @@ import com.example.fffroject.fragment.FoodList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -62,7 +58,7 @@ class WriteActivity : AppCompatActivity() {
         purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
         purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
-        upload_btn = findViewById(R.id.upload_btn)
+        upload_btn = findViewById(R.id.scan_btn)
 
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 

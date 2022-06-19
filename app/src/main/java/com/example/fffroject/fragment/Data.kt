@@ -58,7 +58,9 @@ data class food(
 
 )
 
-data class ChatModel (val user: HashMap<String, Boolean> = HashMap(),
-                      val comments : HashMap<String, Comment> = HashMap()){
-    class Comment(val uid: String? = null, val chat: String? = null, val time: String? = null)
-}
+
+data class Chat(
+    val content: String,
+    val name: String,
+    val multiType: Int
+)
