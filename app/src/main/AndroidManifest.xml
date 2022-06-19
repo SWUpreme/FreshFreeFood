@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <application
         android:name=".FFFroject"
         android:allowBackup="true"
@@ -20,16 +21,11 @@
 
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
-        <activity
-            android:name=".ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".fragment.EnterFragment"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
+
         <activity
             android:name=".FoodListActivity"
             android:exported="true" />
+
         <activity
             android:name=".WriteActivity"
             android:exported="true"

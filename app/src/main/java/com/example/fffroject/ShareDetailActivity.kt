@@ -3,10 +3,12 @@ package com.example.fffroject
 import android.graphics.BitmapFactory
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+//import com.example.directmessage.ChatActivity
 import com.example.fffroject.databinding.ActivitySharedetailBinding
 import com.example.fffroject.fragment.PostDetail
 import com.google.firebase.auth.FirebaseAuth
@@ -72,13 +74,9 @@ class ShareDetailActivity: AppCompatActivity()  {
         //postDetailList = arrayListOf<PostDetail>()
 
         // 메세지 버튼
-        toolbSharedetail.setOnMenuItemClickListener {
+       toolbSharedetail.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.btnGotoMessage -> {
-                    /*val intent = Intent(this@ShareDetailActivity, ChatActivity::class.java)
-                    intent.putExtra("detailIndex", detailIndex.toString())
-                    intent.putExtra("detailWriter", detailWriter.toString())*/
-
 
                     true
                 }
