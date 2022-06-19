@@ -15,6 +15,6 @@
     <item
         android:id="@+id/tab_mypage"
         android:enabled="true"
-        android:icon="@drawable/ic_navi_mypage_gray"
+        android:icon="@drawable/ic_navi_mypage_gray2"
         android:title="마이페이지"/>
 </menu>
