@@ -33,15 +33,19 @@ class BarCodeActivity : AppCompatActivity() {
     var fridgeindex : String? = null
 
     lateinit var name: TextView
-    lateinit var deadline: EditText
-    lateinit var purchasedAt: EditText
+    lateinit var deadline_year:EditText
+    lateinit var deadline_month: EditText
+    lateinit var deadline_day: EditText
+    lateinit var purchasedAt_year: EditText
+    lateinit var purchasedAt_month: EditText
+    lateinit var purchasedAt_day: EditText
     lateinit var count: EditText
     lateinit var upload_btn: Button
     lateinit var scan_btn: Button
 
     lateinit var foodlist: ArrayList<FoodList>
     lateinit var foodindex: String
-
+    var done = false
 
 
     //qr code scanner object
@@ -60,8 +64,12 @@ class BarCodeActivity : AppCompatActivity() {
         foodlist = arrayListOf<FoodList>()
 
         name = findViewById(R.id.name)
-        deadline = findViewById(R.id.deadline)
-        purchasedAt = findViewById(R.id.purchasedAt)
+        deadline_year = findViewById(R.id.fdeadlineYear)
+        deadline_month = findViewById(R.id.fdeadlineMonth)
+        deadline_day = findViewById(R.id.fdeadlineDate)
+        purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
+        purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
+        purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.upload_btn)
         scan_btn = findViewById(R.id.scan_btn)
@@ -81,6 +89,8 @@ class BarCodeActivity : AppCompatActivity() {
         upload_btn.setOnClickListener {
 
             if (user != null) {
+                var food_deadline = deadline_year.text.toString()+"."+deadline_month.text.toString()+"."+deadline_day.text.toString()
+                var purchasedAt = purchasedAt_year.text.toString()+"."+ purchasedAt_month.text.toString()+"."+ purchasedAt_day.text.toString()
                 foodindex = UUID.randomUUID().toString()
                 firestore?.collection("fridge")?.document("$fridgeindex")
                     ?.collection("food")?.document("$foodindex")
@@ -88,9 +98,10 @@ class BarCodeActivity : AppCompatActivity() {
                         hashMapOf(
                             "index" to foodindex,
                             "name" to name.text.toString(),
-                            "deadline" to deadline.text.toString(),
-                            "purchaseAt" to purchasedAt.text.toString(),
-                            "count" to count.text.toString().toInt()
+                            "deadline" to food_deadline,
+                            "purchaseAt" to purchasedAt,
+                            "count" to count.text.toString().toInt(),
+                            "done" to done
                         )
                     )
                     ?.addOnSuccessListener { finish() }
@@ -144,11 +155,11 @@ class BarCodeActivity : AppCompatActivity() {
             if (result.contents != null) {
                 Log.d(TAG, "onActivityResult: result - ${result.contents}")
                 barcodode.text = result.contents
-                    if (result.contents.startsWith("97")){
-                    } else {
-                        // 상품정보 크롤링 호출
-                        setProductInfo(result.contents)
-                    }
+                if (result.contents.startsWith("97")){
+                } else {
+                    // 상품정보 크롤링 호출
+                    setProductInfo(result.contents)
+                }
 
             } else {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
