@@ -1,0 +1,84 @@
+Index: app/src/main/java/com/example/fffroject/ShareDetailActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.fffroject\n\nimport android.graphics.BitmapFactory\nimport android.content.Intent\nimport android.os.Bundle\nimport android.widget.Toast\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.appcompat.widget.Toolbar\nimport androidx.core.content.ContextCompat\nimport com.example.fffroject.databinding.ActivitySharedetailBinding\nimport com.example.fffroject.fragment.PostDetail\nimport com.google.firebase.auth.FirebaseAuth\nimport com.google.firebase.auth.FirebaseUser\nimport com.google.firebase.firestore.FirebaseFirestore\nimport com.google.firebase.firestore.Query\nimport com.google.firebase.storage.FirebaseStorage\nimport com.google.firebase.storage.StorageReference\nimport kotlinx.android.synthetic.main.activity_sharedetail.*\nimport kotlinx.android.synthetic.main.activity_sharepost.*\nimport kotlinx.android.synthetic.main.fragment_share.*\nimport kotlinx.android.synthetic.main.item_sharelist.*\n\n\nclass ShareDetailActivity: AppCompatActivity()  {\n\n    val TAG: String = \"로그\"\n\n    //파이어스토어\n    var auth: FirebaseAuth? = null\n    var db: FirebaseFirestore? = null\n    var user: FirebaseUser? = null\n    var storage: FirebaseStorage? = null\n\n    // 바인딩 객체\n    lateinit var binding: ActivitySharedetailBinding\n\n    // 툴바\n    lateinit var toolbar_sharedetail: Toolbar\n\n    // Data에 있는 PostDetail\n    //lateinit var postDetailList: ArrayList<PostDetail>\n    // 화면 구성 내용\n    lateinit var detailIndex : String\n    lateinit var detailWriter : String\n    lateinit var detailTitle : String\n    lateinit var detailName : String\n    lateinit var detailRegion : String\n    lateinit var detailLocation : String\n    lateinit var detailDeadline : String\n    lateinit var detailCreatedAt : String\n    lateinit var detailPurchasedAt : String\n    lateinit var detailContent : String\n    lateinit var detailFlag : String\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        // 바인딩 객체 획득\n        binding = ActivitySharedetailBinding.inflate(layoutInflater)\n        // 액티비티 화면 출력\n        setContentView(binding.root)\n\n        // 파이어베이스 인증 객체\n        auth = FirebaseAuth.getInstance()\n        user = auth!!.currentUser\n        // 파이어스토어 인스턴스 초기화\n        db = FirebaseFirestore.getInstance()\n        // 파이어스토리지 인스턴스 초기화\n        storage = FirebaseStorage.getInstance()\n        // 상단 툴바 사용\n        toolbar_sharedetail = findViewById(R.id.toolbSharedetail)\n        // postDetail 초기화\n        //postDetailList = arrayListOf<PostDetail>()\n\n        // 메세지 버튼\n        toolbSharedetail.setOnMenuItemClickListener {\n            when(it.itemId) {\n                R.id.btnGotoMessage -> {\n                    true\n                }\n                else -> false\n            }\n        }\n\n        // ShareFragment Intent 연결\n        detailIndex = intent.getStringExtra(\"detailIndex\")!!    // 게시글 인덱스\n        detailWriter = intent.getStringExtra(\"detailWriter\")!!    // 게시글 냉장고 넘김 여부\n        detailFlag = intent.getStringExtra(\"detailFlag\")!!    // 게시글 냉장고 넘김 여부\n\n        // 냉장고에서 넘기기 여부 확인 후 색상 변경\n        if(detailFlag==\"true\"){\n            binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)\n            binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)\n            binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.white))\n            binding.detailLocation.setTextColor(ContextCompat.getColor(this, R.color.white))\n        }else{\n            binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_white)\n            binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_white)\n            binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.blueblack))\n            binding.detailLocation.setTextColor(ContextCompat.getColor(this, R.color.blueblack))\n        }\n\n        // 세부 게시글 내용 불러오기\n        loadData()\n    }\n\n    // 세부 게시글 내용 불러오기\n    fun loadData() {\n        // 유저가 존재한다면\n        if (user != null) {\n            // 해당 인덱스의 게시글 가져오기\n            var detailDocRef = db?.collection(\"post\")?.document(detailIndex.toString())\n            detailDocRef?.get()\n                ?.addOnSuccessListener { documentSnapshot ->\n                    var item = documentSnapshot.toObject(PostDetail::class.java)\n                    binding.detailTitle.text = item?.title!!\n                    binding.detailRegion.text = item?.region!!\n                    binding.detailLocation.text = item?.location!!\n                    binding.detailName.text = item?.name!!\n                    binding.detailDeadline.text = item?.deadline!!\n                    binding.detailCreatedAt.text = item?.createdAt!!\n                    binding.detailPurchasedAt.text = item?.purchasedAt!!\n                    binding.detailContent.text = item?.content!!\n\n                    downloadImage(detailIndex)\n                }\n                ?.addOnFailureListener {\n                    val toast = Toast.makeText(this, \"게시글 가져오기 실패\", Toast.LENGTH_SHORT)\n                    toast.show()\n                }\n\n        }\n\n    }\n\n    private fun downloadImage(imgId: String){\n        // 스토리지를 참조하는 StorageReference 생성\n        val storageRef: StorageReference? = storage?.reference\n        // 실제 업로드하는 파일을 참조하는 StorageReference 생성\n        val imgRef: StorageReference? = storageRef?.child(\"images/${imgId}.jpg\")\n        val ONE_MEGABYTE: Long = 1024*1024\n        imgRef?.getBytes(ONE_MEGABYTE)\n            ?.addOnSuccessListener {\n            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)\n            binding.detailimageView.setImageBitmap(bitmap)\n        }?.addOnFailureListener{\n            Log.d(\"download\", \"fail\")\n        }\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fffroject/ShareDetailActivity.kt b/app/src/main/java/com/example/fffroject/ShareDetailActivity.kt
+--- a/app/src/main/java/com/example/fffroject/ShareDetailActivity.kt	(revision 640a969140f010b2af245cbcd7eca836886d4179)
++++ b/app/src/main/java/com/example/fffroject/ShareDetailActivity.kt	(date 1655559224053)
+@@ -3,6 +3,7 @@
+ import android.graphics.BitmapFactory
+ import android.content.Intent
+ import android.os.Bundle
++import android.util.Log
+ import android.widget.Toast
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.appcompat.widget.Toolbar
+Index: app/src/main/java/com/example/fffroject/fragment/EnterFragment.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/fffroject/fragment/EnterFragment.kt b/app/src/main/java/com/example/fffroject/fragment/EnterFragment.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/fffroject/fragment/EnterFragment.kt	(revision 640a969140f010b2af245cbcd7eca836886d4179)
++++ /dev/null	(revision 640a969140f010b2af245cbcd7eca836886d4179)
+@@ -1,39 +0,0 @@
+-package com.example.fffroject.fragment
+-
+-import android.os.Bundle
+-import android.view.LayoutInflater
+-import android.view.View
+-import android.view.ViewGroup
+-import androidx.core.widget.addTextChangedListener
+-import androidx.fragment.app.Fragment
+-import com.example.fffroject.databinding.FragmentEnterBinding
+-class EnterFragment : Fragment() {
+-    private var _binding: FragmentEnterBinding? = null
+-    private val binding get() = _binding!!
+-
+-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+-        _binding = FragmentEnterBinding.inflate(inflater, container, false)
+-        val view = binding.root
+-
+-        // 닉네임이 공백일 경우 버튼 비활성화
+-        binding.etNickname.addTextChangedListener { text ->
+-            binding.btnEnter.isEnabled = text.toString().replace(" ", "") != ""
+-        }
+-
+-        binding.btnEnter.setOnClickListener {
+-            // 입력한 닉네임을 Bundle에 담아 ChatFragment로 보냄
+-            val nickname = binding.etNickname.text.toString()
+-            val bundle = Bundle()
+-            bundle.putString("nickname", nickname)
+-            // ChatFragment로 이동
+-            (activity as Main2Activity).replaceFragment(bundle)
+-        }
+-
+-        return view
+-    }
+-
+-    override fun onDestroyView() {
+-        super.onDestroyView()
+-        _binding = null
+-    }
+-}
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <bytecodeTargetLevel target=\"16\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision 640a969140f010b2af245cbcd7eca836886d4179)
++++ b/.idea/compiler.xml	(date 1655559205005)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="16" />
++    <bytecodeTargetLevel target="11" />
+   </component>
+ </project>
+\ No newline at end of file
