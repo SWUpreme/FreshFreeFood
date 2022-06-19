@@ -3,18 +3,18 @@
     <item
         android:id="@+id/tab_share"
         android:enabled="true"
-        android:icon="@drawable/ic_food_gray"
+        android:icon="@drawable/ic_navi_share_gray"
         android:title="나눔"/>
 
     <item
         android:id="@+id/tab_fridge"
         android:enabled="true"
-        android:icon="@drawable/ic_refregerator_gray"
+        android:icon="@drawable/ic_navi_refri_gray"
         android:title="냉장고"/>
 
     <item
         android:id="@+id/tab_mypage"
         android:enabled="true"
-        android:icon="@drawable/ic_mypage_gray"
+        android:icon="@drawable/ic_navi_mypage_gray2"
         android:title="마이페이지"/>
 </menu>
