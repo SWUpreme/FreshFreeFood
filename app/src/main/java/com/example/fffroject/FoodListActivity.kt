@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog.show
 import android.content.Intent
 import android.graphics.Color
+import android.icu.lang.UCharacter.IndicPositionalCategory.LEFT
+import android.icu.lang.UCharacter.IndicPositionalCategory.RIGHT
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
@@ -100,6 +103,11 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // 구분선 추가
         val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
         recyclerview_foodlist.addItemDecoration(customDecoration)
+
+        // 식품 리스트 스와이프 삭제를 위한 클래스 연결
+        val swipeHelperCallback = SwipeHelperCallback()
+        val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerview_foodlist)
     }
 
 
@@ -242,4 +250,24 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.addOnFailureListener { }
     }
 
+}
+
+// 스와이프 삭제를 위한 클래스 추가
+class SwipeHelperCallback : ItemTouchHelper.Callback() {
+
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
+        // Drag와 Swipe 방향을 결정 Drag는 사용하지 않아 0, Swipe의 경우는 LEFT, RIGHT 모두 사용가능하도록 설정
+        return makeMovementFlags(0, LEFT or RIGHT)
+    }
+
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ) = false
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
 }
