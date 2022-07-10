@@ -3,6 +3,7 @@ package com.example.fffroject
 import android.app.AlertDialog
 import android.app.ProgressDialog.show
 import android.content.Intent
+import android.graphics.Canvas
 import android.graphics.Color
 import android.icu.lang.UCharacter.IndicPositionalCategory.LEFT
 import android.icu.lang.UCharacter.IndicPositionalCategory.RIGHT
@@ -31,6 +32,7 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
@@ -42,6 +44,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.max
+import kotlin.math.min
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
@@ -252,22 +256,3 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
 }
 
-// 스와이프 삭제를 위한 클래스 추가
-class SwipeHelperCallback : ItemTouchHelper.Callback() {
-
-    override fun getMovementFlags(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
-    ): Int {
-        // Drag와 Swipe 방향을 결정 Drag는 사용하지 않아 0, Swipe의 경우는 LEFT, RIGHT 모두 사용가능하도록 설정
-        return makeMovementFlags(0, LEFT or RIGHT)
-    }
-
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
-    ) = false
-
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
-}
