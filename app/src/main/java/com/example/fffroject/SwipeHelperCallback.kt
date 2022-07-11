@@ -78,7 +78,7 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
         }
     }
 
-    private fun getView(viewHolder: RecyclerView.ViewHolder) : View = viewHolder.itemView.findViewById(R.id.foodSwipe)
+    private fun getView(viewHolder: RecyclerView.ViewHolder) : View = viewHolder.itemView.findViewById(R.id.swipe_view)
 
 
     private fun clampViewPositionHorizontal(
