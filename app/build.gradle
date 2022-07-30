@@ -26,6 +26,9 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    dataBinding {
+        enabled = true
+    }
     // My add
     viewBinding {
         enabled = true

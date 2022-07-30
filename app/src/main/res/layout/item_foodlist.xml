@@ -21,18 +21,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#eeeeee"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:background="#eeeeee" />
 
             <TextView
                 android:id="@+id/tvRemove"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="3"
                 android:background="#FF0000"
+                android:clickable="true"
+                android:gravity="center"
                 android:text="삭제"
                 android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_weight="3"/>
+                tools:ignore="TextContrastCheck"
+                android:focusable="true" />
 
         </LinearLayout>
 
@@ -41,24 +44,10 @@
             android:id="@+id/swipe_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:background="@color/white"
             android:clickable="true"
             android:focusable="true"
-            android:background="@color/white">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="35dp"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="#00FFFFFF"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></androidx.cardview.widget.CardView>
+            android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -125,6 +114,20 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textFoodName" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

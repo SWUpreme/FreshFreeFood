@@ -39,6 +39,10 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
+            android:name=".ExRecyclerView"
+            android:exported="true"/>
+
+        <activity
             android:name=".SharePostActivity"
             android:exported="true" />
         <activity

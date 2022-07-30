@@ -1,13 +1,5 @@
 package com.example.fffroject
 
-import android.app.AlertDialog
-import android.app.ProgressDialog.show
-import android.content.Intent
-import android.graphics.Canvas
-import android.graphics.Color
-import android.icu.lang.UCharacter.IndicPositionalCategory.LEFT
-import android.icu.lang.UCharacter.IndicPositionalCategory.RIGHT
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,39 +8,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-//import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.example.fffroject.fragment.FoodList
-import com.example.fffroject.fragment.FridgeFragment
-import com.example.fffroject.fragment.MyFridge
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sharepost.*
-import kotlinx.android.synthetic.main.activity_write.*
-
-import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
-import com.example.fffroject.fragment.CustomDiverItemDecoration
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.toObject
-import kotlinx.android.synthetic.main.item_foodlist.*
-import org.threeten.bp.format.DateTimeFormatter
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter.ofPattern
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.max
-import kotlin.math.min
 
-class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
+class ExRecyclerView : AppCompatActivity(), MyCustomDialogInterface {
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
@@ -66,9 +38,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_foodlist)
-        Log.d(TAG, "FoodListActivity - onCreate() called")
-
+        setContentView(R.layout.activity_recyclerview)
 
         foodlist = arrayListOf<FoodList>()
 
@@ -102,12 +72,14 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // 파이어베이스에서 식품 리스트 값 불러오기
         loadData()
 
-        recyclerview_foodlist = findViewById(R.id.recyclerviewFoodlist)
+        recyclerview_foodlist = findViewById(R.id.recyclerviewEx)
         recyclerview_foodlist.adapter = RecyclerviewAdapter()
         recyclerview_foodlist.layoutManager = LinearLayoutManager(this)
         // 구분선 추가
         val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
         recyclerview_foodlist.addItemDecoration(customDecoration)
+
+
 
         // 식품 리스트 스와이프 삭제를 위한 클래스 연결
         val swipeHelperCallback = SwipeHelperCallback().apply {
@@ -116,57 +88,19 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerview_foodlist)
-
-        // 다른 곳 터치 시 기존 선택 뷰 닫기 (근데 안됨)
-//        recyclerview_foodlist.setOnTouchListener { _, _ ->
-//            swipeHelperCallback.removePreviousClamp(recyclerview_foodlist)
-//            false
-//        }
     }
 
-
-
-//    fun onDialogBtnClicked(view: View){
-//        Log.d(TAG, "FoodListActivity - onDialogBtnClicked() called")
-//
-//        val myCustomDialog = MyCustomDialog(this, this)
-//
-//        myCustomDialog.show()
-//
-//    }
-
-
-    // 바코드 버튼 클릭
-    override fun onBarcodeBtnClicked() {
-        Log.d(TAG, "FoodListActivity - onBarcodeBtnClicked() called")
-        val intent = Intent(applicationContext, BarCodeActivity::class.java)
-        intent.putExtra("index", index)
-        startActivity(intent)
-    }
-
-    // 직접 입력 버튼 클릭
-    override fun onWriteBtnClicked() {
-        Log.d(TAG, "FoodListActivity - onWriteBtnClicked() called")
-        val intent = Intent(applicationContext, WriteActivity::class.java)
-        intent.putExtra("index", index)
-        startActivity(intent)
-    }
-
-    // 리사이클러뷰 사용
-    inner class RecyclerviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
+    inner class RecyclerviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             var view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_foodlist, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.item_recycler, parent, false)
             return ViewHolder(view)
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-        // view와 실제 데이터 연결
-        @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            var viewHolder = (holder as ViewHolder).itemView
+            var viewHolder = (holder as ExRecyclerView.RecyclerviewAdapter.ViewHolder).itemView
             var food_name: TextView
             var food_count: TextView
             var food_deadline: TextView
@@ -174,53 +108,20 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_dday: TextView
             var food_delete: TextView
 
-            food_name = viewHolder.findViewById(R.id.textFoodName)
-            food_count = viewHolder.findViewById(R.id.textFoodCount)
-            food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
-            btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
-            food_dday = viewHolder.findViewById(R.id.textDday)
+            var food_index = foodlist!![position].index.toString()
 
-            food_delete = viewHolder.findViewById(R.id.tvRemove)
+            food_name = viewHolder.findViewById(R.id.exFoodName)
+
+            food_delete = viewHolder.findViewById(R.id.foodRemove)
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
-            food_count.text = foodlist!![position].count.toString() + " 개"
-            food_deadline.text = foodlist!![position].deadline + " 까지"
-            var food_index = foodlist!![position].index.toString()
-            var deadline = foodlist!![position].deadline
-
-            var formatter = SimpleDateFormat("yyyy.MM.dd")
-            var nowdate = LocalDate.now().format(ofPattern("yyyy.MM.dd"))
-            var date = formatter.parse(deadline).time
-            var day = formatter.parse(nowdate).time
-            var d_day = (date - day)/ (60 * 60 * 24 * 1000)
-            if (d_day.toInt() > 0){
-                food_dday.text = "D - " + d_day.toString()
-                food_dday.setTextColor(Color.parseColor("#71ABFF"))
-            }
-            else if (d_day.toInt() == 0){
-                food_dday.text = "D - Day"
-                food_dday.setTextColor(Color.parseColor("#FEC10A"))
-            }
-            else {
-                food_dday.text = "D + " + (d_day.toInt()*(-1)).toString()
-                food_dday.setTextColor(Color.parseColor("#ED6C3C"))
-            }
-
-
-            // 먹었음 버튼 눌렀을 경우
-            btn_eat.setOnClickListener {
-                eatDone(food_index)
-            }
-
-
 
             // 삭제 텍스트뷰 클릭시 토스트 표시
             food_delete.setOnClickListener {
                 Log.d(TAG, "삭제 텍스트뷰 클릭 가능함")
                 foodDelete(food_index)
             }
-
         }
 
         override fun getItemCount(): Int {
@@ -228,7 +129,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
 
     }
-
 
     // 냉장고별 식품 리스트 불러오기
     fun loadData() {
@@ -255,23 +155,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         if (item != null && done == false) {
                             foodlist.add(item)
 //                        }
-                            }
+                        }
                     }
                     recyclerview_foodlist.adapter?.notifyDataSetChanged()
                 }
             }
 
-    }
-
-    // 식품 먹음 버튼 클릭시
-    fun eatDone(foodindex: String) {
-        firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
-        //recyclerview_foodlist.adapter?.notifyDataSetChanged()
-        firestore?.collection("fridge")?.document(index.toString())
-            ?.collection("food")?.document(foodindex)
-            ?.delete()
-            ?.addOnSuccessListener { Toast.makeText(this, "환경 기여도가 상승했습니다.", Toast.LENGTH_SHORT).show() }
-            ?.addOnFailureListener { }
     }
 
     fun foodDelete(foodindex: String) {
@@ -282,5 +171,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.addOnFailureListener { }
     }
 
-}
+    override fun onBarcodeBtnClicked() {
+        TODO("Not yet implemented")
+    }
 
+    override fun onWriteBtnClicked() {
+        TODO("Not yet implemented")
+    }
+
+}
