@@ -106,8 +106,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         recyclerview_foodlist.adapter = RecyclerviewAdapter()
         recyclerview_foodlist.layoutManager = LinearLayoutManager(this)
         // 구분선 추가
-        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
-        recyclerview_foodlist.addItemDecoration(customDecoration)
+        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.white))
 
         // 식품 리스트 스와이프 삭제를 위한 클래스 연결
         val swipeHelperCallback = SwipeHelperCallback().apply {
@@ -116,6 +115,18 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerview_foodlist)
+
+        recyclerview_foodlist.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            //adapter = swipeAdapter
+            //addItemDecoration(RecyclerView.ItemDecoration())
+            recyclerview_foodlist.addItemDecoration(customDecoration)
+
+            setOnTouchListener { _, _ ->
+                swipeHelperCallback.removePreviousClamp(this)
+                false
+            }
+        }
 
         // 다른 곳 터치 시 기존 선택 뷰 닫기 (근데 안됨)
 //        recyclerview_foodlist.setOnTouchListener { _, _ ->
@@ -219,6 +230,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             food_delete.setOnClickListener {
                 Log.d(TAG, "삭제 텍스트뷰 클릭 가능함")
                 foodDelete(food_index)
+                notifyItemRemoved(position)
             }
 
         }
