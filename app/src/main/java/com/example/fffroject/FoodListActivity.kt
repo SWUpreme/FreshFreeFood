@@ -106,7 +106,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         recyclerview_foodlist.adapter = RecyclerviewAdapter()
         recyclerview_foodlist.layoutManager = LinearLayoutManager(this)
         // 구분선 추가
-        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.white))
+        val customDecoration = CustomDiverItemDecoration(6f, 10f, resources.getColor(R.color.diver_gray))
 
         // 식품 리스트 스와이프 삭제를 위한 클래스 연결
         val swipeHelperCallback = SwipeHelperCallback().apply {

@@ -223,6 +223,12 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
             val isClamped = getTag(viewHolder)
             val x =  clampViewPositionHorizontal(view, dX, isClamped, isCurrentlyActive)
 
+            // 고정시킬 시 애니메이션 추가
+            if (x == -clamp) {
+                getView(viewHolder).animate().translationX(-clamp).setDuration(100L).start()
+                return
+            }
+
             currentDx = x
             getDefaultUIUtil().onDraw(
                 c,
@@ -285,7 +291,7 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
             return
         previousPosition?.let {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(it) ?: return
-            getView(viewHolder).translationX = 0f
+            getView(viewHolder).animate().x(0f).setDuration(100L).start()
             setTag(viewHolder, false)
             previousPosition = null
         }
