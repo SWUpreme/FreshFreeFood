@@ -22,7 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#eeeeee" />
+                android:background="#eeeeee" >
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvRemove"
@@ -80,6 +82,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <Button
+                    android:id="@+id/btnFoodMinus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    app:layout_constraintBottom_toTopOf="@+id/textFoodCount"
+                    tools:layout_editor_absoluteX="35dp" />
+
                 <TextView
                     android:id="@+id/textFoodDeadline"
                     android:layout_width="150dp"
@@ -127,7 +137,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></androidx.cardview.widget.CardView>
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

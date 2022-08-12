@@ -34,6 +34,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import com.example.fffroject.fragment.CustomDiverItemDecoration
+import com.google.common.net.InetAddresses.decrement
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
@@ -184,6 +185,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var btn_eat: Button
             var food_dday: TextView
             var food_delete: TextView
+            var btn_minus: Button
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
@@ -192,6 +194,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             food_dday = viewHolder.findViewById(R.id.textDday)
 
             food_delete = viewHolder.findViewById(R.id.tvRemove)
+
+            btn_minus = viewHolder.findViewById(R.id.btnFoodMinus)
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
@@ -231,6 +235,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 Log.d(TAG, "삭제 텍스트뷰 클릭 가능함")
                 foodDelete(food_index)
                 notifyItemRemoved(position)
+            }
+
+            // 마이너스 버튼 클릭시
+            btn_minus.setOnClickListener {
+                var count = foodlist!![position].count
+                countMinus(food_index, count)
             }
 
         }
@@ -292,6 +302,14 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.delete()
             ?.addOnSuccessListener { Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
+    }
+
+    fun countMinus(foodindex: String, count: Int) {
+        Toast.makeText(this, count.toString(), Toast.LENGTH_SHORT).show()
+        if (count > 1) {
+            firestore?.collection("fridge")?.document(index.toString())
+                ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(-1))
+        }
     }
 
 }
