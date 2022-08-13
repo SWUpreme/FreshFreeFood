@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".FFFroject"
         android:allowBackup="true"
@@ -18,14 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
-
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true">
-
+        <activity
+            android:name=".RegionSelectActivity"
+            android:exported="false" />
         <activity
             android:name=".FoodListActivity"
             android:exported="true" />
-
         <activity
             android:name=".WriteActivity"
             android:exported="true"
@@ -40,18 +37,16 @@
         </activity>
         <activity
             android:name=".ExRecyclerView"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".SharePostActivity"
             android:exported="true" />
         <activity
             android:name=".ShareDetailActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
         <activity
             android:name=".AuthActivity"
             android:exported="true">

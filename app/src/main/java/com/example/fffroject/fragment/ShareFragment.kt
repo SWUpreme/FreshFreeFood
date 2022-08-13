@@ -14,16 +14,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fffroject.FoodListActivity
-import com.example.fffroject.R
-import com.example.fffroject.ShareDetailActivity
-import com.example.fffroject.SharePostActivity
+import com.example.fffroject.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sharepost.*
 
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.fragment_share.*
 
 class ShareFragment : Fragment() {
     // 파이어스토어
@@ -33,6 +31,7 @@ class ShareFragment : Fragment() {
 
     // 바인딩
     lateinit var btnShareAdd: ImageButton
+    lateinit var btnSelectRegion: ImageButton
     lateinit var recyclerviewShare: RecyclerView
     lateinit var toolbar_sharepost: Toolbar
 
@@ -57,6 +56,7 @@ class ShareFragment : Fragment() {
 
         // 바인딩
         btnShareAdd= view.findViewById(R.id.btnShareAdd)
+        btnSelectRegion= view.findViewById(R.id.btnSelectRegion)
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)
         toolbar_sharepost = view.findViewById(R.id.toolbShare)
 
@@ -82,6 +82,12 @@ class ShareFragment : Fragment() {
                 }
                 else -> false
             }
+        }
+
+        // 지역 선택 버튼
+        btnSelectRegion.setOnClickListener{
+            val intent = Intent(activity, RegionSelectActivity::class.java)
+            startActivity(intent)
         }
 
         return view
