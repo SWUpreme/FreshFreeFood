@@ -86,9 +86,10 @@
                     android:id="@+id/btnFoodMinus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
                     android:text="Button"
                     app:layout_constraintBottom_toTopOf="@+id/textFoodCount"
-                    tools:layout_editor_absoluteX="35dp" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/textFoodDeadline"
