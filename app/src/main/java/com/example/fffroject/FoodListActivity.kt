@@ -186,6 +186,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_dday: TextView
             var food_delete: TextView
             var btn_minus: Button
+            var btn_plus: Button
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
@@ -196,6 +197,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             food_delete = viewHolder.findViewById(R.id.tvRemove)
 
             btn_minus = viewHolder.findViewById(R.id.btnFoodMinus)
+            btn_plus = viewHolder.findViewById(R.id.btnFoodPlus)
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
@@ -241,6 +243,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             btn_minus.setOnClickListener {
                 var count = foodlist!![position].count
                 countMinus(food_index, count)
+            }
+
+            // 플러스 버튼 클릭시
+            btn_plus.setOnClickListener {
+                var count = foodlist!![position].count
+                countPlus(food_index, count)
             }
 
         }
@@ -305,11 +313,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     }
 
     fun countMinus(foodindex: String, count: Int) {
-        Toast.makeText(this, count.toString(), Toast.LENGTH_SHORT).show()
         if (count > 1) {
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(-1))
         }
+    }
+
+    fun countPlus(foodindex: String, count: Int) {
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
     }
 
 }

@@ -113,6 +113,14 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="SpeakableTextPresentCheck" />
 
+                <Button
+                    android:id="@+id/btnFoodPlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnFoodMinus" />
+
                 <TextView
                     android:id="@+id/textDday"
                     android:layout_width="70dp"
