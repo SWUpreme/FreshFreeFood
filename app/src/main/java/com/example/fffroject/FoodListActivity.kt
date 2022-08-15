@@ -201,7 +201,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
             // 리사이클러뷰 아이템 정보
             food_name.text = foodlist!![position].name
-            food_count.text = foodlist!![position].count.toString() + " 개"
+            food_count.text = foodlist!![position].count.toString()
             food_deadline.text = foodlist!![position].deadline + " 까지"
             var food_index = foodlist!![position].index.toString()
             var deadline = foodlist!![position].deadline
@@ -229,8 +229,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             btn_eat.setOnClickListener {
                 eatDone(food_index)
             }
-
-
 
             // 삭제 텍스트뷰 클릭시 토스트 표시
             food_delete.setOnClickListener {

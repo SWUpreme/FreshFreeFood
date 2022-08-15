@@ -72,35 +72,25 @@
 
                 <TextView
                     android:id="@+id/textFoodCount"
-                    android:layout_width="80dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="27dp"
+                    android:layout_marginBottom="25dp"
                     android:text="개수"
-                    android:textAlignment="textStart"
+                    android:textAlignment="center"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/btnFoodMinus" />
 
                 <Button
                     android:id="@+id/btnFoodMinus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="35dp"
-                    android:text="Button"
-                    app:layout_constraintBottom_toTopOf="@+id/textFoodCount"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/textFoodDeadline"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="TextView"
-                    android:textAlignment="textEnd"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_foodcount_minus"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <Button
                     android:id="@+id/btnFoodlistEat"
@@ -113,13 +103,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="SpeakableTextPresentCheck" />
 
-                <Button
-                    android:id="@+id/btnFoodPlus"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textFoodDeadline"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="TextView"
+                    android:textAlignment="textEnd"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnFoodMinus" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
                     android:id="@+id/textDday"
@@ -133,6 +126,16 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textFoodName" />
+
+                <Button
+                    android:id="@+id/btnFoodPlus"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_foodcount_plus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textFoodCount"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
