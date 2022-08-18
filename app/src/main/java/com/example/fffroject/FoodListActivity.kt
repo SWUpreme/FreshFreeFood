@@ -1,12 +1,7 @@
 package com.example.fffroject
 
-import android.app.AlertDialog
-import android.app.ProgressDialog.show
 import android.content.Intent
-import android.graphics.Canvas
 import android.graphics.Color
-import android.icu.lang.UCharacter.IndicPositionalCategory.LEFT
-import android.icu.lang.UCharacter.IndicPositionalCategory.RIGHT
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -39,8 +34,10 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.item_foodlist.*
+import kotlinx.android.synthetic.main.item_foodlist.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import org.w3c.dom.Text
+import java.lang.reflect.Array.get
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ofPattern
@@ -134,6 +131,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //            swipeHelperCallback.removePreviousClamp(recyclerview_foodlist)
 //            false
 //        }
+
     }
 
 
@@ -164,21 +162,31 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         startActivity(intent)
     }
 
+    inner class FoodlistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
     // 리사이클러뷰 사용
     inner class RecyclerviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             var view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_foodlist, parent, false)
-            return ViewHolder(view)
+            return FoodlistViewHolder(view)
         }
 
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+
+//        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+//            init {
+//                itemView.setOnClickListener {
+//                    Log.d("click", this.toString())
+//                }
+//            }
+//        }
 
         // view와 실제 데이터 연결
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            var viewHolder = (holder as ViewHolder).itemView
+            var viewHolder = (holder as FoodlistViewHolder).itemView
             var food_name: TextView
             var food_count: TextView
             var food_deadline: TextView
@@ -249,6 +257,17 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 countPlus(food_index, count)
             }
 
+//            holder.itemView.setOnClickListener {
+//                Log.d("click", this.toString())
+//            }
+
+            // swipe_view click: 안됐던 이유: viewHolder.id 를 입력 하고 setOnClickListener 해야 함
+            // id를 맞게 잘 설정해줘야함(Framelayout을 해서 안됐던 거였음)
+            viewHolder.swipe_view.setOnClickListener {
+                Toast.makeText(viewHolder.context, "click", Toast.LENGTH_SHORT).show()
+            }
+
+
         }
 
         override fun getItemCount(): Int {
@@ -256,6 +275,17 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
 
     }
+
+
+//    interface OnItemClickListener{
+//        fun onClick(v: View, position: Int)
+//    }
+//
+//    private lateinit var itemClickListener : OnItemClickListener
+//
+//    fun setItemClicklistener(onItemClickListener: OnItemClickListener, function: () -> Unit){
+//        this.itemClickListener = onItemClickListener
+//    }
 
 
     // 냉장고별 식품 리스트 불러오기
@@ -321,6 +351,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
     }
+
+
 
 }
 
