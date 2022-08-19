@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import com.example.fffroject.fragment.CustomDiverItemDecoration
@@ -61,6 +62,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     var index : String? = null
 
     val TAG: String = "로그"
+
+    var selectFood = -1
+    var eatfoodindex : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,6 +136,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //            false
 //        }
 
+        var btn_food_eat = findViewById<Button>(R.id.btnFoodEat)
+        btn_food_eat.setOnClickListener {
+//            Toast.makeText(this, selectFood.toString(), Toast.LENGTH_SHORT).show()
+            eatDone(eatfoodindex)
+        }
+
     }
 
 
@@ -196,10 +206,13 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var btn_minus: Button
             var btn_plus: Button
 
+            //var btn_food_eat: Button
+
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
             food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
             btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
+//            btn_food_eat = viewHolder.findViewById(R.id.btnFoodEat)
             food_dday = viewHolder.findViewById(R.id.textDday)
 
             food_delete = viewHolder.findViewById(R.id.tvRemove)
@@ -257,15 +270,26 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 countPlus(food_index, count)
             }
 
-//            holder.itemView.setOnClickListener {
-//                Log.d("click", this.toString())
-//            }
+
+            if(selectFood == position) {
+                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.diver_gray))
+            }
+            else{
+                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.white))
+            }
 
             // swipe_view click: 안됐던 이유: viewHolder.id 를 입력 하고 setOnClickListener 해야 함
             // id를 맞게 잘 설정해줘야함(Framelayout을 해서 안됐던 거였음)
             viewHolder.swipe_view.setOnClickListener {
-                Toast.makeText(viewHolder.context, "click", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(viewHolder.context, "click", Toast.LENGTH_SHORT).show()
+                selectFood = position
+                eatfoodindex = foodlist!![position].index.toString()
+                notifyDataSetChanged()
             }
+
+//            btn_food_eat.setOnClickListener {
+//                Toast.makeText(viewHolder.context, position, Toast.LENGTH_SHORT).show()
+//            }
 
 
         }
