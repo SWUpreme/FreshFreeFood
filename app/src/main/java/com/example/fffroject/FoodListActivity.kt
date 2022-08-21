@@ -64,6 +64,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     val TAG: String = "로그"
 
     var selectFood = -1
+    var preselect = -1
     var eatfoodindex : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -139,7 +140,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         var btn_food_eat = findViewById<Button>(R.id.btnFoodEat)
         btn_food_eat.setOnClickListener {
 //            Toast.makeText(this, selectFood.toString(), Toast.LENGTH_SHORT).show()
-            eatDone(eatfoodindex)
+            if (eatfoodindex!=""){
+                eatDone(eatfoodindex)
+                selectFood = preselect
+            }
         }
 
     }
@@ -271,8 +275,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
 
 
-            if(selectFood == position) {
+            if(selectFood == position && selectFood != preselect) {
                 viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.diver_gray))
+            }
+            else if (selectFood == preselect){
+                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.white))
+                eatfoodindex = ""
             }
             else{
                 viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.white))
@@ -282,6 +290,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             // id를 맞게 잘 설정해줘야함(Framelayout을 해서 안됐던 거였음)
             viewHolder.swipe_view.setOnClickListener {
 //                Toast.makeText(viewHolder.context, "click", Toast.LENGTH_SHORT).show()
+                if(selectFood == preselect) preselect = -1
+                else preselect = selectFood
                 selectFood = position
                 eatfoodindex = foodlist!![position].index.toString()
                 notifyDataSetChanged()
