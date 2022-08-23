@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.item_foodlist.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import org.w3c.dom.Text
 import java.lang.reflect.Array.get
+import java.lang.reflect.Array.getLength
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ofPattern
@@ -66,6 +67,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     var selectFood = -1
     var preselect = -1
     var eatfoodindex : String = ""
+    var foodcount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,6 +161,13 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //
 //    }
 
+    // 음식 개수 세는 함수
+    // OnCreate에서 수행시 업데이트가 제대로 되지 않는 문제로 함수를 따로 뺌(foodcount가 제대로 되지 않음)
+    fun getfoodCount(){
+        var text_food_count = findViewById<TextView>(R.id.textShowCount)
+        text_food_count.text = "상품 " + foodcount + "개"
+    }
+
 
     // 바코드 버튼 클릭
     override fun onBarcodeBtnClicked() {
@@ -209,6 +218,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_delete: TextView
             var btn_minus: Button
             var btn_plus: Button
+            var text_food: TextView
 
             //var btn_food_eat: Button
 
@@ -349,7 +359,11 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //                        }
                             }
                     }
+                    // 음식 개수 세는 부분
+                    foodcount = foodlist.size
+                    getfoodCount()
                     recyclerview_foodlist.adapter?.notifyDataSetChanged()
+                    //Toast.makeText(this, foodlist.size.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
 
