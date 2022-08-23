@@ -204,7 +204,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_name: TextView
             var food_count: TextView
             var food_deadline: TextView
-            var btn_eat: Button
+            //var btn_eat: Button
             var food_dday: TextView
             var food_delete: TextView
             var btn_minus: Button
@@ -215,7 +215,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
             food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
-            btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
+            //btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
 //            btn_food_eat = viewHolder.findViewById(R.id.btnFoodEat)
             food_dday = viewHolder.findViewById(R.id.textDday)
 
@@ -251,9 +251,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
 
             // 먹었음 버튼 눌렀을 경우
-            btn_eat.setOnClickListener {
-                eatDone(food_index)
-            }
+//            btn_eat.setOnClickListener {
+//                eatDone(food_index)
+//            }
 
             // 삭제 텍스트뷰 클릭시 토스트 표시
             food_delete.setOnClickListener {
