@@ -228,6 +228,12 @@ class FridgeFragment : Fragment() {
             .show()
     }
 
+    // 공유인원 추가(냉장고 ID 추가)
+    fun addotherFridge(){
+        
+    }
+
+
     // 파이어베이스에서 데이터 불러오는 함수
     fun loadData() {
         // 냉장고 리스트 불러오기

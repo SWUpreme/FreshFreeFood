@@ -62,6 +62,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     var name : String? = null
     var index : String? = null
 
+    var foodname : String? = null
+    var foodlistdeadline : String? = null
+    var foodlistpurchase :  String? = null
+
     val TAG: String = "로그"
 
     var selectFood = -1
@@ -144,6 +148,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //            Toast.makeText(this, selectFood.toString(), Toast.LENGTH_SHORT).show()
             if (eatfoodindex!=""){
                 eatDone(eatfoodindex)
+                selectFood = preselect
+            }
+        }
+
+        var btn_go_post = findViewById<Button>(R.id.btnGoPost)
+        btn_go_post.setOnClickListener {
+            if (eatfoodindex!=""){
+
+                goPost(eatfoodindex)
                 selectFood = preselect
             }
         }
@@ -304,6 +317,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 else preselect = selectFood
                 selectFood = position
                 eatfoodindex = foodlist!![position].index.toString()
+                // 이하는 포스트 이동을 위한 intent를 위해 추가
+                foodname = foodlist!![position].name
+                foodlistdeadline = foodlist!![position].deadline
+                foodlistpurchase = foodlist!![position].purchaseAt
                 notifyDataSetChanged()
             }
 
@@ -398,6 +415,17 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     fun countPlus(foodindex: String, count: Int) {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
+    }
+
+    // 무료 나눔 포스트 작성 페이지로 데이터 전달
+    fun goPost(foodindex: String){
+        val intent = Intent(this, SharePostActivity::class.java)
+        intent.putExtra("index", index)
+        intent.putExtra("foodname", foodname)
+        intent.putExtra("foodlistdeadline", foodlistdeadline)
+        intent.putExtra("foodlistpurchase", foodlistpurchase)
+        //Toast.makeText(this, foodlistdeadline, Toast.LENGTH_SHORT).show()
+        ContextCompat.startActivity(this, intent, null)
     }
 
 
