@@ -62,16 +62,16 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     var name : String? = null
     var index : String? = null
 
-    var foodname : String? = null
-    var foodlistdeadline : String? = null
-    var foodlistpurchase :  String? = null
-
     val TAG: String = "로그"
 
     var selectFood = -1
     var preselect = -1
     var eatfoodindex : String = ""
     var foodcount = 0
+
+    var foodname : String? = null
+    var foodlistdeadline : String? = null
+    var foodlistpurchase :  String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,15 +149,16 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             if (eatfoodindex!=""){
                 eatDone(eatfoodindex)
                 selectFood = preselect
+                eatfoodindex = ""
             }
         }
 
         var btn_go_post = findViewById<Button>(R.id.btnGoPost)
         btn_go_post.setOnClickListener {
             if (eatfoodindex!=""){
-
                 goPost(eatfoodindex)
                 selectFood = preselect
+                eatfoodindex = ""
             }
         }
 

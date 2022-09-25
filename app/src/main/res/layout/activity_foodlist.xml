@@ -39,10 +39,9 @@
 
     <Button
         android:id="@+id/btnFoodEat"
-        android:layout_width="90dp"
+        android:layout_width="80dp"
         android:layout_height="55dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="7dp"
         android:background="@drawable/ic_btn_eaten"
         app:layout_constraintEnd_toStartOf="@+id/btnGoPost"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
@@ -71,11 +70,11 @@
 
     <Button
         android:id="@+id/btnGoPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_width="80dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:background="@drawable/ic_btn_gopost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 
