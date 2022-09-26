@@ -221,8 +221,8 @@ class FridgeFragment : Fragment() {
     // 냉장고 삭제
     fun deleteFridge(index: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
-        val fridgeoption = DialogFridgeoptionBinding.inflate(layoutInflater)
-        val fridgeopDialog = layoutInflater.inflate(R.layout.dialog_fridgeoption, null)
+        //val fridgeoption = DialogFridgeoptionBinding.inflate(layoutInflater)
+        //val fridgeopDialog = layoutInflater.inflate(R.layout.dialog_fridgeoption, null)
 
         val fridgedial = DialogDeletefridgeBinding.inflate(layoutInflater)
         val fridgeview = fridgedial.root
