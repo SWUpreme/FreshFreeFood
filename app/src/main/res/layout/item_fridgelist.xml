@@ -37,9 +37,9 @@
 
             <Button
                 android:id="@+id/btnFridgeDelete"
-                android:layout_width="45dp"
-                android:layout_height="10dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="35dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/btn_more"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,11 +47,11 @@
 
             <Button
                 android:id="@+id/btnPeople"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="30dp"
-                android:text="Button"
+                android:layout_width="40dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/ic_btn_peoplewhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
