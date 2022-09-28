@@ -61,14 +61,31 @@ class AuthActivity : AppCompatActivity() {
                             var user = auth!!.currentUser
 
                             if (user != null) {
+
                                 Toast.makeText(
                                     this, "로그인 되었습니다.",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 var nickname = user?.email?.split("@")?.get(0)
-                                firestore?.collection("user")?.document(user.uid)
-                                    ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
-                                        "contribution" to 0))
+
+
+//                                firestore?.collection("user")?.document(user.uid)
+//                                    ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
+//                                        "contribution" to 0))
+
+
+                                firestore?.collection("user")?.document(user?.uid)
+                                    ?.get()?.addOnSuccessListener { snapShot ->
+                                        if(snapShot.exists() == true) {
+                                            Toast.makeText(this, "기존 유저입니다.", Toast.LENGTH_LONG).show()
+                                        }
+                                        else{
+                                            firestore?.collection("user")?.document(user.uid)
+                                                ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
+                                                    "contribution" to 0))
+                                        }
+                                    }
+
                             }
                             //changeVisibility("login")
                             moveMainPage(task.result?.user)

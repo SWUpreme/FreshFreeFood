@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="160dp"
     android:background="#00FFFFFF">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:outlineProvider="none"
         app:cardBackgroundColor="#00FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
                 android:id="@+id/textFridgeName"
                 android:layout_width="194dp"
                 android:layout_height="49dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="32dp"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
@@ -47,10 +47,10 @@
 
             <Button
                 android:id="@+id/btnPeople"
-                android:layout_width="40dp"
-                android:layout_height="55dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="25dp"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/ic_btn_peoplewhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
