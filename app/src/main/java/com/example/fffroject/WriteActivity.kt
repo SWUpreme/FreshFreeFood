@@ -3,6 +3,7 @@ package com.example.fffroject
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputFilter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -53,9 +54,11 @@ class WriteActivity : AppCompatActivity() {
         name = findViewById(R.id.name)
         deadline_year = findViewById(R.id.fdeadlineYear)
         deadline_month = findViewById(R.id.fdeadlineMonth)
+        deadline_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
         deadline_day = findViewById(R.id.fdeadlineDate)
         purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
         purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
+        purchasedAt_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
         purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.scan_btn)

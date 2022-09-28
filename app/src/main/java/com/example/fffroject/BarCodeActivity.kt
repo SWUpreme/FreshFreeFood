@@ -2,12 +2,12 @@ package com.example.fffroject
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fffroject.fragment.FoodList
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,7 +22,6 @@ import kotlinx.coroutines.withTimeoutOrNull
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class BarCodeActivity : AppCompatActivity() {
@@ -66,9 +65,11 @@ class BarCodeActivity : AppCompatActivity() {
         name = findViewById(R.id.name)
         deadline_year = findViewById(R.id.fdeadlineYear)
         deadline_month = findViewById(R.id.fdeadlineMonth)
+        deadline_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
         deadline_day = findViewById(R.id.fdeadlineDate)
         purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
         purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
+        purchasedAt_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
         purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.upload_btn)

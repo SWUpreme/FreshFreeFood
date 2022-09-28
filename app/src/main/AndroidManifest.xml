@@ -48,7 +48,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".AuthActivity"
+            android:name=".BarCodeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BarCodeActivity"
+            android:name=".AuthActivity"
             android:exported="true"
             tools:ignore="DuplicateActivity" />
         <activity

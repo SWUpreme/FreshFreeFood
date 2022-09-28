@@ -91,7 +91,7 @@
 
             <EditText
                 android:id="@+id/fdeadlineMonth"
-                android:layout_width="40dp"
+                android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
@@ -120,13 +120,13 @@
 
             <EditText
                 android:id="@+id/fdeadlineDate"
+                android:inputType="number"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="4dp"
                 android:background="@drawable/txt_background_round"
-                android:inputType="date"
                 android:maxLength="2"
                 android:minHeight="38dp"
                 android:nextFocusDown="@+id/purchasedAtYear"
@@ -192,13 +192,13 @@
 
             <EditText
                 android:id="@+id/fpurchasedAtMonth"
+                android:inputType="number"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="4dp"
                 android:background="@drawable/txt_background_round"
-                android:inputType="date"
                 android:maxLength="2"
                 android:minHeight="38dp"
                 android:nextFocusDown="@+id/purchasedAtDate"
@@ -312,6 +312,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="바코드 번호"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

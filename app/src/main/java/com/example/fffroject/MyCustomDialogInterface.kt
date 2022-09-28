@@ -7,4 +7,6 @@ interface MyCustomDialogInterface {
 
     fun onWriteBtnClicked()
 
+
+
 }

@@ -34,8 +34,12 @@ class MyCustomDialog(context: Context,
         // 배경 투명
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+
         barcode_btn.setOnClickListener(this)
         write_btn.setOnClickListener(this)
+        close_btn.setOnClickListener {
+            dismiss()
+        }
 
 
     }
@@ -56,6 +60,8 @@ class MyCustomDialog(context: Context,
 
                 this.myCustomDialogInterface?.onWriteBtnClicked()
             }
+
+
         }
     }
 
