@@ -42,16 +42,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/main_top_plus" >
 
-    <TextView
-        android:id="@+id/textFridgeID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="냉장고 페이지"
-        android:textColor="#30353D"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="21dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="냉장고 페이지"
+            android:textColor="#30353D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="181dp"
+            tools:layout_editor_absoluteY="21dp" />
     </androidx.appcompat.widget.Toolbar>
 </androidx.constraintlayout.widget.ConstraintLayout>

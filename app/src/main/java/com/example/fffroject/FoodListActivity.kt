@@ -58,6 +58,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     lateinit var foodlist: ArrayList<FoodList>
     lateinit var recyclerview_foodlist: RecyclerView
     lateinit var toolbar_foodlist: Toolbar
+    lateinit var toolbar_fridgename : TextView
 
     var name : String? = null
     var index : String? = null
@@ -93,7 +94,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         // 상단 툴바 사용
         toolbar_foodlist = findViewById(R.id.toolbFoodlist)
-        toolbar_foodlist.setTitle(name)
+        toolbar_fridgename = findViewById(R.id.textFridgeID)
+        toolbar_fridgename.setText(name)
 
         // 상단 툴바 +버튼 클릭시
         toolbar_foodlist.setOnMenuItemClickListener {

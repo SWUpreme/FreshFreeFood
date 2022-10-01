@@ -124,6 +124,7 @@
         <entry key="app/src/main/res/layout/item_recycler.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/menu/main_top_plus.xml" value="0.271875" />
+        <entry key="app/src/main/res/menu/sharepost_top_plus.xml" value="0.271875" />
       </map>
     </option>
   </component>
