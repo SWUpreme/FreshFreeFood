@@ -13,7 +13,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbFoodlist"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:background="@drawable/background_top"
         android:minHeight="?attr/actionBarSize"
@@ -21,22 +21,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/main_top_plus"/>
+        app:menu="@menu/main_top_plus">
+
+        <TextView
+            android:id="@+id/textFridgeID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="냉장고 페이지"
+            android:textColor="#30353D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="181dp"
+            tools:layout_editor_absoluteY="21dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <TextView
         android:id="@+id/textShowCount"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/ic_btn_foodcount"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/txt_background_foodcount_round"
         android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 
     <Button
         android:id="@+id/btnFoodEat"

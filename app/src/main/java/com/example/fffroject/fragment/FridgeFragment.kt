@@ -30,6 +30,7 @@ import com.example.fffroject.databinding.DialogFridgeoptionBinding
 import com.example.fffroject.databinding.FragmentFridgeBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.activity_write.*
 import kotlinx.android.synthetic.main.dialog_deletefridge.view.*
 
 class FridgeFragment : Fragment() {
@@ -54,6 +55,8 @@ class FridgeFragment : Fragment() {
 
     lateinit var btn_fridgeclose : ImageButton
     lateinit var btn_fridgedel : Button
+
+    lateinit var text_fridge_name : TextView
 
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
@@ -108,7 +111,7 @@ class FridgeFragment : Fragment() {
         // 툴바
         toolbar_fridge = view.findViewById(R.id.toolbShare)    // 상단바
         //toolbar_fridge.inflateMenu(R.menu.main_top_plus)        // menu xml과 상단바 연결
-        toolbar_fridge.setTitle("냉장고 페이지")
+        //toolbar_fridge.setTitle("냉장고 페이지")
 
         // 상단바 메뉴 클릭시
         toolbar_fridge.setOnMenuItemClickListener {
