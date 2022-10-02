@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/foodSwipe"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="110dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -62,9 +62,10 @@
                     android:layout_width="210dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="24dp"
                     android:text="TextView"
                     android:textAlignment="textStart"
+                    android:textColor="#30353D"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +78,7 @@
                     android:layout_marginBottom="25dp"
                     android:text="999"
                     android:textAlignment="center"
+                    android:textColor="#30353D"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnFoodMinus" />
@@ -87,7 +89,7 @@
                     android:layout_height="35dp"
                     android:layout_marginStart="13dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/ic_btn_roundample"
+                    android:background="@drawable/ic_btn_foodcount_minus"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -97,9 +99,10 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="25dp"
+                    android:layout_marginBottom="26dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
+                    android:textColor="#95979B"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -121,7 +124,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginBottom="15dp"
-                    android:background="@drawable/ic_btn_roundample"
+                    android:background="@drawable/ic_btn_foodcount_plus"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textFoodCount"
                     tools:ignore="SpeakableTextPresentCheck" />
