@@ -8,9 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 //import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -59,6 +57,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     lateinit var recyclerview_foodlist: RecyclerView
     lateinit var toolbar_foodlist: Toolbar
     lateinit var toolbar_fridgename : TextView
+    lateinit var spinner_foodlist : Spinner
 
     var name : String? = null
     var index : String? = null
@@ -108,6 +107,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 else -> false
             }
         }
+
+        // Spinner 설정
+        spinner_foodlist = findViewById(R.id.spinFoodHow)
+        spinner_foodlist.adapter = ArrayAdapter.createFromResource(this, R.array.foodarray, android.R.layout.simple_spinner_item)
 
 
         // 파이어베이스에서 식품 리스트 값 불러오기

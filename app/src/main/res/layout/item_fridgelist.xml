@@ -8,11 +8,11 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
         android:outlineProvider="none"
         app:cardBackgroundColor="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,14 +23,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_fridgeback">
+            android:background="@drawable/btn_fridge_back">
 
             <TextView
                 android:id="@+id/textFridgeName"
                 android:layout_width="194dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="25dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="38dp"
                 android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
@@ -40,10 +40,10 @@
 
             <Button
                 android:id="@+id/btnFridgeDelete"
-                android:layout_width="56dp"
-                android:layout_height="38dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/btn_fridgemore"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -54,18 +54,36 @@
                 android:id="@+id/btnPeople"
                 android:layout_width="35dp"
                 android:layout_height="50dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/ic_btn_peoplewhite"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="#71ABFF"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="7dp"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="#71ABFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:elevation="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnPeople"
+                app:layout_constraintEnd_toEndOf="@+id/btnPeople"
+                app:layout_constraintStart_toStartOf="@+id/btnPeople"
+                app:layout_constraintTop_toTopOf="@+id/btnPeople" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="49dp"
                 android:text="유통기한 임박 식품 : "
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"

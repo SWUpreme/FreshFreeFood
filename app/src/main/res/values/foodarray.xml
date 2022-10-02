@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="foodarray">
+        <item>유통기한 순</item>
+        <item>최근 등록 순</item>
+    </string-array>
+</resources>

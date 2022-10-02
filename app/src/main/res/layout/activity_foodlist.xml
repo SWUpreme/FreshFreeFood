@@ -55,6 +55,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 
+    <Spinner
+        android:id="@+id/spinFoodHow"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/txt_background_foodcount_round"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/textShowCount"
+        app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
+
     <Button
         android:id="@+id/btnFoodEat"
         android:layout_width="80dp"
@@ -91,7 +107,7 @@
         android:layout_width="80dp"
         android:layout_height="55dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/ic_btn_gopost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
