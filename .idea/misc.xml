@@ -72,49 +72,43 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.109375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_recyclerview.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_region_select.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_sharedetail.xml" value="0.264" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_sharepost.xml" value="0.264" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_region_select.xml" value="0.264" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_sharedetail.xml" value="0.4" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_sharepost.xml" value="0.4" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_write.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/custom_dialog.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_addfridge.xml" value="0.109375" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_addimage.xml" value="0.264" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_addimage.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_background_round.xml" value="0.2484375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_deletefridge.xml" value="0.109375" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_selectregion.xml" value="0.2484375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_fridge.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_mypage.xml" value="0.1953125" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_foodlist.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_fridgelist.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_sharelist.xml" value="0.4" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_loading.xml" value="0.2484375" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_recycler.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_regionlist.xml" value="0.2484375" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_sharelist.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/menu/main_top_plus.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/menu/selectregion_top.xml" value="0.2484375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/menu/sharedetail_top_send.xml" value="0.2484375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/menu/sharepost_top_plus.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/xml/file_paths.xml" value="0.23385416666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/activity_auth.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/activity_barcode.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/activity_recyclerview.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/activity_write.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/custom_dialog.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/dialog_addfridge.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/dialog_addimage.xml" value="0.17916666666666667" />
-        <entry key="..\:/fff/FreshFreeFood/app/src/main/res/layout/dialog_deletefridge.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/activity_barcode.xml" value="0.22916666666666666" />
-        <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.4793830128897608" />
+        <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.29177290322124094" />
         <entry key="app/src/main/res/layout/activity_recyclerview.xml" value="0.3077858880778589" />
         <entry key="app/src/main/res/layout/activity_sharepost.xml" value="0.49941603066264717" />
         <entry key="app/src/main/res/layout/activity_write.xml" value="0.375" />
         <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/dialog_addimage.xml" value="0.22916666666666666" />
-        <entry key="app/src/main/res/layout/dialog_deletefridge.xml" value="1.0241935483870968" />
-        <entry key="app/src/main/res/layout/dialog_fridgeoption.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/dialog_deletefridge.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.35377604166666665" />
+        <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.2753916422526041" />
         <entry key="app/src/main/res/layout/item_recycler.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.23007246376811594" />
       </map>

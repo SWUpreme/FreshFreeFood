@@ -25,10 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/roboto_medium"
             android:text="게시글 쓰기"
             android:textColor="#30353D"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="163dp"
+            tools:layout_editor_absoluteY="21dp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -101,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="제목"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -111,6 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/txt_background_round"
+                android:fontFamily="@font/roboto_medium"
                 android:hint="게시글 제목을 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
@@ -127,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="유통기한"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -143,6 +149,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:maxLength="4"
                     android:minHeight="38dp"
@@ -160,6 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="년"
                     android:textColor="#30353D"
                     android:textSize="14sp" />
@@ -172,6 +180,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
@@ -189,6 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="월"
                     android:textColor="#30353D"
                     android:textSize="14sp" />
@@ -201,6 +211,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
@@ -228,6 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="구매일"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -244,6 +256,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:maxLength="4"
                     android:minHeight="38dp"
@@ -261,6 +274,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="년"
                     android:textColor="#30353D"
                     android:textSize="14sp" />
@@ -273,6 +287,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
@@ -290,6 +305,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="월"
                     android:textColor="#30353D"
                     android:textSize="14sp" />
@@ -302,6 +318,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:inputType="date"
                     android:maxLength="2"
                     android:minHeight="38dp"
@@ -319,6 +336,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="일"
                     android:textColor="#30353D"
                     android:textSize="14sp" />
@@ -329,6 +347,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="제품명"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -339,6 +358,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/txt_background_round"
+                android:fontFamily="@font/roboto_medium"
                 android:hint="제품명을 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
@@ -355,6 +375,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="지역"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -365,6 +386,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/txt_background_round"
+                android:fontFamily="@font/roboto_medium"
                 android:hint="지역을 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
@@ -381,6 +403,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="거래 희망 위치"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -391,6 +414,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/txt_background_round"
+                android:fontFamily="@font/roboto_medium"
                 android:hint="거래 희망 위치를 입력해주세요."
                 android:maxLength="50"
                 android:minHeight="38dp"
@@ -407,6 +431,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="게시글 내용"
                 android:textColor="#B4B4B4"
                 android:textSize="14sp" />
@@ -421,6 +446,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
                     android:gravity="top"
                     android:hint="게시글 내용을 작성해주세요."
                     android:imeOptions="actionDone"
