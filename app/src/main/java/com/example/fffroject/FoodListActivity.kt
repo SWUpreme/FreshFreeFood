@@ -266,15 +266,15 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var day = formatter.parse(nowdate).time
             var d_day = (date - day)/ (60 * 60 * 24 * 1000)
             if (d_day.toInt() > 0){
-                food_dday.text = "D - " + d_day.toString()
+                food_dday.text = "D-" + d_day.toString()
                 food_dday.setTextColor(Color.parseColor("#71ABFF"))
             }
             else if (d_day.toInt() == 0){
-                food_dday.text = "D - Day"
+                food_dday.text = "D-Day"
                 food_dday.setTextColor(Color.parseColor("#FEC10A"))
             }
             else {
-                food_dday.text = "D + " + (d_day.toInt()*(-1)).toString()
+                food_dday.text = "D+" + (d_day.toInt()*(-1)).toString()
                 food_dday.setTextColor(Color.parseColor("#ED6C3C"))
             }
 
