@@ -50,6 +50,7 @@
                         android:id="@+id/listTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="제목입니당"
                         android:textColor="#30353D"
                         android:textSize="17sp" />
@@ -58,6 +59,7 @@
                         android:id="@+id/listCreatedAt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="05.30"
                         android:textAlignment="viewEnd"
                         android:textColor="#95979B"
@@ -69,6 +71,7 @@
                     android:id="@+id/listName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="사과"
                     android:textColor="#B4B4B4"
                     android:textSize="13sp" />
@@ -83,6 +86,7 @@
                         android:id="@+id/listDeadline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="2022.05.30"
                         android:textColor="#B4B4B4"
                         android:textSize="13sp" />
@@ -91,6 +95,7 @@
                         android:id="@+id/txtNotify"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
                         android:text=" 까지"
                         android:textColor="#B4B4B4"
                         android:textSize="13sp" />
@@ -107,6 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/txt_background_round2_blue"
+                        android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="8dp"
                         android:paddingTop="3dp"
                         android:paddingRight="8dp"
@@ -120,6 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/txt_background_round2_blue"
+                        android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="8dp"
                         android:paddingTop="3dp"
                         android:paddingRight="8dp"
