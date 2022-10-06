@@ -110,11 +110,32 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         // Spinner 설정
         spinner_foodlist = findViewById(R.id.spinFoodHow)
+        val fooditems = resources.getStringArray(R.array.foodarray)
         spinner_foodlist.adapter = ArrayAdapter.createFromResource(this, R.array.foodarray, android.R.layout.simple_spinner_item)
+
+        spinner_foodlist.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // 아이템이 클릭되면 맨 위인 position 0번부터 순서대로 동작하게 됩니다.
+                when(position) {
+                    0 -> {
+                        loadData()
+
+                    }
+                    1 -> {
+                        loadData()
+
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+
 
 
         // 파이어베이스에서 식품 리스트 값 불러오기
-        loadData()
+        //loadData()
 
         recyclerview_foodlist = findViewById(R.id.recyclerviewFoodlist)
         recyclerview_foodlist.adapter = RecyclerviewAdapter()
@@ -355,7 +376,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //    }
 
 
-    // 냉장고별 식품 리스트 불러오기
+    // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
     fun loadData() {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
