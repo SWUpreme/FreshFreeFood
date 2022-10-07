@@ -57,9 +57,9 @@
                 android:layout_marginEnd="28dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/ic_btn_peoplewhite"
+                android:textColor="#71ABFF"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="#71ABFF"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -67,12 +67,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="7dp"
+                android:elevation="5dp"
                 android:text="1"
                 android:textAlignment="center"
                 android:textColor="#71ABFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:elevation="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/btnPeople"
                 app:layout_constraintEnd_toEndOf="@+id/btnPeople"
                 app:layout_constraintStart_toStartOf="@+id/btnPeople"

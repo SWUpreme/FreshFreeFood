@@ -111,7 +111,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // Spinner 설정
         spinner_foodlist = findViewById(R.id.spinFoodHow)
         val fooditems = resources.getStringArray(R.array.foodarray)
-        spinner_foodlist.adapter = ArrayAdapter.createFromResource(this, R.array.foodarray, android.R.layout.simple_spinner_item)
+        spinner_foodlist.adapter = ArrayAdapter.createFromResource(this, R.array.foodarray, R.layout.spinner_style)
 
         spinner_foodlist.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -119,11 +119,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 when(position) {
                     0 -> {
                         loadData()
-
                     }
                     1 -> {
-                        loadData()
-
+                        loadDataDate()
                     }
                 }
             }
@@ -412,6 +410,35 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
 
     }
+
+
+    // 냉장고별 식품 리스트 최신등록순
+    fun loadDataDate() {
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")
+            ?.orderBy("purchaseAt", Query.Direction.DESCENDING)
+            ?.addSnapshotListener { value, error ->
+                foodlist.clear()
+                if (value != null) {
+                    for (snapshot in value.documents) {
+                        var done = firestore?.collection("fridge")?.document(index.toString())
+                            ?.collection("food")?.document("done")?.get().toString().toBoolean()
+                        var item = snapshot.toObject(FoodList::class.java)
+                        if (item != null && done == false) {
+                            foodlist.add(item)
+                        }
+                    }
+                    // 음식 개수 세는 부분
+                    foodcount = foodlist.size
+                    getfoodCount()
+                    recyclerview_foodlist.adapter?.notifyDataSetChanged()
+                }
+            }
+
+    }
+
+
+
 
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
