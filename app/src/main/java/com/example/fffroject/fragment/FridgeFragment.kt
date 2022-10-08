@@ -30,8 +30,10 @@ import com.example.fffroject.databinding.DialogFridgeoptionBinding
 import com.example.fffroject.databinding.FragmentFridgeBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_write.*
 import kotlinx.android.synthetic.main.dialog_deletefridge.view.*
+import kotlinx.android.synthetic.main.item_fridgelist.*
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -43,6 +45,7 @@ class FridgeFragment : Fragment() {
     // Data에 있는 MyFridge랑 해줘야해
     lateinit var fridgelist: ArrayList<MyFridge>
     lateinit var fbinding : FragmentFridgeBinding
+    lateinit var foodcurrnet: ArrayList<FoodList>
 
     lateinit var btn_addFridge: Button
     lateinit var edt_fridgename: EditText
@@ -57,6 +60,7 @@ class FridgeFragment : Fragment() {
     lateinit var btn_fridgedel : Button
 
     lateinit var text_fridge_name : TextView
+    var current = ""
 
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
@@ -70,6 +74,7 @@ class FridgeFragment : Fragment() {
         var view = LayoutInflater.from(activity).inflate(R.layout.fragment_fridge, container, false)
 
         fridgelist = arrayListOf<MyFridge>()
+        foodcurrnet = arrayListOf()
 
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
@@ -145,12 +150,16 @@ class FridgeFragment : Fragment() {
             var viewHolder = (holder as ViewHolder).itemView
             var fridgename: TextView
             var btn_fridge_delete: Button
+            var foodname : TextView
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
+            foodname = viewHolder.findViewById(R.id.textCurrentFood)
 
             // 리사이클러뷰 아이템 정보
             fridgename.text = fridgelist!![position].name
             fridgeid = fridgelist!![position].index!!
+            foodname.text = fridgelist!![position].current
+
 
             // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
             btn_fridge_delete = viewHolder.findViewById(R.id.btnFridgeDelete)
@@ -197,7 +206,8 @@ class FridgeFragment : Fragment() {
                                 hashMapOf(
                                     "index" to fridgeid,
                                     "name" to edt_fridgename.text.toString(),
-                                    "owner" to user?.uid
+                                    "owner" to user?.uid,
+                                    "current" to ""
                                 )
                             )
                             ?.addOnSuccessListener { }
@@ -314,6 +324,14 @@ class FridgeFragment : Fragment() {
                     recyclerview_fridge.adapter?.notifyDataSetChanged()
                 }
         }
+    }
+
+    // 가장 최근 식품 불러오기
+    fun findCurrent(index: String) {
+        current = firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")
+            ?.orderBy("deadline", Query.Direction.DESCENDING)?.limit(1)?.get().toString()
+        Toast.makeText(activity, current, Toast.LENGTH_SHORT).show()
     }
 
 }

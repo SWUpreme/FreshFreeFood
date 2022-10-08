@@ -31,9 +31,11 @@ import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.common.net.InetAddresses.decrement
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.item_foodlist.*
 import kotlinx.android.synthetic.main.item_foodlist.view.*
+import kotlinx.coroutines.flow.merge
 import org.threeten.bp.format.DateTimeFormatter
 import org.w3c.dom.Text
 import java.lang.reflect.Array.get
@@ -399,7 +401,13 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         if (item != null && done == false) {
                             foodlist.add(item)
 //                        }
-                            }
+                        }
+//                        firestore?.collection("current")?.document(foodlist.get(0).name.toString())
+//                            ?.set(firestore?.collection("fridge")?.document(index.toString())!!)
+                        firestore?.collection("fridge")?.document(index.toString())
+                            ?.update("current", foodlist.get(0).name.toString())
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
                     }
                     // 음식 개수 세는 부분
                     foodcount = foodlist.size

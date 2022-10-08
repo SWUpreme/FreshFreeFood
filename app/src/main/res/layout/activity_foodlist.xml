@@ -43,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="5dp"
         android:background="@color/white"
         android:gravity="center"
         android:paddingLeft="5dp"
@@ -52,6 +51,7 @@
         android:textAlignment="center"
         android:textColor="#95979B"
         android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 
@@ -59,7 +59,6 @@
         android:id="@+id/spinFoodHow"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="5dp"
         android:background="@color/white"
         android:gravity="center"
         android:paddingLeft="10dp"
@@ -67,15 +66,15 @@
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
         app:layout_constraintStart_toEndOf="@+id/textShowCount"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 
     <Button
         android:id="@+id/btnFoodEat"
-        android:layout_width="80dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/ic_btn_eaten"
+        android:layout_width="68dp"
+        android:layout_height="45dp"
+        android:background="@drawable/ic_btn_foodeat"
         app:layout_constraintEnd_toStartOf="@+id/btnGoPost"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 
@@ -103,11 +102,10 @@
 
     <Button
         android:id="@+id/btnGoPost"
-        android:layout_width="80dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="79dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="5dp"
-        android:background="@drawable/ic_btn_gopost"
+        android:background="@drawable/ic_btn_foodpost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbFoodlist" />
 

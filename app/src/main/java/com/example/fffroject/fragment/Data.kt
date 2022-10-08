@@ -6,7 +6,8 @@ import kotlin.collections.HashMap
 // 나의 냉장고 리스트
 data class MyFridge(
     var index : String? = null,
-    var name : String? = null
+    var name : String? = null,
+    var current : String? = null
 )
 
 // 나눔 전체 게시글 리스트
