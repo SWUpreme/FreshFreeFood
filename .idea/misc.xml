@@ -130,7 +130,9 @@
         <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.41811175337186895" />
         <entry key="app/src/main/res/layout/item_recycler.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_sharelist.xml" value="0.23007246376811594" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.271875" />
         <entry key="app/src/main/res/menu/main_top_plus.xml" value="0.271875" />
+        <entry key="app/src/main/res/menu/selectregion_top.xml" value="0.271875" />
         <entry key="app/src/main/res/menu/sharepost_top_plus.xml" value="0.271875" />
       </map>
     </option>
