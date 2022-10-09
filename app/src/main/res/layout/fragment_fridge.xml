@@ -33,14 +33,14 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbShare"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:background="@drawable/background_top"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+    android:layout_width="0dp"
+    android:layout_height="65dp"
+    android:background="@drawable/background_top"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="?attr/actionBarTheme"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/main_top_plus">
 
