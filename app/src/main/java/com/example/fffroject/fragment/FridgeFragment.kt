@@ -44,12 +44,12 @@ class FridgeFragment : Fragment() {
 
     // Data에 있는 MyFridge랑 해줘야해
     lateinit var fridgelist: ArrayList<MyFridge>
-    lateinit var fbinding : FragmentFridgeBinding
+    lateinit var fbinding: FragmentFridgeBinding
     lateinit var foodcurrnet: ArrayList<FoodList>
 
     lateinit var btn_addFridge: Button
     lateinit var edt_fridgename: EditText
-    lateinit var btn_addfridgeclose : ImageButton
+    lateinit var btn_addfridgeclose: ImageButton
 
     lateinit var spinner: Spinner
     lateinit var select_fridge: String
@@ -58,12 +58,12 @@ class FridgeFragment : Fragment() {
 
     lateinit var toolbar_fridge: Toolbar
 
-    lateinit var btn_fridgeclose : ImageButton
-    lateinit var btn_fridgedel : Button
+    lateinit var btn_fridgeclose: ImageButton
+    lateinit var btn_fridgedel: Button
 
-    lateinit var btn_addfridge : Button
+    lateinit var btn_addfridge: Button
 
-    lateinit var text_fridge_name : TextView
+    lateinit var text_fridge_name: TextView
     //var current = ""
 
 //    fun newInstance() : FridgeFragment {
@@ -124,7 +124,7 @@ class FridgeFragment : Fragment() {
 
         // 상단바 메뉴 클릭시
         toolbar_fridge.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.btnPlus -> {
                     addFridge()
                     true
@@ -152,7 +152,7 @@ class FridgeFragment : Fragment() {
             var viewHolder = (holder as ViewHolder).itemView
             var fridgename: TextView
             var btn_fridge_delete: Button
-            var foodname : TextView
+            var foodname: TextView
             var btn_add_close: Button
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
@@ -176,7 +176,7 @@ class FridgeFragment : Fragment() {
             }
 
             // 클릭이벤트(해당 냉장고로 넘어감)
-            viewHolder.setOnClickListener{
+            viewHolder.setOnClickListener {
                 val intent = Intent(viewHolder.context, FoodListActivity::class.java)
                 intent.putExtra("index", index)
                 intent.putExtra("name", fridgename.text.toString())
@@ -210,7 +210,7 @@ class FridgeFragment : Fragment() {
 
         // 닫기 버튼
         btn_addfridgeclose = addfridgeview.findViewById(R.id.btnAddClose)
-        btn_addfridgeclose.setOnClickListener{
+        btn_addfridgeclose.setOnClickListener {
             addfridgealertDialog?.dismiss()
         }
 
@@ -314,20 +314,19 @@ class FridgeFragment : Fragment() {
         btn_fridgedel = fridgeview.findViewById(R.id.btnFridgedelOk)
         btn_fridgedel.setOnClickListener {
             firestore?.collection("fridge")?.document(index)
-                    ?.delete()
-                    ?.addOnSuccessListener { }
-                    ?.addOnFailureListener { }
-                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                    ?.document(index)
-                    ?.delete()
-                    ?.addOnSuccessListener {
-                        Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                    ?.addOnFailureListener { }
+                ?.delete()
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                ?.document(index)
+                ?.delete()
+                ?.addOnSuccessListener {
+                    Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                ?.addOnFailureListener { }
 
             fridgealertDialog?.dismiss()
         }
-
 
 
 //        val builder = AlertDialog.Builder(activity)
@@ -354,8 +353,8 @@ class FridgeFragment : Fragment() {
     }
 
     // 공유인원 추가(냉장고 ID 추가)
-    fun addotherFridge(){
-        
+    fun addotherFridge() {
+
     }
 
 
