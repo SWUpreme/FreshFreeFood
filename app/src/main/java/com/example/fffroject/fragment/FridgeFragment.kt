@@ -45,14 +45,12 @@ class FridgeFragment : Fragment() {
     // Data에 있는 MyFridge랑 해줘야해
     lateinit var fridgelist: ArrayList<MyFridge>
     lateinit var fbinding: FragmentFridgeBinding
-    lateinit var foodcurrnet: ArrayList<FoodList>
 
-    lateinit var btn_addFridge: Button
     lateinit var edt_fridgename: EditText
     lateinit var btn_addfridgeclose: ImageButton
 
-    lateinit var spinner: Spinner
-    lateinit var select_fridge: String
+//    lateinit var spinner: Spinner
+//    lateinit var select_fridge: String
     lateinit var fridgeid: String
     lateinit var recyclerview_fridge: RecyclerView
 
@@ -78,7 +76,6 @@ class FridgeFragment : Fragment() {
         var view = LayoutInflater.from(activity).inflate(R.layout.fragment_fridge, container, false)
 
         fridgelist = arrayListOf<MyFridge>()
-        foodcurrnet = arrayListOf()
 
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
