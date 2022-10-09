@@ -19,7 +19,7 @@ class EnvlevelFragment: Fragment() {
 
     lateinit var progress_envlevel: ProgressBar
     // 환경 기여도 레벨
-    var envlevel = 0
+    var envpercent = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,10 +52,10 @@ class EnvlevelFragment: Fragment() {
             firestore?.collection("user")?.document(user!!.uid)
                 ?.get()?.addOnSuccessListener { document ->
                     if (document != null) {
-                        envlevel = document?.data?.get("contribution").toString().toInt()
+                        envpercent = document?.data?.get("contribution").toString().toInt()
                         //Toast.makeText(context, envlevel.toString(), Toast.LENGTH_SHORT).show()
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
-                        progress_envlevel.progress = envlevel
+                        progress_envlevel.progress = envpercent
                     }
                 }
 
