@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
@@ -32,6 +33,8 @@ class ShareFragment : Fragment() {
     // 바인딩
     lateinit var btnShareAdd: ImageButton
     lateinit var btnSelectRegion: ImageButton
+    lateinit var txtRegionSelect: TextView
+    lateinit var webView: WebView
     lateinit var recyclerviewShare: RecyclerView
     lateinit var toolbar_sharepost: Toolbar
 
@@ -57,6 +60,7 @@ class ShareFragment : Fragment() {
         // 바인딩
         btnShareAdd= view.findViewById(R.id.btnShareAdd)
         btnSelectRegion= view.findViewById(R.id.btnSelectRegion)
+        txtRegionSelect = view.findViewById(R.id.txtRegionSelect)
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)
         toolbar_sharepost = view.findViewById(R.id.toolbShare)
 
@@ -84,10 +88,16 @@ class ShareFragment : Fragment() {
             }
         }
 
-        // 지역 선택 버튼
+        // 주소 검색 웹뷰 화면으로 이동
         btnSelectRegion.setOnClickListener{
             val intent = Intent(activity, RegionSelectActivity::class.java)
             startActivity(intent)
+        }
+
+        // 주소 검색 액티비티에서 넘어온 값이 있다면
+        val regionData = arguments?.getString("data")
+        if(regionData != null){
+            txtRegionSelect.text = regionData
         }
 
         return view
