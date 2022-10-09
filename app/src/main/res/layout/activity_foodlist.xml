@@ -47,7 +47,7 @@
         android:gravity="center"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:text="count"
+        android:text="상품 0개"
         android:textAlignment="center"
         android:textColor="#95979B"
         android:textSize="14sp"

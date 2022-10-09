@@ -253,14 +253,11 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             var food_name: TextView
             var food_count: TextView
             var food_deadline: TextView
-            //var btn_eat: Button
+
             var food_dday: TextView
             var food_delete: TextView
             var btn_minus: Button
             var btn_plus: Button
-            var text_food: TextView
-
-            //var btn_food_eat: Button
 
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
@@ -298,12 +295,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 food_dday.text = "D+" + (d_day.toInt()*(-1)).toString()
                 food_dday.setTextColor(Color.parseColor("#ED6C3C"))
             }
-
-
-            // 먹었음 버튼 눌렀을 경우
-//            btn_eat.setOnClickListener {
-//                eatDone(food_index)
-//            }
 
             // 삭제 텍스트뷰 클릭시 토스트 표시
             food_delete.setOnClickListener {
@@ -351,11 +342,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 notifyDataSetChanged()
             }
 
-//            btn_food_eat.setOnClickListener {
-//                Toast.makeText(viewHolder.context, position, Toast.LENGTH_SHORT).show()
-//            }
-
-
         }
 
         override fun getItemCount(): Int {
@@ -400,10 +386,17 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         var item = snapshot.toObject(FoodList::class.java)
                         if (item != null && done == false) {
                             foodlist.add(item)
-//                        }
                         }
 //                        firestore?.collection("current")?.document(foodlist.get(0).name.toString())
 //                            ?.set(firestore?.collection("fridge")?.document(index.toString())!!)
+                        // 유통기한 임박 제품 업데이트
+                        // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                            ?.document(index.toString())
+                            ?.update("current", foodlist.get(0).name.toString())
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
+                        // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
                         firestore?.collection("fridge")?.document(index.toString())
                             ?.update("current", foodlist.get(0).name.toString())
                             ?.addOnSuccessListener { }

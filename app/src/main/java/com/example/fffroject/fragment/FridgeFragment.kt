@@ -60,7 +60,7 @@ class FridgeFragment : Fragment() {
     lateinit var btn_fridgedel : Button
 
     lateinit var text_fridge_name : TextView
-    var current = ""
+    //var current = ""
 
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
@@ -131,7 +131,6 @@ class FridgeFragment : Fragment() {
         }
 
         return view
-//        return inflater.inflate(R.layout.fragment_fridge, container, false)
     }
 
     // 리사이클러뷰 사용
@@ -174,7 +173,6 @@ class FridgeFragment : Fragment() {
 
             // 클릭이벤트(해당 냉장고로 넘어감)
             viewHolder.setOnClickListener{
-                //val intent = Intent(viewHolder.context, FoodListActivity::class.java)
                 val intent = Intent(viewHolder.context, FoodListActivity::class.java)
                 intent.putExtra("index", index)
                 intent.putExtra("name", fridgename.text.toString())
@@ -207,7 +205,7 @@ class FridgeFragment : Fragment() {
                                     "index" to fridgeid,
                                     "name" to edt_fridgename.text.toString(),
                                     "owner" to user?.uid,
-                                    "current" to ""
+                                    "current" to "냉장고가 비었습니다"
                                 )
                             )
                             ?.addOnSuccessListener { }
@@ -217,7 +215,8 @@ class FridgeFragment : Fragment() {
                             ?.set(
                                 hashMapOf(
                                     "index" to fridgeid,
-                                    "name" to edt_fridgename.text.toString()
+                                    "name" to edt_fridgename.text.toString(),
+                                    "current" to "냉장고가 비었습니다"
                                 )
                             )
                             ?.addOnSuccessListener { }
@@ -325,13 +324,4 @@ class FridgeFragment : Fragment() {
                 }
         }
     }
-
-    // 가장 최근 식품 불러오기
-    fun findCurrent(index: String) {
-        current = firestore?.collection("fridge")?.document(index.toString())
-            ?.collection("food")
-            ?.orderBy("deadline", Query.Direction.DESCENDING)?.limit(1)?.get().toString()
-        Toast.makeText(activity, current, Toast.LENGTH_SHORT).show()
-    }
-
 }
