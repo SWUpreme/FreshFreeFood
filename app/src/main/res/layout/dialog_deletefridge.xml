@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
-    android:layout_height="150dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:textAlignment="center">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical"
@@ -46,36 +46,54 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/dialog_background_round"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:visibility="invisible" />
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="73dp">
 
             <TextView
                 android:id="@+id/textFridgeDelete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:text="냉장고를 삭제하시겠습니까?"
                 android:textAlignment="center"
                 android:textColor="#040000"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnFridgedelOk"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_btn_fridgedelok" />
+                android:background="@drawable/ic_btn_fridgeadd_ok"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textFridgeDelete" />
 
-        </LinearLayout>
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="@drawable/dialog_background_round"-->
+            <!--                android:orientation="vertical"-->
+            <!--                tools:layout_editor_absoluteX="8dp"-->
+            <!--                tools:layout_editor_absoluteY="73dp">-->
+
+            <!--            </LinearLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

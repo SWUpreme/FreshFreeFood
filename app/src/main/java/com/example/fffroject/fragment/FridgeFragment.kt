@@ -49,6 +49,8 @@ class FridgeFragment : Fragment() {
 
     lateinit var btn_addFridge: Button
     lateinit var edt_fridgename: EditText
+    lateinit var btn_addfridgeclose : ImageButton
+
     lateinit var spinner: Spinner
     lateinit var select_fridge: String
     lateinit var fridgeid: String
@@ -58,6 +60,8 @@ class FridgeFragment : Fragment() {
 
     lateinit var btn_fridgeclose : ImageButton
     lateinit var btn_fridgedel : Button
+
+    lateinit var btn_addfridge : Button
 
     lateinit var text_fridge_name : TextView
     //var current = ""
@@ -122,7 +126,6 @@ class FridgeFragment : Fragment() {
         toolbar_fridge.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.btnPlus -> {
-                    Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
                     addFridge()
                     true
                 }
@@ -150,6 +153,7 @@ class FridgeFragment : Fragment() {
             var fridgename: TextView
             var btn_fridge_delete: Button
             var foodname : TextView
+            var btn_add_close: Button
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
             foodname = viewHolder.findViewById(R.id.textCurrentFood)
@@ -192,42 +196,93 @@ class FridgeFragment : Fragment() {
         val builder = AlertDialog.Builder(activity)
         val dialogView = layoutInflater.inflate(R.layout.dialog_addfridge, null)
 
-        edt_fridgename = dialogView.findViewById(R.id.edtFridgeName)
-
-        builder.setView(dialogView)
-            .setPositiveButton("등록") { dialogInterFace, i ->
-                if (edt_fridgename.text.toString() != null) {
-                    if (user != null) {
-                        fridgeid = UUID.randomUUID().toString()
-                        firestore?.collection("fridge")?.document("$fridgeid")
-                            ?.set(
-                                hashMapOf(
-                                    "index" to fridgeid,
-                                    "name" to edt_fridgename.text.toString(),
-                                    "owner" to user?.uid,
-                                    "current" to "냉장고가 비었습니다"
-                                )
-                            )
-                            ?.addOnSuccessListener { }
-                            ?.addOnFailureListener { }
-                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                            ?.document("$fridgeid")
-                            ?.set(
-                                hashMapOf(
-                                    "index" to fridgeid,
-                                    "name" to edt_fridgename.text.toString(),
-                                    "current" to "냉장고가 비었습니다"
-                                )
-                            )
-                            ?.addOnSuccessListener { }
-                            ?.addOnFailureListener { }
-                    }
-                } else {
-                    Toast.makeText(activity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
-                }
+        val addfridgedial = DialogAddfridgeBinding.inflate(layoutInflater)
+        val addfridgeview = addfridgedial.root
+        val addfridgealertDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(addfridgedial.root)
+                show()
             }
-            .setNegativeButton("취소", null)
-            .show()
+        }
+
+        addfridgealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        edt_fridgename = addfridgeview.findViewById(R.id.edtFridgeName)
+
+        // 닫기 버튼
+        btn_addfridgeclose = addfridgeview.findViewById(R.id.btnAddClose)
+        btn_addfridgeclose.setOnClickListener{
+            addfridgealertDialog?.dismiss()
+        }
+
+        // 냉장고 추가 버튼 눌렀을 시
+        btn_addfridge = addfridgeview.findViewById(R.id.btnFridgeAdd)
+        btn_addfridge.setOnClickListener {
+            if (edt_fridgename.text.toString() != null) {
+                if (user != null) {
+                    fridgeid = UUID.randomUUID().toString()
+                    firestore?.collection("fridge")?.document("$fridgeid")
+                        ?.set(
+                            hashMapOf(
+                                "index" to fridgeid,
+                                "name" to edt_fridgename.text.toString(),
+                                "owner" to user?.uid,
+                                "current" to "냉장고가 비었습니다"
+                            )
+                        )
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                    firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                        ?.document("$fridgeid")
+                        ?.set(
+                            hashMapOf(
+                                "index" to fridgeid,
+                                "name" to edt_fridgename.text.toString(),
+                                "current" to "냉장고가 비었습니다"
+                            )
+                        )
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                }
+            } else {
+                Toast.makeText(activity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+            addfridgealertDialog?.dismiss()
+        }
+
+//        builder.setView(dialogView)
+//            .setPositiveButton("등록") { dialogInterFace, i ->
+//                if (edt_fridgename.text.toString() != null) {
+//                    if (user != null) {
+//                        fridgeid = UUID.randomUUID().toString()
+//                        firestore?.collection("fridge")?.document("$fridgeid")
+//                            ?.set(
+//                                hashMapOf(
+//                                    "index" to fridgeid,
+//                                    "name" to edt_fridgename.text.toString(),
+//                                    "owner" to user?.uid,
+//                                    "current" to "냉장고가 비었습니다"
+//                                )
+//                            )
+//                            ?.addOnSuccessListener { }
+//                            ?.addOnFailureListener { }
+//                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+//                            ?.document("$fridgeid")
+//                            ?.set(
+//                                hashMapOf(
+//                                    "index" to fridgeid,
+//                                    "name" to edt_fridgename.text.toString(),
+//                                    "current" to "냉장고가 비었습니다"
+//                                )
+//                            )
+//                            ?.addOnSuccessListener { }
+//                            ?.addOnFailureListener { }
+//                    }
+//                } else {
+//                    Toast.makeText(activity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            .setNegativeButton("취소", null)
+//            .show()
     }
 
     // 냉장고 삭제
