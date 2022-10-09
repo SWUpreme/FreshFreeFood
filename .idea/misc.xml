@@ -124,6 +124,7 @@
         <entry key="app/src/main/res/layout/dialog_addimage.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/dialog_deletefridge.xml" value="0.45" />
         <entry key="app/src/main/res/layout/dialog_fridgeoption.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.20742753623188406" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.41594827586206895" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.5794258021101166" />

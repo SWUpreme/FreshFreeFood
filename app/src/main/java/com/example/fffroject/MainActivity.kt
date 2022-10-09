@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toolbar
+import com.example.fffroject.fragment.EnvlevelFragment
 import com.example.fffroject.fragment.FridgeFragment
 import com.example.fffroject.fragment.MypageFragment
 import com.example.fffroject.fragment.ShareFragment
@@ -42,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.tab_mypage -> {
                     val mypageFragment = MypageFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.main_content, mypageFragment).commit()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.tab_envlevel -> {
+                    val envlevelFragment = EnvlevelFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_content, envlevelFragment).commit()
                     return@setOnItemSelectedListener true
                 }
             }
