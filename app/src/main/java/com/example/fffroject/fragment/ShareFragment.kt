@@ -1,5 +1,6 @@
 package com.example.fffroject.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -7,11 +8,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.*
@@ -32,6 +36,8 @@ class ShareFragment : Fragment() {
     // 바인딩
     lateinit var btnShareAdd: ImageButton
     lateinit var btnSelectRegion: ImageButton
+    lateinit var txtRegionSelect: TextView
+    lateinit var webView: WebView
     lateinit var recyclerviewShare: RecyclerView
     lateinit var toolbar_sharepost: Toolbar
 
@@ -57,6 +63,7 @@ class ShareFragment : Fragment() {
         // 바인딩
         btnShareAdd= view.findViewById(R.id.btnShareAdd)
         btnSelectRegion= view.findViewById(R.id.btnSelectRegion)
+        txtRegionSelect = view.findViewById(R.id.txtRegionSelect)
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)
         toolbar_sharepost = view.findViewById(R.id.toolbShare)
 
@@ -76,22 +83,41 @@ class ShareFragment : Fragment() {
         toolbar_sharepost.setOnMenuItemClickListener{
             when(it.itemId) {
                 R.id.btnPlus -> {
-                    val intent = Intent(activity, SharePostActivity::class.java)
-                    startActivity(intent)
+                    if(txtRegionSelect.text != "나눔 지역을 선택해주세요."){
+                        val intent = Intent(activity, SharePostActivity::class.java)
+                        intent.putExtra("region", txtRegionSelect.text)
+                        startActivity(intent)
+                    }else{
+                        //양식 작성 안되어 있을 시
+                        Toast.makeText(activity, "나눔 지역을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                    }
                     true
                 }
                 else -> false
             }
         }
 
-        // 지역 선택 버튼
+        // 주소 검색 웹뷰 화면으로 이동
         btnSelectRegion.setOnClickListener{
             val intent = Intent(activity, RegionSelectActivity::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            startForResult.launch(intent)
         }
 
         return view
     }
+
+    // 콜백 받는 부분
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        // RegionSelectActivity로부터 결과값을 이곳으로 전달
+        if (it.resultCode == Activity.RESULT_OK) {
+            if(it.data != null){
+                var regionData : String? = it.data!!.getStringExtra("data")
+                txtRegionSelect.text = regionData
+            }
+        }
+    }
+
 
     // 뷰 홀더
     //inner class ShareViewHolder(val binding: ItemSharelistBinding): RecyclerView.ViewHolder(binding.root)
