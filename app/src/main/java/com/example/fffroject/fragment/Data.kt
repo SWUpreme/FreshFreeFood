@@ -1,4 +1,5 @@
 package com.example.fffroject.fragment
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -60,8 +61,8 @@ data class food(
 )
 
 
-data class Chat(
-    val content: String,
-    val name: String,
-    val multiType: Int
-)
+data class user(
+    val email:String,
+    val nickname:String,
+    val uid:String,
+): Serializable
