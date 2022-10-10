@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import com.example.fffroject.fragment.CustomDiverItemDecoration
+import com.example.fffroject.fragment.food
 import com.google.common.net.InetAddresses.decrement
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
@@ -390,17 +391,33 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //                        firestore?.collection("current")?.document(foodlist.get(0).name.toString())
 //                            ?.set(firestore?.collection("fridge")?.document(index.toString())!!)
                         // 유통기한 임박 제품 업데이트
-                        // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
-                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                            ?.document(index.toString())
-                            ?.update("current", foodlist.get(0).name.toString())
-                            ?.addOnSuccessListener { }
-                            ?.addOnFailureListener { }
-                        // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
-                        firestore?.collection("fridge")?.document(index.toString())
-                            ?.update("current", foodlist.get(0).name.toString())
-                            ?.addOnSuccessListener { }
-                            ?.addOnFailureListener { }
+                        // 비어있는 경우 업데이트가 안되어서 If문으로 수정
+                        if(foodlist.size == 0){
+                            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+                            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                                ?.document(index.toString())
+                                ?.update("current", "냉장고가 비었습니다")
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+                            firestore?.collection("fridge")?.document(index.toString())
+                                ?.update("current", "냉장고가 비었습니다")
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                        }
+                        else {
+                            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+                            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                                ?.document(index.toString())
+                                ?.update("current", foodlist.get(0).name.toString())
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+                            firestore?.collection("fridge")?.document(index.toString())
+                                ?.update("current", foodlist.get(0).name.toString())
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                        }
                     }
                     // 음식 개수 세는 부분
                     foodcount = foodlist.size
@@ -450,6 +467,22 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.delete()
             ?.addOnSuccessListener { Toast.makeText(this, "환경 기여도가 상승했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
+        // envlevel과 contribution 설정 및 상호 연동
+        firestore?.collection("user")?.document(user!!.uid)
+            ?.get()?.addOnSuccessListener { document ->
+                var contribution = document?.data?.get("contribution").toString().toInt()
+                var rest = contribution % 50
+                var contri = contribution / 50
+                firestore?.collection("user")?.document(user!!.uid)
+                    ?.update("contribution", rest)
+                    ?.addOnSuccessListener { }
+                    ?.addOnFailureListener { }
+                firestore?.collection("user")?.document(user!!.uid)
+                    ?.update("envlevel", contri)
+                    ?.addOnSuccessListener { }
+                    ?.addOnFailureListener { }
+
+            }
     }
 
     fun foodDelete(foodindex: String) {
