@@ -18,6 +18,14 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChatListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".RegionSelectActivity"
             android:exported="false" />
         <activity
@@ -26,8 +34,7 @@
         <activity
             android:name=".WriteActivity"
             android:exported="true"
-            android:parentActivityName=".FoodListActivity">
-        </activity>
+            android:parentActivityName=".FoodListActivity" />
         <activity
             android:name=".ExRecyclerView"
             android:exported="true" />
@@ -43,11 +50,13 @@
         <activity
             android:name=".BarCodeActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".AuthActivity"
@@ -59,9 +68,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
