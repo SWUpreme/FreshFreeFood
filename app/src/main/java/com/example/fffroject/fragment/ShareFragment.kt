@@ -83,8 +83,14 @@ class ShareFragment : Fragment() {
         toolbar_sharepost.setOnMenuItemClickListener{
             when(it.itemId) {
                 R.id.btnPlus -> {
-                    val intent = Intent(activity, SharePostActivity::class.java)
-                    startActivity(intent)
+                    if(txtRegionSelect.text != "나눔 지역을 선택해주세요."){
+                        val intent = Intent(activity, SharePostActivity::class.java)
+                        intent.putExtra("region", txtRegionSelect.text)
+                        startActivity(intent)
+                    }else{
+                        //양식 작성 안되어 있을 시
+                        Toast.makeText(activity, "나눔 지역을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                    }
                     true
                 }
                 else -> false

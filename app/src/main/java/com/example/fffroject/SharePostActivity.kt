@@ -67,11 +67,12 @@ class SharePostActivity : AppCompatActivity() {
     // 툴바
     lateinit var toolbar_sharepost: Toolbar
 
-
     lateinit var postId: String
     lateinit var nowdate: LocalDate
     lateinit var date : String
     lateinit var createdAt: String
+
+    lateinit var regionIntent: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +105,10 @@ class SharePostActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         // 파이어스토리지 인스턴스 초기화
         storage = FirebaseStorage.getInstance()
+
+        // ShareFragment Intent 연결
+        regionIntent = intent.getStringExtra("region")!!
+        binding.region.setText(regionIntent)
 
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)

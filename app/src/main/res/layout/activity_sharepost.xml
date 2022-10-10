@@ -396,6 +396,8 @@
                 android:textColor="#30353D"
                 android:textColorHint="#E9E9E9"
                 android:textSize="14sp"
+                android:focusable="false"
+                android:clickable="false"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
@@ -414,6 +416,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/txt_background_round"
+                android:focusable="false"
                 android:fontFamily="@font/roboto_medium"
                 android:hint="거래 희망 위치를 입력해주세요."
                 android:maxLength="50"
