@@ -11,12 +11,10 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.example.fffroject.fragment.ShareFragment
 
 class RegionSelectActivity : AppCompatActivity() {
-    companion object{
-        var regionData : String =""
-    }
 
     lateinit var webView: WebView
 
@@ -36,9 +34,6 @@ class RegionSelectActivity : AppCompatActivity() {
         // 최초 웹뷰 로드
         webView.loadUrl("https://fffroject-f3104.web.app")
 
-//        searchView.setOnQueryTextListener{
-//
-//        }
     }
 
     inner class WebViewClient : android.webkit.WebViewClient(){
@@ -53,19 +48,10 @@ class RegionSelectActivity : AppCompatActivity() {
         @JavascriptInterface
         fun processDATA(data: String){
             // 다음(카카오) 주소 검색 API 결과 값이 브릿지 통로를 통해 전달 받는다. (from JAVASCRIPT)
-            val shareFragment = ShareFragment()
-            var bundle = Bundle()
-            bundle.putString("data",data)
-            shareFragment.arguments = bundle
-            mContext.supportFragmentManager.beginTransaction().replace(R.id.main_content, shareFragment).commit()
-            // getActivity().setResult(Activity.RESULT_OK, data)
-
-            // 액티비티용
-//            val intent = Intent(mContext, ShareFragment::class.java)
-//            intent.putExtra("data", data)
-//            ContextCompat.startActivity(mContext, intent, null)
-//            setResult(RESULT_OK, intent)
-//            finish
+            val intent = Intent()
+            intent.putExtra("data", data)
+            mContext.setResult(RESULT_OK, intent)
+            mContext.finish()
         }
     }
 }
