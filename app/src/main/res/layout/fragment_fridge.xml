@@ -48,10 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/roboto_regular"
             android:text="냉장고"
             android:textColor="#30353D"
             android:textSize="18sp"
-            android:textStyle="bold"
             tools:layout_editor_absoluteX="181dp"
             tools:layout_editor_absoluteY="21dp" />
     </androidx.appcompat.widget.Toolbar>
