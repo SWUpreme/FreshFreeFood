@@ -470,17 +470,24 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         firestore?.collection("user")?.document(user!!.uid)
             ?.get()?.addOnSuccessListener { document ->
                 var contribution = document?.data?.get("contribution").toString().toInt()
-                var rest = contribution % 50
-                var contri = contribution / 50
-                firestore?.collection("user")?.document(user!!.uid)
-                    ?.update("contribution", rest)
-                    ?.addOnSuccessListener { }
-                    ?.addOnFailureListener { }
-                firestore?.collection("user")?.document(user!!.uid)
-                    ?.update("envlevel", contri)
-                    ?.addOnSuccessListener { }
-                    ?.addOnFailureListener { }
-
+                var rest = 0
+                if (contribution > 50) {
+                    rest = contribution % 50
+                    firestore?.collection("user")?.document(user!!.uid)
+                        ?.update("contribution", rest)
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                    firestore?.collection("user")?.document(user!!.uid)
+                        ?.update("envlevel", FieldValue.increment(1))
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                }
+                else {
+                    firestore?.collection("user")?.document(user!!.uid)
+                        ?.update("contribution", contribution)
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                }
             }
     }
 

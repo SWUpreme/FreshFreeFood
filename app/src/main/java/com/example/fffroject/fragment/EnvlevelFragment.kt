@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.fffroject.R
@@ -18,6 +19,7 @@ class EnvlevelFragment: Fragment() {
     var user: FirebaseUser? = null
 
     lateinit var progress_envlevel: ProgressBar
+    lateinit var text_envcontri: TextView
     // 환경 기여도 레벨
     var envpercent = 0
 
@@ -36,6 +38,7 @@ class EnvlevelFragment: Fragment() {
         firestore = FirebaseFirestore.getInstance()
 
         progress_envlevel = view.findViewById(R.id.progEnvLev)
+        text_envcontri = view.findViewById(R.id.textEnvContri)
 
 
         // 파이어베이스에서 환경 기여도 가져와서 설정
@@ -56,6 +59,7 @@ class EnvlevelFragment: Fragment() {
                         //Toast.makeText(context, envlevel.toString(), Toast.LENGTH_SHORT).show()
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
                         progress_envlevel.progress = envpercent
+                        text_envcontri.text = envpercent.toString() + "/50"
                     }
                 }
 
