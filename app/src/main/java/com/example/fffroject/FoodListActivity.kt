@@ -388,42 +388,25 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         if (item != null && done == false) {
                             foodlist.add(item)
                         }
-//                        firestore?.collection("current")?.document(foodlist.get(0).name.toString())
-//                            ?.set(firestore?.collection("fridge")?.document(index.toString())!!)
+                        
                         // 유통기한 임박 제품 업데이트
                         // 비어있는 경우 업데이트가 안되어서 If문으로 수정
-                        if(foodlist.size == 0){
-                            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
-                            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                                ?.document(index.toString())
-                                ?.update("current", "냉장고가 비었습니다")
-                                ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }
-                            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
-                            firestore?.collection("fridge")?.document(index.toString())
-                                ?.update("current", "냉장고가 비었습니다")
-                                ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }
-                        }
-                        else {
-                            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
-                            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                                ?.document(index.toString())
-                                ?.update("current", foodlist.get(0).name.toString())
-                                ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }
-                            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
-                            firestore?.collection("fridge")?.document(index.toString())
-                                ?.update("current", foodlist.get(0).name.toString())
-                                ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }
-                        }
+                        // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                            ?.document(index.toString())
+                            ?.update("current", foodlist.get(0).name.toString())
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
+                        // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+                        firestore?.collection("fridge")?.document(index.toString())
+                            ?.update("current", foodlist.get(0).name.toString())
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
                     }
                     // 음식 개수 세는 부분
                     foodcount = foodlist.size
                     getfoodCount()
                     recyclerview_foodlist.adapter?.notifyDataSetChanged()
-                    //Toast.makeText(this, foodlist.size.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -462,6 +445,22 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     fun eatDone(foodindex: String) {
         firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
         //recyclerview_foodlist.adapter?.notifyDataSetChanged()
+        // 비어있는 경우 업데이트가 안되어서 If문으로 수정
+        // 처음에 loadData에서 시도했으나 음식이 없는 경우 foodlist가 아예 생성이 안되어 한개 있는걸 할 때로 변경
+        // 따라서 deleteFood에도 적용시켜주어야 함
+        if (foodcount == 1) {
+            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                ?.document(index.toString())
+                ?.update("current", "냉장고가 비었습니다")
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+            firestore?.collection("fridge")?.document(index.toString())
+                ?.update("current", "냉장고가 비었습니다")
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+        }
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
             ?.delete()
@@ -486,6 +485,20 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     }
 
     fun foodDelete(foodindex: String) {
+        if (foodcount == 1) {
+            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                ?.document(index.toString())
+                ?.update("current", "냉장고가 비었습니다")
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+            firestore?.collection("fridge")?.document(index.toString())
+                ?.update("current", "냉장고가 비었습니다")
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+        }
+
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
             ?.delete()
