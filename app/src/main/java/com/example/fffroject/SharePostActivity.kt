@@ -117,24 +117,29 @@ class SharePostActivity : AppCompatActivity() {
         toolbar_sharepost.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.btnPostUpload -> {
-                    if(checkAllWritten()){
-                        // editText -> string
-                        var title = binding.title.text.toString()
-                        var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
-                        var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
-                        var name = binding.name.text.toString()
-                        var region = binding.region.text.toString()
-                        var location = binding.location.text.toString()
-                        var content = binding.context.text.toString()
-                        // db 저장
-                        addPostDB(title, deadline, purchasedAt, name, region, location, content)
-                        // 전체 게시글로 되돌아가기
-                        finish()
-                    } else {
-                        //양식 작성 안되어 있을 시
-                        val toast = Toast.makeText(this, "양식을 모두 작성해주세요", Toast.LENGTH_SHORT)
-                        toast.show()
+                    if(binding.imgFood.visibility == View.VISIBLE){
+                        if(checkAllWritten()){
+                            // editText -> string
+                            var title = binding.title.text.toString()
+                            var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
+                            var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
+                            var name = binding.name.text.toString()
+                            var region = binding.region.text.toString()
+                            var location = binding.location.text.toString()
+                            var content = binding.context.text.toString()
+                            // db 저장
+                            addPostDB(title, deadline, purchasedAt, name, region, location, content)
+                            // 전체 게시글로 되돌아가기
+                            finish()
+                        } else {
+                            //양식 작성 안되어 있을 시
+                            val toast = Toast.makeText(this, "양식을 모두 작성해 주세요.", Toast.LENGTH_SHORT)
+                            toast.show()
+                        }
+                    }else{
+                        Toast.makeText(this, "사진을 업로드해 주세요.", Toast.LENGTH_SHORT).show()
                     }
+
                     true
                 }
                 else -> false
@@ -168,21 +173,6 @@ class SharePostActivity : AppCompatActivity() {
         }?.addOnCompleteListener{
             Log.d("error", "upload success....")
         }
-
-
-//        // 스토리지를 참조하는 StorageReference 생성
-//        val storageRef: StorageReference? = storage?.reference
-//        // 실제 업로드하는 파일을 참조하는 StorageReference 생성
-//        val imgRef: StorageReference? = storageRef?.child("images/${postId}.jpg")
-//        // 파일 업로드
-//        var file = Uri.fromFile(File(filePath))
-//        imgRef?.putFile(file)
-//            ?.addOnFailureListener {
-//                Log.d("storage"," failure............."+it)
-//            }?.addOnSuccessListener {
-//                Log.d("storage"," Success............."+it)
-//                finish()
-//            }
     }
 
     // 양식 작성 여부 확인
