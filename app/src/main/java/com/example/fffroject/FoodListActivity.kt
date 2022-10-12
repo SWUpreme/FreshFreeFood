@@ -471,8 +471,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.get()?.addOnSuccessListener { document ->
                 var contribution = document?.data?.get("contribution").toString().toInt()
                 var rest = 0
-                if (contribution > 50) {
-                    rest = contribution % 50
+                if (contribution > 49) {
+                    rest = contribution % 50 + 1
                     firestore?.collection("user")?.document(user!!.uid)
                         ?.update("contribution", rest)
                         ?.addOnSuccessListener { }
