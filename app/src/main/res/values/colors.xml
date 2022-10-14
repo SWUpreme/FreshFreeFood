@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blueblack">#FF30353D</color>
     <color name="diver_gray">#FFF4F4F4</color>
+    <color name="chat_1">#ED6C3C</color>
+    <color name="chat_2">#71ABFF</color>
 </resources>
