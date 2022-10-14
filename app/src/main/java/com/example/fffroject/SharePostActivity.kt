@@ -118,6 +118,7 @@ class SharePostActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.btnPostUpload -> {
                     if(binding.imgFood.visibility == View.VISIBLE){
+                        // 업로드된 이미지 있을 시
                         if(checkAllWritten()){
                             // editText -> string
                             var title = binding.title.text.toString()
@@ -137,6 +138,7 @@ class SharePostActivity : AppCompatActivity() {
                             toast.show()
                         }
                     }else{
+                        // 업로드된 이미지 없을 시
                         Toast.makeText(this, "사진을 업로드해 주세요.", Toast.LENGTH_SHORT).show()
                     }
 
