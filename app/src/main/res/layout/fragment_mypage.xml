@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbMypage"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"/>
 
     <ImageView
         android:id="@+id/imageView6"
@@ -124,7 +124,7 @@
         app:layout_constraintTop_toTopOf="@+id/btnMypageMessage" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/brnMypageAlarm"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="15dp"
@@ -140,9 +140,9 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button8"
-        app:layout_constraintStart_toStartOf="@+id/button8"
-        app:layout_constraintTop_toTopOf="@+id/button8"
+        app:layout_constraintBottom_toBottomOf="@+id/brnMypageAlarm"
+        app:layout_constraintStart_toStartOf="@+id/brnMypageAlarm"
+        app:layout_constraintTop_toTopOf="@+id/brnMypageAlarm"
         app:srcCompat="@drawable/btn_mypage_alarm" />
 
     <ImageView
@@ -150,9 +150,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button8"
-        app:layout_constraintEnd_toEndOf="@+id/button8"
-        app:layout_constraintTop_toTopOf="@+id/button8"
+        app:layout_constraintBottom_toBottomOf="@+id/brnMypageAlarm"
+        app:layout_constraintEnd_toEndOf="@+id/brnMypageAlarm"
+        app:layout_constraintTop_toTopOf="@+id/brnMypageAlarm"
         app:srcCompat="@drawable/btn_mypage_arrow" />
 
     <TextView
@@ -164,9 +164,9 @@
         android:text="알람 설정"
         android:textColor="#30353D"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button8"
+        app:layout_constraintBottom_toBottomOf="@+id/brnMypageAlarm"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/button8" />
+        app:layout_constraintTop_toTopOf="@+id/brnMypageAlarm" />
 
     <Button
         android:id="@+id/button3"
@@ -174,8 +174,10 @@
         android:layout_height="70dp"
         android:layout_marginTop="15dp"
         android:background="@color/zxing_transparent"
-        app:layout_constraintTop_toBottomOf="@+id/button8"
-        tools:layout_editor_absoluteX="174dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brnMypageAlarm"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -204,14 +206,14 @@
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginBottom="227dp"
+        android:layout_marginTop="50dp"
         android:background="@color/zxing_transparent"
         android:fontFamily="@font/roboto_regular"
         android:text="로그아웃"
         android:textColor="#BDBDBD"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <ImageView
         android:id="@+id/imageView4"

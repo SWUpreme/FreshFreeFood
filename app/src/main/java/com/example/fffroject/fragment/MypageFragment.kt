@@ -25,7 +25,7 @@ class MypageFragment : Fragment() {
     var user : FirebaseUser? = null
 
     lateinit var btn_logout: Button
-    lateinit var detailbtn: Button
+    lateinit var btn_mypage_share: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +39,9 @@ class MypageFragment : Fragment() {
         binding = FragmentMypageBinding.inflate(layoutInflater)
         btn_logout = view.findViewById(R.id.btnLogout)
 
+        // 버튼 연동
+        btn_mypage_share = view.findViewById(R.id.btnMypageShare)
+
         // 로그아웃 처리
         btn_logout.setOnClickListener {
             Toast.makeText(context,"로그아웃누름", Toast.LENGTH_SHORT).show()
@@ -49,8 +52,16 @@ class MypageFragment : Fragment() {
             // startActivity(Intent(activity, AuthActivity::class.java))
         }
 
+        // 나의 나눔 버튼 눌렀을 경우
+        btn_mypage_share.setOnClickListener {
+            val intent = Intent(view.context, MyShareActivity::class.java)
+            ContextCompat.startActivity(view.context, intent, null)
+        }
 
-
+//        val intent = Intent(viewHolder.context, FoodListActivity::class.java)
+//        intent.putExtra("index", index)
+//        intent.putExtra("name", fridgename.text.toString())
+//        ContextCompat.startActivity(viewHolder.context, intent, null)
 
 
 
