@@ -1,9 +1,13 @@
 package com.example.fffroject
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,6 +16,8 @@ import com.example.fffroject.fragment.FoodList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_barcode.*
+import kotlinx.android.synthetic.main.activity_write.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,10 +44,19 @@ class WriteActivity : AppCompatActivity() {
     var fridgeindex : String? = null
     var done = false
 
+    @SuppressLint("MissingInflatedId")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
+
+        setSupportActionBar(toolbWrite)
+        //Toolbar에 표시되는 제목의 표시 유무를 설정. false로 해야 custom한 툴바의 이름이 화면에 보인다.
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        //왼쪽 버튼 사용설정(기본은 뒤로가기)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        //왼쪽 버튼 아이콘 변경
+        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_back_btn)
 
         foodlist = arrayListOf<FoodList>()
 
@@ -54,14 +69,14 @@ class WriteActivity : AppCompatActivity() {
         name = findViewById(R.id.name)
         deadline_year = findViewById(R.id.fdeadlineYear)
         deadline_month = findViewById(R.id.fdeadlineMonth)
-        deadline_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
+
         deadline_day = findViewById(R.id.fdeadlineDate)
         purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
         purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
-        purchasedAt_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
+
         purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
-        upload_btn = findViewById(R.id.scan_btn)
+        upload_btn = findViewById(R.id.upload_btn)
 
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 
@@ -76,40 +91,61 @@ class WriteActivity : AppCompatActivity() {
 //            )
 
             // 민영 추가 파이어스토어 코드
-            if (user != null) {
-                var food_deadline = deadline_year.text.toString()+"."+deadline_month.text.toString()+"."+deadline_day.text.toString()
-                var purchasedAt = purchasedAt_year.text.toString()+"."+ purchasedAt_month.text.toString()+"."+ purchasedAt_day.text.toString()
-                foodindex = UUID.randomUUID().toString()
-                firestore?.collection("fridge")?.document("$fridgeindex")
-                    ?.collection("food")?.document("$foodindex")
-                    ?.set(
-                        hashMapOf(
-                            "index" to foodindex,
-                            "name" to name.text.toString(),
-                            "deadline" to food_deadline,
-                            "purchaseAt" to purchasedAt,
-                            "count" to count.text.toString().toInt(),
-                            "done" to done
+            if (checkAllWritten()) {
+                if (user != null) {
+
+                    var food_deadline =
+                        deadline_year.text.toString() + "." + deadline_month.text.toString() + "." + deadline_day.text.toString()
+                    var purchasedAt =
+                        purchasedAt_year.text.toString() + "." + purchasedAt_month.text.toString() + "." + purchasedAt_day.text.toString()
+                    foodindex = UUID.randomUUID().toString()
+                    firestore?.collection("fridge")?.document("$fridgeindex")
+                        ?.collection("food")?.document("$foodindex")
+                        ?.set(
+                            hashMapOf(
+                                "index" to foodindex,
+                                "name" to name.text.toString(),
+                                "deadline" to food_deadline,
+                                "purchaseAt" to purchasedAt,
+                                "count" to count.text.toString().toInt(),
+                                "done" to done
+                            )
                         )
-                    )
-                    ?.addOnSuccessListener { finish() }
-                    ?.addOnFailureListener {  }
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                }
+            } else {
+                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+            Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
+
+    }
+
+    private fun checkAllWritten(): Boolean{
+        return (name.length()>0 && deadline_year.length()>0 && deadline_month.length()>0 && deadline_day.length()>0
+                && purchasedAt_year.length()>0 && purchasedAt_month.length()>0 && purchasedAt_day.length()>0
+                && count.length()>0)
+
+    }
+
+
+    //item 버튼 클릭 했을 때
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                //뒤로가기 버튼 눌렀을 때
+                Log.d("ToolBar_item: ", "뒤로가기 버튼 클릭")
+                val intent = Intent(applicationContext,FoodListActivity::class.java)
+                startActivity(intent)
+                return true
             }
 
-
-//            firestore!!.collection("food")
-//                .add(food)
-//                .addOnSuccessListener { documentReference ->
-//                    Log.d(
-//                        "DatabaseTest",
-//                        documentReference.id
-//                    )
-//                }
-//                .addOnFailureListener { exception -> Log.d("DatabaseTest", exception.message!!) }
-//
-//
-            Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
+            else -> return super.onOptionsItemSelected(item)
         }
     }
+
 
 }

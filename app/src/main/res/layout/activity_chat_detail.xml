@@ -11,7 +11,7 @@
     >
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbChat"
+        android:id="@+id/toolbChatDetail"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:background="@drawable/background_top"
@@ -23,11 +23,11 @@
         app:menu="@menu/chat_top_send">
 
         <TextView
-            android:id="@+id/ChatBar"
+            android:id="@+id/ChatName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="쪽지 보내기"
+            android:text="유저"
             android:fontFamily="@font/roboto_medium"
             android:textColor="#30353D"
             android:textSize="18sp"
@@ -37,19 +37,23 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/ChatContent"
-        android:layout_width="394dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="9dp"
-        android:background="@null"
-        android:fontFamily="@font/roboto_medium"
-        android:hint="내용을 입력하세요."
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbChat"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

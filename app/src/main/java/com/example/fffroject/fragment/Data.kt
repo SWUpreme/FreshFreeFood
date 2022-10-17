@@ -60,9 +60,20 @@ data class food(
 
 )
 
+//채팅
+data class ChatDTO(
+    var context :  String? =  null,
+    var from : String? = null,
+    var index : String? = null,
+    var to : String? = null,
+    var sendedAt : String? = null,
 
-data class user(
-    val email:String,
-    val nickname:String,
-    val uid:String,
-): Serializable
+    )
+
+
+data class MyChat(
+    var index : String? = null,
+    var from : String? = null,
+    var context : String? = null,
+    var sendedAt : String? = null,
+)
