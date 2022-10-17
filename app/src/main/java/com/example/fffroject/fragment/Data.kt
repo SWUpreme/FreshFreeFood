@@ -69,3 +69,11 @@ data class ChatDTO(
     var sendedAt : String? = null,
 
     )
+
+
+data class MyChat(
+    var index : String? = null,
+    var from : String? = null,
+    var context : String? = null,
+    var sendedAt : String? = null,
+)

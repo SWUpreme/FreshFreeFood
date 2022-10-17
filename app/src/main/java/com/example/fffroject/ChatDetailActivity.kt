@@ -1,39 +1,22 @@
 package com.example.fffroject
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.fragment.ChatDTO
 import com.example.fffroject.fragment.CustomDiverItemDecoration
-import com.example.fffroject.fragment.FoodList
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.item_foodlist.view.*
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class ChatDetailActivity : AppCompatActivity() {
 
@@ -118,7 +101,7 @@ class ChatDetailActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view: View = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_chat_detail, parent, false)
+                .inflate(R.layout.item_chat_list, parent, false)
 
             return ChatDetailViewHolder(view)
         }
