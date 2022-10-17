@@ -4,6 +4,8 @@ import android.graphics.BitmapFactory
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -72,26 +74,56 @@ class ShareDetailActivity: AppCompatActivity()  {
         toolbar_sharedetail = findViewById(R.id.toolbSharedetail)
         // postDetail 초기화
         //postDetailList = arrayListOf<PostDetail>()
+        // 상단 툴바 버튼 사용
+        //var btnGotoMessage: Button = findViewById(R.id.btnGotoMessage)
+
+        // ShareFragment Intent 연결
+        detailIndex = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
+        detailWriter = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
+        detailFlag = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
+
+
+//        // 메세지 버튼
+//       toolbSharedetail.setOnMenuItemClickListener {
+//            when(it.itemId) {
+//                R.id.btnGotoMessage -> {
+//
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+
 
         // 메세지 버튼
-       toolbSharedetail.setOnMenuItemClickListener {
+        toolbSharedetail.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.btnGotoMessage -> {
-                    val intent = Intent(applicationContext, ChatActivity::class.java)
-                    intent.putExtra("detailIndex", detailIndex)
-                    intent.putExtra("detailWriter", detailWriter)
-                    startActivity(intent)
-
+                    // 본인 글일 시 , 메시지 버튼 숨기기
+                    if(user != null){
+                        var userString = user?.uid
+                        if(userString.equals(detailWriter)){
+                            // 내가 작성한 글이라면
+                            Log.d("user", "it's mine")
+                            Toast.makeText(this, "자신이 작성한 나눔글입니다.", Toast.LENGTH_SHORT).show()
+                            //btnGotoMessage.setVisibility(View.GONE)
+                        }else{
+                            val intent = Intent(applicationContext, ChatActivity::class.java)
+                            intent.putExtra("detailIndex", detailIndex)
+                            intent.putExtra("detailWriter", detailWriter)
+                            startActivity(intent)
+                            Log.d("user", "it's not mine")
+                        }
+                    }
                     true
                 }
                 else -> false
             }
         }
 
-        // ShareFragment Intent 연결
-        detailIndex = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
-        detailWriter = intent.getStringExtra("detailWriter")!!    // 게시글 냉장고 넘김 여부
-        detailFlag = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
+
+
+
 
         // 냉장고에서 넘기기 여부 확인 후 색상 변경
         if(detailFlag=="true"){

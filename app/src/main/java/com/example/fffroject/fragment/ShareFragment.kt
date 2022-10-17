@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class ShareFragment : Fragment() {
     lateinit var recyclerviewShare: RecyclerView
     lateinit var toolbar_sharepost: Toolbar
 
+    lateinit var presentRegion : String
 
     // Data에 있는 PostAll
     lateinit var postAllList: ArrayList<PostAll>
@@ -114,6 +116,7 @@ class ShareFragment : Fragment() {
             if(it.data != null){
                 var regionData : String? = it.data!!.getStringExtra("data")
                 txtRegionSelect.text = regionData
+                loadData()      // 리사이클러뷰 재로딩
             }
         }
     }
@@ -189,23 +192,49 @@ class ShareFragment : Fragment() {
 
     // 파이어베이스에서 데이터 불러오는 함수
     private fun loadData() {
-        // 게시글 리스트 불러오기
-        if (user != null) {
-            db?.collection("post")
-                ?.orderBy("dateTime", Query.Direction.DESCENDING)
-                ?.addSnapshotListener { value, error ->
-                    postAllList.clear()
-                    if (value != null) {
-                        for (snapshot in value.documents) {
-                            var item = snapshot.toObject(PostAll::class.java)
-                            if (item != null) {
-                                postAllList.add(item)
+        // 현재 지역 이름
+        presentRegion = txtRegionSelect.text as String
+        // 현재 지역 설정이 되어있다면
+        if (presentRegion != "나눔 지역을 선택해주세요."){
+            // 해당 지역 게시글 리스트 불러오기
+            if (user != null) {
+                db?.collection("post")
+                    ?.whereEqualTo("region", presentRegion)
+                    ?.orderBy("dateTime", Query.Direction.DESCENDING)
+                    ?.addSnapshotListener { value, error ->
+                        postAllList.clear()
+                        if (value != null) {
+                            for (snapshot in value.documents) {
+                                var item = snapshot.toObject(PostAll::class.java)
+                                if (item != null) {
+                                    Log.d("region:", item.region.toString())
+                                    postAllList.add(item)
+                                }
                             }
                         }
+                        recyclerviewShare.adapter?.notifyDataSetChanged()
                     }
-                    recyclerviewShare.adapter?.notifyDataSetChanged()
-                }
+            }
+        }else{
+            // 전체 게시글 리스트 불러오기
+            if (user != null) {
+                db?.collection("post")
+                    ?.orderBy("dateTime", Query.Direction.DESCENDING)
+                    ?.addSnapshotListener { value, error ->
+                        postAllList.clear()
+                        if (value != null) {
+                            for (snapshot in value.documents) {
+                                var item = snapshot.toObject(PostAll::class.java)
+                                if (item != null) {
+                                    postAllList.add(item)
+                                }
+                            }
+                        }
+                        recyclerviewShare.adapter?.notifyDataSetChanged()
+                    }
+            }
         }
+
     }
 
 }

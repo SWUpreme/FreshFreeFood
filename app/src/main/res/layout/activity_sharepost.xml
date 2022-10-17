@@ -18,6 +18,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         app:menu="@menu/sharepost_top_plus">
 
         <TextView
@@ -416,7 +417,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/txt_background_round"
-                android:focusable="false"
                 android:fontFamily="@font/roboto_medium"
                 android:hint="거래 희망 위치를 입력해주세요."
                 android:maxLength="50"
