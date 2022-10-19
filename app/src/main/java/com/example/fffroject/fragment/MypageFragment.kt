@@ -26,6 +26,7 @@ class MypageFragment : Fragment() {
 
     lateinit var btn_logout: Button
     lateinit var btn_mypage_share: Button
+    lateinit var btn_mypage_message: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +42,7 @@ class MypageFragment : Fragment() {
 
         // 버튼 연동
         btn_mypage_share = view.findViewById(R.id.btnMypageShare)
+        btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {
@@ -58,12 +60,11 @@ class MypageFragment : Fragment() {
             ContextCompat.startActivity(view.context, intent, null)
         }
 
-//        val intent = Intent(viewHolder.context, FoodListActivity::class.java)
-//        intent.putExtra("index", index)
-//        intent.putExtra("name", fridgename.text.toString())
-//        ContextCompat.startActivity(viewHolder.context, intent, null)
-
-
+        // 메시지 버튼을 눌렀을 경우
+        btn_mypage_message.setOnClickListener {
+            val intent = Intent(view.context, ChatListActivity::class.java)
+            ContextCompat.startActivity(view.context, intent, null)
+        }
 
         // 로그아웃 처리
 //        binding.btnLogoutGoogle.setOnClickListener {

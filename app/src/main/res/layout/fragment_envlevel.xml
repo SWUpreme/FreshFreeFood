@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#F2F7FF">
+    android:background="#EFF6FF">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbShare"
@@ -35,7 +35,7 @@
         android:id="@+id/imgTopBedge"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbShare"
@@ -82,7 +82,8 @@
         android:id="@+id/nestedScrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/background_bedge"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,124 +93,126 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/imgTree1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree1" />
 
                 <ImageView
                     android:id="@+id/imgTree2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree2" />
 
                 <ImageView
                     android:id="@+id/imgTree3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree3" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/imgTree4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree4" />
 
                 <ImageView
                     android:id="@+id/imgTree5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree5" />
 
                 <ImageView
                     android:id="@+id/imgTree6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree6" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/imgTree7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree7" />
 
                 <ImageView
                     android:id="@+id/imgTree8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree8" />
 
                 <ImageView
                     android:id="@+id/imgTree9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree9" />
             </LinearLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
