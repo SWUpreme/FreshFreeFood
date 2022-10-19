@@ -479,7 +479,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         ?.addOnFailureListener { }
                     firestore?.collection("user")?.document(user!!.uid)
                         ?.update("envlevel", FieldValue.increment(1))
-                        ?.addOnSuccessListener { }
+                        ?.addOnSuccessListener { Toast.makeText(this, "환경 기여 레벨이 상승했어요!", Toast.LENGTH_SHORT).show() }
                         ?.addOnFailureListener { }
                 }
                 else {
@@ -532,7 +532,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         intent.putExtra("foodname", foodname)
         intent.putExtra("foodlistdeadline", foodlistdeadline)
         intent.putExtra("foodlistpurchase", foodlistpurchase)
-        //Toast.makeText(this, foodlistdeadline, Toast.LENGTH_SHORT).show()
         ContextCompat.startActivity(this, intent, null)
     }
 
