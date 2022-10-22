@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#00FFFFFF"
-    android:backgroundTint="#00FFFFFF"
-    android:foregroundTint="#00FFFFFF"
+    android:background="@color/white"
     tools:context=".WriteActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -45,6 +43,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="35dp"
         android:orientation="vertical"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

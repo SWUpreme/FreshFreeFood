@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_barcode.*
 import kotlinx.android.synthetic.main.activity_write.*
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,13 +51,13 @@ class WriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        setSupportActionBar(toolbWrite)
+        /*setSupportActionBar(toolbWrite)
         //Toolbar에 표시되는 제목의 표시 유무를 설정. false로 해야 custom한 툴바의 이름이 화면에 보인다.
         supportActionBar?.setDisplayShowTitleEnabled(false)
         //왼쪽 버튼 사용설정(기본은 뒤로가기)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         //왼쪽 버튼 아이콘 변경
-        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_back_btn)
+        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_back_btn)*/
 
         foodlist = arrayListOf<FoodList>()
 
@@ -80,6 +81,14 @@ class WriteActivity : AppCompatActivity() {
 
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 
+
+        //날짜 계산
+        var now = LocalDate.now().toString()
+        var nowdate = now.split("-")
+        purchasedAt_year.setText(nowdate[0])
+        purchasedAt_month.setText(nowdate[1])
+        purchasedAt_day.setText(nowdate[2])
+
         // 데이터 추가
         upload_btn.setOnClickListener {
 
@@ -90,7 +99,6 @@ class WriteActivity : AppCompatActivity() {
 //                "count" to count.text.toString(),
 //            )
 
-            // 민영 추가 파이어스토어 코드
             if (checkAllWritten()) {
                 if (user != null) {
 
@@ -111,16 +119,13 @@ class WriteActivity : AppCompatActivity() {
                                 "done" to done
                             )
                         )
-                        ?.addOnSuccessListener { }
-                        ?.addOnFailureListener { }
+
                 }
             } else {
                 Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
+
         }
-
-
-            Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
 
     }
 
@@ -129,23 +134,24 @@ class WriteActivity : AppCompatActivity() {
                 && purchasedAt_year.length()>0 && purchasedAt_month.length()>0 && purchasedAt_day.length()>0
                 && count.length()>0)
 
+
     }
 
 
     //item 버튼 클릭 했을 때
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                //뒤로가기 버튼 눌렀을 때
-                Log.d("ToolBar_item: ", "뒤로가기 버튼 클릭")
-                val intent = Intent(applicationContext,FoodListActivity::class.java)
-                startActivity(intent)
-                return true
-            }
+    /*  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+          when (item?.itemId) {
+              android.R.id.home -> {
+                  //뒤로가기 버튼 눌렀을 때
+                  Log.d("ToolBar_item: ", "뒤로가기 버튼 클릭")
+                  val intent = Intent(applicationContext,FoodListActivity::class.java)
+                  startActivity(intent)
+                  return true
+              }
 
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
+              else -> return super.onOptionsItemSelected(item)
+          }
+      }*/
 
 
 }
