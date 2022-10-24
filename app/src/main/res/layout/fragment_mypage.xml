@@ -92,8 +92,8 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnMypageMessage"
         app:layout_constraintStart_toStartOf="parent"
