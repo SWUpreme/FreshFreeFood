@@ -1,6 +1,7 @@
 package com.example.fffroject.fragment
 
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -15,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_sharepost.*
 
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_share.*
+import java.util.*
 
 class ShareFragment : Fragment() {
     // 파이어스토어
@@ -41,6 +44,7 @@ class ShareFragment : Fragment() {
     lateinit var webView: WebView
     lateinit var recyclerviewShare: RecyclerView
     lateinit var toolbar_sharepost: Toolbar
+    lateinit var txtNoRegion: TextView
 
     lateinit var presentRegion : String
 
@@ -68,6 +72,7 @@ class ShareFragment : Fragment() {
         txtRegionSelect = view.findViewById(R.id.txtRegionSelect)
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)
         toolbar_sharepost = view.findViewById(R.id.toolbShare)
+        txtNoRegion = view.findViewById(R.id.txtNoRegion)
 
         // 파이어베이스에서 게시글 불러오기
         loadData()
@@ -196,6 +201,8 @@ class ShareFragment : Fragment() {
         presentRegion = txtRegionSelect.text as String
         // 현재 지역 설정이 되어있다면
         if (presentRegion != "나눔 지역을 선택해주세요."){
+            // 지역 없음 텍스트 unvisible
+            txtNoRegion.setVisibility(View.INVISIBLE)
             // 해당 지역 게시글 리스트 불러오기
             if (user != null) {
                 db?.collection("post")
@@ -216,23 +223,8 @@ class ShareFragment : Fragment() {
                     }
             }
         }else{
-            // 전체 게시글 리스트 불러오기
-            if (user != null) {
-                db?.collection("post")
-                    ?.orderBy("dateTime", Query.Direction.DESCENDING)
-                    ?.addSnapshotListener { value, error ->
-                        postAllList.clear()
-                        if (value != null) {
-                            for (snapshot in value.documents) {
-                                var item = snapshot.toObject(PostAll::class.java)
-                                if (item != null) {
-                                    postAllList.add(item)
-                                }
-                            }
-                        }
-                        recyclerviewShare.adapter?.notifyDataSetChanged()
-                    }
-            }
+            // 지역 없음 텍스트 visible
+            txtNoRegion.setVisibility(View.VISIBLE)
         }
 
     }
