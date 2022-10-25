@@ -120,18 +120,36 @@ class SharePostActivity : AppCompatActivity() {
                     if(binding.imgFood.visibility == View.VISIBLE){
                         // 업로드된 이미지 있을 시
                         if(checkAllWritten()){
-                            // editText -> string
-                            var title = binding.title.text.toString()
-                            var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
-                            var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
-                            var name = binding.name.text.toString()
-                            var region = binding.region.text.toString()
-                            var location = binding.location.text.toString()
-                            var content = binding.context.text.toString()
-                            // db 저장
-                            addPostDB(title, deadline, purchasedAt, name, region, location, content)
-                            // 전체 게시글로 되돌아가기
-                            finish()
+                            // 유효한 날짜-년이 맞을 시
+                            if(checkValidYear()){
+                                // 유효한 날짜-월이 맞을 시
+                                if(checkValidMonth()){
+                                    // 유효한 날짜-일이 맞을 시
+                                    if(checkValidDate()){
+                                        // editText -> string
+                                        var title = binding.title.text.toString()
+                                        var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
+                                        var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
+                                        var name = binding.name.text.toString()
+                                        var region = binding.region.text.toString()
+                                        var location = binding.location.text.toString()
+                                        var content = binding.context.text.toString()
+                                        // db 저장
+                                        addPostDB(title, deadline, purchasedAt, name, region, location, content)
+                                        // 전체 게시글로 되돌아가기
+                                        finish()
+                                    }else{
+                                        // 유효한 날짜-일이 아닐 시
+                                        Toast.makeText(this, "1~31일 사이의 값을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }else{
+                                    // 유효한 날짜-월이 아닐 시
+                                    Toast.makeText(this, "1~12월 사이의 값을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                // 유효한 날짜-년이 아닐 시
+                                Toast.makeText(this, "정확한 년도를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                            }
                         } else {
                             //양식 작성 안되어 있을 시
                             val toast = Toast.makeText(this, "양식을 모두 작성해 주세요.", Toast.LENGTH_SHORT)
@@ -175,6 +193,24 @@ class SharePostActivity : AppCompatActivity() {
         }?.addOnCompleteListener{
             Log.d("error", "upload success....")
         }
+    }
+
+    // 날짜 입력 년 유효값 확인
+    private fun checkValidYear(): Boolean{
+        return(Integer.parseInt(binding.deadlineYear.text.toString())>2020 && Integer.parseInt(binding.deadlineYear.text.toString())<=2299
+                && Integer.parseInt(binding.purchasedAtYear.text.toString())>2020 && Integer.parseInt(binding.purchasedAtYear.text.toString())<=2299)
+    }
+
+    // 날짜 입력 월 유효값 확인
+    private fun checkValidMonth(): Boolean{
+        return (Integer.parseInt(binding.deadlineMonth.text.toString())>0 && Integer.parseInt(binding.deadlineMonth.text.toString())<=12
+                && Integer.parseInt(binding.purchasedAtMonth.text.toString())>0 && Integer.parseInt(binding.purchasedAtMonth.text.toString())<=12)
+    }
+
+    // 날짜 입력 일 유효값 확인
+    private fun checkValidDate(): Boolean{
+        return (Integer.parseInt(binding.deadlineDate.text.toString())>0 && Integer.parseInt(binding.deadlineDate.text.toString())<=31
+                && Integer.parseInt(binding.purchasedAtDate.text.toString())>0 && Integer.parseInt(binding.purchasedAtDate.text.toString())<=31)
     }
 
     // 양식 작성 여부 확인
