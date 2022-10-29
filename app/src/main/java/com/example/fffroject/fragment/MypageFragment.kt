@@ -41,8 +41,8 @@ class MypageFragment : Fragment() {
         btn_logout = view.findViewById(R.id.btnLogout)
 
         // 버튼 연동
-       // btn_mypage_share = view.findViewById(R.id.btnMypageShare)
-       // btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
+       btn_mypage_share = view.findViewById(R.id.btnMypageShare)
+       btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {

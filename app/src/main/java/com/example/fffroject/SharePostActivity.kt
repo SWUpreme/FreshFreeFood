@@ -213,6 +213,10 @@ class SharePostActivity : AppCompatActivity() {
                 && Integer.parseInt(binding.purchasedAtDate.text.toString())>0 && Integer.parseInt(binding.purchasedAtDate.text.toString())<=31)
     }
 
+//    private fun checkCompareDate(): Bollean{
+//        return()
+//    }
+
     // 양식 작성 여부 확인
     private fun checkAllWritten(): Boolean{
         return (binding.title.length()>0 && binding.deadlineYear.length()>0 && binding.deadlineMonth.length()>0 && binding.deadlineDate.length()>0
