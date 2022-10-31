@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\serak\.android\avd\serak0310.avd" />
+            <value value="C:\Users\serak\.android\avd\emul.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-10-29T19:58:15.571396900Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-10-31T06:18:17.130260Z" />
   </component>
 </project>

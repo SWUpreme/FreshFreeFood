@@ -198,34 +198,74 @@ class ShareFragment : Fragment() {
     // 파이어베이스에서 데이터 불러오는 함수
     private fun loadData() {
         // 현재 지역 이름
-        presentRegion = txtRegionSelect.text as String
-        // 현재 지역 설정이 되어있다면
-        if (presentRegion != "나눔 지역을 선택해주세요."){
-            // 지역 없음 텍스트 unvisible
-            txtNoRegion.setVisibility(View.INVISIBLE)
-            // 해당 지역 게시글 리스트 불러오기
-            if (user != null) {
-                db?.collection("post")
-                    ?.whereEqualTo("region", presentRegion)
-                    ?.orderBy("dateTime", Query.Direction.DESCENDING)
-                    ?.addSnapshotListener { value, error ->
-                        postAllList.clear()
-                        if (value != null) {
-                            for (snapshot in value.documents) {
-                                var item = snapshot.toObject(PostAll::class.java)
-                                if (item != null) {
-                                    Log.d("region:", item.region.toString())
-                                    postAllList.add(item)
+        //presentRegion = txtRegionSelect.text as String
+
+        if(user != null){
+            // 현재 지역 설정 조회
+            db?.collection("user")?.document(user?.uid.toString())?.get()?.addOnSuccessListener { value ->
+                presentRegion = value.data?.get("nowRegion") as String
+                // 현재 지역 설정이 되어있다면
+                if (presentRegion != "n"){
+                    // 지역 없음 텍스트 unvisible
+                    txtNoRegion.setVisibility(View.INVISIBLE)
+                    // 검색창 텍스트를 설정된 지역으로 변경
+                    txtRegionSelect.text = presentRegion
+                    // 해당 지역 게시글 리스트 불러오기
+                    if (user != null) {
+                        db?.collection("post")
+                            ?.whereEqualTo("region", presentRegion)
+                            ?.orderBy("dateTime", Query.Direction.DESCENDING)
+                            ?.addSnapshotListener { value, error ->
+                                postAllList.clear()
+                                if (value != null) {
+                                    for (snapshot in value.documents) {
+                                        var item = snapshot.toObject(PostAll::class.java)
+                                        if (item != null) {
+                                            Log.d("region:", item.region.toString())
+                                            postAllList.add(item)
+                                        }
+                                    }
                                 }
+                                recyclerviewShare.adapter?.notifyDataSetChanged()
                             }
-                        }
-                        recyclerviewShare.adapter?.notifyDataSetChanged()
                     }
+                }
+                // 현재 지역 설정이 안 되어 있다면
+                else{
+                    // 지역 없음 텍스트 visible
+                    txtNoRegion.setVisibility(View.VISIBLE)
+                    // 검색창 텍스트를 없음으로 변경
+                    txtRegionSelect.text = "나눔 지역을 선택해주세요."
+                }
             }
-        }else{
-            // 지역 없음 텍스트 visible
-            txtNoRegion.setVisibility(View.VISIBLE)
         }
+//        // 현재 지역 설정이 되어있다면
+//        if (presentRegion != "n"){
+//            // 지역 없음 텍스트 unvisible
+//            txtNoRegion.setVisibility(View.INVISIBLE)
+//            // 해당 지역 게시글 리스트 불러오기
+//            if (user != null) {
+//                db?.collection("post")
+//                    ?.whereEqualTo("region", presentRegion)
+//                    ?.orderBy("dateTime", Query.Direction.DESCENDING)
+//                    ?.addSnapshotListener { value, error ->
+//                        postAllList.clear()
+//                        if (value != null) {
+//                            for (snapshot in value.documents) {
+//                                var item = snapshot.toObject(PostAll::class.java)
+//                                if (item != null) {
+//                                    Log.d("region:", item.region.toString())
+//                                    postAllList.add(item)
+//                                }
+//                            }
+//                        }
+//                        recyclerviewShare.adapter?.notifyDataSetChanged()
+//                    }
+//            }
+//        }else{
+//            // 지역 없음 텍스트 visible
+//            txtNoRegion.setVisibility(View.VISIBLE)
+//        }
 
     }
 
