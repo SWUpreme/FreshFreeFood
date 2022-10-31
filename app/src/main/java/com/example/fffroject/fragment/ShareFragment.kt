@@ -121,6 +121,9 @@ class ShareFragment : Fragment() {
             if(it.data != null){
                 var regionData : String? = it.data!!.getStringExtra("data")
                 txtRegionSelect.text = regionData
+                db?.collection("user")?.document(user?.uid.toString())
+                    ?.update("nowRegion", regionData)
+                    ?.addOnSuccessListener {}
                 loadData()      // 리사이클러뷰 재로딩
             }
         }
