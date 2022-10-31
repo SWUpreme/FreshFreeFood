@@ -1,11 +1,14 @@
+
 package com.example.fffroject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.fragment.MyChat
@@ -58,62 +61,60 @@ class ChatListActivity : AppCompatActivity() {
             return ViewHolder(view)
         }
 
-            inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-            // view와 실제 데이터 연결결
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                var viewHolder = (holder as ViewHolder).itemView
-                var chatname: TextView
-                var chatcontent: TextView
-                var chattime: TextView
+        // view와 실제 데이터 연결결
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            var viewHolder = (holder as ViewHolder).itemView
+            var chatname: TextView
+            var chatcontent: TextView
+            var chattime: TextView
 
-                chatname = viewHolder.findViewById(R.id.chat_tv_nickname)
-                chatcontent = viewHolder.findViewById(R.id.chat_tv_contents)
-                chattime = viewHolder.findViewById(R.id.chat_tv_time)
-
-
-                // 리사이클러뷰 아이템 정보
-                chatname.text = chatlist!![position].from
-                chatid = chatlist!![position].index!!
-                chatcontent.text = chatlist!![position].context
-                chattime.text = chatlist!![position].sendedAt
+            chatname = viewHolder.findViewById(R.id.chat_tv_nickname)
+            chatcontent = viewHolder.findViewById(R.id.chat_tv_contents)
+            chattime = viewHolder.findViewById(R.id.chat_tv_time)
 
 
+            // 리사이클러뷰 아이템 정보
+            chatname.text = chatlist!![position].from
+            chatid = chatlist!![position].index!!
+            chatcontent.text = chatlist!![position].context
+            chattime.text = chatlist!![position].sendedAt
 
-               /* // 클릭이벤트(해당 냉장고로 넘어감)
-                viewHolder.setOnClickListener {
-                    val intent = Intent(viewHolder.context, FoodListActivity::class.java)
-                    intent.putExtra("index", index)
-                    intent.putExtra("name", fridgename.text.toString())
-                    ContextCompat.startActivity(viewHolder.context, intent, null)
-                }*/
 
-            }
 
-            override fun getItemCount(): Int {
-                return chatlist.size
-            }
+
+             viewHolder.setOnClickListener {
+                 val intent = Intent(viewHolder.context, ChatDetailActivity::class.java)
+                 ContextCompat.startActivity(viewHolder.context, intent, null)
+             }
 
         }
 
+        override fun getItemCount(): Int {
+            return chatlist.size
+        }
 
-        // 파이어베이스에서 mychat 불러오기
-        fun loadChat() {
-            if (user != null) {
-                firestore?.collection("user")?.document(user!!.uid)
-                    ?.collection("mychat")
-                    ?.addSnapshotListener { value, error ->
-                        chatlist.clear()
-                        if (value != null) {
-                            for (snapshot in value.documents) {
-                                var item = snapshot.toObject(MyChat::class.java)
-                                if (item != null) {
-                                    chatlist.add(item)
-                                }
+    }
+
+
+    // 파이어베이스에서 mychat 불러오기
+    fun loadChat() {
+        if (user != null) {
+            firestore?.collection("user")?.document(user!!.uid)
+                ?.collection("mychat")
+                ?.addSnapshotListener { value, error ->
+                    chatlist.clear()
+                    if (value != null) {
+                        for (snapshot in value.documents) {
+                            var item = snapshot.toObject(MyChat::class.java)
+                            if (item != null) {
+                                chatlist.add(item)
                             }
                         }
-                        recyclerview_chat.adapter?.notifyDataSetChanged()
                     }
-            }
+                    recyclerview_chat.adapter?.notifyDataSetChanged()
+                }
         }
     }
+}
