@@ -18,6 +18,9 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FoodlistToShare"
+            android:exported="false" />
+        <activity
             android:name=".ChatListActivity"
             android:exported="false">
             <meta-data
@@ -62,7 +65,7 @@
             android:exported="true" />
         <activity
             android:name=".MyShareActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".BarCodeActivity"
             android:exported="true">
