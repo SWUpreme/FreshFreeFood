@@ -57,12 +57,6 @@ class FoodlistToShareActivity : AppCompatActivity() {
     lateinit var region : EditText
     lateinit var location : EditText
     lateinit var context : EditText
-    lateinit var deadlineYear : EditText
-    lateinit var deadlineMonth : EditText
-    lateinit var deadlineDate : EditText
-    lateinit var purchasedAtYear : EditText
-    lateinit var purchasedAtMonth : EditText
-    lateinit var purchasedAtDate : EditText
     lateinit var imgFood : ImageView
 
     // 툴바
