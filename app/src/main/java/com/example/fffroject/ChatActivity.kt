@@ -26,14 +26,14 @@ class ChatActivity : AppCompatActivity() {
     var user: FirebaseUser? = null
 
     //sharedetail에서 받아온 것
-    var detailIndex : String? = null
-    var detailWriter : String? = null
+    var detailIndex: String? = null
+    var detailWriter: String? = null
 
-    lateinit var Chatcontent : EditText
+    lateinit var Chatcontent: EditText
 
     lateinit var chatlist: ArrayList<MyChat>
     lateinit var chatid: String
-   // lateinit var toolbar_chat: Toolbar
+    // lateinit var toolbar_chat: Toolbar
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,66 +59,71 @@ class ChatActivity : AppCompatActivity() {
 //        toolbar_chat = findViewById(R.id.toolbChat)
         //toolbar 쪽지 보내기 눌렀을 때
         toolbChat.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.btnChatContent -> {
                     if (Chatcontent.text.toString() != null) {
                         if (user != null) {
                             chatid = UUID.randomUUID().toString()
+                            if (chatid == null) {
+                                checkChatRoom()
+                            } else {
 
-                            db?.collection("chat")?.document("$chatid")
-                                ?.set(
-                                    hashMapOf(
-                                        "index" to chatid,
-                                        "context" to Chatcontent.text.toString(),
-                                        "from" to user?.uid,
-                                        "to" to detailWriter,
-                                        "sendedAt" to curTime
+                                db?.collection("chat")?.document("$chatid")
+                                    ?.set(
+                                        hashMapOf(
+                                            "index" to chatid,
+                                            "context" to Chatcontent.text.toString(),
+                                            "from" to user?.uid,
+                                            "to" to detailWriter,
+                                            "sendedAt" to curTime
+                                        )
                                     )
-                                )
-                                ?.addOnSuccessListener {
-                                    Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
-                                }
-                                ?.addOnFailureListener {
-                                    Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
-                                }
-                            db?.collection("user")?.document(user!!.uid)?.collection("mychat")
-                                ?.document("$chatid")
-                                ?.set(
-                                    hashMapOf(
-                                        "index" to chatid,
-                                        "context" to Chatcontent.text.toString(),
-                                        "from" to user?.uid,
-                                        "to" to detailWriter,
-                                        "sendedAt" to curTime
+                                    ?.addOnSuccessListener {
+                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+                                    }
+                                    ?.addOnFailureListener {
+                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+                                    }
+                                db?.collection("user")?.document(user!!.uid)?.collection("mychat")
+                                    ?.document("$chatid")
+                                    ?.set(
+                                        hashMapOf(
+                                            "index" to chatid,
+                                            "context" to Chatcontent.text.toString(),
+                                            "from" to user?.uid,
+                                            "to" to detailWriter,
+                                            "sendedAt" to curTime
+                                        )
                                     )
-                                )
-                                ?.addOnSuccessListener {
-                                    Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
-                                }
-                                ?.addOnFailureListener {
-                                    Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
-                                }
+                                    ?.addOnSuccessListener {
+                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+                                    }
+                                    ?.addOnFailureListener {
+                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+                                    }
 
-                            db?.collection("user")?.document(detailWriter!!)?.collection("mychat")
-                                ?.document("$detailIndex")
-                                ?.set(
-                                    hashMapOf(
-                                        "index" to detailIndex,
-                                        "context" to Chatcontent.text.toString(),
-                                        "from" to detailWriter,
-                                        "to" to user?.uid,
-                                        "sendedAt" to curTime
+                                db?.collection("user")?.document(detailWriter!!)
+                                    ?.collection("mychat")
+                                    ?.document("$detailIndex")
+                                    ?.set(
+                                        hashMapOf(
+                                            "index" to detailIndex,
+                                            "context" to Chatcontent.text.toString(),
+                                            "from" to detailWriter,
+                                            "to" to user?.uid,
+                                            "sendedAt" to curTime
+                                        )
                                     )
-                                )
-                                ?.addOnSuccessListener {
-                                    Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
-                                }
-                                ?.addOnFailureListener {
-                                    Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
-                                }
-                            finish()
+                                    ?.addOnSuccessListener {
+                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+                                    }
+                                    ?.addOnFailureListener {
+                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+                                    }
+                                finish()
 
 
+                            }
                         }
                     } else {
                         Toast.makeText(this@ChatActivity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
@@ -136,21 +141,36 @@ class ChatActivity : AppCompatActivity() {
     }
 
 
-
-
-    //item 버튼 클릭 했을 때
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                //뒤로가기 버튼 눌렀을 때
-                Log.d("ToolBar_item: ", "뒤로가기 버튼 클릭")
-                val intent = Intent(applicationContext,ShareDetailActivity::class.java)
-                startActivity(intent)
-                return true
+    private fun checkChatRoom() {
+        //db?.collection("chat")?.document(detailIndex!!)
+        FirebaseFirestore.getInstance().collection("chat").whereArrayContains("chat", user?.uid!!)
+            .get().addOnCompleteListener { value ->
+                if (value.isSuccessful) {
+                    for (document in value.result) {
+                        if (document.data["chat"].toString().contains(detailWriter!!)) {
+                        }
+                        chatid = document.id
+                    }
+                }
             }
-
-            else -> return super.onOptionsItemSelected(item)
-        }
     }
 
-}
+
+
+
+        //item 버튼 클릭 했을 때
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            when (item?.itemId) {
+                android.R.id.home -> {
+                    //뒤로가기 버튼 눌렀을 때
+                    Log.d("ToolBar_item: ", "뒤로가기 버튼 클릭")
+                    val intent = Intent(applicationContext, ShareDetailActivity::class.java)
+                    startActivity(intent)
+                    return true
+                }
+
+                else -> return super.onOptionsItemSelected(item)
+            }
+        }
+
+    }
