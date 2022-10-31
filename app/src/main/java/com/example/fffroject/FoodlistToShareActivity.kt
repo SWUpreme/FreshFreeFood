@@ -118,6 +118,22 @@ class FoodlistToShareActivity : AppCompatActivity() {
         binding.purchasedAtMonth.setText(foodlistpurchaseIntent.split('.')[1])
         binding.purchasedAtDate.setText(foodlistpurchaseIntent.split('.')[2])
 
+        // 지역버튼에 유저DB의 현재 지정한 지역 가져오기
+        if(user != null) {
+            // 현재 지역 설정 조회
+            db?.collection("user")?.document(user?.uid.toString())?.get()
+                ?.addOnSuccessListener { value ->
+                    var dbregion = value.data?.get("nowRegion") as String
+                    if (dbregion != "n"){
+                        // 현재 지역 설정이 되어있다면
+                        binding.region.text = dbregion      // 검색창 텍스트를 설정된 지역으로 변경
+                    }else{
+                        // 현재 지역 설정이 안 되어있다면
+                        binding.region.text = ""            // 검색창 텍스트 없음
+                    }
+                }
+        }
+
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
 
