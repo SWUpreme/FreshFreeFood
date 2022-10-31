@@ -15,39 +15,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.fragment.FoodList
-import com.example.fffroject.fragment.FridgeFragment
-import com.example.fffroject.fragment.MyFridge
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sharepost.*
-import kotlinx.android.synthetic.main.activity_write.*
 
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import com.example.fffroject.fragment.CustomDiverItemDecoration
-import com.example.fffroject.fragment.food
-import com.google.common.net.InetAddresses.decrement
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
-import kotlinx.android.synthetic.main.item_foodlist.*
 import kotlinx.android.synthetic.main.item_foodlist.view.*
-import kotlinx.coroutines.flow.merge
-import org.threeten.bp.format.DateTimeFormatter
-import org.w3c.dom.Text
-import java.lang.reflect.Array.get
-import java.lang.reflect.Array.getLength
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ofPattern
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.max
-import kotlin.math.min
 
 class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
@@ -527,7 +509,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     // 무료 나눔 포스트 작성 페이지로 데이터 전달
     fun goPost(foodindex: String){
-        val intent = Intent(this, SharePostActivity::class.java)
+        val intent = Intent(this, FoodlistToShareActivity::class.java)
         intent.putExtra("index", index)
         intent.putExtra("foodname", foodname)
         intent.putExtra("foodlistdeadline", foodlistdeadline)

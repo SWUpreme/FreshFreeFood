@@ -18,7 +18,7 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FoodlistToShare"
+            android:name=".FoodlistToShareActivity"
             android:exported="false" />
         <activity
             android:name=".ChatListActivity"
