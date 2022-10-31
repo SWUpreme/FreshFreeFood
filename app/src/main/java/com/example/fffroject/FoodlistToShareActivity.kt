@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,31 +18,25 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
+import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
-import com.example.fffroject.fragment.ShareFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import com.jakewharton.threetenabp.AndroidThreeTen
-import java.util.*
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.DateTimeFormatter.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.*
 
-class SharePostActivity : AppCompatActivity() {
+class FoodlistToShareActivity : AppCompatActivity() {
     //파이어스토어
     var auth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
@@ -51,7 +46,7 @@ class SharePostActivity : AppCompatActivity() {
     lateinit var bitmap: Bitmap
 
     // 바인딩 객체
-    lateinit var binding: ActivitySharepostBinding
+    lateinit var binding: ActivityFoodlistToShareBinding
     lateinit var filePath: String
 
     // 파이어스토어 게시글 리스트
@@ -72,7 +67,10 @@ class SharePostActivity : AppCompatActivity() {
     lateinit var date : String
     lateinit var createdAt: String
 
-    lateinit var regionIntent: String
+    lateinit var indexIntent: String
+    lateinit var foodnameIntent: String
+    lateinit var foodlistdeadlineIntent: String
+    lateinit var foodlistpurchaseIntent: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +79,7 @@ class SharePostActivity : AppCompatActivity() {
         AndroidThreeTen.init(this);
 
         // 바인딩 객체 획득
-        binding = ActivitySharepostBinding.inflate(layoutInflater)
+        binding = ActivityFoodlistToShareBinding.inflate(layoutInflater)
 
         // 액티비티 화면 출력
         setContentView(binding.root)
@@ -107,8 +105,17 @@ class SharePostActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
 
         // ShareFragment Intent 연결
-        regionIntent = intent.getStringExtra("region")!!
-        binding.region.setText(regionIntent)
+        indexIntent = intent.getStringExtra("index")!!
+        foodnameIntent = intent.getStringExtra("foodname")!!
+        foodlistdeadlineIntent = intent.getStringExtra("foodlistdeadline")!!
+        foodlistpurchaseIntent = intent.getStringExtra("foodlistpurchase")!!
+        binding.name.setText(foodnameIntent)
+        binding.deadlineYear.setText(foodlistdeadlineIntent.split('.')[0])
+        binding.deadlineMonth.setText(foodlistdeadlineIntent.split('.')[1])
+        binding.deadlineDate.setText(foodlistdeadlineIntent.split('.')[2])
+        binding.purchasedAtYear.setText(foodlistpurchaseIntent.split('.')[0])
+        binding.purchasedAtMonth.setText(foodlistpurchaseIntent.split('.')[1])
+        binding.purchasedAtDate.setText(foodlistpurchaseIntent.split('.')[2])
 
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
@@ -228,7 +235,7 @@ class SharePostActivity : AppCompatActivity() {
     private fun showDialogAddimage() {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val dialogBinding = DialogAddimageBinding.inflate(layoutInflater)
-        val alertDialog =AlertDialog.Builder(this).run {
+        val alertDialog = AlertDialog.Builder(this).run {
             setView(dialogBinding.root)
             show()
         }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
@@ -326,13 +333,13 @@ class SharePostActivity : AppCompatActivity() {
 
     // 데이터 저장
     private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
-    location: String, content: String){
+                          location: String, content: String){
         //유저가 존재한다면
         if (user != null){
             postId = UUID.randomUUID().toString()
             //게시글 등록 날짜
             nowdate = LocalDate.now()
-            date = nowdate.format(ofPattern("yyyy.MM.dd"))
+            date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
 
 //            nowDateTime = LocalDateTime.now()
@@ -416,5 +423,4 @@ class SharePostActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 }

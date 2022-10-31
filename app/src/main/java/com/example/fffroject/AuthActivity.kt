@@ -82,7 +82,7 @@ class AuthActivity : AppCompatActivity() {
                                         else{
                                             firestore?.collection("user")?.document(user.uid)
                                                 ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
-                                                    "contribution" to 0, "envlevel" to 0))
+                                                    "contribution" to 0, "envlevel" to 0, "nowRegion" to "n"))
                                         }
                                     }
 
