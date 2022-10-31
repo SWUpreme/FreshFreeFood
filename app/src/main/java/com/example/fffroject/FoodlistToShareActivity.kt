@@ -1,5 +1,7 @@
 package com.example.fffroject
 
+import android.app.Activity
+import android.app.appsearch.SearchResult
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -13,9 +15,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.jakewharton.threetenabp.AndroidThreeTen
+import kotlinx.android.synthetic.main.fragment_share.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.ByteArrayOutputStream
@@ -54,7 +55,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
     lateinit var deadline : EditText
     lateinit var purchasedAt : EditText
     lateinit var name : EditText
-    lateinit var region : EditText
+    lateinit var region : Button
     lateinit var location : EditText
     lateinit var context : EditText
     lateinit var imgFood : ImageView
@@ -120,6 +121,12 @@ class FoodlistToShareActivity : AppCompatActivity() {
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
 
+        // 지역설정 버튼
+        binding.region.setOnClickListener(){
+            val intent = Intent(this, RegionSelectActivity::class.java)
+            startForResult.launch(intent)
+        }
+
         // 완료버튼-post db 저장
         toolbar_sharepost.setOnMenuItemClickListener {
             when(it.itemId) {
@@ -178,6 +185,23 @@ class FoodlistToShareActivity : AppCompatActivity() {
             showDialogAddimage()
         }
 
+    }
+
+    // 콜백 받는 부분
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        // RegionSelectActivity로부터 결과값을 이곳으로 전달
+        if (it.resultCode == Activity.RESULT_OK) {
+            // 콜백으로 받아온 데이터가 있따면
+            if(it.data != null){
+                var regionData : String? = it.data!!.getStringExtra("data")
+                // 지역 설정 버튼 텍스트로 저장
+                binding.region.text = regionData
+                // 유저db-현재 설정된 지역 수정
+                db?.collection("user")?.document(user?.uid.toString())
+                    ?.update("nowRegion", regionData)
+                    ?.addOnSuccessListener {}
+            }
+        }
     }
 
     // 스토리지에 이미지 업로드

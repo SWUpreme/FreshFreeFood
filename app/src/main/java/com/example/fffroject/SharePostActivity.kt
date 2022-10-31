@@ -42,7 +42,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 
 class SharePostActivity : AppCompatActivity() {
-    //파이어스토어
+    // 파이어스토어
     var auth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
     var user: FirebaseUser? = null

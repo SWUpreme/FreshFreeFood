@@ -67,7 +67,6 @@ class ChatActivity : AppCompatActivity() {
                             if (chatid == null) {
                                 checkChatRoom()
                             } else {
-
                                 db?.collection("chat")?.document("$chatid")
                                     ?.set(
                                         hashMapOf(
