@@ -242,36 +242,7 @@ class ShareFragment : Fragment() {
                 }
             }
         }
-//        // 현재 지역 설정이 되어있다면
-//        if (presentRegion != "n"){
-//            // 지역 없음 텍스트 unvisible
-//            txtNoRegion.setVisibility(View.INVISIBLE)
-//            // 해당 지역 게시글 리스트 불러오기
-//            if (user != null) {
-//                db?.collection("post")
-//                    ?.whereEqualTo("region", presentRegion)
-//                    ?.orderBy("dateTime", Query.Direction.DESCENDING)
-//                    ?.addSnapshotListener { value, error ->
-//                        postAllList.clear()
-//                        if (value != null) {
-//                            for (snapshot in value.documents) {
-//                                var item = snapshot.toObject(PostAll::class.java)
-//                                if (item != null) {
-//                                    Log.d("region:", item.region.toString())
-//                                    postAllList.add(item)
-//                                }
-//                            }
-//                        }
-//                        recyclerviewShare.adapter?.notifyDataSetChanged()
-//                    }
-//            }
-//        }else{
-//            // 지역 없음 텍스트 visible
-//            txtNoRegion.setVisibility(View.VISIBLE)
-//        }
-
     }
-
 }
 
 // 커스텀 divider 추가
