@@ -101,7 +101,7 @@ class EnvlevelFragment: Fragment() {
                         //Toast.makeText(context, envlevel.toString(), Toast.LENGTH_SHORT).show()
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
                         progress_envlevel.progress = envpercent
-                        text_envcontri.text = envpercent.toString() + "/50"
+                        text_envcontri.text = envpercent.toString() + "/30"
                     }
                 }
 
