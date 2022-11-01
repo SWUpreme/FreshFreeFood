@@ -160,6 +160,16 @@ class ShareDetailActivity: AppCompatActivity()  {
                     binding.detailPurchasedAt.text = item?.purchasedAt!!
                     binding.detailContent.text = item?.content!!
 
+                    Log.d("aaa", detailWriter)
+                    // 게시글 작성 유저 정보 가져오기
+                    db?.collection("user")?.document(detailWriter)?.get()
+                        ?.addOnSuccessListener { value ->
+                            var dbUserNickname = value.data?.get("nickname") as String
+                            var dbEnvLevel = value.data?.get("envlevel").toString()
+                            binding.detailWriter.text = dbUserNickname
+                            binding.detailEnvLevel.text = dbEnvLevel
+                        }
+
                     downloadImage(detailIndex)
                 }
                 ?.addOnFailureListener {
