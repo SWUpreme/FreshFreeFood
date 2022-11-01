@@ -166,6 +166,18 @@ class ShareDetailActivity: AppCompatActivity()  {
                         ?.addOnSuccessListener { value ->
                             var dbUserNickname = value.data?.get("nickname") as String
                             var dbEnvLevel = value.data?.get("envlevel").toString()
+                            when (dbEnvLevel){
+                                "1" -> dbEnvLevel="씨앗이"
+                                "2" -> dbEnvLevel="새싹이"
+                                "3" -> dbEnvLevel="세잎이"
+                                "4" -> dbEnvLevel="묘목이"
+                                "5" -> dbEnvLevel="유목이"
+                                "6" -> dbEnvLevel="성목이"
+                                "7" -> dbEnvLevel="꽃잎이"
+                                "8" -> dbEnvLevel="낙옆이"
+                                "9" -> dbEnvLevel="과실이"
+                                else -> dbEnvLevel="씨앗이"
+                            }
                             binding.detailWriter.text = dbUserNickname
                             binding.detailEnvLevel.text = dbEnvLevel
                         }
