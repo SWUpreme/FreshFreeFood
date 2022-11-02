@@ -86,7 +86,7 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/dialog_selectregion.xml" value="0.2484375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_fridge.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_mypage.xml" value="0.1953125" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.536" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.264" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_chat_detail.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_foodlist.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_fridgelist.xml" value="0.2" />
@@ -129,11 +129,13 @@
         <entry key="app/src/main/res/layout/dialog_addfridge.xml" value="0.34038130165874103" />
         <entry key="app/src/main/res/layout/dialog_addimage.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/dialog_deletefridge.xml" value="0.45813953488372094" />
-        <entry key="app/src/main/res/layout/dialog_fixnickname.xml" value="0.2644927536231884" />
         <entry key="app/src/main/res/layout/dialog_fridgeoption.xml" value="0.22056159420289856" />
-        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.24823593094637256" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.34510650634765627" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.34510650634765627" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.3793640136718751" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.3793640136718751" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.29140603953394395" />
-        <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.4764129638671876" />
+        <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.29196624755859385" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.5794258021101166" />
         <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.41811175337186895" />
