@@ -1,6 +1,8 @@
 package com.example.fffroject.fragment
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.fffroject.*
+import com.example.fffroject.databinding.DialogFixnicknameBinding
 import com.example.fffroject.databinding.FragmentMypageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -27,6 +30,7 @@ class MypageFragment : Fragment() {
     lateinit var btn_logout: Button
     lateinit var btn_mypage_share: Button
     lateinit var btn_mypage_message: Button
+    lateinit var btn_mypage_nickname: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,8 +45,9 @@ class MypageFragment : Fragment() {
         btn_logout = view.findViewById(R.id.btnLogout)
 
         // 버튼 연동
-       btn_mypage_share = view.findViewById(R.id.btnMypageShare)
-       btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
+        btn_mypage_share = view.findViewById(R.id.btnMypageShare)
+        btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
+        btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {
@@ -66,6 +71,11 @@ class MypageFragment : Fragment() {
             ContextCompat.startActivity(view.context, intent, null)
         }
 
+        // 닉네임 수정 버튼을 눌렀을 경우
+        btn_mypage_nickname.setOnClickListener {
+
+        }
+
         // 로그아웃 처리
 //        binding.btnLogoutGoogle.setOnClickListener {
             // 구글 계정 로그아웃
@@ -82,5 +92,18 @@ class MypageFragment : Fragment() {
 //            startActivity(Intent(activity, AuthActivity::class.java))
         //}
         return view
+    }
+
+    fun fixNickname() {
+        val nicknamedial = DialogFixnicknameBinding.inflate(layoutInflater)
+        val nicknameview = nicknamedial.root
+        val nicknamefixDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(nicknamedial.root)
+                show()
+            }
+        }
+
+        nicknamefixDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 }

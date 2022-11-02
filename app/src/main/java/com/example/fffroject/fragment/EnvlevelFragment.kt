@@ -24,7 +24,7 @@ class EnvlevelFragment: Fragment() {
     lateinit var text_envcontri: TextView
     // 환경 기여도 레벨
     var envpercent = 0
-    var envlevel = 0
+    var envlevel = 1
 
     // 이미지뷰 설정
     lateinit var img_tree1: ImageView
