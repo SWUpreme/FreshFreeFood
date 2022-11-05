@@ -11,15 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fffroject.databinding.ActivityMyshareBinding
-import com.example.fffroject.databinding.ActivitySharepostBinding
-import com.example.fffroject.databinding.DialogAddimageBinding
-import com.example.fffroject.databinding.DialogPostoptionBinding
+import com.example.fffroject.databinding.*
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.example.fffroject.fragment.PostAll
 import com.example.fffroject.fragment.ShareFragment
@@ -135,7 +133,9 @@ class MyShareActivity: AppCompatActivity() {
             }
 
             listBtnmore.setOnClickListener{
-                showDialogMoreOption()
+                if (listIndex != null) {
+                    showDialogMoreOption(listIndex)
+                }
             }
 
         }
@@ -169,19 +169,15 @@ class MyShareActivity: AppCompatActivity() {
     }
 
     // 게시글 아이템 더보기 다이얼로그
-    private fun showDialogMoreOption(){
+    private fun showDialogMoreOption(index: String){
         //뷰 바인딩을 적용한 XML 파일 초기화
         val dialogBinding = DialogPostoptionBinding.inflate(layoutInflater)
         val alertDialog = AlertDialog.Builder(this).run {
             setView(dialogBinding.root)
-//            // Custom Dialog 위치 조절
-//            window?.setGravity(Gravity.BOTTOM)
-            //window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             show()
         }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
         // Custom Dialog 위치 조절
         alertDialog.window?.setGravity(Gravity.BOTTOM)
-
 
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -194,10 +190,40 @@ class MyShareActivity: AppCompatActivity() {
         // 삭제 버튼
         dialogBinding.btnPostDelete.setOnClickListener(View.OnClickListener {
             alertDialog.dismiss()
+            showDialogDelete(index)
         })
 
         // 취소 버튼
         dialogBinding.btnCancle.setOnClickListener(View.OnClickListener {
+            alertDialog.dismiss()
+        })
+    }
+
+    // 게시글 삭제 다이얼로그
+    private fun showDialogDelete(index: String){
+        //뷰 바인딩을 적용한 XML 파일 초기화
+        val dialogBinding = DialogDeletepostBinding.inflate(layoutInflater)
+        val alertDialog = AlertDialog.Builder(this).run {
+            setView(dialogBinding.root)
+            show()
+        }
+
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 취소 버튼
+        dialogBinding.btnPostDeleteCancle.setOnClickListener(View.OnClickListener {
+            alertDialog.dismiss()
+        })
+
+        // 삭제 확인 버튼
+        dialogBinding.btnPostDelete.setOnClickListener(View.OnClickListener {
+            db?.collection("post")?.document(index)
+                ?.delete()
+                ?.addOnSuccessListener {
+                    Toast.makeText(this, "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                ?.addOnFailureListener { }
             alertDialog.dismiss()
         })
     }
