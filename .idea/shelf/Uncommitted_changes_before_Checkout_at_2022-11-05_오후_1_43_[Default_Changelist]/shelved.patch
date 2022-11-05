@@ -1,0 +1,162 @@
+Index: app/src/main/java/com/example/fffroject/ChatActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.fffroject\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.MenuItem\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport android.widget.Toolbar\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.ContextCompat\r\nimport com.example.fffroject.fragment.MyChat\r\nimport com.example.fffroject.fragment.MyFridge\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.FirebaseUser\r\nimport com.google.firebase.firestore.FirebaseFirestore\r\nimport kotlinx.android.synthetic.main.activity_chat.*\r\nimport java.util.*\r\nimport java.text.SimpleDateFormat\r\n\r\nclass ChatActivity : AppCompatActivity() {\r\n\r\n    var auth: FirebaseAuth? = null\r\n    var db: FirebaseFirestore? = null\r\n    var user: FirebaseUser? = null\r\n\r\n    //sharedetail에서 받아온 것\r\n    var postid: String? = null\r\n    var to: String? = null\r\n\r\n    //채팅 edit\r\n    lateinit var Chatcontent: EditText\r\n\r\n    lateinit var chatlist: ArrayList<MyChat>\r\n\r\n    lateinit var chatroomid: String\r\n    lateinit var chatid: String\r\n\r\n    // lateinit var toolbar_chat: Toolbar\r\n\r\n    @SuppressLint(\"SimpleDateFormat\")\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_chat)\r\n\r\n        chatlist = arrayListOf<MyChat>()\r\n\r\n        // Firestore 초기화\r\n        auth = FirebaseAuth.getInstance()\r\n        user = auth!!.currentUser\r\n        db = FirebaseFirestore.getInstance()\r\n        Chatcontent = findViewById(R.id.ChatContent)\r\n\r\n        //ShareDetail에서 받아 온 인덱스\r\n        postid = intent.getStringExtra(\"detailIndex\")!!\r\n        to = intent.getStringExtra(\"detailWriter\")!!\r\n\r\n        val time = System.currentTimeMillis()\r\n        val dateFormat = SimpleDateFormat(\"MM/dd hh:mm\")\r\n        val curTime = dateFormat.format(time)\r\n        //toolbar_chat = findViewById(R.id.toolbChat)\r\n//        toolbar_chat = findViewById(R.id.toolbChat)\r\n\r\n\r\n        //toolbar 쪽지 보내기 눌렀을 때\r\n        toolbChat.setOnMenuItemClickListener {\r\n            when (it.itemId) {\r\n                R.id.btnChatContent -> {\r\n                    if (Chatcontent.text.toString() != null) {\r\n                        if (user != null) {\r\n                            db?.collection(\"user\")?.document(user?.uid!!)?.collection(\"mychat\")\r\n                                ?.whereEqualTo(\"postid\", postid)?.get()\r\n                                ?.addOnCompleteListener { task ->\r\n                                    if (task.result?.size() == 0) {\r\n\r\n                                        chatid = UUID.randomUUID().toString()\r\n                                        chatroomid = UUID.randomUUID().toString()\r\n\r\n                                        db?.collection(\"chatroom\")?.document(\"$postid\")\r\n                                            ?.set(\r\n                                                hashMapOf(\r\n                                                    \"index\" to postid,\r\n                                                    \"context\" to Chatcontent.text.toString(),\r\n                                                    \"from\" to user?.uid,\r\n                                                    \"to\" to to,\r\n                                                    \"sendedAt\" to curTime\r\n                                                )\r\n                                            )\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n\r\n                                        db?.collection(\"user\")?.document(user!!.uid)\r\n                                            ?.collection(\"mychat\")\r\n                                            ?.document(\"$chatroomid\")\r\n                                            ?.set(\r\n                                                hashMapOf(\r\n                                                    \"index\" to chatroomid,\r\n                                                    \"context\" to Chatcontent.text.toString(),\r\n                                                    \"from\" to user?.uid,\r\n                                                    \"to\" to to,\r\n                                                    \"sendedAt\" to curTime\r\n                                                )\r\n                                            )\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n\r\n                                        db?.collection(\"chatroom\")?.document(\"$chatroomid\")\r\n                                            ?.collection(\"chat\")?.document(\"$chatid\")\r\n                                            ?.set(\r\n                                                hashMapOf(\r\n                                                    \"index\" to chatid,\r\n                                                    \"context\" to Chatcontent.text.toString(),\r\n                                                    \"from\" to user?.uid,\r\n                                                    \"to\" to to,\r\n                                                    \"sendedAt\" to curTime\r\n                                                )\r\n                                            )\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n\r\n                                    } else {\r\n                                        db?.collection(\"user\")?.document(user?.uid!!)?.collection(\"mychat\")?.document(chatroomid!!)\r\n                                            ?.update(\"context\", Chatcontent.text.toString())\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n\r\n                                        db?.collection(\"user\")?.document(user?.uid!!)?.collection(\"mychat\")?.document(chatroomid!!)\r\n                                            ?.update(\"sendedAt\", curTime)\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n\r\n                                        db?.collection(\"chatroom\")?.document(\"$chatroomid\")\r\n                                            ?.collection(\"chat\")?.document(\"$chatid\")\r\n                                            ?.update(\"context\", Chatcontent.text.toString())\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                        db?.collection(\"chatroom\")?.document(\"$chatroomid\")\r\n                                            ?.collection(\"chat\")?.document(\"$chatid\")\r\n                                            ?.update(\"sendedAt\", curTime)\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n\r\n\r\n                                        db?.collection(\"chatroom\")?.document(\"$postid\")\r\n                                            ?.update(\"context\", Chatcontent.text.toString())\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                        db?.collection(\"chatroom\")?.document(\"$postid\")\r\n                                            ?.update(\"sendedAt\", curTime)\r\n                                            ?.addOnSuccessListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 완료.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                            ?.addOnFailureListener {\r\n                                                Toast.makeText(this, \"쪽지 전송 실패.\", Toast.LENGTH_SHORT).show()\r\n                                            }\r\n                                    }\r\n\r\n                                }\r\n                        }\r\n                        } else {\r\n                            Toast.makeText(this@ChatActivity, \"내용을 입력하세요.\", Toast.LENGTH_SHORT)\r\n                                .show()\r\n                        }\r\n\r\n\r\n\r\n                        true\r\n                    }\r\n                    else -> false\r\n\r\n                }\r\n            }\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n        //item 버튼 클릭 했을 때\r\n        override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n            when (item?.itemId) {\r\n                android.R.id.home -> {\r\n                    //뒤로가기 버튼 눌렀을 때\r\n                    Log.d(\"ToolBar_item: \", \"뒤로가기 버튼 클릭\")\r\n                    val intent = Intent(applicationContext, ShareDetailActivity::class.java)\r\n                    startActivity(intent)\r\n                    return true\r\n                }\r\n\r\n                else -> return super.onOptionsItemSelected(item)\r\n            }\r\n        }\r\n\r\n    }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fffroject/ChatActivity.kt b/app/src/main/java/com/example/fffroject/ChatActivity.kt
+--- a/app/src/main/java/com/example/fffroject/ChatActivity.kt	(revision 14cdd43c605a0630225963a6322d3c68b286a451)
++++ b/app/src/main/java/com/example/fffroject/ChatActivity.kt	(date 1667399015320)
+@@ -72,15 +72,15 @@
+                             db?.collection("user")?.document(user?.uid!!)?.collection("mychat")
+                                 ?.whereEqualTo("postid", postid)?.get()
+                                 ?.addOnCompleteListener { task ->
+-                                    if (task.result?.size() == 0) {
+-
+-                                        chatid = UUID.randomUUID().toString()
++                                    chatid = UUID.randomUUID().toString()
++                                    if (task.result?.size() == 0) {
+                                         chatroomid = UUID.randomUUID().toString()
+ 
+                                         db?.collection("chatroom")?.document("$postid")
+                                             ?.set(
+                                                 hashMapOf(
+-                                                    "index" to postid,
++                                                    "index" to chatroomid,
++                                                    "postid" to postid,
+                                                     "context" to Chatcontent.text.toString(),
+                                                     "from" to user?.uid,
+                                                     "to" to to,
+@@ -100,6 +100,7 @@
+                                             ?.set(
+                                                 hashMapOf(
+                                                     "index" to chatroomid,
++                                                    "postid" to postid,
+                                                     "context" to Chatcontent.text.toString(),
+                                                     "from" to user?.uid,
+                                                     "to" to to,
+@@ -132,62 +133,72 @@
+                                             }
+ 
+                                     } else {
+-                                        db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
+-                                            ?.update("context", Chatcontent.text.toString())
+-                                            ?.addOnSuccessListener {
+-                                                Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                            ?.addOnFailureListener {
+-                                                Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+-                                            }
++                                        db?.collection("user")?.document(user?.uid.toString())?.collection("mychat")
++                                            ?.whereEqualTo("postid", postid)?.get()
++                                            ?.addOnSuccessListener { value ->
++                                                var doc = value.documents?.get(0)
++                                                var chatroomid = doc.get("to") as String
++                                                //var chatroomid = value.documents?.get("index")
++                                                //var dbregion = value.data?.get("to") as String
++
++                                                db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
++                                                    ?.update("context", Chatcontent.text.toString())
++                                                    ?.addOnSuccessListener {
++                                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                    ?.addOnFailureListener {
++                                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
++                                                    }
+ 
+-                                        db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
+-                                            ?.update("sendedAt", curTime)
+-                                            ?.addOnSuccessListener {
+-                                                Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                            ?.addOnFailureListener {
+-                                                Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+-                                            }
++                                                db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
++                                                    ?.update("sendedAt", curTime)
++                                                    ?.addOnSuccessListener {
++                                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                    ?.addOnFailureListener {
++                                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
++                                                    }
+ 
+-                                        db?.collection("chatroom")?.document("$chatroomid")
+-                                            ?.collection("chat")?.document("$chatid")
+-                                            ?.update("context", Chatcontent.text.toString())
+-                                            ?.addOnSuccessListener {
+-                                                Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                            ?.addOnFailureListener {
+-                                                Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                        db?.collection("chatroom")?.document("$chatroomid")
+-                                            ?.collection("chat")?.document("$chatid")
+-                                            ?.update("sendedAt", curTime)
+-                                            ?.addOnSuccessListener {
+-                                                Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                            ?.addOnFailureListener {
+-                                                Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+-                                            }
++                                                db?.collection("chatroom")?.document("$chatroomid")
++                                                    ?.collection("chat")?.document("$chatid")
++                                                    ?.update("context", Chatcontent.text.toString())
++                                                    ?.addOnSuccessListener {
++                                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                    ?.addOnFailureListener {
++                                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                db?.collection("chatroom")?.document("$chatroomid")
++                                                    ?.collection("chat")?.document("$chatid")
++                                                    ?.update("sendedAt", curTime)
++                                                    ?.addOnSuccessListener {
++                                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                    ?.addOnFailureListener {
++                                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
++                                                    }
+ 
+ 
+-                                        db?.collection("chatroom")?.document("$postid")
+-                                            ?.update("context", Chatcontent.text.toString())
+-                                            ?.addOnSuccessListener {
+-                                                Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                            ?.addOnFailureListener {
+-                                                Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                        db?.collection("chatroom")?.document("$postid")
+-                                            ?.update("sendedAt", curTime)
+-                                            ?.addOnSuccessListener {
+-                                                Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                            ?.addOnFailureListener {
+-                                                Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
+-                                            }
+-                                    }
++                                                db?.collection("chatroom")?.document("$postid")
++                                                    ?.update("context", Chatcontent.text.toString())
++                                                    ?.addOnSuccessListener {
++                                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                    ?.addOnFailureListener {
++                                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                db?.collection("chatroom")?.document("$postid")
++                                                    ?.update("sendedAt", curTime)
++                                                    ?.addOnSuccessListener {
++                                                        Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                                    ?.addOnFailureListener {
++                                                        Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
++                                                    }
++                                            }
+ 
++                                    }
++
+                                 }
+                         }
+                         } else {
