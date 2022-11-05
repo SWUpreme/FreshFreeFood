@@ -131,13 +131,10 @@ class MyShareActivity: AppCompatActivity() {
 
     // 파이어베이스에서 데이터 불러오는 함수
     private fun loadData() {
-        // 현재 지역 이름
-        //presentRegion = txtRegionSelect.text as String
-
         if (user != null) {
             if (user != null) {
                 db?.collection("post")
-//                    ?.whereEqualTo("region", presentRegion)
+                    ?.whereEqualTo("writer", user?.uid.toString())
                     ?.orderBy("dateTime", Query.Direction.DESCENDING)
                     ?.addSnapshotListener { value, error ->
                         postAllList.clear()
