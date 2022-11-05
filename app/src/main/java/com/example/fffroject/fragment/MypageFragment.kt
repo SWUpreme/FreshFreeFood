@@ -32,8 +32,10 @@ class MypageFragment : Fragment() {
     lateinit var btn_mypage_share: Button
     lateinit var btn_mypage_message: Button
     lateinit var btn_mypage_nickname: Button
+
     lateinit var btn_nickname_close: ImageButton
     lateinit var edt_mypage_nickname: EditText
+    lateinit var btn_nickname_fix : Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,13 +80,6 @@ class MypageFragment : Fragment() {
             ContextCompat.startActivity(view.context, intent, null)
         }
 
-//        firestore?.collection("user")?.document(user!!.uid)
-//            ?.get()?.addOnSuccessListener { document ->
-//                if (document != null) {
-//                    nickname = document?.data?.get("nickname").toString()
-//                }
-//            }
-
         // 닉네임 변경 버튼을 눌렀을 경우
         btn_mypage_nickname.setOnClickListener {
             editNickName()
@@ -111,7 +106,7 @@ class MypageFragment : Fragment() {
         return view
     }
 
-    fun editNickName() {
+    private fun editNickName() {
         val nicknamedial = DialogFixnicknameBinding.inflate(layoutInflater)
         val nicknameview = nicknamedial.root
         val nicknamealertDialog = context?.let {
@@ -119,11 +114,12 @@ class MypageFragment : Fragment() {
                 setView(nicknamedial.root)
                 show()
             }
-        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        }
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
         nicknamealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 에딧텍스트 나의 닉네임 연동
+        // view가 다르기 때문에 새로운뷰.파인드~ 이런 식으로 해 줘야 널값 오류 안남
         edt_mypage_nickname = nicknameview.findViewById(R.id.edtNickName)
         firestore?.collection("user")?.document(user!!.uid)
             ?.get()?.addOnSuccessListener { document ->
@@ -131,6 +127,18 @@ class MypageFragment : Fragment() {
                     edt_mypage_nickname.setText(document?.data?.get("nickname").toString())
                 }
             }
+
+        // 확인 버튼을 눌렀을 경우 닉네임 업데이트
+        btn_nickname_fix = nicknameview.findViewById(R.id.btnNicknameFix)
+        btn_nickname_fix.setOnClickListener {
+            if(user != null) {
+                firestore?.collection("user")?.document(user!!.uid)
+                    ?.update("nickname", edt_mypage_nickname.text.toString())
+                    ?.addOnSuccessListener { Toast.makeText(context, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                    nicknamealertDialog?.dismiss()}
+                    ?.addOnFailureListener { Toast.makeText(context, "다시 입력 해 주세요.", Toast.LENGTH_SHORT).show() }
+            }
+        }
 
         // 닫기 버튼
         // 닫기 버튼이 ImageButton인지 Button인지 구분 잘 해주기(아니면 오류남)
