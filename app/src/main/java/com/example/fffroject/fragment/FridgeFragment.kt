@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,17 +22,9 @@ import kotlin.collections.ArrayList
 
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.example.fffroject.ExRecyclerView
 import com.example.fffroject.databinding.DialogAddfridgeBinding
 import com.example.fffroject.databinding.DialogDeletefridgeBinding
-import com.example.fffroject.databinding.DialogFridgeoptionBinding
 import com.example.fffroject.databinding.FragmentFridgeBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_write.*
-import kotlinx.android.synthetic.main.dialog_deletefridge.view.*
-import kotlinx.android.synthetic.main.item_fridgelist.*
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -206,7 +197,7 @@ class FridgeFragment : Fragment() {
         edt_fridgename = addfridgeview.findViewById(R.id.edtFridgeName)
 
         // 닫기 버튼
-        btn_addfridgeclose = addfridgeview.findViewById(R.id.btnAddClose)
+        btn_addfridgeclose = addfridgeview.findViewById(R.id.btnNicknameClose)
         btn_addfridgeclose.setOnClickListener {
             addfridgealertDialog?.dismiss()
         }
@@ -219,6 +210,7 @@ class FridgeFragment : Fragment() {
                     fridgeid = UUID.randomUUID().toString()
                     firestore?.collection("fridge")?.document("$fridgeid")
                         ?.set(
+
                             hashMapOf(
                                 "index" to fridgeid,
                                 "name" to edt_fridgename.text.toString(),

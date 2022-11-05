@@ -124,7 +124,7 @@
         app:layout_constraintTop_toTopOf="@+id/btnMypageMessage" />
 
     <Button
-        android:id="@+id/brnMypageAlarm"
+        android:id="@+id/btnMypageAlarm"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="15dp"
@@ -140,9 +140,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/brnMypageAlarm"
-        app:layout_constraintStart_toStartOf="@+id/brnMypageAlarm"
-        app:layout_constraintTop_toTopOf="@+id/brnMypageAlarm"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMypageAlarm"
+        app:layout_constraintStart_toStartOf="@+id/btnMypageAlarm"
+        app:layout_constraintTop_toTopOf="@+id/btnMypageAlarm"
         app:srcCompat="@drawable/btn_mypage_alarm" />
 
     <ImageView
@@ -150,9 +150,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/brnMypageAlarm"
-        app:layout_constraintEnd_toEndOf="@+id/brnMypageAlarm"
-        app:layout_constraintTop_toTopOf="@+id/brnMypageAlarm"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMypageAlarm"
+        app:layout_constraintEnd_toEndOf="@+id/btnMypageAlarm"
+        app:layout_constraintTop_toTopOf="@+id/btnMypageAlarm"
         app:srcCompat="@drawable/btn_mypage_arrow" />
 
     <TextView
@@ -164,19 +164,19 @@
         android:text="알람 설정"
         android:textColor="#30353D"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/brnMypageAlarm"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMypageAlarm"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/brnMypageAlarm" />
+        app:layout_constraintTop_toTopOf="@+id/btnMypageAlarm" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnMypageNickname"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="15dp"
         android:background="@color/zxing_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brnMypageAlarm"
+        app:layout_constraintTop_toBottomOf="@+id/btnMypageAlarm"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -184,10 +184,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMypageNickname"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button3"
-        app:srcCompat="@drawable/btn_mypage_quest" />
+        app:layout_constraintTop_toTopOf="@+id/btnMypageNickname"
+        app:srcCompat="@drawable/btn_mypage_nickname" />
 
     <TextView
         android:id="@+id/textView10"
@@ -195,34 +195,80 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="도움말"
+        android:text="닉네임 설정"
         android:textColor="#30353D"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMypageNickname"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/button3" />
+        app:layout_constraintTop_toTopOf="@+id/btnMypageNickname" />
 
     <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:id="@+id/button7"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
         android:background="@color/zxing_transparent"
-        android:fontFamily="@font/roboto_regular"
-        android:text="로그아웃"
-        android:textColor="#BDBDBD"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMypageNickname"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMypageNickname"
+        app:layout_constraintEnd_toEndOf="@+id/btnMypageNickname"
+        app:layout_constraintTop_toTopOf="@+id/btnMypageNickname"
+        app:srcCompat="@drawable/btn_mypage_arrow" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button7"
+        app:srcCompat="@drawable/btn_mypage_quest" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="도움말"
+        android:textColor="#30353D"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintStart_toEndOf="@+id/imageView15"
+        app:layout_constraintTop_toTopOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/zxing_transparent"
+        android:fontFamily="@font/roboto_regular"
+        android:text="로그아웃"
+        android:textColor="#BDBDBD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button7"
         app:srcCompat="@drawable/btn_mypage_arrow" />
 
 

@@ -1,32 +1,39 @@
 package com.example.fffroject.fragment
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.fffroject.*
+import com.example.fffroject.databinding.DialogFixnicknameBinding
 import com.example.fffroject.databinding.FragmentMypageBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MypageFragment : Fragment() {
-    //    fun newInstance() : MypageFragment {
-//        return MypageFragment()
-//    }
-    lateinit var binding: FragmentMypageBinding
+
+    //lateinit var binding: FragmentMypageBinding
 
     var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null
     var user : FirebaseUser? = null
 
     lateinit var btn_logout: Button
     lateinit var btn_mypage_share: Button
     lateinit var btn_mypage_message: Button
+    lateinit var btn_mypage_nickname: Button
+    lateinit var btn_nickname_close: ImageButton
+    lateinit var edt_mypage_nickname: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,18 +42,23 @@ class MypageFragment : Fragment() {
     ): View? {
         var view = LayoutInflater.from(activity).inflate(R.layout.fragment_mypage, container, false)
 
+        //binding = FragmentMypageBinding.inflate(layoutInflater)
+
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
-        binding = FragmentMypageBinding.inflate(layoutInflater)
-        btn_logout = view.findViewById(R.id.btnLogout)
+        user = auth!!.currentUser
+        // 파이어스토어 인스턴스 초기화
+        firestore = FirebaseFirestore.getInstance()
 
         // 버튼 연동
-       btn_mypage_share = view.findViewById(R.id.btnMypageShare)
-       btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
+        btn_logout = view.findViewById(R.id.btnLogout)
+        btn_mypage_share = view.findViewById(R.id.btnMypageShare)
+        btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
+        btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {
-            Toast.makeText(context,"로그아웃누름", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"로그아웃되셨습니다.", Toast.LENGTH_SHORT).show()
             auth?.signOut()
             // FFFroject.email = null
             val intent = Intent(activity, AuthActivity::class.java)
@@ -66,6 +78,20 @@ class MypageFragment : Fragment() {
             ContextCompat.startActivity(view.context, intent, null)
         }
 
+//        firestore?.collection("user")?.document(user!!.uid)
+//            ?.get()?.addOnSuccessListener { document ->
+//                if (document != null) {
+//                    nickname = document?.data?.get("nickname").toString()
+//                }
+//            }
+
+        // 닉네임 변경 버튼을 눌렀을 경우
+        btn_mypage_nickname.setOnClickListener {
+            editNickName()
+        }
+
+
+
         // 로그아웃 처리
 //        binding.btnLogoutGoogle.setOnClickListener {
             // 구글 계정 로그아웃
@@ -81,6 +107,36 @@ class MypageFragment : Fragment() {
 //            //activity?.let { ContextCompat.startActivity(it, intent, null) }
 //            startActivity(Intent(activity, AuthActivity::class.java))
         //}
+
         return view
+    }
+
+    fun editNickName() {
+        val nicknamedial = DialogFixnicknameBinding.inflate(layoutInflater)
+        val nicknameview = nicknamedial.root
+        val nicknamealertDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(nicknamedial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        nicknamealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 에딧텍스트 나의 닉네임 연동
+        edt_mypage_nickname = nicknameview.findViewById(R.id.edtNickName)
+        firestore?.collection("user")?.document(user!!.uid)
+            ?.get()?.addOnSuccessListener { document ->
+                if (document != null) {
+                    edt_mypage_nickname.setText(document?.data?.get("nickname").toString())
+                }
+            }
+
+        // 닫기 버튼
+        // 닫기 버튼이 ImageButton인지 Button인지 구분 잘 해주기(아니면 오류남)
+        btn_nickname_close = nicknameview.findViewById(R.id.btnNicknameClose)
+        btn_nickname_close.setOnClickListener(View.OnClickListener {
+            nicknamealertDialog?.dismiss()
+        })
     }
 }
