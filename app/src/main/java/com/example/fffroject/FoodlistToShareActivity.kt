@@ -2,7 +2,9 @@ package com.example.fffroject
 
 import android.app.Activity
 import android.app.appsearch.SearchResult
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -19,10 +22,13 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -290,26 +296,11 @@ class FoodlistToShareActivity : AppCompatActivity() {
 
         //카메라 버튼
         dialogBinding.btnCameraOn.setOnClickListener{
-            // 카메라 앱
-            // 파일 준비
-            val timeStamp: String =
-                SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            val storageDir: File? =
-                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val file = File.createTempFile(
-                "JPEG_${timeStamp}_",
-                ".jpg",
-                storageDir
-            )
-            filePath = file.absolutePath
-            val photoURI: Uri = FileProvider.getUriForFile(
-                this,
-                "com.example.fffroject.fileprovider", file
-            )
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            requestCameraFileLauncher.launch(intent)
-            alertDialog.dismiss()
+            // 카메라 권한 승인했다면
+            if (isCameraPermissionGranted(alertDialog)){
+                // 카메라 기능 실행
+                startCameraProcess(alertDialog)
+            }
         }
 
         //앨범 버튼
@@ -321,6 +312,72 @@ class FoodlistToShareActivity : AppCompatActivity() {
             alertDialog.dismiss()
         }
 
+    }
+
+    // 카메라 권한 처리
+    private fun isCameraPermissionGranted(alertDialog: AlertDialog): Boolean{
+        val preference = getPreferences(Context.MODE_PRIVATE)
+        val isFirstCheck = preference.getBoolean("isFirstPermissionCheck", true)
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 거절된 상태
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {
+                // 1. 사용자가 승인 거절을 누른경우
+                // 사용자에게 왜 필요한지 이유를 설명해주는게 좋음
+                val snackBar = Snackbar.make(binding.sharepostConst, "촬영을 위해서 카메라 권한이 필요합니다.", Snackbar.LENGTH_INDEFINITE)
+                snackBar.setAction("권한승인") {
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 1)
+                }
+                snackBar.show()
+            } else {
+                if (isFirstCheck){
+                    // 2. 혹은 아직 승인요청을 한적이 없는 경우
+                    // 처음 물었는지 여부를 저장
+                    preference.edit().putBoolean("isFirstPermissionCheck", false).apply()
+                    // 권한요청
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 1)
+                }else{
+                    // 3. 사용자가 승인 거절과 동시에 다시 표시하지 않기 옵션을 선택한 경우
+                    // requestPermission을 요청해도 창이 나타나지 않기 때문에 설정창으로 이동
+                    val snackBar = Snackbar.make(binding.sharepostConst, "카메라 권한이 필요합니다. 확인을 누르면 설정 화면으로 이동합니다.", Snackbar.LENGTH_INDEFINITE)
+                    snackBar.setAction("확인") {
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts("package", packageName, null)
+                        intent.data = uri
+                        startActivity(intent)
+                    }
+                    snackBar.show()
+                    alertDialog.dismiss()
+                }
+            }
+            return false
+        } else {
+            // 4. 권한이 승인된 상태
+            return true
+        }
+    }
+
+    // 카메라 기능 실행(권한 있을 시 카메라 버튼 터치)
+    private fun startCameraProcess(alertDialog: AlertDialog){
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? =
+            getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val file = File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        )
+        filePath = file.absolutePath
+        val photoURI: Uri = FileProvider.getUriForFile(
+            this,
+            "com.example.fffroject.fileprovider", file
+        )
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+        requestCameraFileLauncher.launch(intent)
+        alertDialog.dismiss()
     }
 
     //이미지 불러오기(gallery request launcher)
