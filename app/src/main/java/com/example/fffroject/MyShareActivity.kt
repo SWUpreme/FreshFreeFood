@@ -1,5 +1,6 @@
 package com.example.fffroject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -210,6 +211,14 @@ class MyShareActivity: AppCompatActivity() {
 
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 게시글 타이틀 불러오기
+        db?.collection("post")?.document(index)?.get()
+            ?.addOnSuccessListener {value->
+                var postTitle = value.data?.get("title") as String
+                dialogBinding.textPostDelete.text = "'"+postTitle+"' 게시글을 삭제하시겠습니까?"
+            }
+            ?.addOnFailureListener { }
 
         // 취소 버튼
         dialogBinding.btnPostDeleteCancle.setOnClickListener(View.OnClickListener {
