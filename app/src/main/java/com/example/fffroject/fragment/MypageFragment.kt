@@ -131,12 +131,17 @@ class MypageFragment : Fragment() {
         // 확인 버튼을 눌렀을 경우 닉네임 업데이트
         btn_nickname_fix = nicknameview.findViewById(R.id.btnNicknameFix)
         btn_nickname_fix.setOnClickListener {
-            if(user != null) {
-                firestore?.collection("user")?.document(user!!.uid)
-                    ?.update("nickname", edt_mypage_nickname.text.toString())
-                    ?.addOnSuccessListener { Toast.makeText(context, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                    nicknamealertDialog?.dismiss()}
-                    ?.addOnFailureListener { Toast.makeText(context, "다시 입력 해 주세요.", Toast.LENGTH_SHORT).show() }
+            if(edt_mypage_nickname.length() > 0) {
+                if(user != null) {
+                    firestore?.collection("user")?.document(user!!.uid)
+                        ?.update("nickname", edt_mypage_nickname.text.toString())
+                        ?.addOnSuccessListener { Toast.makeText(context, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                            nicknamealertDialog?.dismiss()}
+                        ?.addOnFailureListener { Toast.makeText(context, "다시 입력해 주세요.", Toast.LENGTH_SHORT).show() }
+                }
+            }
+            else {
+                Toast.makeText(context, "이름을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
 

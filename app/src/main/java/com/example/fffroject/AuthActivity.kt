@@ -1,12 +1,14 @@
 package com.example.fffroject
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import com.example.fffroject.databinding.ActivityAuthBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class AuthActivity : AppCompatActivity() {
     lateinit var binding: ActivityAuthBinding
@@ -23,6 +27,7 @@ class AuthActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
@@ -80,9 +85,10 @@ class AuthActivity : AppCompatActivity() {
                                             Toast.makeText(this, "기존 유저입니다.", Toast.LENGTH_LONG).show()
                                         }
                                         else{
+                                            var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                                             firestore?.collection("user")?.document(user.uid)
                                                 ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
-                                                    "contribution" to 0, "envlevel" to 1, "nowRegion" to "n"))
+                                                    "contribution" to 0, "envlevel" to 1, "nowRegion" to "n", "login" to nowdate))
                                         }
                                     }
 
