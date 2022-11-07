@@ -18,6 +18,13 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".OpenApiActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".FoodlistToShareActivity"
             android:exported="false" />
         <activity

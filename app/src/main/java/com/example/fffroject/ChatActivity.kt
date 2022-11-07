@@ -72,15 +72,17 @@ class ChatActivity : AppCompatActivity() {
                             db?.collection("user")?.document(user?.uid!!)?.collection("mychat")
                                 ?.whereEqualTo("postid", postid)?.get()
                                 ?.addOnCompleteListener { task ->
-                                    if (task.result?.size() == 0) {
+                                    chatid = UUID.randomUUID().toString()
 
-                                        chatid = UUID.randomUUID().toString()
+                                    if (task.result?.size() == 0) {
                                         chatroomid = UUID.randomUUID().toString()
 
-                                        db?.collection("chatroom")?.document("$postid")
+
+                                        db?.collection("chatroom")?.document("$chatroomid")
                                             ?.set(
                                                 hashMapOf(
-                                                    "index" to postid,
+                                                    "index" to chatroomid,
+                                                    "postid" to postid,
                                                     "context" to Chatcontent.text.toString(),
                                                     "from" to user?.uid,
                                                     "to" to to,
@@ -100,6 +102,7 @@ class ChatActivity : AppCompatActivity() {
                                             ?.set(
                                                 hashMapOf(
                                                     "index" to chatroomid,
+                                                    "postid" to postid,
                                                     "context" to Chatcontent.text.toString(),
                                                     "from" to user?.uid,
                                                     "to" to to,
@@ -170,7 +173,7 @@ class ChatActivity : AppCompatActivity() {
                                             }
 
 
-                                        db?.collection("chatroom")?.document("$postid")
+                                        db?.collection("chatroom")?.document("$chatroomid")
                                             ?.update("context", Chatcontent.text.toString())
                                             ?.addOnSuccessListener {
                                                 Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
@@ -178,7 +181,7 @@ class ChatActivity : AppCompatActivity() {
                                             ?.addOnFailureListener {
                                                 Toast.makeText(this, "쪽지 전송 실패.", Toast.LENGTH_SHORT).show()
                                             }
-                                        db?.collection("chatroom")?.document("$postid")
+                                        db?.collection("chatroom")?.document("$chatroomid")
                                             ?.update("sendedAt", curTime)
                                             ?.addOnSuccessListener {
                                                 Toast.makeText(this, "쪽지 전송 완료.", Toast.LENGTH_SHORT).show()
