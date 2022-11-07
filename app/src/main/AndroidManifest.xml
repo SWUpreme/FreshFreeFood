@@ -18,6 +18,9 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ShareUpdateActivity"
+            android:exported="false" />
+        <activity
             android:name=".FoodlistToShareActivity"
             android:exported="false" />
         <activity

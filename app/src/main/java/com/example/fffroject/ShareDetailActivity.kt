@@ -82,19 +82,6 @@ class ShareDetailActivity: AppCompatActivity()  {
         detailWriter = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
         detailFlag = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
 
-
-//        // 메세지 버튼
-//       toolbSharedetail.setOnMenuItemClickListener {
-//            when(it.itemId) {
-//                R.id.btnGotoMessage -> {
-//
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-
-
         // 메세지 버튼
         toolbSharedetail.setOnMenuItemClickListener {
             when(it.itemId) {
@@ -120,10 +107,6 @@ class ShareDetailActivity: AppCompatActivity()  {
                 else -> false
             }
         }
-
-
-
-
 
         // 냉장고에서 넘기기 여부 확인 후 색상 변경
         if(detailFlag=="true"){
@@ -159,6 +142,28 @@ class ShareDetailActivity: AppCompatActivity()  {
                     binding.detailCreatedAt.text = item?.createdAt!!
                     binding.detailPurchasedAt.text = item?.purchasedAt!!
                     binding.detailContent.text = item?.content!!
+
+                    Log.d("aaa", detailWriter)
+                    // 게시글 작성 유저 정보 가져오기
+                    db?.collection("user")?.document(detailWriter)?.get()
+                        ?.addOnSuccessListener { value ->
+                            var dbUserNickname = value.data?.get("nickname") as String
+                            var dbEnvLevel = value.data?.get("envlevel").toString()
+                            when (dbEnvLevel){
+                                "1" -> dbEnvLevel="씨앗이"
+                                "2" -> dbEnvLevel="새싹이"
+                                "3" -> dbEnvLevel="세잎이"
+                                "4" -> dbEnvLevel="묘목이"
+                                "5" -> dbEnvLevel="유목이"
+                                "6" -> dbEnvLevel="성목이"
+                                "7" -> dbEnvLevel="꽃잎이"
+                                "8" -> dbEnvLevel="낙옆이"
+                                "9" -> dbEnvLevel="과실이"
+                                else -> dbEnvLevel="씨앗이"
+                            }
+                            binding.detailWriter.text = dbUserNickname
+                            binding.detailEnvLevel.text = dbEnvLevel
+                        }
 
                     downloadImage(detailIndex)
                 }

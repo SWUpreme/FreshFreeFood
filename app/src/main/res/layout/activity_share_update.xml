@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ShareUpdateActivity"
     android:background="#FFFFFF"
-    tools:context=".FoodlistToShareActivity"
     android:id="@+id/sharepostConst">
 
     <androidx.appcompat.widget.Toolbar
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_medium"
-            android:text="게시글 쓰기"
+            android:text="게시글 수정"
             android:textColor="#30353D"
             android:textSize="18sp"
             android:textStyle="bold"

@@ -1,7 +1,6 @@
 package com.example.fffroject
 
 import android.app.Activity
-import android.app.appsearch.SearchResult
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,7 +17,10 @@ import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -26,7 +28,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
-import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -35,7 +36,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kotlinx.android.synthetic.main.fragment_share.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.ByteArrayOutputStream
@@ -43,7 +43,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FoodlistToShareActivity : AppCompatActivity() {
+class ShareUpdateActivity : AppCompatActivity() {
     //파이어스토어
     var auth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
@@ -75,34 +75,18 @@ class FoodlistToShareActivity : AppCompatActivity() {
     lateinit var createdAt: String
 
     lateinit var indexIntent: String
-    lateinit var foodnameIntent: String
-    lateinit var foodlistdeadlineIntent: String
-    lateinit var foodlistpurchaseIntent: String
+    var isImageChange: Boolean = false      // 이미지 변환 확인 변수
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_share_update)
         //'ThreeTen' 백포트 사용
         AndroidThreeTen.init(this);
 
         // 바인딩 객체 획득
         binding = ActivityFoodlistToShareBinding.inflate(layoutInflater)
-
         // 액티비티 화면 출력
         setContentView(binding.root)
-
-        // 툴바 뒤로가기 버튼 활성화
-//        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
-//        setSupportActionBar(toolbar_sharepost)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)      // 뒤로가기 버튼 default로 만들기
-//        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_x_rec)
-//        supportActionBar?.setDisplayShowTitleEnabled(false)    // 기본 타이틀 숨기기
-
-//        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)      // 뒤로가기 버튼 default로 만들기
-//        getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.ic_x_rec)
-//        getSupportActionBar()?.setDisplayShowTitleEnabled(false)    // 기본 타이틀 숨기기
-
-
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
@@ -111,34 +95,8 @@ class FoodlistToShareActivity : AppCompatActivity() {
         // 파이어스토리지 인스턴스 초기화
         storage = FirebaseStorage.getInstance()
 
-        // ShareFragment Intent 연결
+        // MyShareActivity Intent 연결
         indexIntent = intent.getStringExtra("index")!!
-        foodnameIntent = intent.getStringExtra("foodname")!!
-        foodlistdeadlineIntent = intent.getStringExtra("foodlistdeadline")!!
-        foodlistpurchaseIntent = intent.getStringExtra("foodlistpurchase")!!
-        binding.name.setText(foodnameIntent)
-        binding.deadlineYear.setText(foodlistdeadlineIntent.split('.')[0])
-        binding.deadlineMonth.setText(foodlistdeadlineIntent.split('.')[1])
-        binding.deadlineDate.setText(foodlistdeadlineIntent.split('.')[2])
-        binding.purchasedAtYear.setText(foodlistpurchaseIntent.split('.')[0])
-        binding.purchasedAtMonth.setText(foodlistpurchaseIntent.split('.')[1])
-        binding.purchasedAtDate.setText(foodlistpurchaseIntent.split('.')[2])
-
-        // 지역버튼에 유저DB의 현재 지정한 지역 가져오기
-        if(user != null) {
-            // 현재 지역 설정 조회
-            db?.collection("user")?.document(user?.uid.toString())?.get()
-                ?.addOnSuccessListener { value ->
-                    var dbregion = value.data?.get("nowRegion") as String
-                    if (dbregion != "n"){
-                        // 현재 지역 설정이 되어있다면
-                        binding.region.text = dbregion      // 검색창 텍스트를 설정된 지역으로 변경
-                    }else{
-                        // 현재 지역 설정이 안 되어있다면
-                        binding.region.text = "나눔 지역을 선택해주세요."            // 검색창 텍스트 없음
-                    }
-                }
-        }
 
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
@@ -207,6 +165,36 @@ class FoodlistToShareActivity : AppCompatActivity() {
             showDialogAddimage()
         }
 
+        loadData()      // db에서 수정할 데이터 불러오기
+
+    }
+
+    // db에서 수정할 데이터 불러오기
+    private fun loadData(){
+        // 지역버튼에 유저DB의 현재 지정한 지역 가져오기
+        if(user != null) {
+            // 선택한 포스트 조회
+            db?.collection("post")?.document(indexIntent)?.get()
+                ?.addOnSuccessListener { value ->
+                    // 분리할 날짜 데이터 가져오기
+                    var deadline = value.data?.get("deadline") as String
+                    var purchasedAt = value.data?.get("purchasedAt") as String
+                    // 조회한 데이터 넣기
+                    binding.title.setText(value.data?.get("title") as String)                 // 타이틀
+                    binding.deadlineYear.setText(deadline.split('.')[0])            // 유통기한
+                    binding.deadlineMonth.setText(deadline.split('.')[1])
+                    binding.deadlineDate.setText(deadline.split('.')[2])
+                    binding.purchasedAtYear.setText(purchasedAt.split('.')[0])      // 구매일
+                    binding.purchasedAtMonth.setText(purchasedAt.split('.')[1])
+                    binding.purchasedAtDate.setText(purchasedAt.split('.')[2])
+                    binding.name.setText(value.data?.get("name") as String)                   // 상품명
+                    binding.region.setText(value.data?.get("region") as String)               // 지역
+                    binding.location.setText(value.data?.get("location") as String)           // 거래희망위치
+                    binding.context.setText(value.data?.get("content") as String)             // 게시글내용
+                }
+            downloadImage(indexIntent)
+
+        }
     }
 
     // 콜백 받는 부분
@@ -265,10 +253,6 @@ class FoodlistToShareActivity : AppCompatActivity() {
         return (Integer.parseInt(binding.deadlineDate.text.toString())>0 && Integer.parseInt(binding.deadlineDate.text.toString())<=31
                 && Integer.parseInt(binding.purchasedAtDate.text.toString())>0 && Integer.parseInt(binding.purchasedAtDate.text.toString())<=31)
     }
-
-//    private fun checkCompareDate(): Bollean{
-//        return()
-//    }
 
     // 양식 작성 여부 확인
     private fun checkAllWritten(): Boolean{
@@ -404,6 +388,8 @@ class FoodlistToShareActivity : AppCompatActivity() {
             } ?: let {
                 Log.d("kkang", "bitmap null")
             }
+            // 이미지 변경 변수 false -> true
+            isImageChange = true
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -426,6 +412,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
             binding.imgFood.setImageBitmap(bitmap)
             binding.imgFood.visibility = View.VISIBLE
         }
+        isImageChange = true
     }
 
     // 데이터 저장
@@ -433,15 +420,12 @@ class FoodlistToShareActivity : AppCompatActivity() {
                           location: String, content: String){
         //유저가 존재한다면
         if (user != null){
-            postId = UUID.randomUUID().toString()
+            postId = indexIntent
             //게시글 등록 날짜
             nowdate = LocalDate.now()
             date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
 
-//            nowDateTime = LocalDateTime.now()
-//            val formatter = DateTimeFormatter.ISO_DATE
-//            dateTime = nowDateTime.format(formatter)
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
             val dateTime = timeformatter.format(nowTime)
@@ -461,18 +445,20 @@ class FoodlistToShareActivity : AppCompatActivity() {
                         "content" to content,
                         "createdAt" to createdAt,
                         "dateTime" to dateTime,
-                        "flag" to true,
+                        "flag" to false,
                         "done" to false
                     )
                 )
                 ?.addOnSuccessListener {
                     //  스토리지에 데이터 저장 후 postId값으로 스토리지에 이미지 업로드
-                    uploadImage(postId)
-                    val toast = Toast.makeText(this, "게시글 작성 완료", Toast.LENGTH_SHORT)
+                    if(isImageChange){
+                        uploadImage(postId)
+                    }
+                    val toast = Toast.makeText(this, "게시글 수정 완료", Toast.LENGTH_SHORT)
                     toast.show()
                 }
                 ?.addOnFailureListener {
-                    val toast = Toast.makeText(this, "게시글 작성 실패", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(this, "게시글 수정 실패", Toast.LENGTH_SHORT)
                     toast.show()
                 }
         }
@@ -519,5 +505,22 @@ class FoodlistToShareActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // 스토리지에서 이미지 다운로드
+    private fun downloadImage(imgId: String){
+        // 스토리지를 참조하는 StorageReference 생성
+        val storageRef: StorageReference? = storage?.reference
+        // 실제 업로드하는 파일을 참조하는 StorageReference 생성
+        val imgRef: StorageReference? = storageRef?.child("images/${imgId}.jpg")
+        val ONE_MEGABYTE: Long = 1024*1024
+        imgRef?.getBytes(ONE_MEGABYTE)
+            ?.addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                binding.imgFood.setImageBitmap(bitmap)
+            }?.addOnFailureListener{
+                Log.d("download", "fail")
+            }
+        binding.imgFood.visibility = View.VISIBLE
     }
 }
