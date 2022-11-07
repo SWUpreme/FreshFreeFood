@@ -186,6 +186,12 @@ class MyShareActivity: AppCompatActivity() {
         // 수정 버튼
         dialogBinding.btnPostUpdate.setOnClickListener(View.OnClickListener {
             alertDialog.dismiss()
+//            // 게시글 수정 액티비티 실행
+//            val intent = Intent(viewHolder.context, ShareDetailActivity::class.java)
+//            intent.putExtra("detailIndex", listIndex.toString())
+//            intent.putExtra("detailFlag", listFlag.toString())
+//            intent.putExtra("detailWriter", listWriter.toString())
+//            ContextCompat.startActivity(viewHolder.context, intent, null)
         })
 
         // 삭제 버튼
