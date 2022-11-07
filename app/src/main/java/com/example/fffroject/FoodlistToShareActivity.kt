@@ -135,7 +135,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
                         binding.region.text = dbregion      // 검색창 텍스트를 설정된 지역으로 변경
                     }else{
                         // 현재 지역 설정이 안 되어있다면
-                        binding.region.text = ""            // 검색창 텍스트 없음
+                        binding.region.text = "나눔 지역을 선택해주세요."            // 검색창 텍스트 없음
                     }
                 }
         }

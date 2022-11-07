@@ -135,7 +135,7 @@ class MyShareActivity: AppCompatActivity() {
 
             listBtnmore.setOnClickListener{
                 if (listIndex != null) {
-                    showDialogMoreOption(listIndex)
+                    showDialogMoreOption(listIndex, viewHolder)
                 }
             }
 
@@ -170,7 +170,7 @@ class MyShareActivity: AppCompatActivity() {
     }
 
     // 게시글 아이템 더보기 다이얼로그
-    private fun showDialogMoreOption(index: String){
+    private fun showDialogMoreOption(index: String, viewHolder: View){
         //뷰 바인딩을 적용한 XML 파일 초기화
         val dialogBinding = DialogPostoptionBinding.inflate(layoutInflater)
         val alertDialog = AlertDialog.Builder(this).run {
@@ -186,12 +186,10 @@ class MyShareActivity: AppCompatActivity() {
         // 수정 버튼
         dialogBinding.btnPostUpdate.setOnClickListener(View.OnClickListener {
             alertDialog.dismiss()
-//            // 게시글 수정 액티비티 실행
-//            val intent = Intent(viewHolder.context, ShareDetailActivity::class.java)
-//            intent.putExtra("detailIndex", listIndex.toString())
-//            intent.putExtra("detailFlag", listFlag.toString())
-//            intent.putExtra("detailWriter", listWriter.toString())
-//            ContextCompat.startActivity(viewHolder.context, intent, null)
+            // 게시글 수정 액티비티 실행
+            val intent = Intent(viewHolder.context, ShareUpdateActivity::class.java)
+            intent.putExtra("index", index)
+            ContextCompat.startActivity(viewHolder.context, intent, null)
         })
 
         // 삭제 버튼
