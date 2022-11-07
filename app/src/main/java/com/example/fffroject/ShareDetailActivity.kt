@@ -82,19 +82,6 @@ class ShareDetailActivity: AppCompatActivity()  {
         detailWriter = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
         detailFlag = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
 
-
-//        // 메세지 버튼
-//       toolbSharedetail.setOnMenuItemClickListener {
-//            when(it.itemId) {
-//                R.id.btnGotoMessage -> {
-//
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-
-
         // 메세지 버튼
         toolbSharedetail.setOnMenuItemClickListener {
             when(it.itemId) {
@@ -120,10 +107,6 @@ class ShareDetailActivity: AppCompatActivity()  {
                 else -> false
             }
         }
-
-
-
-
 
         // 냉장고에서 넘기기 여부 확인 후 색상 변경
         if(detailFlag=="true"){

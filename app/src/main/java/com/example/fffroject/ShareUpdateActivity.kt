@@ -120,6 +120,8 @@ class ShareUpdateActivity : AppCompatActivity() {
                     binding.location.setText(value.data?.get("location") as String)           // 거래희망위치
                     binding.context.setText(value.data?.get("content") as String)             // 게시글내용
                 }
+            downloadImage(indexIntent)
+
         }
 
         // 상단 툴바 사용
@@ -415,7 +417,7 @@ class ShareUpdateActivity : AppCompatActivity() {
                           location: String, content: String){
         //유저가 존재한다면
         if (user != null){
-            postId = UUID.randomUUID().toString()
+            postId = indexIntent
             //게시글 등록 날짜
             nowdate = LocalDate.now()
             date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
@@ -450,11 +452,11 @@ class ShareUpdateActivity : AppCompatActivity() {
                 ?.addOnSuccessListener {
                     //  스토리지에 데이터 저장 후 postId값으로 스토리지에 이미지 업로드
                     uploadImage(postId)
-                    val toast = Toast.makeText(this, "게시글 작성 완료", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(this, "게시글 수정 완료", Toast.LENGTH_SHORT)
                     toast.show()
                 }
                 ?.addOnFailureListener {
-                    val toast = Toast.makeText(this, "게시글 작성 실패", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(this, "게시글 수정 실패", Toast.LENGTH_SHORT)
                     toast.show()
                 }
         }
@@ -501,5 +503,21 @@ class ShareUpdateActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun downloadImage(imgId: String){
+        // 스토리지를 참조하는 StorageReference 생성
+        val storageRef: StorageReference? = storage?.reference
+        // 실제 업로드하는 파일을 참조하는 StorageReference 생성
+        val imgRef: StorageReference? = storageRef?.child("images/${imgId}.jpg")
+        val ONE_MEGABYTE: Long = 1024*1024
+        imgRef?.getBytes(ONE_MEGABYTE)
+            ?.addOnSuccessListener {
+                val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                binding.imgFood.setImageBitmap(bitmap)
+            }?.addOnFailureListener{
+                Log.d("download", "fail")
+            }
+        binding.imgFood.visibility = View.VISIBLE
     }
 }

@@ -461,7 +461,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
                         "content" to content,
                         "createdAt" to createdAt,
                         "dateTime" to dateTime,
-                        "flag" to false,
+                        "flag" to true,
                         "done" to false
                     )
                 )
