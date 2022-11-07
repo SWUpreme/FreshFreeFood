@@ -75,9 +75,8 @@ class ShareUpdateActivity : AppCompatActivity() {
     lateinit var createdAt: String
 
     lateinit var indexIntent: String
-    lateinit var foodnameIntent: String
-    lateinit var foodlistdeadlineIntent: String
-    lateinit var foodlistpurchaseIntent: String
+    var isImageChange: Boolean = false      // 이미지 변환 확인 변수
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_update)
@@ -388,6 +387,8 @@ class ShareUpdateActivity : AppCompatActivity() {
             } ?: let {
                 Log.d("kkang", "bitmap null")
             }
+            // 이미지 변경 변수 false -> true
+            isImageChange = true
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -410,6 +411,7 @@ class ShareUpdateActivity : AppCompatActivity() {
             binding.imgFood.setImageBitmap(bitmap)
             binding.imgFood.visibility = View.VISIBLE
         }
+        isImageChange = true
     }
 
     // 데이터 저장
@@ -423,9 +425,6 @@ class ShareUpdateActivity : AppCompatActivity() {
             date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
 
-//            nowDateTime = LocalDateTime.now()
-//            val formatter = DateTimeFormatter.ISO_DATE
-//            dateTime = nowDateTime.format(formatter)
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
             val dateTime = timeformatter.format(nowTime)
@@ -451,7 +450,9 @@ class ShareUpdateActivity : AppCompatActivity() {
                 )
                 ?.addOnSuccessListener {
                     //  스토리지에 데이터 저장 후 postId값으로 스토리지에 이미지 업로드
-                    uploadImage(postId)
+                    if(isImageChange){
+                        uploadImage(postId)
+                    }
                     val toast = Toast.makeText(this, "게시글 수정 완료", Toast.LENGTH_SHORT)
                     toast.show()
                 }
@@ -505,6 +506,7 @@ class ShareUpdateActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    // 스토리지에서 이미지 다운로드
     private fun downloadImage(imgId: String){
         // 스토리지를 참조하는 StorageReference 생성
         val storageRef: StorageReference? = storage?.reference
