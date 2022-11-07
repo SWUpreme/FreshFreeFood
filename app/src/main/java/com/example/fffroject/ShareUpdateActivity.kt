@@ -98,31 +98,6 @@ class ShareUpdateActivity : AppCompatActivity() {
         // MyShareActivity Intent 연결
         indexIntent = intent.getStringExtra("index")!!
 
-        // 지역버튼에 유저DB의 현재 지정한 지역 가져오기
-        if(user != null) {
-            // 선택한 포스트 조회
-            db?.collection("post")?.document(indexIntent)?.get()
-                ?.addOnSuccessListener { value ->
-                    // 분리할 날짜 데이터 가져오기
-                    var deadline = value.data?.get("deadline") as String
-                    var purchasedAt = value.data?.get("purchasedAt") as String
-                    // 조회한 데이터 넣기
-                    binding.title.setText(value.data?.get("title") as String)                 // 타이틀
-                    binding.deadlineYear.setText(deadline.split('.')[0])            // 유통기한
-                    binding.deadlineMonth.setText(deadline.split('.')[1])
-                    binding.deadlineDate.setText(deadline.split('.')[2])
-                    binding.purchasedAtYear.setText(purchasedAt.split('.')[0])      // 구매일
-                    binding.purchasedAtMonth.setText(purchasedAt.split('.')[1])
-                    binding.purchasedAtDate.setText(purchasedAt.split('.')[2])
-                    binding.name.setText(value.data?.get("name") as String)                   // 상품명
-                    binding.region.setText(value.data?.get("region") as String)               // 지역
-                    binding.location.setText(value.data?.get("location") as String)           // 거래희망위치
-                    binding.context.setText(value.data?.get("content") as String)             // 게시글내용
-                }
-            downloadImage(indexIntent)
-
-        }
-
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
 
@@ -190,6 +165,36 @@ class ShareUpdateActivity : AppCompatActivity() {
             showDialogAddimage()
         }
 
+        loadData()      // db에서 수정할 데이터 불러오기
+
+    }
+
+    // db에서 수정할 데이터 불러오기
+    private fun loadData(){
+        // 지역버튼에 유저DB의 현재 지정한 지역 가져오기
+        if(user != null) {
+            // 선택한 포스트 조회
+            db?.collection("post")?.document(indexIntent)?.get()
+                ?.addOnSuccessListener { value ->
+                    // 분리할 날짜 데이터 가져오기
+                    var deadline = value.data?.get("deadline") as String
+                    var purchasedAt = value.data?.get("purchasedAt") as String
+                    // 조회한 데이터 넣기
+                    binding.title.setText(value.data?.get("title") as String)                 // 타이틀
+                    binding.deadlineYear.setText(deadline.split('.')[0])            // 유통기한
+                    binding.deadlineMonth.setText(deadline.split('.')[1])
+                    binding.deadlineDate.setText(deadline.split('.')[2])
+                    binding.purchasedAtYear.setText(purchasedAt.split('.')[0])      // 구매일
+                    binding.purchasedAtMonth.setText(purchasedAt.split('.')[1])
+                    binding.purchasedAtDate.setText(purchasedAt.split('.')[2])
+                    binding.name.setText(value.data?.get("name") as String)                   // 상품명
+                    binding.region.setText(value.data?.get("region") as String)               // 지역
+                    binding.location.setText(value.data?.get("location") as String)           // 거래희망위치
+                    binding.context.setText(value.data?.get("content") as String)             // 게시글내용
+                }
+            downloadImage(indexIntent)
+
+        }
     }
 
     // 콜백 받는 부분
@@ -248,10 +253,6 @@ class ShareUpdateActivity : AppCompatActivity() {
         return (Integer.parseInt(binding.deadlineDate.text.toString())>0 && Integer.parseInt(binding.deadlineDate.text.toString())<=31
                 && Integer.parseInt(binding.purchasedAtDate.text.toString())>0 && Integer.parseInt(binding.purchasedAtDate.text.toString())<=31)
     }
-
-//    private fun checkCompareDate(): Bollean{
-//        return()
-//    }
 
     // 양식 작성 여부 확인
     private fun checkAllWritten(): Boolean{
