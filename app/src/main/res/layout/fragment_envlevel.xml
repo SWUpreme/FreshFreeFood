@@ -307,10 +307,10 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbShare" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/textFridgeEnv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="23dp"
         android:fontFamily="@font/roboto_regular"
         android:text="3회"
@@ -324,14 +324,14 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/roboto_bold"
         android:text="달성!"
         android:textColor="#30353D"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/textFridgeEnv"
         app:layout_constraintTop_toBottomOf="@+id/toolbShare" />
 
     <ImageView
@@ -345,7 +345,7 @@
         app:srcCompat="@drawable/eco_countbubble" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/textNowMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

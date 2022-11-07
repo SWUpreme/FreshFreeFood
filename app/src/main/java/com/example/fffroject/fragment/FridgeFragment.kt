@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,16 +23,16 @@ import kotlin.collections.ArrayList
 
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.findFragment
 import com.example.fffroject.databinding.DialogAddfridgeBinding
 import com.example.fffroject.databinding.DialogDeletefridgeBinding
+import com.example.fffroject.databinding.DialogFridgeoptionBinding
 import com.example.fffroject.databinding.FragmentFridgeBinding
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var user: FirebaseUser? = null
-
-    //lateinit var binding: FragmentFridgeBinding
 
     // Data에 있는 MyFridge랑 해줘야해
     lateinit var fridgelist: ArrayList<MyFridge>
@@ -40,8 +41,6 @@ class FridgeFragment : Fragment() {
     lateinit var edt_fridgename: EditText
     lateinit var btn_addfridgeclose: ImageButton
 
-//    lateinit var spinner: Spinner
-//    lateinit var select_fridge: String
     lateinit var fridgeid: String
     lateinit var recyclerview_fridge: RecyclerView
 
@@ -53,7 +52,6 @@ class FridgeFragment : Fragment() {
     lateinit var btn_addfridge: Button
 
     lateinit var text_fridge_name: TextView
-    //var current = ""
 
 //    fun newInstance() : FridgeFragment {
 //        return FridgeFragment()
@@ -85,25 +83,6 @@ class FridgeFragment : Fragment() {
         fbinding = FragmentFridgeBinding.inflate(layoutInflater)
 
         //binding = FragmentFridgeBinding.inflate(layoutInflater)
-        //btn_addFridge = view.findViewById(R.id.btnFridgeAdd)
-
-        // 냉장고 추가
-//        btn_addFridge.setOnClickListener {
-//            Toast.makeText(context, "냉장고 추가 누름", Toast.LENGTH_SHORT).show()
-//            addFridge()
-//        }
-
-//        toolbar = view.findViewById(R.id.btnPlus)
-//        toolbar.inflateMenu(R.menu.main_top_plus)
-//        toolbar.setOnMenuItemClickListener {
-//            when(it.itemId) {
-//                R.id.toolbMainPlus -> {
-//                    startActivity(Intent(context, FoodListActivity::class.java))
-//                    true
-//                }
-//                else  -> false
-//            }
-//        }
 
         // 툴바
         toolbar_fridge = view.findViewById(R.id.toolbShare)    // 상단바
@@ -139,9 +118,8 @@ class FridgeFragment : Fragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             var viewHolder = (holder as ViewHolder).itemView
             var fridgename: TextView
-            var btn_fridge_delete: Button
             var foodname: TextView
-            var btn_add_close: Button
+            var btn_option: Button
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
             foodname = viewHolder.findViewById(R.id.textCurrentFood)
@@ -151,15 +129,14 @@ class FridgeFragment : Fragment() {
             fridgeid = fridgelist!![position].index!!
             foodname.text = fridgelist!![position].current
 
-
             // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
-            btn_fridge_delete = viewHolder.findViewById(R.id.btnFridgeDelete)
+            btn_option = viewHolder.findViewById(R.id.btnFridgeOption)
 
-            // 냉장고 삭제
+            // 냉장고별 옵션 선택
             var index = fridgelist!![position].index
-            btn_fridge_delete.setOnClickListener {
+            btn_option.setOnClickListener {
                 if (index != null) {
-                    deleteFridge(index)
+                    fridgeOption(index)
                 }
             }
 
@@ -176,7 +153,6 @@ class FridgeFragment : Fragment() {
         override fun getItemCount(): Int {
             return fridgelist.size
         }
-
     }
 
     // 냉장고 추가
@@ -197,7 +173,7 @@ class FridgeFragment : Fragment() {
         edt_fridgename = addfridgeview.findViewById(R.id.edtFridgeName)
 
         // 닫기 버튼
-        btn_addfridgeclose = addfridgeview.findViewById(R.id.btnNicknameClose)
+        btn_addfridgeclose = addfridgeview.findViewById(R.id.btnAddClose)
         btn_addfridgeclose.setOnClickListener {
             addfridgealertDialog?.dismiss()
         }
@@ -210,7 +186,6 @@ class FridgeFragment : Fragment() {
                     fridgeid = UUID.randomUUID().toString()
                     firestore?.collection("fridge")?.document("$fridgeid")
                         ?.set(
-
                             hashMapOf(
                                 "index" to fridgeid,
                                 "name" to edt_fridgename.text.toString(),
@@ -237,86 +212,30 @@ class FridgeFragment : Fragment() {
             }
             addfridgealertDialog?.dismiss()
         }
-
-//        builder.setView(dialogView)
-//            .setPositiveButton("등록") { dialogInterFace, i ->
-//                if (edt_fridgename.text.toString() != null) {
-//                    if (user != null) {
-//                        fridgeid = UUID.randomUUID().toString()
-//                        firestore?.collection("fridge")?.document("$fridgeid")
-//                            ?.set(
-//                                hashMapOf(
-//                                    "index" to fridgeid,
-//                                    "name" to edt_fridgename.text.toString(),
-//                                    "owner" to user?.uid,
-//                                    "current" to "냉장고가 비었습니다"
-//                                )
-//                            )
-//                            ?.addOnSuccessListener { }
-//                            ?.addOnFailureListener { }
-//                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-//                            ?.document("$fridgeid")
-//                            ?.set(
-//                                hashMapOf(
-//                                    "index" to fridgeid,
-//                                    "name" to edt_fridgename.text.toString(),
-//                                    "current" to "냉장고가 비었습니다"
-//                                )
-//                            )
-//                            ?.addOnSuccessListener { }
-//                            ?.addOnFailureListener { }
-//                    }
-//                } else {
-//                    Toast.makeText(activity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            .setNegativeButton("취소", null)
-//            .show()
     }
 
-    // 냉장고 삭제
-    fun deleteFridge(index: String) {
+    // 냉장고별 옵션 선택
+    fun fridgeOption(index: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
-        //val fridgeoption = DialogFridgeoptionBinding.inflate(layoutInflater)
-        //val fridgeopDialog = layoutInflater.inflate(R.layout.dialog_fridgeoption, null)
-
-        val fridgedial = DialogDeletefridgeBinding.inflate(layoutInflater)
-        val fridgeview = fridgedial.root
-        val fridgealertDialog = context?.let {
+        val optiondial = DialogFridgeoptionBinding.inflate(layoutInflater)
+        val optionview = optiondial.root
+        val optionalertDialog = context?.let {
             androidx.appcompat.app.AlertDialog.Builder(it).run {
-                setView(fridgedial.root)
+                setView(optiondial.root)
                 show()
             }
         }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
-        fridgealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        //fridgealertDialog?.window?.setGravity(Gravity.BOTTOM)
-        // 다이얼로그 밑으로 나오게 하는 것
+        optionalertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        // 다이얼로그 밑으로 나오게
+        optionalertDialog?.window?.setGravity(Gravity.BOTTOM)
 
-        //닫기 버튼
-        btn_fridgeclose = fridgeview.findViewById(R.id.btnFridgeClose)
-        btn_fridgeclose.setOnClickListener(View.OnClickListener {
-            fridgealertDialog?.dismiss()
-
-        })
-
-        btn_fridgedel = fridgeview.findViewById(R.id.btnFridgedelOk)
-        btn_fridgedel.setOnClickListener {
-            firestore?.collection("fridge")?.document(index)
-                ?.delete()
-                ?.addOnSuccessListener { }
-                ?.addOnFailureListener { }
-            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                ?.document(index)
-                ?.delete()
-                ?.addOnSuccessListener {
-                    Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                }
-                ?.addOnFailureListener { }
-
-            fridgealertDialog?.dismiss()
+        // 냉장고 삭제 버튼 선택시
+        var btn_delete_fridge = optionview.findViewById<Button>(R.id.btnFridgeDelete)
+        btn_delete_fridge.setOnClickListener {
+            deleteFridge(index)
+            optionalertDialog?.dismiss()
         }
-
 
 //        val builder = AlertDialog.Builder(activity)
 //        val dialogView = layoutInflater.inflate(R.layout.dialog_deletefridge, null)
@@ -339,6 +258,46 @@ class FridgeFragment : Fragment() {
 //            }
 //            .setNegativeButton("취소", null)
 //            .show()
+    }
+
+    // 냉장고 이름 변경
+
+   // 냉장고 삭제
+    fun deleteFridge(index: String) {
+        val deletedial = DialogDeletefridgeBinding.inflate(layoutInflater)
+        val deleteview = deletedial.root
+        val deletealertDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(deletedial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        deletealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 다이얼로그의 확인 버튼과 연동해주기
+        var delete_fridge_ok = deleteview.findViewById<Button>(R.id.btnFridgedelOk)
+        delete_fridge_ok.setOnClickListener {
+            firestore?.collection("fridge")?.document(index)
+                ?.delete()
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                ?.document(index)
+                ?.delete()
+                ?.addOnSuccessListener {
+                    Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                ?.addOnFailureListener { }
+
+            deletealertDialog?.dismiss()
+        }
+
+        // 다이얼로그의 X버튼과 연동해주기
+        var delete_fridge_cancel = deleteview.findViewById<ImageButton>(R.id.btnFridgedelClose)
+        delete_fridge_cancel.setOnClickListener {
+            deletealertDialog?.dismiss()
+        }
     }
 
     // 공유인원 추가(냉장고 ID 추가)

@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/btnFridgeDelete"
+                android:id="@+id/btnFridgeOption"
                 android:layout_width="60dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
