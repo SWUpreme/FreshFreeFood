@@ -1,3 +1,5 @@
+
+
 package com.example.fffroject
 
 import android.content.Intent
@@ -11,7 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fffroject.fragment.ChatDTO
+import com.example.fffroject.fragment.ChatRoom
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -25,7 +27,7 @@ class ChatDetailActivity : AppCompatActivity() {
     var user: FirebaseUser? = null
 
     // 채팅 리스트
-    lateinit var ChatList: ArrayList<ChatDTO>
+    lateinit var ChatList: ArrayList<ChatRoom>
     lateinit var recyclerview_chatdetail: RecyclerView
     lateinit var toolbar_chatdetail: Toolbar
     lateinit var toolbar_friendname: TextView
@@ -43,7 +45,7 @@ class ChatDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_detail)
 
-        ChatList = arrayListOf<ChatDTO>()
+        ChatList = arrayListOf<ChatRoom>()
         // var check = MutableLiveData<ArrayList<MessageDTO>>() // 최신 메시지 확인
         // Firestore 초기화
         auth = FirebaseAuth.getInstance()
@@ -162,7 +164,7 @@ class ChatDetailActivity : AppCompatActivity() {
                     Toast.makeText(this, "수신은됨", Toast.LENGTH_SHORT).show()
                     // 문서 수신
                     for (snapshot in value.documents) {
-                        var chatlist = snapshot.toObject(ChatDTO::class.java)
+                        var chatlist = snapshot.toObject(ChatRoom::class.java)
 
                         if (chatlist != null) {
                             ChatList.add(chatlist)

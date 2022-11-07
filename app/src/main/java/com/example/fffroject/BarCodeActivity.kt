@@ -151,8 +151,11 @@ class BarCodeActivity : AppCompatActivity() {
     // QR/바코드 스캔 결과
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d(TAG, "onActivityResult: called")
+        // QR 코드를 찍은 결과를 변수에 담는다.
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        //결과가 있으면
         if (result != null) {
+            //QRCode Scan 성공&컨텐츠가 있으면
             if (result.contents != null) {
                 Log.d(TAG, "onActivityResult: result - ${result.contents}")
                 barcodode.text = result.contents
@@ -161,10 +164,11 @@ class BarCodeActivity : AppCompatActivity() {
                     // 상품정보 크롤링 호출
                     setProductInfo(result.contents)
                 }
-
+                // 컨텐츠가 없으면
             } else {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
             }
+            // 결과가 없으면
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
