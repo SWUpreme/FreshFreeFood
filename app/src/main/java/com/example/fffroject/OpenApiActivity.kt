@@ -17,11 +17,13 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_barcode.*
-import kotlinx.coroutines.NonCancellable.start
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 
 class OpenApiActivity : AppCompatActivity() {
@@ -52,7 +54,8 @@ class OpenApiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_api)
-
+        name.text = ""
+        barcodode.text = ""
         integrator.setBeepEnabled(false)
         integrator.setOrientationLocked(false)
         integrator.initiateScan()
@@ -77,21 +80,46 @@ class OpenApiActivity : AppCompatActivity() {
         upload_btn = findViewById(R.id.upload_btn)
         scan_btn = findViewById(R.id.scan_btn)
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
+
+        // 데이터 추가
+        upload_btn.setOnClickListener {
+
+            if (user != null) {
+                var food_deadline = deadline_year.text.toString()+"."+deadline_month.text.toString()+"."+deadline_day.text.toString()
+                var purchasedAt = purchasedAt_year.text.toString()+"."+ purchasedAt_month.text.toString()+"."+ purchasedAt_day.text.toString()
+                foodindex = UUID.randomUUID().toString()
+                firestore?.collection("fridge")?.document("$fridgeindex")
+                    ?.collection("food")?.document("$foodindex")
+                    ?.set(
+                        hashMapOf(
+                            "index" to foodindex,
+                            "name" to name.text.toString(),
+                            "deadline" to food_deadline,
+                            "purchaseAt" to purchasedAt,
+                            "count" to count.text.toString().toInt(),
+                            "done" to done
+                        )
+                    )
+                    ?.addOnSuccessListener { finish() }
+                    ?.addOnFailureListener {  }
+            }
+
+
+            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
 
     // 네트워크를 이용할 때는 쓰레드를 사용해서 접근해야 함
-    class NetworkThread() : Thread() {
-        lateinit var bar:String
+    class NetworkThread(var bar:String) : Thread() {
+
         override fun run() {
-            //var Key = "6FV9
-            //            var conn = url.openConnection()
-            //            var input = conn.getInputStream()
-            //            var isr = InputStreamReader(input)GXM40O"
+            var key = "74cb78df7c2b4d38b2f7"
             // API 정보를 가지고 있는 주소
             val site =
-                "https ://www.consumer.go.kr/openapi/recall/contents/index.do?serviceKey=6FV9GXM40O\n" +
-                        "&pageNo=1&cntPerPage=10&stdBrcd=" + bar
+                "https://openapi.foodsafetykorea.go.kr/api/"+key+"/C005/json/1/2/BAR_CD=" +bar
 
             val url = URL(site)
             val conn = url.openConnection()
@@ -114,28 +142,37 @@ class OpenApiActivity : AppCompatActivity() {
 
             // 전체가 객체로 묶여있기 때문에 객체형태로 가져옴
             val root = JSONObject(buf.toString())
-            var channel = root.getJSONObject("channel")
-            var allCnt: String = channel.getString("allCnt")
+            var C005 = root.getJSONObject("C005")
+            var total_count: String = C005.getString("total_count")
 
-            if (allCnt == "1") {
-                var content = channel.getJSONArray("content") // 객체 안에 있는 content라는 이름의 리스트를 가져옴
-                var obj2 = content.getJSONObject(0)
-                var common = channel.getJSONObject("return")
-                var code: String = common.getString("code") //결과코드
+            if (total_count == "1") {
+                Log.d("스레드로 넘어옴:","${total_count}")
+                var row = C005.getJSONArray("row") // 객체 안에 있는 content라는 이름의 리스트를 가져옴
+                var obj2 = row.getJSONObject(0)
+                var result = C005.getJSONObject("RESULT")
+                var code: String = result.getString("CODE") //결과코드
 
-                var productNm: String = obj2.getString("productNm") //제품명
-                var distbTmlmtDe: String = obj2.getString("distbTmlmtDe")  //유통기한 일자
-                var stdBrcd: String = obj2.getString("stdBrcd")  //바코드
-/*
+                var PRDLST_NM: String = obj2.getString("PRDLST_NM") //제품명
+                var POG_DAYCNT: String = obj2.getString("POG_DAYCNT")  //유통기한 일자
+                var BAR_CD: String = obj2.getString("BAR_CD")  //바코드
+
+                //Toast.makeText(this@NetworkThread, "바코드_번호: ${BAR_CD} 바코드_제품이름: ${PRDLST_NM} 바코드_유통기한: ${POG_DAYCNT}", Toast.LENGTH_LONG).show()
+
+
                 // 화면에 출력
-                runOnUiThread {
-                    textView.append("제품명: ${productNm}\n")
-                    textView.append("유통기한: ${distbTmlmtDe}\n")
-                    textView.append("유통기한: ${stdBrcd}\n")
-                }
-*/
+
+                Log.d("바코드_번호:","${BAR_CD}")
+                Log.d("바코드_제품이름:","${PRDLST_NM}")
+                Log.d("바코드_유통기한:","${POG_DAYCNT}")
+
+
+
+
 
             }
+            else{
+                Log.d("바코드실패:","다시 시도해주세요")
+           }
 
 
         }
@@ -144,6 +181,7 @@ class OpenApiActivity : AppCompatActivity() {
 
     // QR/바코드 스캔 결과
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         Log.d(TAG, "onActivityResult: called")
         // QR 코드를 찍은 결과를 변수에 담는다.
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
@@ -151,15 +189,16 @@ class OpenApiActivity : AppCompatActivity() {
         if (result != null) {
             //QRCode Scan 성공&컨텐츠가 있으면
             if (result.contents != null) {
-                Toast.makeText(this, "scanned: ${result.contents} format: ${result.formatName}", Toast.LENGTH_LONG).show()
-                //NetworkThread.start()
-            } else {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                var thread = NetworkThread(result.contents.toString())
+                thread.start()
+                thread.join()
             }
-
-        } else {
+            else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+
 
     }
 }
