@@ -54,8 +54,8 @@ class OpenApiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_api)
-        name.text = ""
-        barcodode.text = ""
+        //name.text = ""
+        //barcodode.text = ""
         integrator.setBeepEnabled(false)
         integrator.setOrientationLocked(false)
         integrator.initiateScan()
