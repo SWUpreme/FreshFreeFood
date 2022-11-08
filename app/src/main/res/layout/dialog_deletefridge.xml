@@ -55,25 +55,41 @@
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="73dp">
 
-            <TextView
-                android:id="@+id/textFridgeDelete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="냉장고를 삭제하시겠습니까?"
-                android:textAlignment="center"
-                android:textColor="#040000"
-                android:textSize="14sp"
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textFridgenameDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="'나의냉장고'"
+                    android:textAlignment="textEnd"
+                    android:textColor="#30353D"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textFridgeDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=" 을(를) 삭제하시겠습니까?"
+                    android:textAlignment="textStart"
+                    android:textColor="#30353D"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnFridgedelOk"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginStart="13dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginEnd="13dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
@@ -81,19 +97,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textFridgeDelete"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:background="@drawable/dialog_background_round"-->
-            <!--                android:orientation="vertical"-->
-            <!--                tools:layout_editor_absoluteX="8dp"-->
-            <!--                tools:layout_editor_absoluteY="73dp">-->
-
-            <!--            </LinearLayout>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

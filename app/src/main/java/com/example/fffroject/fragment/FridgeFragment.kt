@@ -134,9 +134,10 @@ class FridgeFragment : Fragment() {
 
             // 냉장고별 옵션 선택
             var index = fridgelist!![position].index
+            var fname = fridgelist!![position].name.toString()
             btn_option.setOnClickListener {
                 if (index != null) {
-                    fridgeOption(index)
+                    fridgeOption(index, fname)
                 }
             }
 
@@ -215,7 +216,7 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고별 옵션 선택
-    fun fridgeOption(index: String) {
+    fun fridgeOption(index: String, fname: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val optiondial = DialogFridgeoptionBinding.inflate(layoutInflater)
         val optionview = optiondial.root
@@ -230,40 +231,36 @@ class FridgeFragment : Fragment() {
         // 다이얼로그 밑으로 나오게
         optionalertDialog?.window?.setGravity(Gravity.BOTTOM)
 
+        // 냉장고 이름 변경 선택시
+        // user의 myfridge에서 이름 바꿔줘야함
+        // fridge에서 이름 바꿔줘야함
+        var btn_fridgename_fix = optionview.findViewById<Button>(R.id.btnFridgeNameFix)
+        btn_fridgename_fix.setOnClickListener {
+
+        }
+
         // 냉장고 삭제 버튼 선택시
         var btn_delete_fridge = optionview.findViewById<Button>(R.id.btnFridgeDelete)
         btn_delete_fridge.setOnClickListener {
-            deleteFridge(index)
+            deleteFridge(index, fname)
             optionalertDialog?.dismiss()
         }
 
-//        val builder = AlertDialog.Builder(activity)
-//        val dialogView = layoutInflater.inflate(R.layout.dialog_deletefridge, null)
-//        var findex = index
-//
-//
-//        builder.setView(dialogView)
-//            .setPositiveButton("확인") { dialogInterFace, i ->
-//                firestore?.collection("fridge")?.document(findex)
-//                    ?.delete()
-//                    ?.addOnSuccessListener { }
-//                    ?.addOnFailureListener { }
-//                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-//                    ?.document(findex)
-//                    ?.delete()
-//                    ?.addOnSuccessListener {
-//                        Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-//                    }
-//                    ?.addOnFailureListener { }
-//            }
-//            .setNegativeButton("취소", null)
-//            .show()
+        // 취소 버튼 선택시
+        var btn_option_close = optionview.findViewById<Button>(R.id.btnFridgeOptionClose)
+        btn_option_close.setOnClickListener {
+            optionalertDialog?.dismiss()
+        }
+
     }
 
     // 냉장고 이름 변경
+    fun fixnameFridge() {
+        
+    }
 
-   // 냉장고 삭제
-    fun deleteFridge(index: String) {
+    // 냉장고 삭제
+    fun deleteFridge(index: String, fname: String) {
         val deletedial = DialogDeletefridgeBinding.inflate(layoutInflater)
         val deleteview = deletedial.root
         val deletealertDialog = context?.let {
@@ -274,6 +271,10 @@ class FridgeFragment : Fragment() {
         }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
         deletealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 다이얼로그의 냉장고 이름 연동해주기
+        var fridgename = deleteview.findViewById<TextView>(R.id.textFridgenameDelete)
+        fridgename.setText("'" + fname + "'")
 
         // 다이얼로그의 확인 버튼과 연동해주기
         var delete_fridge_ok = deleteview.findViewById<Button>(R.id.btnFridgedelOk)
