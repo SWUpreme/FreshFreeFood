@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".FFFroject"
@@ -22,7 +23,9 @@
             android:exported="false" />
         <activity
             android:name=".OpenApiActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
