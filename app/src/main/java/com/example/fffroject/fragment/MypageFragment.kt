@@ -31,6 +31,7 @@ class MypageFragment : Fragment() {
     lateinit var btn_logout: Button
     lateinit var btn_mypage_share: Button
     lateinit var btn_mypage_message: Button
+    lateinit var btn_mypage_alarm: Button
     lateinit var btn_mypage_nickname: Button
 
     lateinit var btn_nickname_close: ImageButton
@@ -56,6 +57,7 @@ class MypageFragment : Fragment() {
         btn_logout = view.findViewById(R.id.btnLogout)
         btn_mypage_share = view.findViewById(R.id.btnMypageShare)
         btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
+        btn_mypage_alarm = view.findViewById(R.id.btnMypageAlarm)
         btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
 
         // 로그아웃 처리
@@ -83,6 +85,12 @@ class MypageFragment : Fragment() {
         // 닉네임 변경 버튼을 눌렀을 경우
         btn_mypage_nickname.setOnClickListener {
             editNickName()
+        }
+
+        // 임시 - 알람 버튼을 눌렀을 경우 후기 페이지로 이동
+        btn_mypage_alarm.setOnClickListener {
+            val intent = Intent(view.context, SharePointActivity::class.java)
+            ContextCompat.startActivity(view.context, intent, null)
         }
 
 
