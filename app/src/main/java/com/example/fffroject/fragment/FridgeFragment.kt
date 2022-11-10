@@ -24,10 +24,7 @@ import kotlin.collections.ArrayList
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.findFragment
-import com.example.fffroject.databinding.DialogAddfridgeBinding
-import com.example.fffroject.databinding.DialogDeletefridgeBinding
-import com.example.fffroject.databinding.DialogFridgeoptionBinding
-import com.example.fffroject.databinding.FragmentFridgeBinding
+import com.example.fffroject.databinding.*
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -236,7 +233,8 @@ class FridgeFragment : Fragment() {
         // fridge에서 이름 바꿔줘야함
         var btn_fridgename_fix = optionview.findViewById<Button>(R.id.btnFridgeNameFix)
         btn_fridgename_fix.setOnClickListener {
-
+            fixnameFridge(index, fname)
+            optionalertDialog?.dismiss()
         }
 
         // 냉장고 삭제 버튼 선택시
@@ -255,8 +253,44 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고 이름 변경
-    fun fixnameFridge() {
-        
+    fun fixnameFridge(index: String, fname: String) {
+        //뷰 바인딩을 적용한 XML 파일 초기화
+        val fixfridgedial = DialogFixfridgeBinding.inflate(layoutInflater)
+        val fixfridgeview = fixfridgedial.root
+        val fixfridgeDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(fixfridgedial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        fixfridgeDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 다이얼로그의 냉장고 이름 연동해주기
+        var fridgename = fixfridgeview.findViewById<EditText>(R.id.edtFixFridgeName)
+        fridgename.setText(fname)
+
+        // 다이얼로그의 확인 버튼과 연동해주기
+        // 냉장고 이름 업데이트
+        var fix_fridgename_ok = fixfridgeview.findViewById<Button>(R.id.btnFridgenameFix)
+        fix_fridgename_ok.setOnClickListener {
+            if(fridgename.length() > 0) {
+                if(user != null){
+                    firestore?.collection("fridge")?.document(index)
+                        ?.update("name", fridgename.text.toString())
+                        ?.addOnSuccessListener {  }
+                        ?.addOnFailureListener {  }
+                    firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")?.document(index)
+                        ?.update("name", fridgename.text.toString())
+                        ?.addOnSuccessListener { Toast.makeText(context, "냉장고 이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                            fixfridgeDialog?.dismiss()}
+                        ?.addOnFailureListener { Toast.makeText(context, "다시 입력해 주세요.", Toast.LENGTH_SHORT).show() }
+                }
+            }
+            else {
+                Toast.makeText(context, "냉장고 이름을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // 냉장고 삭제
