@@ -105,6 +105,7 @@ class WriteActivity : AppCompatActivity() {
                 var formatter = SimpleDateFormat("yyyy.MM.dd")
                 var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                 var deadline = nowdate[0] + "." + nowdate[1] + "." + nowdate[2]
+
                 var date = formatter.parse(deadline).time
                 var day = formatter.parse(nowdate).time
                 var d_day = (date - day)/ (60 * 60 * 24 * 1000)

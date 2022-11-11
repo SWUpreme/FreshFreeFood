@@ -3,123 +3,161 @@ package com.example.fffroject
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputFilter
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.fffroject.databinding.ActivityOpenApiBinding
 import com.example.fffroject.fragment.FoodList
-import com.google.common.collect.ComparisonChain.start
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.activity_barcode.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
-
 
 
 class OpenApiActivity : AppCompatActivity() {
-
+    //파이어스토어
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var user: FirebaseUser? = null
-    var fridgeindex : String? = null
+    lateinit var food: ArrayList<food>
 
-    lateinit var name: TextView
-    lateinit var deadline_year: EditText
-    lateinit var deadline_month: EditText
-    lateinit var deadline_day: EditText
-    lateinit var purchasedAt_year: EditText
-    lateinit var purchasedAt_month: EditText
-    lateinit var purchasedAt_day: EditText
-    lateinit var count: EditText
-    lateinit var upload_btn: Button
-    lateinit var scan_btn: Button
+    lateinit var name: EditText  //상품명
+    lateinit var count: EditText  //개수
+    lateinit var uploadBtn: Button  //업로드
+    lateinit var deadline:EditText //유통기한
+    lateinit var purchasedAt:EditText //유통기한
+
 
     lateinit var foodlist: ArrayList<FoodList>
     lateinit var foodindex: String
+
+    // 전역 변수로 바인딩 객체 선언
+    private var mBinding: ActivityOpenApiBinding? = null
+    // 매번 null 체크를 할 필요 없이 편의성을 위해 바인딩 변수 재 선언
+    private val binding get() = mBinding!!
+
+    var fridgeindex : String? = null
     var done = false
 
-    //private var qrScan: IntentIntegrator? = null
-    val integrator = IntentIntegrator(this)
+    val integrator = IntentIntegrator(this)  //context를 넣어줍니다
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_api)
-        //name.text = ""
-        //barcodode.text = ""
-        integrator.setBeepEnabled(false)
+
+        // 자동 생성된 뷰 바인딩 클래스에서의 inflate라는 메서드를 활용해서
+        // 액티비티에서 사용할 바인딩 클래스의 인스턴스 생성
+        mBinding = ActivityOpenApiBinding.inflate(layoutInflater)
+        // getRoot 메서드로 레이아웃 내부의 최상위 위치 뷰의
+        // 인스턴스를 활용하여 생성된 뷰를 액티비티에 표시 합니다.
+        setContentView(binding.root)
+
+        integrator.setBeepEnabled(false) //스캔 시 삡 소리 OFF
         integrator.setOrientationLocked(false)
-        integrator.initiateScan()
+        integrator.setPrompt("바코드를 읽어주세요")//QR 스캐너 하단 메세지 셋팅
+        integrator.initiateScan()  //초기화
+
+        foodlist = arrayListOf<FoodList>()
+
 
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         firestore = FirebaseFirestore.getInstance()
-        foodlist = arrayListOf<FoodList>()
-
-
-
+/*
         name = findViewById(R.id.name)
         deadline_year = findViewById(R.id.fdeadlineYear)
         deadline_month = findViewById(R.id.fdeadlineMonth)
-        deadline_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
+        api_layout = findViewById(R.id.apilayout)
+
         deadline_day = findViewById(R.id.fdeadlineDate)
         purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
         purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
-        purchasedAt_month.setFilters(arrayOf<InputFilter>(InputFilterMinMax("1", "12")))
+
         purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
         count = findViewById(R.id.count)
         upload_btn = findViewById(R.id.upload_btn)
-        scan_btn = findViewById(R.id.scan_btn)
+*/
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 
-        // 데이터 추가
-        upload_btn.setOnClickListener {
+        //날짜 계산
+        var now = LocalDate.now().toString()
+        var nowdate = now.split("-")
+        binding.fpurchasedAtYear.setText(nowdate[0])
+        binding.fpurchasedAtMonth.setText(nowdate[1])
+        binding.fpurchasedAtDate.setText(nowdate[2])
 
-            if (user != null) {
-                var food_deadline = deadline_year.text.toString()+"."+deadline_month.text.toString()+"."+deadline_day.text.toString()
-                var purchasedAt = purchasedAt_year.text.toString()+"."+ purchasedAt_month.text.toString()+"."+ purchasedAt_day.text.toString()
-                foodindex = UUID.randomUUID().toString()
-                firestore?.collection("fridge")?.document("$fridgeindex")
-                    ?.collection("food")?.document("$foodindex")
-                    ?.set(
-                        hashMapOf(
-                            "index" to foodindex,
-                            "name" to name.text.toString(),
-                            "deadline" to food_deadline,
-                            "purchaseAt" to purchasedAt,
-                            "count" to count.text.toString().toInt(),
-                            "done" to done
-                        )
-                    )
-                    ?.addOnSuccessListener { finish() }
-                    ?.addOnFailureListener {  }
+        // 데이터 추가
+        binding.uploadBtn.setOnClickListener {
+            if (checkAllWritten()) {
+                //화면에 현재 날짜, 시간 정보를 나타내고자 사용
+                var formatter = SimpleDateFormat("yyyy.MM.dd")
+                var food_deadline = binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
+                var deadline = formatter.parse(food_deadline).time
+                var purchasedAt = binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
+                var day = formatter.parse(purchasedAt).time
+                var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)
+
+                if (d_day.toInt() >= 0){
+                    if (user != null) {
+                        var food_deadline =
+                            binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
+                        var purchasedAt =
+                            binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
+                        foodindex = UUID.randomUUID().toString()
+                        firestore?.collection("fridge")?.document("$fridgeindex")
+                            ?.collection("food")?.document("$foodindex")
+                            ?.set(
+                                hashMapOf(
+                                    "index" to foodindex,
+                                    "name" to binding.name.text.toString(),
+                                    "deadline" to food_deadline,
+                                    "purchaseAt" to purchasedAt,
+                                    "count" to binding.count.text.toString().toInt(),
+                                    "done" to done
+                                )
+                            )
+
+                    }
+                    Toast.makeText(this, "등록되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                else {
+                    Toast.makeText(this, "유통기한이 이미 지난 제품입니다.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
 
-
-            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
+
+    }
+
+    private fun checkAllWritten(): Boolean{
+        return (binding.name.length()>0 && binding.fdeadlineYear.length()>0 && binding.fdeadlineMonth.length()>0 && binding.fdeadlineDate.length()>0
+                && binding.fpurchasedAtYear.length()>0 && binding.fpurchasedAtMonth.length()>0 && binding.fpurchasedAtDate.length()>0
+                && binding.count.length()>0)
 
 
     }
 
 
     // 네트워크를 이용할 때는 쓰레드를 사용해서 접근해야 함
-    class NetworkThread(var bar:String) : Thread() {
+    inner class NetworkThread(var barcode:String) : Thread() {
 
         override fun run() {
+            // var apiview = api_layout
             var key = "74cb78df7c2b4d38b2f7"
             // API 정보를 가지고 있는 주소
-            val site =
-                "https://openapi.foodsafetykorea.go.kr/api/"+key+"/C005/json/1/2/BAR_CD=" +bar
+            val site = "https://openapi.foodsafetykorea.go.kr/api/"+key+"/C005/json/1/5/BAR_CD="+barcode
 
             val url = URL(site)
             val conn = url.openConnection()
@@ -141,40 +179,37 @@ class OpenApiActivity : AppCompatActivity() {
             } while (str != null)
 
             // 전체가 객체로 묶여있기 때문에 객체형태로 가져옴
-            val root = JSONObject(buf.toString())
-            var C005 = root.getJSONObject("C005")
-            var total_count: String = C005.getString("total_count")
+            val root = JSONObject(buf.toString())  //받아온 내용 객체로 가져옴
+            var C005 = root.getJSONObject("C005")  //받아온 내용에서 C005객체 가져옴
+            var total_count: String = C005.getString("total_count")  //검색된 총 수량
 
-            if (total_count == "1") {
-                Log.d("스레드로 넘어옴:","${total_count}")
-                var row = C005.getJSONArray("row") // 객체 안에 있는 content라는 이름의 리스트를 가져옴
+            //사용자 인터페이스와 관련된 모든 동작은 onCreate () 및 이벤트 처리가 실행되는 주 스레드 또는 UI 스레드에서 수행되어야 함
+            // 다른 스레드에서 동작할 때 에러가 발생-> runOnUiThread를 사용
+            runOnUiThread {
+            if (total_count == "0") {
+                Log.d("바코드실패:","해당 상품이 없습니다.")
+                Toast.makeText(this@OpenApiActivity, "해당 상품이 없습니다.", Toast.LENGTH_LONG).show()
+            }
+            else {
+
+
+                Log.d("스레드로 넘어옴:", "${total_count}")
+                var row = C005.getJSONArray("row") // 객체 안에 있는 row라는 이름의 리스트를 가져옴&검색 결과 리스트
                 var obj2 = row.getJSONObject(0)
-                var result = C005.getJSONObject("RESULT")
+                var result = C005.getJSONObject("RESULT") //결과값
                 var code: String = result.getString("CODE") //결과코드
 
-                var PRDLST_NM: String = obj2.getString("PRDLST_NM") //제품명
+                var PRDLST_NM = obj2.getString("PRDLST_NM")!! //제품명
                 var POG_DAYCNT: String = obj2.getString("POG_DAYCNT")  //유통기한 일자
                 var BAR_CD: String = obj2.getString("BAR_CD")  //바코드
 
-                //Toast.makeText(this@NetworkThread, "바코드_번호: ${BAR_CD} 바코드_제품이름: ${PRDLST_NM} 바코드_유통기한: ${POG_DAYCNT}", Toast.LENGTH_LONG).show()
-
-
                 // 화면에 출력
-
-                Log.d("바코드_번호:","${BAR_CD}")
-                Log.d("바코드_제품이름:","${PRDLST_NM}")
-                Log.d("바코드_유통기한:","${POG_DAYCNT}")
-
-
-
-
-
+                binding.name.setText(PRDLST_NM)
+                Log.d("바코드_번호:", "${BAR_CD}")
+                Log.d("바코드_제품이름:", "${PRDLST_NM}")
+                Log.d("바코드_유통기한:", "${POG_DAYCNT}")
             }
-            else{
-                Log.d("바코드실패:","다시 시도해주세요")
-           }
-
-
+            }
         }
     }
 
@@ -189,16 +224,20 @@ class OpenApiActivity : AppCompatActivity() {
         if (result != null) {
             //QRCode Scan 성공&컨텐츠가 있으면
             if (result.contents != null) {
+                // 쓰레드 생성
+                //Toast.makeText(this, "scanned: ${result.contents}", Toast.LENGTH_LONG).show()
                 var thread = NetworkThread(result.contents.toString())
                 thread.start()
                 thread.join()
+            } else {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
             }
-            else {
+        }
+        else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
 
 
-    }
 }
