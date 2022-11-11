@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:enabled="false"
+        android:icon="@drawable/env_text"
+        android:title=""
+    />
+    <item
+        android:title="씨앗이-새싹이-묘목이"
+        android:enabled="false"
+        />
+    <item
+        android:title="씨앗이-새싹이-묘목이"
+        android:enabled="false"
+        />
+</menu>
