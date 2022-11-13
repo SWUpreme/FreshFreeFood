@@ -327,27 +327,67 @@ class FridgeFragment : Fragment() {
             var memberuid = ""
             var membername = ""
             // 이메일칸이 비지 않았다면
-                firestore?.collection("user")?.whereEqualTo("email",addmember)?.get()
-                    ?.addOnSuccessListener { document ->
-                        if (document != null) {
-                            // 해당하는 아이디의 사람이 있다면 uid 받아오기
-                            var sheet = document.documents?.get(0)
-                            memberuid = sheet.get("uid").toString()
-                            membername = sheet.get("nickname").toString()
-                            // 위에까지 오류 안나고 가능
-                            // 해당 멤버를 fridge의 멤버에 추가해주기
-                            // 이미 있는 멤버인 경우도 생각해주기
-                            firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
-                                ?.document("$memberuid")
-                                ?.set(
-                                    hashMapOf(
-                                        "uid" to memberuid,
-                                        "nickname" to membername
-                                    )
-                                )
-                        }
-                    }
+                if(addmember.length > 0){
+                    firestore?.collection("user")?.whereEqualTo("email",addmember)?.get()
+                        ?.addOnSuccessListener { document ->
+                            if (document != null) {
+                                // 해당하는 아이디의 사람이 있다면 uid 받아오기
+                                var sheet = document.documents?.get(0)
+                                memberuid = sheet.get("uid").toString()
+                                membername = sheet.get("nickname").toString()
+                                // 위에까지 오류 안나고 가능
+                                // 해당 멤버를 fridge의 멤버에 추가해주기
+                                // 이미 있는 멤버인지 검색
+                                firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+                                    ?.whereEqualTo("uid",memberuid)?.get()
+                                    ?.addOnCompleteListener { task ->
+                                        // 새로운 멤버인 경우
+                                        if(task.result?.size() == 0) {
+                                            // fridge의 멤버에 추가
+                                            firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+                                                ?.document("$memberuid")
+                                                ?.set(
+                                                    hashMapOf(
+                                                        "uid" to memberuid,
+                                                        "nickname" to membername,
+                                                        "email" to addmember
+                                                    )
+                                                )
+                                            // 새로운 멤버의 myfridge에 냉장고 추가
+                                            firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
+                                                ?.document("$fridgeid")
+                                                ?.set(
+                                                    hashMapOf(
+                                                        "index" to index,
+                                                        "name" to fname,
+                                                        "current" to current,
+                                                        "status" to true
+                                                    )
+                                                )
+                                                ?.addOnSuccessListener { }
+                                                ?.addOnFailureListener { }
+                                            Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                            addmemberDialog?.dismiss()
+                                        }
+                                        // 기존에 등록된 멤버인 경우
+                                        else {
+                                            Toast.makeText(context, "이미 등록된 멤버입니다.", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
 
+                            }
+                        }
+                }
+            else {
+                Toast.makeText(context, "이메일을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                }
+
+        }
+
+        // 취소 버튼과 연동
+        var btn_member_close = addmemberview.findViewById<ImageButton>(R.id.btnAddmemberClose)
+        btn_member_close.setOnClickListener {
+            addmemberDialog?.dismiss()
         }
     }
 
