@@ -132,9 +132,10 @@ class FridgeFragment : Fragment() {
             // 냉장고별 옵션 선택
             var index = fridgelist!![position].index
             var fname = fridgelist!![position].name.toString()
+            var currentname = fridgelist!![position].current.toString()
             btn_option.setOnClickListener {
                 if (index != null) {
-                    fridgeOption(index, fname)
+                    fridgeOption(index, fname, currentname)
                 }
             }
 
@@ -199,7 +200,8 @@ class FridgeFragment : Fragment() {
                             hashMapOf(
                                 "index" to fridgeid,
                                 "name" to edt_fridgename.text.toString(),
-                                "current" to "냉장고가 비었습니다"
+                                "current" to "냉장고가 비었습니다",
+                                "status" to true
                             )
                         )
                         ?.addOnSuccessListener { }
@@ -213,7 +215,7 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고별 옵션 선택
-    fun fridgeOption(index: String, fname: String) {
+    fun fridgeOption(index: String, fname: String, current: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val optiondial = DialogFridgeoptionBinding.inflate(layoutInflater)
         val optionview = optiondial.root
@@ -234,6 +236,13 @@ class FridgeFragment : Fragment() {
         var btn_fridgename_fix = optionview.findViewById<Button>(R.id.btnFridgeNameFix)
         btn_fridgename_fix.setOnClickListener {
             fixnameFridge(index, fname)
+            optionalertDialog?.dismiss()
+        }
+
+        // 냉장고 멤버 추가 선택시
+        var btn_add_member = optionview.findViewById<Button>(R.id.btnFridgeMemberAdd)
+        btn_add_member.setOnClickListener {
+            addMember(index, fname, current)
             optionalertDialog?.dismiss()
         }
 
@@ -293,6 +302,56 @@ class FridgeFragment : Fragment() {
         }
     }
 
+    // 냉장고에 멤버 추가
+    fun addMember(index: String, fname: String, current: String){
+        //뷰 바인딩을 적용한 XML 파일 초기화
+        val addmemberdial = DialogAddmemberBinding.inflate(layoutInflater)
+        val addmemberview = addmemberdial.root
+        val addmemberDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(addmemberdial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        addmemberDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 이메일 받는 부분 연동하기
+        var memberemail = addmemberview.findViewById<EditText>(R.id.edtMemberEmail)
+
+        // 다이얼로그의 확인 부분과 연동
+        val btn_memberok = addmemberview.findViewById<Button>(R.id.btnMemberOk)
+        btn_memberok.setOnClickListener {
+            // 이메일 받아와서 파이어스토어에서 멤버 찾기
+            var addmember = memberemail.text.toString()
+            var memberuid = ""
+            var membername = ""
+            // 이메일칸이 비지 않았다면
+                firestore?.collection("user")?.whereEqualTo("email",addmember)?.get()
+                    ?.addOnSuccessListener { document ->
+                        if (document != null) {
+                            // 해당하는 아이디의 사람이 있다면 uid 받아오기
+                            var sheet = document.documents?.get(0)
+                            memberuid = sheet.get("uid").toString()
+                            membername = sheet.get("nickname").toString()
+                            // 위에까지 오류 안나고 가능
+                            // 해당 멤버를 fridge의 멤버에 추가해주기
+                            // 이미 있는 멤버인 경우도 생각해주기
+                            firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+                                ?.document("$memberuid")
+                                ?.set(
+                                    hashMapOf(
+                                        "uid" to memberuid,
+                                        "nickname" to membername
+                                    )
+                                )
+                        }
+                    }
+
+        }
+    }
+
+
     // 냉장고 삭제
     fun deleteFridge(index: String, fname: String) {
         val deletedial = DialogDeletefridgeBinding.inflate(layoutInflater)
@@ -313,17 +372,23 @@ class FridgeFragment : Fragment() {
         // 다이얼로그의 확인 버튼과 연동해주기
         var delete_fridge_ok = deleteview.findViewById<Button>(R.id.btnFridgedelOk)
         delete_fridge_ok.setOnClickListener {
-            firestore?.collection("fridge")?.document(index)
-                ?.delete()
-                ?.addOnSuccessListener { }
-                ?.addOnFailureListener { }
+//            firestore?.collection("fridge")?.document(index)
+//                ?.delete()
+//                ?.addOnSuccessListener { }
+//                ?.addOnFailureListener { }
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                ?.document(index)
-                ?.delete()
-                ?.addOnSuccessListener {
-                    Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                }
+                ?.document(index.toString())
+                ?.update("status", false)
+                ?.addOnSuccessListener { Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()}
                 ?.addOnFailureListener { }
+//            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+//                ?.document(index)
+//                ?.delete()
+//                ?.addOnSuccessListener {
+//                    Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//                ?.addOnFailureListener { }
+//
 
             deletealertDialog?.dismiss()
         }
@@ -345,8 +410,9 @@ class FridgeFragment : Fragment() {
     fun loadData() {
         // 냉장고 리스트 불러오기
         if (user != null) {
+            // visible이 true인 냉장고만 가져오
             firestore?.collection("user")?.document(user!!.uid)
-                ?.collection("myfridge")
+                ?.collection("myfridge")?.whereEqualTo("status", true)
                 ?.addSnapshotListener { value, error ->
                     fridgelist.clear()
                     if (value != null) {
