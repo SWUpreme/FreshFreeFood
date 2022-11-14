@@ -1,18 +1,23 @@
 package com.example.fffroject.fragment
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.example.fffroject.R
+import com.example.fffroject.databinding.DialogFixnicknameBinding
+import com.example.fffroject.databinding.DialogTreegradeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,6 +54,13 @@ class EnvlevelFragment: Fragment() {
     lateinit var img_tree8: ImageView
     lateinit var img_tree9: ImageView
     lateinit var img_topbedge: ImageView
+    lateinit var img_gradebox: ImageView
+    lateinit var env_back: ConstraintLayout
+    lateinit var recycler: LinearLayout
+    lateinit var text_grade: TextView
+
+    // 나무 등급 보기 버튼
+    lateinit var btn_show_grade: Button
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -75,6 +87,9 @@ class EnvlevelFragment: Fragment() {
         progress_envlevel = view.findViewById(R.id.progEnvLev)
         text_envcontri = view.findViewById(R.id.textEnvContri)
 
+        // 등급 보여주는 버튼 연결
+        btn_show_grade = view.findViewById(R.id.btnGrade)
+
         // 이미지뷰 부분(나무들) 연결
         img_tree1 = view.findViewById(R.id.imgTree1)
         img_tree2 = view.findViewById(R.id.imgTree2)
@@ -87,6 +102,16 @@ class EnvlevelFragment: Fragment() {
         img_tree9 = view.findViewById(R.id.imgTree9)
         img_topbedge = view.findViewById(R.id.imgTopBedge)
 
+        // 나무 등급 보여주는 이미지, 텍스트 연결
+        img_gradebox = view.findViewById(R.id.imgTreeGrade)
+        text_grade = view.findViewById(R.id.textGrade)
+        // 다른 부분 클릭시 등급표 안보이게 해주기 위해 영역 연결
+        env_back = view.findViewById(R.id.envBack)
+        recycler = view.findViewById(R.id.envLinear)
+        // 처음엔 등급표 안보이게
+        img_gradebox.visibility = View.INVISIBLE
+        text_grade.visibility = View.INVISIBLE
+
         // 기본 색 #9F9F9F로 설정 (GRAY)
         img_tree1.setColorFilter(Color.parseColor("#9F9F9F"))
         img_tree2.setColorFilter(Color.parseColor("#9F9F9F"))
@@ -98,7 +123,6 @@ class EnvlevelFragment: Fragment() {
         img_tree8.setColorFilter(Color.parseColor("#9F9F9F"))
         img_tree9.setColorFilter(Color.parseColor("#9F9F9F"))
 
-
         // 환경 기여도에 따른 뱃지 보여주기
         setTreeImage()
 
@@ -107,6 +131,32 @@ class EnvlevelFragment: Fragment() {
 
         // 파이어베이스에서 환경 기여도 가져와서 설정
         loadEnvLev()
+
+        // 등급 보여주는 버튼을 눌렀을 때
+        btn_show_grade.setOnClickListener {
+//            val treegradedial = DialogTreegradeBinding.inflate(layoutInflater)
+//            val treegradeview = treegradedial.root
+//            val treegradealertDialog = context?.let {
+//                androidx.appcompat.app.AlertDialog.Builder(it).run {
+//                    setView(treegradedial.root)
+//                    show()
+//                }
+//            }
+//            //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+//            treegradealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            img_gradebox.visibility = View.VISIBLE
+            text_grade.visibility = View.VISIBLE
+
+            // 다른 배경 눌렀을 때 등급표 안보이게
+            env_back.setOnClickListener {
+                img_gradebox.visibility = View.INVISIBLE
+                text_grade.visibility = View.INVISIBLE
+            }
+            recycler.setOnClickListener {
+                img_gradebox.visibility = View.INVISIBLE
+                text_grade.visibility = View.INVISIBLE
+            }
+        }
 
 
 //        var formatter = SimpleDateFormat("yyyy.MM.dd")
@@ -137,6 +187,13 @@ class EnvlevelFragment: Fragment() {
 
         }
     }
+
+    fun showGrade() {
+        val grademenu = PopupMenu(context, btn_show_grade)
+        grademenu.menuInflater.inflate(R.menu.env_treegrade, grademenu.menu)
+        grademenu.show()
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setContri() {

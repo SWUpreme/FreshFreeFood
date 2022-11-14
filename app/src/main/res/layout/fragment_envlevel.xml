@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/envBack"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#F2F7FF">
 
     <ImageView
@@ -144,6 +145,7 @@
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
+            android:id="@+id/envLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -156,20 +158,20 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button6"
+                    android:id="@+id/btnGrade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="나무 성장 단계"
                     android:layout_marginLeft="25dp"
-                    android:background="@color/white"/>
+                    android:background="@color/white"
+                    android:text="나무 성장 단계" />
 
                 <ImageView
                     android:id="@+id/imageView14"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:srcCompat="@drawable/eco_img_showlevel"
                     android:layout_gravity="center"
-                    android:paddingLeft="5dp"/>
+                    android:paddingLeft="5dp"
+                    app:srcCompat="@drawable/eco_img_showlevel" />
             </LinearLayout>
 
             <LinearLayout
@@ -209,6 +211,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_tree3" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -355,6 +358,27 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView13"
         app:layout_constraintStart_toStartOf="@+id/imageView13"
         app:layout_constraintTop_toTopOf="@+id/imageView13" />
+
+    <ImageView
+        android:id="@+id/imgTreeGrade"
+        android:layout_width="200dp"
+        android:layout_height="179dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nestedScrollView2"
+        app:srcCompat="@drawable/ic_treegrade_background" />
+
+    <TextView
+        android:id="@+id/textGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="씨앗이-새싹이-그다음\n씨앗이-새싹이-그다음\n씨앗이-새싹이-그다음"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
+        app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
+        app:layout_constraintTop_toTopOf="@+id/imgTreeGrade" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

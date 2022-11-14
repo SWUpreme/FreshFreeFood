@@ -22,7 +22,7 @@
             android:layout_marginBottom="15dp">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnFridgeNameFix"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
@@ -30,11 +30,19 @@
                 android:textSize="16sp"/>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnFridgeMemberAdd"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
-                android:text="버튼"
+                android:text="냉장고 멤버 추가"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@color/zxing_transparent"
+                android:text="냉장고 공유"
                 android:textSize="16sp" />
 
             <Button
@@ -47,7 +55,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnFridgeOptionClose"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/dialog_background_round"
