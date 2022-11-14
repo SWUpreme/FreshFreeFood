@@ -150,58 +150,32 @@ class ChatActivity : AppCompatActivity() {
                                         var doc = task.result.documents?.get(0)
                                         chatroomid = doc?.get("index").toString()
 
-                                        //var chatCount = task.result!!.size()+1
-                                        //var chatCount = task.result.documents.count()+1
-
-                                        // 채탱 개수 가져오기
+                                        // 채팅방 내의 채팅 개수 세기
                                         db?.collection("chatroom")?.document("$chatroomid")
                                             ?.collection("chat")
-                                            ?.addSnapshotListener() {value, error ->
-                                                if (value != null){
-                                                    for (snapshot in value.documents) {
-                                                        chatCount += 1
-                                                    }
-                                                    Toast.makeText(this, chatCount, Toast.LENGTH_SHORT).show()
-                                                    // 전체 채팅룸에 채팅 올리기
-                                                    db?.collection("chatroom")?.document("$chatroomid")
-                                                        ?.collection("chat")?.document("$chatid")
-                                                        ?.set(
-                                                            hashMapOf(
-                                                                "index" to chatid,
-                                                                "context" to Chatcontent.text.toString(),
-                                                                "from" to user?.uid,
-                                                                "to" to to,
-                                                                "sendedAt" to curTime,
-                                                                "count" to  chatCount
-                                                            )
+                                            ?.get()
+                                            ?.addOnSuccessListener() { task ->
+                                                chatCount= task.size()+1
+                                                // 전체 채팅룸에 채팅 올리기
+                                                db?.collection("chatroom")?.document("$chatroomid")
+                                                    ?.collection("chat")?.document("$chatid")
+                                                    ?.set(
+                                                        hashMapOf(
+                                                            "index" to chatid,
+                                                            "context" to Chatcontent.text.toString(),
+                                                            "from" to user?.uid,
+                                                            "to" to to,
+                                                            "sendedAt" to curTime,
+                                                            "count" to  chatCount
                                                         )
-                                                        ?.addOnSuccessListener {
-                                                            Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                        ?.addOnFailureListener {
-                                                            Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                }
-
+                                                    )
+                                                    ?.addOnSuccessListener {
+                                                        Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                    ?.addOnFailureListener {
+                                                        Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                                    }
                                             }
-//                                        // 채탱 개수 가져오기
-//                                        db?.collection("chatroom")?.document("$chatroomid")?.collection("chat")
-//                                            ?.addSnapshotListener () {value, error ->
-//                                                if (value != null){
-//                                                    chatCount = value.size()+1
-//                                                    Toast.makeText(this, value.size(), Toast.LENGTH_SHORT).show()
-//                                                }
-//
-//                                            }
-
-
-
-
-                                        // 유저의 최신채팅 업데이트/채팅방의 최신채팅 업데이트 고민해볼점
-                                        // 둘 중에 하나만 해도 정보 받아오기는 가능할 것 같으니 고민해서 하나만 업데이트하고 넣어주는걸로 하자
-                                        // 채팅방에서 어느 것의 정보를 받아오느냐에 따라 다를 것
-                                        // 편의성을 위해서는 그냥 도너/기버 두 명의 유저에게 업데이트 해 주는 것이 훨씬 나을 것이라고 생각함
-
 
                                         // 나의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
@@ -252,13 +226,8 @@ class ChatActivity : AppCompatActivity() {
                         true
                     }
                     else -> false
-
                 }
             }
-
-
-
-
     }
 
         //item 버튼 클릭 했을 때
