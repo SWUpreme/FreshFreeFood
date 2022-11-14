@@ -216,7 +216,6 @@ class OpenApiActivity : AppCompatActivity() {
 
     // QR/바코드 스캔 결과
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         Log.d(TAG, "onActivityResult: called")
         // QR 코드를 찍은 결과를 변수에 담는다.
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
