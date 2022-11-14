@@ -87,14 +87,18 @@ class WriteActivity : AppCompatActivity() {
 
             if (checkAllWritten()) {
                 var formatter = SimpleDateFormat("yyyy.MM.dd")
-                var food_deadline = deadline_year.text.toString() + "." + deadline_month.text.toString() + "." + deadline_day.text.toString()
-                var deadline = formatter.parse(food_deadline).time
-                var purchasedAt =
-                    purchasedAt_year.text.toString() + "." + purchasedAt_month.text.toString() + "." + purchasedAt_day.text.toString()
-                var day = formatter.parse(purchasedAt).time
-                var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)
+                var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+                var deadline = nowdate[0] + "." + nowdate[1] + "." + nowdate[2]
+
+                var date = formatter.parse(deadline).time
+                var day = formatter.parse(nowdate).time
+                var d_day = (date - day)/ (60 * 60 * 24 * 1000)
                 if (d_day.toInt() >= 0){
                     if (user != null) {
+                        var food_deadline =
+                            deadline_year.text.toString() + "." + deadline_month.text.toString() + "." + deadline_day.text.toString()
+                        var purchasedAt =
+                            purchasedAt_year.text.toString() + "." + purchasedAt_month.text.toString() + "." + purchasedAt_day.text.toString()
                         foodindex = UUID.randomUUID().toString()
                         firestore?.collection("fridge")?.document("$fridgeindex")
                             ?.collection("food")?.document("$foodindex")
@@ -110,12 +114,31 @@ class WriteActivity : AppCompatActivity() {
                             )
 
                     }
-                    Toast.makeText(this, "등록되었습니다.", Toast.LENGTH_SHORT).show()
-                    finish()
                 }
                 else {
                     Toast.makeText(this, "유통기한이 이미 지난 제품입니다.", Toast.LENGTH_SHORT).show()
                 }
+//                if (user != null) {
+//
+//                    var food_deadline =
+//                        deadline_year.text.toString() + "." + deadline_month.text.toString() + "." + deadline_day.text.toString()
+//                    var purchasedAt =
+//                        purchasedAt_year.text.toString() + "." + purchasedAt_month.text.toString() + "." + purchasedAt_day.text.toString()
+//                    foodindex = UUID.randomUUID().toString()
+//                    firestore?.collection("fridge")?.document("$fridgeindex")
+//                        ?.collection("food")?.document("$foodindex")
+//                        ?.set(
+//                            hashMapOf(
+//                                "index" to foodindex,
+//                                "name" to name.text.toString(),
+//                                "deadline" to food_deadline,
+//                                "purchaseAt" to purchasedAt,
+//                                "count" to count.text.toString().toInt(),
+//                                "done" to done
+//                            )
+//                        )
+//
+//                }
             } else {
                 Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
@@ -131,4 +154,22 @@ class WriteActivity : AppCompatActivity() {
 
 
     }
+
+
+    //item 버튼 클릭 했을 때
+    /*  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+          when (item?.itemId) {
+              android.R.id.home -> {
+                  //뒤로가기 버튼 눌렀을 때
+                  Log.d("ToolBar_item: ", "뒤로가기 버튼 클릭")
+                  val intent = Intent(applicationContext,FoodListActivity::class.java)
+                  startActivity(intent)
+                  return true
+              }
+
+              else -> return super.onOptionsItemSelected(item)
+          }
+      }*/
+
+
 }
