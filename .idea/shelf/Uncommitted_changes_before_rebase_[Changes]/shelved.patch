@@ -1,0 +1,15 @@
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12__2_17__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\n<changelist name=\"Uncommitted_changes_before_Checkout_at_2022-11-12_오전_2_17_[Default_Changelist]\" date=\"1668187031439\" recycled=\"true\" deleted=\"true\">\n  <option name=\"PATH\" value=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12_오전_2_17_[Default_Changelist]/shelved.patch\" />\n  <option name=\"DESCRIPTION\" value=\"Uncommitted changes before Checkout at 2022-11-12 오전 2:17 [Default Changelist]\" />\n</changelist>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12__2_17__Default_Changelist_.xml b/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12__2_17__Default_Changelist_.xml
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12__2_17__Default_Changelist_.xml	(revision e8e91f1a233d146d16859efabe45003bcda0525a)
++++ b/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12__2_17__Default_Changelist_.xml	(date 1668435964815)
+@@ -1,4 +1,3 @@
+-
+ <changelist name="Uncommitted_changes_before_Checkout_at_2022-11-12_오전_2_17_[Default_Changelist]" date="1668187031439" recycled="true" deleted="true">
+   <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-12_오전_2_17_[Default_Changelist]/shelved.patch" />
+   <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 2022-11-12 오전 2:17 [Default Changelist]" />

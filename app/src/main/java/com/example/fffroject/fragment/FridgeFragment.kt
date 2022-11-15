@@ -358,7 +358,7 @@ class FridgeFragment : Fragment() {
                 if(addmember.length > 0){
                     firestore?.collection("user")?.whereEqualTo("email",addmember)?.get()
                         ?.addOnSuccessListener { document ->
-                            if (document != null) {
+                            if (document.size() != 0) {
                                 // 해당하는 아이디의 사람이 있다면 uid 받아오기
                                 var sheet = document.documents?.get(0)
                                 memberuid = sheet.get("uid").toString()
@@ -366,13 +366,13 @@ class FridgeFragment : Fragment() {
                                 // 위에까지 오류 안나고 가능
                                 // 해당 멤버를 fridge의 멤버에 추가해주기
                                 // 이미 있는 멤버인지 검색
-                                firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+                                firestore?.collection("fridge")?.document(index)?.collection("member")
                                     ?.whereEqualTo("uid",memberuid)?.get()
                                     ?.addOnCompleteListener { task ->
                                         // 새로운 멤버인 경우
                                         if(task.result?.size() == 0) {
                                             // fridge의 멤버에 추가
-                                            firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+                                            firestore?.collection("fridge")?.document(index)?.collection("member")
                                                 ?.document("$memberuid")
                                                 ?.set(
                                                     hashMapOf(
@@ -383,7 +383,7 @@ class FridgeFragment : Fragment() {
                                                 )
                                             // 새로운 멤버의 myfridge에 냉장고 추가
                                             firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
-                                                ?.document("$fridgeid")
+                                                ?.document("$index")
                                                 ?.set(
                                                     hashMapOf(
                                                         "index" to index,
@@ -396,7 +396,7 @@ class FridgeFragment : Fragment() {
                                                 ?.addOnSuccessListener {
                                                     membercount = fcount + 1
                                                     // 멤버의 냉장고의 현재 멤버 수 업데이트
-                                                    firestore?.collection("fridge")?.document(fridgeid)
+                                                    firestore?.collection("fridge")?.document(index)
                                                         ?.collection("member")?.get()
                                                         ?.addOnSuccessListener { task ->
                                                             //Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
@@ -406,7 +406,7 @@ class FridgeFragment : Fragment() {
                                                                     var memberuid = doc.get("uid").toString()
                                                                     //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
                                                                     firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
-                                                                        ?.document(fridgeid)
+                                                                        ?.document(index)
                                                                         ?.update("member", membercount)
                                                                         ?.addOnSuccessListener { }
                                                                         ?.addOnFailureListener { }
@@ -415,7 +415,7 @@ class FridgeFragment : Fragment() {
                                                         }
                                                     // 나의 냉장고에서 멤버 수 업데이트
                                                     firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                                                        ?.document(fridgeid)
+                                                        ?.document(index)
                                                         ?.update("member", membercount)
                                                         ?.addOnSuccessListener { Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()}
                                                         ?.addOnFailureListener { }
@@ -430,6 +430,9 @@ class FridgeFragment : Fragment() {
                                         }
                                     }
 
+                            }
+                            else {
+                                Toast.makeText(context, "해당 유저가 없습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
