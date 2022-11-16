@@ -140,7 +140,22 @@ class FridgeFragment : Fragment() {
             var fcount = fridgelist!![position].member.toString().toInt()
             btn_option.setOnClickListener {
                 if (index != null) {
-                    fridgeOption(index, fname, currentname, fcount)
+                    // 냉장고의 owner인지 member인지 확인
+                    firestore?.collection("fridge")?.document(index)?.get()
+                        ?.addOnSuccessListener { document ->
+                            if (document != null) {
+                                // 해당하는 냉장고의 owner 받아오기
+                                var owner = document.data?.get("owner").toString()
+                                // 내가 owner인 경우
+                                if (owner == user!!.uid) {
+                                    fridgeOption(index, fname, currentname, fcount)
+                                }
+                                // 내가 member인 경우
+                                else {
+                                    fridgememberOption(index, fname, fcount)
+                                }
+                            }
+                        }
                 }
             }
 
@@ -220,7 +235,7 @@ class FridgeFragment : Fragment() {
         }
     }
 
-    // 냉장고별 옵션 선택
+    // 냉장고별 옵션 선택(owner의 경우)
     fun fridgeOption(index: String, fname: String, current: String, fcount: Int) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val optiondial = DialogFridgeoptionBinding.inflate(layoutInflater)
@@ -265,6 +280,23 @@ class FridgeFragment : Fragment() {
             optionalertDialog?.dismiss()
         }
 
+    }
+
+    // 멤버의 경우
+    fun fridgememberOption(index: String, fname: String, fcount: Int) {
+        //뷰 바인딩을 적용한 XML 파일 초기화
+        val memberdial = DialogMemberoptionBinding.inflate(layoutInflater)
+        val memberview = memberdial.root
+        val memberalertDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(memberdial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        memberalertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        // 다이얼로그 밑으로 나오게
+        memberalertDialog?.window?.setGravity(Gravity.BOTTOM)
     }
 
     // 냉장고 이름 변경
