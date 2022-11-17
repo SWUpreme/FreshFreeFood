@@ -153,6 +153,7 @@ class MyShareActivity: AppCompatActivity() {
                     if (value != null) {
                         // 나눔 없음 텍스트 INVISIBLE
                         txtNoRegion.setVisibility(View.INVISIBLE)
+                        // 전체 게시글 리스트에 추가하기
                         for (snapshot in value.documents) {
                             var item = snapshot.toObject(PostAll::class.java)
                             if (item != null) {
