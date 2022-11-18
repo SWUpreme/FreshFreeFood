@@ -22,6 +22,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.findFragment
 import com.example.fffroject.databinding.*
@@ -119,16 +120,35 @@ class FridgeFragment : Fragment() {
             var foodname: TextView
             var btn_option: Button
             var member: TextView
+            var fridgeback: ConstraintLayout
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
             foodname = viewHolder.findViewById(R.id.textCurrentFood)
             member = viewHolder.findViewById(R.id.textMemberCount)
+            fridgeback = viewHolder.findViewById(R.id.cardviewFridge)
 
             // 리사이클러뷰 아이템 정보
             fridgename.text = fridgelist!![position].name
             fridgeid = fridgelist!![position].index!!
             foodname.text = fridgelist!![position].current
             member.text = fridgelist!![position].member.toString()
+
+            // 냉장고 뒷배경 설정
+            firestore?.collection("fridge")?.document(fridgeid)?.get()
+                ?.addOnSuccessListener { document ->
+                    if (document != null) {
+                        // 해당하는 냉장고의 owner 받아오기
+                        var owner = document.data?.get("owner").toString()
+                        // 내가 owner인 경우
+                        if (owner != user!!.uid) {
+                            fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back2)
+                        }
+                        // 내가 member인 경우
+                        else {
+                            fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back)
+                        }
+                    }
+                }
 
             // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
             btn_option = viewHolder.findViewById(R.id.btnFridgeOption)
@@ -563,12 +583,6 @@ class FridgeFragment : Fragment() {
             deletealertDialog?.dismiss()
         }
     }
-
-    // 공유인원 추가(냉장고 ID 추가)
-    fun addotherFridge() {
-
-    }
-
 
     // 파이어베이스에서 데이터 불러오는 함수
     fun loadData() {
