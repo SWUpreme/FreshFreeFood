@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_chat_list.*
 import kotlinx.android.synthetic.main.activity_myshare.*
 import kotlinx.android.synthetic.main.activity_myshare.txtNoRegion
@@ -138,6 +139,7 @@ class ChatListActivity : AppCompatActivity() {
         if (user != null) {
             db?.collection("user")?.document(user!!.uid)
                 ?.collection("mychat")
+                ?.orderBy("sendedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     chatRoomList.clear()
                     if (value != null) {
