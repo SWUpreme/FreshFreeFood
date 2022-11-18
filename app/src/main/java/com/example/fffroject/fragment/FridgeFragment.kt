@@ -141,7 +141,7 @@ class FridgeFragment : Fragment() {
                         var owner = document.data?.get("owner").toString()
                         // 내가 owner인 경우
                         if (owner != user!!.uid) {
-                            fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back2)
+                            fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back3)
                         }
                         // 내가 member인 경우
                         else {

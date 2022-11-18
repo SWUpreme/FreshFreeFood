@@ -76,11 +76,12 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd="25dp"
                 android:ems="10"
-                android:hint="이름을 입력해 주세요"
+                android:hint="이름을 입력해 주세요(10자)"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textAlignment="viewStart"
                 android:textSize="14sp"
+                android:maxLength="10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
