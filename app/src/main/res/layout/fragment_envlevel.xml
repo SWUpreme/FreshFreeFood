@@ -180,9 +180,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
+                android:paddingLeft="0dp"
                 android:paddingTop="5dp"
-                android:paddingRight="20dp"
+                android:paddingRight="0dp"
                 android:paddingBottom="10dp">
 
                 <ImageView
@@ -190,27 +190,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree1" />
+                    app:srcCompat="@drawable/eco_img_tree1" />
 
                 <ImageView
                     android:id="@+id/imgTree2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree2" />
+                    app:srcCompat="@drawable/eco_img_tree2" />
 
                 <ImageView
                     android:id="@+id/imgTree3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree3" />
+                    app:srcCompat="@drawable/eco_img_tree3" />
 
             </LinearLayout>
 
