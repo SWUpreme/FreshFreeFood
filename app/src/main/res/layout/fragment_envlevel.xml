@@ -59,11 +59,12 @@
     <ImageView
         android:id="@+id/imgTopBedge"
         android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_height="90dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/eco_tree1" />
+        app:srcCompat="@drawable/eco_img_tree1" />
 
     <ProgressBar
         android:id="@+id/progEnvLev"
@@ -180,9 +181,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
-                android:paddingLeft="0dp"
+                android:paddingLeft="20dp"
                 android:paddingTop="5dp"
-                android:paddingRight="0dp"
+                android:paddingRight="20dp"
                 android:paddingBottom="10dp">
 
                 <ImageView
@@ -190,7 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree1" />
 
@@ -198,8 +199,8 @@
                     android:id="@+id/imgTree2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree2" />
 
@@ -207,7 +208,7 @@
                     android:id="@+id/imgTree3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree3" />
@@ -232,7 +233,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree4" />
+                    app:srcCompat="@drawable/eco_img_tree4" />
 
                 <ImageView
                     android:id="@+id/imgTree5"
@@ -241,7 +242,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree5" />
+                    app:srcCompat="@drawable/eco_img_tree5" />
 
                 <ImageView
                     android:id="@+id/imgTree6"
@@ -250,7 +251,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree6" />
+                    app:srcCompat="@drawable/eco_img_tree6" />
             </LinearLayout>
 
             <LinearLayout
@@ -271,7 +272,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree7" />
+                    app:srcCompat="@drawable/eco_img_tree7" />
 
                 <ImageView
                     android:id="@+id/imgTree8"
@@ -280,7 +281,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree8" />
+                    app:srcCompat="@drawable/eco_img_tree8" />
 
                 <ImageView
                     android:id="@+id/imgTree9"
@@ -289,7 +290,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_tree9" />
+                    app:srcCompat="@drawable/eco_img_tree9" />
             </LinearLayout>
 
         </LinearLayout>
@@ -342,7 +343,7 @@
         android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="-20dp"
+        android:layout_marginEnd="-10dp"
         app:layout_constraintEnd_toStartOf="@+id/imgTopBedge"
         app:layout_constraintTop_toBottomOf="@+id/toolbShare"
         app:srcCompat="@drawable/eco_countbubble" />
@@ -373,12 +374,34 @@
         android:id="@+id/textGrade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:text="씨앗이-새싹이-그다음\n씨앗이-새싹이-그다음\n씨앗이-새싹이-그다음"
+        android:layout_marginTop="48dp"
+        android:text="씨앗이-새싹이-세잎이"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
         app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
         app:layout_constraintTop_toTopOf="@+id/imgTreeGrade" />
+
+    <TextView
+        android:id="@+id/textGrade2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="묘목이-유목이-성목이"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
+        app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
+        app:layout_constraintTop_toBottomOf="@+id/textGrade" />
+
+    <TextView
+        android:id="@+id/textGrade3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="꽃잎이-낙엽이-과실이"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
+        app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
+        app:layout_constraintTop_toBottomOf="@+id/textGrade2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

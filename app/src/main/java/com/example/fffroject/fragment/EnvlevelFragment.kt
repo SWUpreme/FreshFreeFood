@@ -58,6 +58,8 @@ class EnvlevelFragment: Fragment() {
     lateinit var env_back: ConstraintLayout
     lateinit var recycler: LinearLayout
     lateinit var text_grade: TextView
+    lateinit var text_grade2: TextView
+    lateinit var text_grade3: TextView
 
     // 나무 등급 보기 버튼
     lateinit var btn_show_grade: Button
@@ -105,12 +107,16 @@ class EnvlevelFragment: Fragment() {
         // 나무 등급 보여주는 이미지, 텍스트 연결
         img_gradebox = view.findViewById(R.id.imgTreeGrade)
         text_grade = view.findViewById(R.id.textGrade)
+        text_grade2 = view.findViewById(R.id.textGrade2)
+        text_grade3 = view.findViewById(R.id.textGrade3)
         // 다른 부분 클릭시 등급표 안보이게 해주기 위해 영역 연결
         env_back = view.findViewById(R.id.envBack)
         recycler = view.findViewById(R.id.envLinear)
         // 처음엔 등급표 안보이게
         img_gradebox.visibility = View.INVISIBLE
         text_grade.visibility = View.INVISIBLE
+        text_grade2.visibility = View.INVISIBLE
+        text_grade3.visibility = View.INVISIBLE
 
         // 기본 색 #9F9F9F로 설정 (GRAY)
         img_tree1.setColorFilter(Color.parseColor("#9F9F9F"))
@@ -146,15 +152,21 @@ class EnvlevelFragment: Fragment() {
 //            treegradealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             img_gradebox.visibility = View.VISIBLE
             text_grade.visibility = View.VISIBLE
+            text_grade2.visibility = View.VISIBLE
+            text_grade3.visibility = View.VISIBLE
 
             // 다른 배경 눌렀을 때 등급표 안보이게
             env_back.setOnClickListener {
                 img_gradebox.visibility = View.INVISIBLE
                 text_grade.visibility = View.INVISIBLE
+                text_grade2.visibility = View.INVISIBLE
+                text_grade3.visibility = View.INVISIBLE
             }
             recycler.setOnClickListener {
                 img_gradebox.visibility = View.INVISIBLE
                 text_grade.visibility = View.INVISIBLE
+                text_grade2.visibility = View.INVISIBLE
+                text_grade3.visibility = View.INVISIBLE
             }
         }
 
@@ -237,32 +249,32 @@ class EnvlevelFragment: Fragment() {
                         when(envlevel) {
                             1 -> {
                                 img_tree1.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree1)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree1)}
                             2 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree2)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree2)}
                             3 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree3)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree3)}
                             4 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree4)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree4)}
                             5 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
                                 img_tree5.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree5)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree5)}
                             6 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
                                 img_tree5.setColorFilter(null)
                                 img_tree6.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree6)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree6)}
                             7 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
@@ -270,7 +282,7 @@ class EnvlevelFragment: Fragment() {
                                 img_tree5.setColorFilter(null)
                                 img_tree6.setColorFilter(null)
                                 img_tree7.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree7)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree7)}
                             8 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
@@ -279,7 +291,7 @@ class EnvlevelFragment: Fragment() {
                                 img_tree6.setColorFilter(null)
                                 img_tree7.setColorFilter(null)
                                 img_tree8.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree8)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree8)}
                             9 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
@@ -289,7 +301,7 @@ class EnvlevelFragment: Fragment() {
                                 img_tree7.setColorFilter(null)
                                 img_tree8.setColorFilter(null)
                                 img_tree9.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_tree9)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_tree9)}
                             else -> { }
                         }
                     }
