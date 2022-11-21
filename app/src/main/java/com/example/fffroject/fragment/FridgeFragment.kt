@@ -49,6 +49,7 @@ class FridgeFragment : Fragment() {
     lateinit var btn_fridgedel: Button
 
     lateinit var btn_addfridge: Button
+    lateinit var text_nofridge: TextView
 
     lateinit var text_fridge_name: TextView
 
@@ -77,6 +78,7 @@ class FridgeFragment : Fragment() {
         recyclerview_fridge = view.findViewById(R.id.recyclerviewFridge)
         recyclerview_fridge.adapter = RecyclerViewAdapter()
         recyclerview_fridge.layoutManager = LinearLayoutManager(activity)
+        text_nofridge = view.findViewById(R.id.textNoFridge)
 
         // 바인딩 객체 획득
         fbinding = FragmentFridgeBinding.inflate(layoutInflater)
@@ -594,6 +596,7 @@ class FridgeFragment : Fragment() {
                 ?.addSnapshotListener { value, error ->
                     fridgelist.clear()
                     if (value != null) {
+                        text_nofridge.visibility = View.INVISIBLE
                         for (snapshot in value.documents) {
                             var item = snapshot.toObject(MyFridge::class.java)
                             if (item != null) {
