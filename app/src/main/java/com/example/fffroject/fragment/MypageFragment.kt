@@ -89,7 +89,7 @@ class MypageFragment : Fragment() {
 
         // 임시 - 알람 버튼을 눌렀을 경우 후기 페이지로 이동
         btn_mypage_alarm.setOnClickListener {
-            val intent = Intent(view.context, SharePointActivity::class.java)
+            val intent = Intent(view.context, FcmActivity::class.java)
             ContextCompat.startActivity(view.context, intent, null)
         }
 

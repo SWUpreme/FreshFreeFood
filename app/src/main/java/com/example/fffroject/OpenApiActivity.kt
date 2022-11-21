@@ -178,6 +178,57 @@ class OpenApiActivity : AppCompatActivity() {
                 }
             } while (str != null)
 
+            /*다른 방식으로 짠 코드
+                        // 전체가 객체로 묶여있기 때문에 객체형태로 가져옴
+            val root = JSONObject(buf.toString())  //받아온 내용 객체로 가져옴
+            var C005 = root.getJSONObject("C005")  //받아온 내용에서 C005객체 가져옴
+            var row = C005.getJSONArray("row")  // 객체 안에 있는 row라는 이름의 리스트를 가져옴&검색 결과 리스트
+            var obj2 = row.getJSONObject(0)
+            //var total_count: String = C005.getString("total_count")  //검색된 총 수량
+            // 화면에 출력
+            runOnUiThread {
+                // 페이지 수만큼 반복하여 데이터를 불러옴
+                for(i in 0 until row.length()) {
+
+                    // 쪽수 별로 데이터를 읽는다.
+                    //append:문자열 추가 메서드
+                    val jObject = row.getJSONObject(i)
+                     var PRDLST_NM: String = jObject.getString("PRDLST_NM") //제품명
+                    //  var POG_DAYCNT: String = jObject.getString("POG_DAYCNT")  //유통기한 일자
+                    // var BAR_CD: String = jObject.getString("BAR_CD")  //바코드
+                   // binding.name.append("${ JSON_Parse(jObject,"PRDLST_NM")}\n")
+                    binding.name.setText(PRDLST_NM)
+                    //textView.append("2. 캠핑장 이름: ${JSON_Parse(jObject,"POG_DAYCNT")}\n")
+                    // Log.d("바코드_번호:", "${BAR_CD}")
+                    //  Log.d("바코드_제품이름:", "${PRDLST_NM}")
+                    //  Log.d("바코드_유통기한:", "${POG_DAYCNT}")
+
+                    //Log.d("바코드_제품이름:", "${PRDLST_NM}")
+                    //Log.d("바코드_번호:", "${BAR_CD}")
+                    //Log.d("바코드_유통기한:", "${POG_DAYCNT}")
+                    //  Log.d("바코드_유통기한:", "${POG_DAYCNT}")
+
+                }
+
+            }
+        }
+
+        // 함수를 통해 데이터를 불러온다.
+        fun JSON_Parse(obj:JSONObject, data : String): String {
+
+            // 원하는 정보를 불러와 리턴받고 없는 정보는 캐치하여 "없습니다."로 리턴받는다.
+            return try {
+
+                obj.getString(data)
+
+            } catch (e: Exception) {
+                "없습니다."
+            }
+        }
+    }
+*/
+
+
             // 전체가 객체로 묶여있기 때문에 객체형태로 가져옴
             val root = JSONObject(buf.toString())  //받아온 내용 객체로 가져옴
             var C005 = root.getJSONObject("C005")  //받아온 내용에서 C005객체 가져옴
@@ -186,32 +237,33 @@ class OpenApiActivity : AppCompatActivity() {
             //사용자 인터페이스와 관련된 모든 동작은 onCreate () 및 이벤트 처리가 실행되는 주 스레드 또는 UI 스레드에서 수행되어야 함
             // 다른 스레드에서 동작할 때 에러가 발생-> runOnUiThread를 사용
             runOnUiThread {
-            if (total_count == "0") {
-                Log.d("바코드실패:","해당 상품이 없습니다.")
-                Toast.makeText(this@OpenApiActivity, "해당 상품이 없습니다.", Toast.LENGTH_LONG).show()
-            }
-            else {
+                if (total_count == "0") {
+                    Log.d("바코드실패:","해당 상품이 없습니다.")
+                    Toast.makeText(this@OpenApiActivity, "해당 상품이 없습니다.", Toast.LENGTH_LONG).show()
+                }
+                else {
 
 
-                Log.d("스레드로 넘어옴:", "${total_count}")
-                var row = C005.getJSONArray("row") // 객체 안에 있는 row라는 이름의 리스트를 가져옴&검색 결과 리스트
-                var obj2 = row.getJSONObject(0)
-                var result = C005.getJSONObject("RESULT") //결과값
-                var code: String = result.getString("CODE") //결과코드
+                    Log.d("스레드로 넘어옴:", "${total_count}")
+                    var row = C005.getJSONArray("row") // 객체 안에 있는 row라는 이름의 리스트를 가져옴&검색 결과 리스트
+                    var obj2 = row.getJSONObject(0)
+                    var result = C005.getJSONObject("RESULT") //결과값
+                    var code: String = result.getString("CODE") //결과코드
 
-                var PRDLST_NM = obj2.getString("PRDLST_NM")!! //제품명
-                var POG_DAYCNT: String = obj2.getString("POG_DAYCNT")  //유통기한 일자
-                var BAR_CD: String = obj2.getString("BAR_CD")  //바코드
+                    var PRDLST_NM = obj2.getString("PRDLST_NM")!! //제품명
+                    var POG_DAYCNT: String = obj2.getString("POG_DAYCNT")  //유통기한 일자
+                    var BAR_CD: String = obj2.getString("BAR_CD")  //바코드
 
-                // 화면에 출력
-                binding.name.setText(PRDLST_NM)
-                Log.d("바코드_번호:", "${BAR_CD}")
-                Log.d("바코드_제품이름:", "${PRDLST_NM}")
-                Log.d("바코드_유통기한:", "${POG_DAYCNT}")
-            }
+                    // 화면에 출력
+                    binding.name.setText(PRDLST_NM)
+                    Log.d("바코드_번호:", "${BAR_CD}")
+                    Log.d("바코드_제품이름:", "${PRDLST_NM}")
+                    Log.d("바코드_유통기한:", "${POG_DAYCNT}")
+                }
             }
         }
     }
+
 
 
     // QR/바코드 스캔 결과
