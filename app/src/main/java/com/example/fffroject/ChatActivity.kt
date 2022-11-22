@@ -63,7 +63,7 @@ class ChatActivity : AppCompatActivity() {
         toolbChat.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.btnChatContent -> {
-                    if (Chatcontent.text.toString() != null) {
+                    if (Chatcontent.text.toString().length != 0) {
                         if (user != null) {
                             db?.collection("user")?.document(user?.uid!!)?.collection("mychat")
                                 ?.whereEqualTo("postid", postid)?.get()
@@ -73,6 +73,7 @@ class ChatActivity : AppCompatActivity() {
 
                                     // 기존에 채팅방이 존재하지 않는다면
                                     if (task.result?.size() == 0) {
+                                        Log.d("chatError", "사이즈가 영입니다")
                                         chatroomid = UUID.randomUUID().toString()
 
                                         // chatroom에 채팅방 생성
@@ -148,6 +149,8 @@ class ChatActivity : AppCompatActivity() {
 
                                     // 기존에 상대방과의 채팅방이 존재한다면
                                     } else {
+                                        Log.d("chatError", "사이즈가 영이 아니오")
+
                                         // 해당하는 나의 채팅창을 찾아서(포스트 인덱스로) 채팅룸id 받아오기
                                         var doc = task.result.documents?.get(0)
                                         chatroomid = doc?.get("index").toString()
@@ -181,11 +184,9 @@ class ChatActivity : AppCompatActivity() {
 
                                         // 나의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
-                                            ?.set(
-                                                hashMapOf(
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "sendedAt" to curTime,
-                                                )
+                                            ?.update(
+                                                "context", Chatcontent.text.toString(),
+                                                "sendedAt", curTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -194,11 +195,9 @@ class ChatActivity : AppCompatActivity() {
 
                                         // 상대의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(to.toString())?.collection("mychat")?.document(chatroomid!!)
-                                            ?.set(
-                                                hashMapOf(
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "sendedAt" to curTime,
-                                                )
+                                            ?.update(
+                                                "context", Chatcontent.text.toString(),
+                                                "sendedAt", curTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -207,11 +206,9 @@ class ChatActivity : AppCompatActivity() {
 
                                         // 채팅룸의 최신 채팅/채팅시간 업데이트
                                         db?.collection("chatroom")?.document("$chatroomid")
-                                            ?.set(
-                                                hashMapOf(
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "sendedAt" to curTime,
-                                                )
+                                            ?.update(
+                                                "context", Chatcontent.text.toString(),
+                                                "sendedAt", curTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -222,14 +219,16 @@ class ChatActivity : AppCompatActivity() {
 
                                 }
                         }
-                        } else {
-                            Toast.makeText(this@ChatActivity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
-                        }
-                        true
+                        // 쪽지 전송 완료 후 게시글로 돌아가기
+                        finish()
+                    } else {
+                        Toast.makeText(this@ChatActivity, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
                     }
-                    else -> false
+                    true
                 }
+                else -> false
             }
+        }
     }
 
         //item 버튼 클릭 했을 때

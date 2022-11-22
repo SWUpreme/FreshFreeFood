@@ -92,7 +92,7 @@ class ChatListActivity : AppCompatActivity() {
             var from = chatRoomList!![position].from        // 나눔자
             var to = chatRoomList!![position].to            // 피나눔자
             var opponentId : String = ""                           // 상대방 유저 인덱스를 저장할 변수
-            var oppoentNickname = ""                               // 상대방 닉네임
+            var oppoentNickname : String = ""                               // 상대방 닉네임
 
             // 상대방 유저 인덱스 찾기
             if (user != null) {
