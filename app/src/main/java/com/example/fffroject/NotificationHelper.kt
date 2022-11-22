@@ -3,8 +3,10 @@ package com.example.fffroject
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -52,11 +54,15 @@ class NotificationHelper(base: Context?) : ContextWrapper(base) {
 
     //Notification 설정
     fun getChannelNotification(): NotificationCompat.Builder{
+        val intent = Intent(this, FoodListActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
 
         return NotificationCompat.Builder(applicationContext, channelID)
             .setContentTitle("FFF") //제목
             .setContentText("냉장고야")//내용
             .setWhen(System.currentTimeMillis())
             .setSmallIcon(R.drawable.ic_launcher_background) //아이콘
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
     }
 }
