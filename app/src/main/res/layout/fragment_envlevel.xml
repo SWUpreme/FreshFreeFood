@@ -179,19 +179,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
+                android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp">
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp">
 
                 <ImageView
                     android:id="@+id/imgTree1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree1" />
 
@@ -199,8 +199,8 @@
                     android:id="@+id/imgTree2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree2" />
 
@@ -208,8 +208,8 @@
                     android:id="@+id/imgTree3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree3" />
 
@@ -219,19 +219,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
+                android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="10dp">
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp">
 
                 <ImageView
                     android:id="@+id/imgTree4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree4" />
 
@@ -239,8 +239,8 @@
                     android:id="@+id/imgTree5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree5" />
 
@@ -248,8 +248,8 @@
                     android:id="@+id/imgTree6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree6" />
             </LinearLayout>
@@ -260,9 +260,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
+                android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:paddingRight="20dp"
+                android:paddingRight="10dp"
                 android:paddingBottom="10dp">
 
                 <ImageView
@@ -270,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree7" />
 
@@ -278,8 +278,8 @@
                     android:id="@+id/imgTree8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree8" />
 
@@ -287,8 +287,8 @@
                     android:id="@+id/imgTree9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/eco_img_tree9" />
             </LinearLayout>

@@ -249,32 +249,32 @@ class EnvlevelFragment: Fragment() {
                         when(envlevel) {
                             1 -> {
                                 img_tree1.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree1)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge1)}
                             2 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree2)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge2)}
                             3 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree3)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge3)}
                             4 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree4)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge4)}
                             5 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
                                 img_tree5.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree5)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge5)}
                             6 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
                                 img_tree5.setColorFilter(null)
                                 img_tree6.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree6)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge6)}
                             7 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
@@ -282,7 +282,7 @@ class EnvlevelFragment: Fragment() {
                                 img_tree5.setColorFilter(null)
                                 img_tree6.setColorFilter(null)
                                 img_tree7.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree7)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge7)}
                             8 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
@@ -291,7 +291,7 @@ class EnvlevelFragment: Fragment() {
                                 img_tree6.setColorFilter(null)
                                 img_tree7.setColorFilter(null)
                                 img_tree8.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree8)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge8)}
                             9 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
@@ -301,7 +301,7 @@ class EnvlevelFragment: Fragment() {
                                 img_tree7.setColorFilter(null)
                                 img_tree8.setColorFilter(null)
                                 img_tree9.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_tree9)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge9)}
                             else -> { }
                         }
                     }
