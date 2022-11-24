@@ -10,7 +10,8 @@ data class MyFridge(
     var name : String? = null,
     var current : String? = null,
     var status : Boolean? = null,
-    var member : Int? = null
+    var member : Int? = null,
+    var addTime : String? = null
 )
 
 // 나눔 전체 게시글 리스트

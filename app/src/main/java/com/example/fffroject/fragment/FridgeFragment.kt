@@ -26,7 +26,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.findFragment
 import com.example.fffroject.databinding.*
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import java.text.SimpleDateFormat
 
 class FridgeFragment : Fragment() {
     var auth: FirebaseAuth? = null
@@ -148,6 +150,7 @@ class FridgeFragment : Fragment() {
                         // 내가 member인 경우
                         else {
                             fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back)
+                            member.setTextColor(Color.parseColor("#7096CC"))
                         }
                     }
                 }
@@ -160,6 +163,7 @@ class FridgeFragment : Fragment() {
             var fname = fridgelist!![position].name.toString()
             var currentname = fridgelist!![position].current.toString()
             var fcount = fridgelist!![position].member.toString().toInt()
+            var ftime = fridgelist!![position].addTime.toString()
             btn_option.setOnClickListener {
                 if (index != null) {
                     // 냉장고의 owner인지 member인지 확인
@@ -170,7 +174,7 @@ class FridgeFragment : Fragment() {
                                 var owner = document.data?.get("owner").toString()
                                 // 내가 owner인 경우
                                 if (owner == user!!.uid) {
-                                    fridgeOption(index, fname, currentname, fcount)
+                                    fridgeOption(index, fname, currentname, fcount, ftime)
                                 }
                                 // 내가 member인 경우
                                 else {
@@ -222,6 +226,10 @@ class FridgeFragment : Fragment() {
         // 냉장고 추가 버튼 눌렀을 시
         btn_addfridge = addfridgeview.findViewById(R.id.btnFridgeAdd)
         btn_addfridge.setOnClickListener {
+            // 최근 입력순 정렬 위한 시간 추가
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
+            val dateTime = timeformatter.format(nowTime)
             if (edt_fridgename.text.toString() != null) {
                 if (user != null) {
                     fridgeid = UUID.randomUUID().toString()
@@ -244,7 +252,8 @@ class FridgeFragment : Fragment() {
                                 "name" to edt_fridgename.text.toString(),
                                 "current" to "냉장고가 비었습니다",
                                 "status" to true,
-                                "member" to 1
+                                "member" to 1,
+                                "addTime" to dateTime
                             )
                         )
                         ?.addOnSuccessListener { }
@@ -258,7 +267,7 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고별 옵션 선택(owner의 경우)
-    fun fridgeOption(index: String, fname: String, current: String, fcount: Int) {
+    fun fridgeOption(index: String, fname: String, current: String, fcount: Int, ftime: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val optiondial = DialogFridgeoptionBinding.inflate(layoutInflater)
         val optionview = optiondial.root
@@ -285,7 +294,7 @@ class FridgeFragment : Fragment() {
         // 냉장고 멤버 추가 선택시
         var btn_add_member = optionview.findViewById<Button>(R.id.btnFridgeMemberAdd)
         btn_add_member.setOnClickListener {
-            addMember(index, fname, current, fcount)
+            addMember(index, fname, current, fcount, ftime)
             optionalertDialog?.dismiss()
         }
 
@@ -304,7 +313,7 @@ class FridgeFragment : Fragment() {
 
     }
 
-    // 멤버의 경우
+    // 냉장고 옵션 멤버의 경우
     fun fridgememberOption(index: String, fname: String, fcount: Int) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val memberdial = DialogMemberoptionBinding.inflate(layoutInflater)
@@ -319,6 +328,12 @@ class FridgeFragment : Fragment() {
         memberalertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         // 다이얼로그 밑으로 나오게
         memberalertDialog?.window?.setGravity(Gravity.BOTTOM)
+
+        // 냉장고 나가기 선택시
+        var btn_member_out = memberview.findViewById<Button>(R.id.btnMemberDrop)
+        btn_member_out.setOnClickListener {
+            dropMember(index, fname, fcount)
+        }
     }
 
     // 냉장고 이름 변경
@@ -384,7 +399,7 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고에 멤버 추가
-    fun addMember(index: String, fname: String, current: String, fcount: Int){
+    fun addMember(index: String, fname: String, current: String, fcount: Int, ftime: String){
         //뷰 바인딩을 적용한 XML 파일 초기화
         val addmemberdial = DialogAddmemberBinding.inflate(layoutInflater)
         val addmemberview = addmemberdial.root
@@ -444,7 +459,8 @@ class FridgeFragment : Fragment() {
                                                         "name" to fname,
                                                         "current" to current,
                                                         "status" to true,
-                                                        "member" to fcount
+                                                        "member" to fcount,
+                                                        "addTime" to ftime
                                                     )
                                                 )
                                                 ?.addOnSuccessListener {
@@ -586,6 +602,65 @@ class FridgeFragment : Fragment() {
         }
     }
 
+    // 냉장고 나가기 버튼 선택시
+    fun dropMember(index: String, fname: String, fcount: Int) {
+        val dropdial = DialogDropmemberBinding.inflate(layoutInflater)
+        val dropview = dropdial.root
+        val dropalertDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(dropdial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        dropalertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 다이얼로그의 냉장고 이름 연동해주기
+        var fridgename = dropview.findViewById<TextView>(R.id.textFridgenameDrop)
+        fridgename.setText("'" + fname + "'")
+
+        // 다이얼로그의 확인 버튼과 연동해주기
+        var drop_member_ok = dropview.findViewById<Button>(R.id.btnFridgedropOk)
+        drop_member_ok.setOnClickListener {
+            // 나의 냉장고에서 삭제해주기
+            // membercount 줄여주기
+            if (user != null) {
+                firestore?.collection("fridge")?.document(index)
+                    ?.collection("member")?.get()
+                    ?.addOnSuccessListener { task ->
+                        if (fcount != 0) {
+                            for (count:Int in 0..(fcount-2)){
+                                var doc = task.documents?.get(count)
+                                var memberuid = doc.get("uid").toString()
+                                //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
+                                firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
+                                    ?.document(index)
+                                    ?.update("member", FieldValue.increment(-1))
+                                    ?.addOnSuccessListener { }
+                                    ?.addOnFailureListener { }
+                            }
+                        }
+                    }
+                // 나의 냉장고에서 멤버 수 업데이트
+                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                    ?.document(index)
+                    ?.update("member", FieldValue.increment(-1))
+                    ?.addOnSuccessListener { Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()}
+                    ?.addOnFailureListener { }
+                // 멤버에게서 냉장고 삭제
+                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                    ?.document(index)
+                    ?.delete()
+                    ?.addOnSuccessListener {
+                        Toast.makeText(activity, "냉장고에서 나갔습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    ?.addOnFailureListener { }
+            }
+        }
+
+        // 다이얼로그의 취소 버튼과 연동해주기
+    }
+
     // 파이어베이스에서 데이터 불러오는 함수
     fun loadData() {
         // 냉장고 리스트 불러오기
@@ -593,15 +668,18 @@ class FridgeFragment : Fragment() {
             // visible이 true인 냉장고만 가져오
             firestore?.collection("user")?.document(user!!.uid)
                 ?.collection("myfridge")?.whereEqualTo("status", true)
+                ?.orderBy("addTime", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     fridgelist.clear()
                     if (value != null) {
-                        text_nofridge.visibility = View.INVISIBLE
                         for (snapshot in value.documents) {
                             var item = snapshot.toObject(MyFridge::class.java)
                             if (item != null) {
                                 fridgelist.add(item)
                             }
+                        }
+                        if (fridgelist.size>0){
+                            text_nofridge.visibility = View.INVISIBLE
                         }
                     }
                     recyclerview_fridge.adapter?.notifyDataSetChanged()
