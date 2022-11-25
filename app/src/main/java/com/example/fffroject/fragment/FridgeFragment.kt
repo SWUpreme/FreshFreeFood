@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.Image
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -143,14 +144,14 @@ class FridgeFragment : Fragment() {
                     if (document != null) {
                         // 해당하는 냉장고의 owner 받아오기
                         var owner = document.data?.get("owner").toString()
-                        // 내가 owner인 경우
+                        // 내가 member인 경우
                         if (owner != user!!.uid) {
                             fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back3)
+                            member.setTextColor(Color.parseColor("#7096CC"))
                         }
-                        // 내가 member인 경우
+                        // 내가 owner인 경우
                         else {
                             fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back)
-                            member.setTextColor(Color.parseColor("#7096CC"))
                         }
                     }
                 }
@@ -333,6 +334,13 @@ class FridgeFragment : Fragment() {
         var btn_member_out = memberview.findViewById<Button>(R.id.btnMemberDrop)
         btn_member_out.setOnClickListener {
             dropMember(index, fname, fcount)
+            memberalertDialog?.dismiss()
+        }
+
+        // 취소 선택시
+        var btn_memberoption_close = memberview.findViewById<Button>(R.id.btnFridgememOptionClose)
+        btn_memberoption_close.setOnClickListener {
+            memberalertDialog?.dismiss()
         }
     }
 
@@ -358,17 +366,26 @@ class FridgeFragment : Fragment() {
         // 냉장고 이름 업데이트
         var fix_fridgename_ok = fixfridgeview.findViewById<Button>(R.id.btnFridgenameFix)
         fix_fridgename_ok.setOnClickListener {
-            if(fridgename.length() > 0) {
-                if(user != null){
+            if (fridgename.length() > 0) {
+                if (user != null) {
                     firestore?.collection("fridge")?.document(index)
                         ?.update("name", fridgename.text.toString())
-                        ?.addOnSuccessListener {  }
-                        ?.addOnFailureListener {  }
-                    firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")?.document(index)
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                    firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                        ?.document(index)
                         ?.update("name", fridgename.text.toString())
-                        ?.addOnSuccessListener { Toast.makeText(context, "냉장고 이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                            fixfridgeDialog?.dismiss()}
-                        ?.addOnFailureListener { Toast.makeText(context, "다시 입력해 주세요.", Toast.LENGTH_SHORT).show() }
+                        ?.addOnSuccessListener {
+                            Toast.makeText(context, "냉장고 이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                            fixfridgeDialog?.dismiss()
+                        }
+                        ?.addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                "다시 입력해 주세요.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     // 멤버의 냉장고 이름도 변경해주기
                     var membercount = 0
                     // 멤버 수 받아오기
@@ -379,10 +396,11 @@ class FridgeFragment : Fragment() {
                             // 멤버가 있다면
                             if (membercount != 0) {
                                 // 멤버의 myfridge의 냉장고명 바꿔주기
-                                for (count:Int in 0..(membercount-1)){
+                                for (count: Int in 0..(membercount - 1)) {
                                     var doc = task.documents?.get(count)
                                     var memberuid = doc.get("uid").toString()
-                                    firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
+                                    firestore?.collection("user")?.document(memberuid)
+                                        ?.collection("myfridge")
                                         ?.document(index)
                                         ?.update("name", fridgename.text.toString())
                                         ?.addOnSuccessListener { }
@@ -391,15 +409,14 @@ class FridgeFragment : Fragment() {
                             }
                         }
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(context, "냉장고 이름을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     // 냉장고에 멤버 추가
-    fun addMember(index: String, fname: String, current: String, fcount: Int, ftime: String){
+    fun addMember(index: String, fname: String, current: String, fcount: Int, ftime: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val addmemberdial = DialogAddmemberBinding.inflate(layoutInflater)
         val addmemberview = addmemberdial.root
@@ -424,91 +441,102 @@ class FridgeFragment : Fragment() {
             var membername = ""
             var membercount = 0
             // 이메일칸이 비지 않았다면
-                if(addmember.length > 0){
-                    firestore?.collection("user")?.whereEqualTo("email",addmember)?.get()
-                        ?.addOnSuccessListener { document ->
-                            if (document.size() != 0) {
-                                // 해당하는 아이디의 사람이 있다면 uid 받아오기
-                                var sheet = document.documents?.get(0)
-                                memberuid = sheet.get("uid").toString()
-                                membername = sheet.get("nickname").toString()
-                                // 위에까지 오류 안나고 가능
-                                // 해당 멤버를 fridge의 멤버에 추가해주기
-                                // 이미 있는 멤버인지 검색
-                                firestore?.collection("fridge")?.document(index)?.collection("member")
-                                    ?.whereEqualTo("uid",memberuid)?.get()
-                                    ?.addOnCompleteListener { task ->
-                                        // 새로운 멤버인 경우
-                                        if(task.result?.size() == 0) {
-                                            // fridge의 멤버에 추가
-                                            firestore?.collection("fridge")?.document(index)?.collection("member")
-                                                ?.document("$memberuid")
-                                                ?.set(
-                                                    hashMapOf(
-                                                        "uid" to memberuid,
-                                                        "nickname" to membername,
-                                                        "email" to addmember
-                                                    )
+            if (addmember.length > 0) {
+                firestore?.collection("user")?.whereEqualTo("email", addmember)?.get()
+                    ?.addOnSuccessListener { document ->
+                        if (document.size() != 0) {
+                            // 해당하는 아이디의 사람이 있다면 uid 받아오기
+                            var sheet = document.documents?.get(0)
+                            memberuid = sheet.get("uid").toString()
+                            membername = sheet.get("nickname").toString()
+                            // 위에까지 오류 안나고 가능
+                            // 해당 멤버를 fridge의 멤버에 추가해주기
+                            // 이미 있는 멤버인지 검색
+                            firestore?.collection("fridge")?.document(index)?.collection("member")
+                                ?.whereEqualTo("uid", memberuid)?.get()
+                                ?.addOnCompleteListener { task ->
+                                    // 새로운 멤버인 경우
+                                    if (task.result?.size() == 0) {
+                                        // fridge의 멤버에 추가
+                                        firestore?.collection("fridge")?.document(index)
+                                            ?.collection("member")
+                                            ?.document("$memberuid")
+                                            ?.set(
+                                                hashMapOf(
+                                                    "uid" to memberuid,
+                                                    "nickname" to membername,
+                                                    "email" to addmember
                                                 )
-                                            // 새로운 멤버의 myfridge에 냉장고 추가
-                                            firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
-                                                ?.document("$index")
-                                                ?.set(
-                                                    hashMapOf(
-                                                        "index" to index,
-                                                        "name" to fname,
-                                                        "current" to current,
-                                                        "status" to true,
-                                                        "member" to fcount,
-                                                        "addTime" to ftime
-                                                    )
+                                            )
+                                        // 새로운 멤버의 myfridge에 냉장고 추가
+                                        firestore?.collection("user")?.document(memberuid)
+                                            ?.collection("myfridge")
+                                            ?.document("$index")
+                                            ?.set(
+                                                hashMapOf(
+                                                    "index" to index,
+                                                    "name" to fname,
+                                                    "current" to current,
+                                                    "status" to true,
+                                                    "member" to fcount,
+                                                    "addTime" to ftime
                                                 )
-                                                ?.addOnSuccessListener {
-                                                    membercount = fcount + 1
-                                                    // 멤버의 냉장고의 현재 멤버 수 업데이트
-                                                    firestore?.collection("fridge")?.document(index)
-                                                        ?.collection("member")?.get()
-                                                        ?.addOnSuccessListener { task ->
-                                                            //Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
-                                                            if (membercount != 0) {
-                                                                for (count:Int in 0..(membercount-2)){
-                                                                    var doc = task.documents?.get(count)
-                                                                    var memberuid = doc.get("uid").toString()
-                                                                    //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
-                                                                    firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
-                                                                        ?.document(index)
-                                                                        ?.update("member", membercount)
-                                                                        ?.addOnSuccessListener { }
-                                                                        ?.addOnFailureListener { }
-                                                                }
+                                            )
+                                            ?.addOnSuccessListener {
+                                                membercount = fcount + 1
+                                                // 멤버의 냉장고의 현재 멤버 수 업데이트
+                                                firestore?.collection("fridge")?.document(index)
+                                                    ?.collection("member")?.get()
+                                                    ?.addOnSuccessListener { task ->
+                                                        //Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
+                                                        if (membercount != 0) {
+                                                            for (count: Int in 0..(membercount - 2)) {
+                                                                var doc = task.documents?.get(count)
+                                                                var memberuid =
+                                                                    doc.get("uid").toString()
+                                                                //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
+                                                                firestore?.collection("user")
+                                                                    ?.document(memberuid)
+                                                                    ?.collection("myfridge")
+                                                                    ?.document(index)
+                                                                    ?.update("member", membercount)
+                                                                    ?.addOnSuccessListener { }
+                                                                    ?.addOnFailureListener { }
                                                             }
                                                         }
-                                                    // 나의 냉장고에서 멤버 수 업데이트
-                                                    firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                                                        ?.document(index)
-                                                        ?.update("member", membercount)
-                                                        ?.addOnSuccessListener { Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()}
-                                                        ?.addOnFailureListener { }
-                                                }
-                                                ?.addOnFailureListener { }
-                                            //Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()
-                                            addmemberDialog?.dismiss()
-                                        }
-                                        // 기존에 등록된 멤버인 경우
-                                        else {
-                                            Toast.makeText(context, "이미 등록된 멤버입니다.", Toast.LENGTH_SHORT).show()
-                                        }
+                                                    }
+                                                // 나의 냉장고에서 멤버 수 업데이트
+                                                firestore?.collection("user")?.document(user!!.uid)
+                                                    ?.collection("myfridge")
+                                                    ?.document(index)
+                                                    ?.update("member", membercount)
+                                                    ?.addOnSuccessListener {
+                                                        Toast.makeText(
+                                                            context,
+                                                            "등록되었습니다.",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
+                                                    ?.addOnFailureListener { }
+                                            }
+                                            ?.addOnFailureListener { }
+                                        //Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                        addmemberDialog?.dismiss()
                                     }
+                                    // 기존에 등록된 멤버인 경우
+                                    else {
+                                        Toast.makeText(context, "이미 등록된 멤버입니다.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                }
 
-                            }
-                            else {
-                                Toast.makeText(context, "해당 유저가 없습니다.", Toast.LENGTH_SHORT).show()
-                            }
+                        } else {
+                            Toast.makeText(context, "해당 유저가 없습니다.", Toast.LENGTH_SHORT).show()
                         }
-                }
-            else {
+                    }
+            } else {
                 Toast.makeText(context, "이메일을 입력해 주세요.", Toast.LENGTH_SHORT).show()
-                }
+            }
 
         }
 
@@ -548,11 +576,12 @@ class FridgeFragment : Fragment() {
                     membercount = task.size()
                     Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
                     if (membercount != 0) {
-                        for (count:Int in 0..(membercount-1)){
+                        for (count: Int in 0..(membercount - 1)) {
                             var doc = task.documents?.get(count)
                             var memberuid = doc.get("uid").toString()
                             Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
-                            firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
+                            firestore?.collection("user")?.document(memberuid)
+                                ?.collection("myfridge")
                                 ?.document(index)
                                 ?.update("status", false)
                                 ?.addOnSuccessListener { }
@@ -581,7 +610,9 @@ class FridgeFragment : Fragment() {
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                 ?.document(index)
                 ?.update("status", false)
-                ?.addOnSuccessListener { Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()}
+                ?.addOnSuccessListener {
+                    Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
                 ?.addOnFailureListener { }
             // 냉장고 완전삭제
 //            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -622,43 +653,80 @@ class FridgeFragment : Fragment() {
         // 다이얼로그의 확인 버튼과 연동해주기
         var drop_member_ok = dropview.findViewById<Button>(R.id.btnFridgedropOk)
         drop_member_ok.setOnClickListener {
-            // 나의 냉장고에서 삭제해주기
             // membercount 줄여주기
             if (user != null) {
+                // member의 membercount 줄이기
                 firestore?.collection("fridge")?.document(index)
                     ?.collection("member")?.get()
                     ?.addOnSuccessListener { task ->
-                        if (fcount != 0) {
-                            for (count:Int in 0..(fcount-2)){
+                        if (fcount > 2) {
+                            Toast.makeText(activity, fcount.toString(), Toast.LENGTH_SHORT).show()
+                            for (count: Int in 0..(fcount - 2)) {
                                 var doc = task.documents?.get(count)
                                 var memberuid = doc.get("uid").toString()
-                                //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
-                                firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
+                                firestore?.collection("user")?.document(memberuid)
+                                    ?.collection("myfridge")
                                     ?.document(index)
                                     ?.update("member", FieldValue.increment(-1))
                                     ?.addOnSuccessListener { }
                                     ?.addOnFailureListener { }
                             }
                         }
+//                        else if (fcount == 2) {
+//                            var doc = task.documents?.get(0)
+//                            var memberuid = doc.get("uid").toString()
+//                            //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
+//                            firestore?.collection("user")?.document(memberuid)
+//                                ?.collection("myfridge")
+//                                ?.document(index)
+//                                ?.update("member", FieldValue.increment(-1))
+//                                ?.addOnSuccessListener { }
+//                                ?.addOnFailureListener { }
+//                        }
                     }
-                // 나의 냉장고에서 멤버 수 업데이트
-                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                    ?.document(index)
-                    ?.update("member", FieldValue.increment(-1))
-                    ?.addOnSuccessListener { Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()}
-                    ?.addOnFailureListener { }
-                // 멤버에게서 냉장고 삭제
-                firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                    ?.document(index)
-                    ?.delete()
-                    ?.addOnSuccessListener {
-                        Toast.makeText(activity, "냉장고에서 나갔습니다.", Toast.LENGTH_SHORT).show()
+                // owner의 membercount 줄이기
+                firestore?.collection("fridge")?.document(index)?.get()
+                    ?.addOnSuccessListener { document ->
+                        if (document != null) {
+                            // 해당하는 냉장고의 owner 받아오기
+                            var owner = document.data?.get("owner").toString()
+                            firestore?.collection("user")?.document(owner)?.collection("myfridge")
+                                ?.document(index)
+                                ?.update("member", FieldValue.increment(-1))
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                        }
                     }
-                    ?.addOnFailureListener { }
             }
+            // 나의 냉장고에서 멤버 수 업데이트
+//            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+//                ?.document(index)
+//                ?.update("member", FieldValue.increment(-1))
+//                ?.addOnSuccessListener { }
+//                ?.addOnFailureListener { }
+
+            // fridge의 member에서 해당 멤버 삭제
+            firestore?.collection("fridge")?.document(index)?.collection("member")
+                ?.document(user!!.uid)
+                ?.delete()
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+            // myfridge에서 냉장고 삭제
+            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                ?.document(index)
+                ?.delete()
+                ?.addOnSuccessListener {
+                    Toast.makeText(activity, "냉장고에서 나갔습니다.", Toast.LENGTH_SHORT).show()
+                    dropalertDialog?.dismiss()
+                }
+                ?.addOnFailureListener { }
         }
 
         // 다이얼로그의 취소 버튼과 연동해주기
+        var btn_memberdrop_close = dropview.findViewById<ImageButton>(R.id.btnMemberdropClose)
+        btn_memberdrop_close.setOnClickListener {
+            dropalertDialog?.dismiss()
+        }
     }
 
     // 파이어베이스에서 데이터 불러오는 함수
@@ -678,7 +746,7 @@ class FridgeFragment : Fragment() {
                                 fridgelist.add(item)
                             }
                         }
-                        if (fridgelist.size>0){
+                        if (fridgelist.size > 0) {
                             text_nofridge.visibility = View.INVISIBLE
                         }
                     }

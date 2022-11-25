@@ -1,12 +1,15 @@
 package com.example.fffroject
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SharePointActivity : AppCompatActivity(){
@@ -25,6 +28,9 @@ class SharePointActivity : AppCompatActivity(){
     //별점포인트
     var point = 1
 
+    // intent값 받아온 것
+    var giver : String? = null
+
     // 후기 보내기 버튼
     lateinit var btn_review_send: Button
 
@@ -37,6 +43,10 @@ class SharePointActivity : AppCompatActivity(){
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
+
+        // intent와 연결(FridgeFragment에서 넘겨 준 것들)
+        //giver = intent.getStringExtra("name")    // 공유해준사람의 uid
+        giver = "pNN9vZHj9jg3wcxscAVNqv0iAsZ2"
 
         // 별점 버튼 연결
         btn_star1 = findViewById(R.id.btnStar1)
@@ -102,7 +112,42 @@ class SharePointActivity : AppCompatActivity(){
         }
 
         btn_review_send.setOnClickListener {
-            Toast.makeText(this, point.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "후기가 전송되었습니다.", Toast.LENGTH_SHORT).show()
+            pointUp(giver.toString(), point)
+            finish()
         }
+    }
+
+    fun pointUp(giver : String, point : Int) {
+        firestore?.collection("user")?.document(giver)
+            ?.get()?.addOnSuccessListener { document ->
+                var sharepoint = 0
+                if (document != null) {
+                    sharepoint = document?.data?.get("sharepoint").toString().toInt()
+                    sharepoint += point
+                    // sharepoint가 30이 넘는 경우
+                    var rest = 0
+                    if (sharepoint > 29) {
+                        rest = sharepoint % 30
+                        firestore?.collection("user")?.document(giver)
+                            ?.update("sharepoint", rest)
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
+                        firestore?.collection("user")?.document(giver)
+                            ?.update("envlevel", FieldValue.increment(1))
+                            ?.addOnSuccessListener {
+                                //Toast.makeText(this,"환경 기여 레벨이 상승했어요!",Toast.LENGTH_SHORT).show()
+                            }
+                            ?.addOnFailureListener { }
+                    }
+                    else {
+                        firestore?.collection("user")?.document(giver)
+                            ?.update("sharepoint", sharepoint)
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
+                    }
+
+                }
+            }
     }
 }

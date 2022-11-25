@@ -20,6 +20,7 @@ import com.example.fffroject.databinding.DialogFixnicknameBinding
 import com.example.fffroject.databinding.DialogTreegradeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_envlevel.*
 import java.text.SimpleDateFormat
@@ -42,6 +43,7 @@ class EnvlevelFragment: Fragment() {
     // 환경 기여도 레벨
     var envpercent = 0
     var envlevel = 0
+    var sharepoint = 0
 
     // 이미지뷰 설정
     lateinit var img_tree1: ImageView
@@ -135,6 +137,7 @@ class EnvlevelFragment: Fragment() {
         // 달이 갱신되면 냉장고 털기 0으로 설정해주기
         setContri()
 
+        //setSharepoint()
         // 파이어베이스에서 환경 기여도 가져와서 설정
         loadEnvLev()
 
@@ -189,11 +192,54 @@ class EnvlevelFragment: Fragment() {
                 ?.get()?.addOnSuccessListener { document ->
                     if (document != null) {
                         envpercent = document?.data?.get("contribution").toString().toInt()
-                        //Toast.makeText(context, envlevel.toString(), Toast.LENGTH_SHORT).show()
+                        sharepoint = document?.data?.get("sharepoint").toString().toInt()
+                        // sharepoint가 30이 넘는 경우
+//                        var rest = 0
+//                        if (sharepoint > 29) {
+//                            rest = sharepoint % 30
+//                            firestore?.collection("user")?.document(user!!.uid)
+//                                ?.update("sharepoint", rest)
+//                                ?.addOnSuccessListener { }
+//                                ?.addOnFailureListener { }
+//                            firestore?.collection("user")?.document(user!!.uid)
+//                                ?.update("envlevel", FieldValue.increment(1))
+//                                ?.addOnSuccessListener {
+//                                    Toast.makeText(context,"환경 기여 레벨이 상승했어요!",Toast.LENGTH_SHORT).show()
+//                                }
+//                                ?.addOnFailureListener { }
+//                        }
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
-                        progress_envlevel.progress = envpercent
-                        text_envcontri.text = envpercent.toString() + "/30"
+                        progress_envlevel.progress = sharepoint
+                        text_envcontri.text = sharepoint.toString() + "/30"
                         text_fridgeenv.text = envpercent.toString() + "회"
+                    }
+                }
+
+        }
+    }
+
+    fun setSharepoint() {
+        if (user != null) {
+            firestore?.collection("user")?.document(user!!.uid)
+                ?.get()?.addOnSuccessListener { document ->
+                    if (document != null) {
+                        sharepoint = document?.data?.get("sharepoint").toString().toInt()
+                        // sharepoint가 30이 넘는 경우
+                        var rest = 0
+                        if (sharepoint > 29) {
+                            rest = sharepoint % 30
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("sharepoint", rest)
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("envlevel", FieldValue.increment(1))
+                                ?.addOnSuccessListener {
+                                    Toast.makeText(context,"환경 기여 레벨이 상승했어요!",Toast.LENGTH_SHORT).show()
+                                }
+                                ?.addOnFailureListener { }
+                        }
+
                     }
                 }
 
