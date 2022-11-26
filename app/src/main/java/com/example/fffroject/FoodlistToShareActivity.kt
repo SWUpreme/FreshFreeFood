@@ -462,7 +462,8 @@ class FoodlistToShareActivity : AppCompatActivity() {
                         "createdAt" to createdAt,
                         "dateTime" to dateTime,
                         "flag" to true,
-                        "done" to false
+                        "done" to false,
+                        "pointDone" to false
                     )
                 )
                 ?.addOnSuccessListener {

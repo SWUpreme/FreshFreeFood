@@ -95,7 +95,6 @@ class ChatListActivity : AppCompatActivity() {
             var opponentId : String = ""                           // 상대방 유저 인덱스를 저장할 변수
             var oppoentNickname : String = ""                               // 상대방 닉네임
 
-
             // 상대방 유저 인덱스 찾기
             if (user != null) {
                 if(user!!.uid.toString() != giver){
@@ -138,7 +137,6 @@ class ChatListActivity : AppCompatActivity() {
             }
         }
     }
-
 
     // 파이어베이스에서 쪽지방 데이터 불러오는 함수
     fun loadChat() {

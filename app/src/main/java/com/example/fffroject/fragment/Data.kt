@@ -24,7 +24,8 @@ data class PostAll(
     var deadline : String? = null,
     var createdAt : String? = null,
     var flag : Boolean? = null,
-    var done : Boolean? = null
+    var done : Boolean? = null,
+    var pointDone : Boolean? = null
 )
 
 // 나눔 세부 게시글 리스트

@@ -60,9 +60,9 @@ class ChatDetailActivity : AppCompatActivity() {
         giverId = intent.getStringExtra("giverId")                  // 나눔자 아이디
         oppoentNickname = intent.getStringExtra("oppoentNickname")  // 상대방 닉네임
         // 파이어베이스에서 데이터 불러오기
-        loadChatDetail()
-        loadPostName()
-        checkBtn()
+        loadChatDetail()    // 쪽지 불러오기
+        loadPostName()      // 게시글 이름 불러오기
+        checkBtn()          // 버튼 visble 처리
 
         //리사이클러뷰
         recyclerview = binding.chatDetailRecyclerView                     // 리사이클러뷰 바인딩
@@ -79,7 +79,6 @@ class ChatDetailActivity : AppCompatActivity() {
                     val intent = Intent(this, ChatActivity::class.java)
                     intent.putExtra("Index", chatroomIndex)
                     ContextCompat.startActivity(this, intent, null)
-
                     true
                 }
                 else -> false
@@ -88,7 +87,13 @@ class ChatDetailActivity : AppCompatActivity() {
 
         // 거래완료 버튼
         binding.btnShareComplete.setOnClickListener{
-
+            // 게시글 나눔 완료로 변경
+            db?.collection("post")?.document(postIndex.toString())
+                ?.update(
+                    "done", true
+                )
+                ?.addOnSuccessListener {}
+                ?.addOnFailureListener {}
         }
 
         // 별점 보내기 버튼
@@ -191,6 +196,15 @@ class ChatDetailActivity : AppCompatActivity() {
     // 나눔자=거래완료, 피나눔자=별점보내기(나눔이 완료됐다면) 버튼 보이기
     fun checkBtn(){
         if (user != null) {
+            db?.collection("post")?.document(postIndex.toString())?.get()
+                ?.addOnSuccessListener { value ->
+                    var done = value.data?.get("done")
+                    if(done == true){
+                        // 나눔자가 나눔 완료했다면
+                    }else{
+
+                    }
+                }
             if(giverId==user!!.uid){
                 // 유저가 나눔자라면
                 binding.btnShareComplete.visibility = View.VISIBLE

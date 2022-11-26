@@ -418,7 +418,8 @@ class SharePostActivity : AppCompatActivity() {
                         "createdAt" to createdAt,
                         "dateTime" to dateTime,
                         "flag" to false,
-                        "done" to false
+                        "done" to false,
+                        "pointDone" to false
                     )
                 )
                 ?.addOnSuccessListener {
