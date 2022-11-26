@@ -27,7 +27,7 @@ class ChatActivity : AppCompatActivity() {
 
     //sharedetail에서 받아온 것
     var postid: String? = null
-    var to: String? = null
+    var giver: String? = null
 
     var chatCount : Int  =0       // 채팅 개수
 
@@ -51,8 +51,8 @@ class ChatActivity : AppCompatActivity() {
         Chatcontent = findViewById(R.id.ChatContent)
 
         //ShareDetail에서 받아 온 인덱스
-        postid = intent.getStringExtra("detailIndex")!!
-        to = intent.getStringExtra("detailWriter")!!
+        postid = intent.getStringExtra("detailIndex")!!     // 포스트 아이디
+        giver = intent.getStringExtra("detailWriter")!!        // 나눔자 아이디
 
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM/dd hh:mm")
@@ -83,8 +83,8 @@ class ChatActivity : AppCompatActivity() {
                                                     "index" to chatroomid,
                                                     "postid" to postid,
                                                     "context" to Chatcontent.text.toString(),
-                                                    "from" to user?.uid,
-                                                    "to" to to,
+                                                    "taker" to user?.uid,
+                                                    "giver" to giver,
                                                     "sendedAt" to curTime
                                                 )
                                             )
@@ -102,8 +102,8 @@ class ChatActivity : AppCompatActivity() {
                                                 hashMapOf(
                                                     "index" to chatid,
                                                     "context" to Chatcontent.text.toString(),
-                                                    "from" to user?.uid,
-                                                    "to" to to,
+                                                    "taker" to user?.uid,
+                                                    "giver" to giver,
                                                     "wroteId" to user?.uid,
                                                     "sendedAt" to curTime,
                                                     "count" to chatCount
@@ -121,9 +121,9 @@ class ChatActivity : AppCompatActivity() {
                                                     "index" to chatroomid,
                                                     "postid" to postid,
                                                     "context" to Chatcontent.text.toString(),
-                                                    "from" to user?.uid,
-                                                    "to" to to,
-                                                    "opponentId" to to,
+                                                    "taker" to user?.uid,
+                                                    "giver" to giver,
+                                                    "opponentId" to giver,
                                                     "sendedAt" to curTime
                                                 )
                                             )
@@ -131,7 +131,7 @@ class ChatActivity : AppCompatActivity() {
                                             ?.addOnFailureListener {}
 
                                         // 상대방 mychat에 새로운 채팅방 생성
-                                        db?.collection("user")?.document(to.toString())
+                                        db?.collection("user")?.document(giver.toString())
                                             ?.collection("mychat")
                                             ?.document("$chatroomid")
                                             ?.set(
@@ -139,9 +139,9 @@ class ChatActivity : AppCompatActivity() {
                                                     "index" to chatroomid,
                                                     "postid" to postid,
                                                     "context" to Chatcontent.text.toString(),
-                                                    "from" to user?.uid,
-                                                    "to" to to,
-                                                    "opponentId" to to,
+                                                    "taker" to user?.uid,
+                                                    "giver" to giver,
+                                                    "opponentId" to giver,
                                                     "sendedAt" to curTime
                                                 )
                                             )
@@ -169,8 +169,8 @@ class ChatActivity : AppCompatActivity() {
                                                         hashMapOf(
                                                             "index" to chatid,
                                                             "context" to Chatcontent.text.toString(),
-                                                            "from" to user?.uid,
-                                                            "to" to to,
+                                                            "taker" to user?.uid,
+                                                            "giver" to giver,
                                                             "wroteId" to user?.uid,
                                                             "sendedAt" to curTime,
                                                             "count" to  chatCount
@@ -196,7 +196,7 @@ class ChatActivity : AppCompatActivity() {
                                             }
 
                                         // 상대의 최신 채팅/채팅시간 업데이트
-                                        db?.collection("user")?.document(to.toString())?.collection("mychat")?.document(chatroomid!!)
+                                        db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomid!!)
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
                                                 "sendedAt", curTime

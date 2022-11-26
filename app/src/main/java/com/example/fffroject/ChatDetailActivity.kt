@@ -93,8 +93,7 @@ class ChatDetailActivity : AppCompatActivity() {
 
         // 별점 보내기 버튼
         binding.btnSendStar.setOnClickListener{
-            val intent = Intent(this, FoodListActivity::class.java)
-            intent.putExtra("chatroomIndex", chatroomIndex)             // 채팅방 아이디
+            val intent = Intent(this, SharePointActivity::class.java)
             intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
             intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
             ContextCompat.startActivity(this, intent, null)
@@ -159,7 +158,7 @@ class ChatDetailActivity : AppCompatActivity() {
             // 채팅 불러오기
             db?.collection("chatroom")?.document(chatroomIndex.toString())
                 ?.collection("chat")
-                ?.orderBy("sendedAt", Query.Direction.DESCENDING)
+                ?.orderBy("count", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     chatDetailList.clear()
                     if (value != null) {

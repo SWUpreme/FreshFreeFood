@@ -89,8 +89,8 @@ class ChatListActivity : AppCompatActivity() {
 
             // 뷰 데이터 출력 외 정보
             var chatroomIndex = chatRoomList!![position].index
-            var from = chatRoomList!![position].from        // 나눔자
-            var to = chatRoomList!![position].to            // 피나눔자
+            var giver = chatRoomList!![position].giver        // 나눔자
+            var taker = chatRoomList!![position].taker            // 피나눔자
             var postid = chatRoomList!![position].postid  // 포스트 아이디
             var opponentId : String = ""                           // 상대방 유저 인덱스를 저장할 변수
             var oppoentNickname : String = ""                               // 상대방 닉네임
@@ -98,12 +98,12 @@ class ChatListActivity : AppCompatActivity() {
 
             // 상대방 유저 인덱스 찾기
             if (user != null) {
-                if(user!!.uid.toString() != from){
+                if(user!!.uid.toString() != giver){
                     // 내 아아디와 나눔자 아이디가 다르다면
-                    opponentId = from.toString()    // 상대방은 나눔자
+                    opponentId = giver.toString()    // 상대방은 나눔자
                 }else{
                     // 내 아이디와 나눔자 아이디가 같다면
-                    opponentId = to.toString()      // 상대방은 피나눔자
+                    opponentId = taker.toString()      // 상대방은 피나눔자
                 }
 
                 // 상대방이 현재 존재하는 계정이라면
@@ -133,7 +133,7 @@ class ChatListActivity : AppCompatActivity() {
                 intent.putExtra("postIndex", postid.toString())
                 intent.putExtra("opponentId", opponentId)
                 intent.putExtra("oppoentNickname", oppoentNickname)
-                intent.putExtra("giverId", from)
+                intent.putExtra("giverId", giver)
                 ContextCompat.startActivity(viewHolder.context, intent, null)
             }
         }

@@ -82,8 +82,8 @@ data class ChatRoom(
     var index : String? = null,
     var context :  String? =  null,
     var postid :  String? =  null,
-    var from : String? = null,
-    var to : String? = null,
+    var taker : String? = null,
+    var giver : String? = null,
     var sendedAt : String? = null
 )
 // 상세 채팅 리스트
@@ -91,8 +91,8 @@ data class ChatDetail(
     var index : String? = null,
     var wroteId :  String? =  null,
     var context :  String? =  null,
-    var from : String? = null,
-    var to : String? = null,
+    var taker : String? = null,
+    var giver : String? = null,
     var sendedAt : String? = null
 )
 
