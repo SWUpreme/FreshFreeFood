@@ -147,18 +147,12 @@ class ChatDetailActivity : AppCompatActivity() {
             if (wroteId!!.equals(user?.uid)) { // 본인 채팅
                 tfFromTo.setText("보낸 쪽지")
                 tfFromTo.setTextColor(
-                    ContextCompat.getColor(
-                        viewHolder.context,
-                        R.color.chat_2
-                    )
+                    ContextCompat.getColor(viewHolder.context, R.color.chat_2)
                 )
             } else { // 상대방 채팅
                 tfFromTo.setText("받은 쪽지")
                 tfFromTo.setTextColor(
-                    ContextCompat.getColor(
-                        viewHolder.context,
-                        R.color.chat_1
-                    )
+                    ContextCompat.getColor(viewHolder.context, R.color.chat_1)
                 )
             }
         }

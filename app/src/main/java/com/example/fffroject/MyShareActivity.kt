@@ -99,7 +99,6 @@ class MyShareActivity: AppCompatActivity() {
             var listBtnmore: Button = viewHolder.findViewById(R.id.listBtnmore)
 
             // 뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
-            listTitle.text = postAllList!![position].title
             listRegion.text = postAllList!![position].region
             listLocation.text = postAllList!![position].location
             listName.text = postAllList!![position].name
@@ -110,6 +109,7 @@ class MyShareActivity: AppCompatActivity() {
             var listFlag = postAllList!![position].flag
             var listIndex = postAllList!![position].index
             var listWriter = postAllList!![position].writer
+            var done = postAllList!![position].done
 
             // 냉장고에서 넘기기 여부 확인 후 색상 변경
             if(listFlag==true){
@@ -123,6 +123,17 @@ class MyShareActivity: AppCompatActivity() {
                 listRegion.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
                 listLocation.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
             }
+
+            // 거래 완료 타이틀 표시
+           if(done == true){
+               // 완료된 거래라면
+               var title= postAllList!![position].title
+               listTitle.text = "(거래완료) "+title
+               listTitle.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.deep_gray))
+           }else{
+               // 진행중인 거래라면
+               listTitle.text = postAllList!![position].title
+           }
 
             // 객체 클릭 이벤트
             viewHolder.setOnClickListener{
