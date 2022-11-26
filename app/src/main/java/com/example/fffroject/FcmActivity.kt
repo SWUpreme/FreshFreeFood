@@ -10,12 +10,14 @@ import android.icu.util.Calendar
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.fffroject.databinding.ActivityFcmBinding
+import java.lang.reflect.Array.getInt
 
 
 class FcmActivity : AppCompatActivity() {
@@ -47,20 +49,25 @@ class FcmActivity : AppCompatActivity() {
         // 현재 알람 설정 상태 확인
         loadNoticeData()
 
+        loadNoticeTime()
+
         //스위치 현재 상태 확인
         binding.RefAlarm.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 isNoticeOn = if(isChecked){
-                    addAlarm(myhour.toInt(), mymin.toInt())
+                    Toast.makeText(this@FcmActivity, "냉장고 알림이 켜졌어요!", Toast.LENGTH_SHORT).show()
                     true
                 }else{
                     // on -> off
+                    Toast.makeText(this@FcmActivity, "냉장고 알림이 꺼졌어요!", Toast.LENGTH_SHORT).show()
+                    //delAlarm()
                     false
                 }
             }
         })
 
         fun getTime(button: Button, context: Context) {
+            //if(!isNoticeOn) return
             val cal = Calendar.getInstance()
 
 
@@ -76,34 +83,41 @@ class FcmActivity : AppCompatActivity() {
                         myampm = "오후"
                         var timestr : Int = myhour - 12
                         if (timestr in 0..9 && mymin in 0..9) {
-                            button.text = "오후0$timestr:0$mymin"
+                            binding.Alarm.text = "오후 0$timestr:0$mymin"
                         } else if (timestr in 0..9) {
-                            button.text = "오후0$timestr:$mymin"
+                            binding.Alarm.text = "오후 0$timestr:$mymin"
                         } else if (mymin in 0..9) {
-                            button.text = "오후$timestr:0$mymin"
+                            binding.Alarm.text = "오후 $timestr:0$mymin"
                         } else {
-                            button.text = "오후 $timestr:$mymin"
+                            binding.Alarm.text = "오후 $timestr:$mymin"
                         }
                     } else {
                         myampm = "오전"
                         if(myhour == 0) {
                             if(mymin in 0..9) {
-                                button.text = "오전12:0$mymin"
+                                binding.Alarm.text = "오전 12:0$mymin"
                             } else {
-                                button.text = "오전 12:$mymin"
+                                binding.Alarm.text = "오전 12:$mymin"
                             }
                         } else if(myhour in 0..9 && mymin in 0..9) {
-                            button.text = "오전0$myhour:0$mymin"
+                            binding.Alarm.text = "오전 0$myhour:0$mymin"
                         } else if (myhour in 0..9) {
-                            button.text = "오전 0$myhour:$mymin"
+                            binding.Alarm.text = "오전 0$myhour:$mymin"
                         } else if (mymin in 0..9) {
-                            button.text = "오전$myhour:0$mymin"
+                            binding.Alarm.text = "오전 $myhour:0$mymin"
                         } else {
-                            button.text = "오전$myhour:$mymin"
+                            binding.Alarm.text = "오전 $myhour:$mymin"
                         }
+
                     }
                     //saveNoticeData("noticeStatus", isNoticeOn)
-                    // addAlarm(myhour.toInt(), mymin.toInt())
+                    addAlarm(myhour.toInt(), mymin.toInt())
+                    val pref = getSharedPreferences("my_pref", 0)
+                    val edit = pref.edit()
+                    edit.putInt("noticeHour", myhour)
+                    edit.putInt("noticeMinute", mymin)
+                    edit.apply()
+                    Log.d("시간:", "${myhour}")
 
                 }
 
@@ -161,6 +175,7 @@ class FcmActivity : AppCompatActivity() {
 
         //이미 예약된 경우 새로 덮어쓰도록
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
     }
 
     // 알람 취소
@@ -189,7 +204,52 @@ class FcmActivity : AppCompatActivity() {
         else {
 
         }
+
+
     }
+    fun loadNoticeTime() {
+        val pref = getSharedPreferences("my_pref", MODE_PRIVATE)
+        myhour = pref.getInt("noticeHour", myhour)
+        mymin = pref.getInt("noticeMinute", mymin)
+        if (myhour >= 13) {
+            myampm = "오후"
+            var timestr: Int = myhour - 12
+            if (timestr in 0..9 && mymin in 0..9) {
+                binding.Alarm.text = "오후 0$timestr:0$mymin"
+            } else if (timestr in 0..9) {
+                binding.Alarm.text = "오후 0$timestr:$mymin"
+            } else if (mymin in 0..9) {
+                binding.Alarm.text = "오후 $timestr:0$mymin"
+            } else {
+                binding.Alarm.text = "오후 $timestr:$mymin"
+            }
+        } else {
+            myampm = "오전"
+            if (myhour == 0) {
+                if (mymin in 0..9) {
+                    binding.Alarm.text = "오전 12:0$mymin"
+                } else {
+                    binding.Alarm.text = "오전 12:$mymin"
+                }
+            } else if (myhour in 0..9 && mymin in 0..9) {
+                binding.Alarm.text = "오전 0$myhour:0$mymin"
+            } else if (myhour in 0..9) {
+                binding.Alarm.text = "오전 0$myhour:$mymin"
+            } else if (mymin in 0..9) {
+                binding.Alarm.text = "오전 $myhour:0$mymin"
+            } else {
+                binding.Alarm.text = "오전 $myhour:$mymin"
+            }
+/*
+
+        myhour = pref.getInt("noticeHour", myhour)
+        mymin = pref.getInt("noticeMinute", mymin)
+        binding.Alarm.text = "$myampm $myhour:$mymin"
+*/
+
+        }
+    }
+
 
     // 종료
     override fun onDestroy() {
@@ -199,6 +259,8 @@ class FcmActivity : AppCompatActivity() {
         val pref = getSharedPreferences("my_pref", 0)
         val edit = pref.edit()
         edit.putBoolean("noticeStatus", isNoticeOn)
+        //edit.putInt("noticeHour", myhour)
+        //edit.putInt("noticeMinute", mymin)
         edit.apply()
     }
 
