@@ -38,6 +38,7 @@ class ChatDetailActivity : AppCompatActivity() {
 
     var chatroomIndex: String? = null
     var postIndex: String? = null
+    var giverId: String? = null
     var opponentId: String? = null
     var oppoentNickname: String? = null
 
@@ -56,10 +57,12 @@ class ChatDetailActivity : AppCompatActivity() {
         chatroomIndex = intent.getStringExtra("chatroomIndex")      // 채팅방 아이디
         postIndex = intent.getStringExtra("postIndex")              // 포스트 아이디
         opponentId = intent.getStringExtra("opponentId")            // 상대방 아이디
+        giverId = intent.getStringExtra("giverId")                  // 나눔자 아이디
         oppoentNickname = intent.getStringExtra("oppoentNickname")  // 상대방 닉네임
         // 파이어베이스에서 데이터 불러오기
         loadChatDetail()
         loadPostName()
+        checkBtn()
 
         //리사이클러뷰
         recyclerview = binding.chatDetailRecyclerView                     // 리사이클러뷰 바인딩
@@ -69,10 +72,10 @@ class ChatDetailActivity : AppCompatActivity() {
         val customDecoration = CustomDiverItemDecoration(4f, 10f, resources.getColor(R.color.diver_gray))
         recyclerview.addItemDecoration(customDecoration)
 
+        // 툴바 쪽지 전송 버튼
         binding.toolbChatDetail.setOnMenuItemClickListener {
             when (it.itemId) {
-                // 툴바 버튼 클릭 시
-                R.id.btnChatDetail -> {
+                R.id.btnChatContent -> {
                     val intent = Intent(this, ChatActivity::class.java)
                     intent.putExtra("Index", chatroomIndex)
                     ContextCompat.startActivity(this, intent, null)
@@ -81,6 +84,20 @@ class ChatDetailActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        // 거래완료 버튼
+        binding.btnShareComplete.setOnClickListener{
+
+        }
+
+        // 별점 보내기 버튼
+        binding.btnSendStar.setOnClickListener{
+            val intent = Intent(this, FoodListActivity::class.java)
+            intent.putExtra("chatroomIndex", chatroomIndex)             // 채팅방 아이디
+            intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
+            intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
+            ContextCompat.startActivity(this, intent, null)
         }
     }
 
@@ -169,6 +186,21 @@ class ChatDetailActivity : AppCompatActivity() {
                     binding.chatDetailContext.text = "\"$title\" 글을 통해 시작된 쪽지입니다."
                     binding.ChatName.text = oppoentNickname
                 }
+        }
+    }
+
+    // 나눔자=거래완료, 피나눔자=별점보내기(나눔이 완료됐다면) 버튼 보이기
+    fun checkBtn(){
+        if (user != null) {
+            if(giverId==user!!.uid){
+                // 유저가 나눔자라면
+                binding.btnShareComplete.visibility = View.VISIBLE
+                binding.btnSendStar.visibility = View.GONE
+            }else{
+                // 유저가 피나눔자라면
+                binding.btnShareComplete.visibility = View.GONE
+                binding.btnSendStar.visibility = View.VISIBLE
+            }
         }
     }
 }

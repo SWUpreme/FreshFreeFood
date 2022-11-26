@@ -133,6 +133,7 @@ class ChatListActivity : AppCompatActivity() {
                 intent.putExtra("postIndex", postid.toString())
                 intent.putExtra("opponentId", opponentId)
                 intent.putExtra("oppoentNickname", oppoentNickname)
+                intent.putExtra("giverId", from)
                 ContextCompat.startActivity(viewHolder.context, intent, null)
             }
         }
