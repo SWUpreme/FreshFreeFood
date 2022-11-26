@@ -4,18 +4,23 @@ package com.example.fffroject
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.databinding.ActivityChatDetailBinding
 import com.example.fffroject.databinding.ActivityChatListBinding
+import com.example.fffroject.databinding.DialogDeletepostBinding
+import com.example.fffroject.databinding.DialogSharedoneBinding
 import com.example.fffroject.fragment.ChatDetail
 import com.example.fffroject.fragment.ChatRoom
 import com.example.fffroject.fragment.CustomDiverItemDecoration
@@ -87,13 +92,8 @@ class ChatDetailActivity : AppCompatActivity() {
 
         // 거래완료 버튼
         binding.btnShareComplete.setOnClickListener{
-            // 게시글 나눔 완료로 변경
-            db?.collection("post")?.document(postIndex.toString())
-                ?.update(
-                    "done", true
-                )
-                ?.addOnSuccessListener {}
-                ?.addOnFailureListener {}
+            // 거래완료 다이얼로그 생성
+            showDialogDelete(postIndex.toString())
         }
 
         // 별점 보내기 버튼
@@ -241,6 +241,40 @@ class ChatDetailActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // 무료나눔 완료 버튼
+    fun showDialogDelete(postIndex: String){
+        //뷰 바인딩을 적용한 XML 파일 초기화
+        val dialogBinding = DialogSharedoneBinding.inflate(layoutInflater)
+        val alertDialog = AlertDialog.Builder(this).run {
+            setView(dialogBinding.root)
+            show()
+        }
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 아니오 버튼 (거래완료하지않기)
+        dialogBinding.btnNo.setOnClickListener(View.OnClickListener {
+            alertDialog.dismiss()
+        })
+
+        // 예 버튼 (거래완료하기)
+        dialogBinding.btnYes.setOnClickListener(View.OnClickListener {
+            db?.collection("post")?.document(postIndex.toString())
+                ?.update(
+                    "done", true
+                )
+                ?.addOnSuccessListener {
+                    Toast.makeText(this, "나눔이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                ?.addOnFailureListener {}
+            alertDialog.dismiss()
+            // 거래 완료 후 전체 쪽지방 화면으로 돌아가기
+            finish()
+        })
+
+
     }
 
 }
