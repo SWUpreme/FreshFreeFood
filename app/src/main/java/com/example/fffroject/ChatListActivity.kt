@@ -131,6 +131,8 @@ class ChatListActivity : AppCompatActivity() {
                 val intent = Intent(viewHolder.context, ChatDetailActivity::class.java)
                 intent.putExtra("chatroomIndex", chatroomIndex.toString())
                 intent.putExtra("postIndex", postid.toString())
+                intent.putExtra("opponentId", opponentId)
+                intent.putExtra("oppoentNickname", oppoentNickname)
                 ContextCompat.startActivity(viewHolder.context, intent, null)
             }
         }

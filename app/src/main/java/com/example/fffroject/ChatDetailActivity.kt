@@ -38,6 +38,8 @@ class ChatDetailActivity : AppCompatActivity() {
 
     var chatroomIndex: String? = null
     var postIndex: String? = null
+    var opponentId: String? = null
+    var oppoentNickname: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +52,11 @@ class ChatDetailActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()                                // 파이어베이스 인증 객체
         user = auth!!.currentUser
         db = FirebaseFirestore.getInstance()                             // 파이어베이스 인스턴스 초기화
-        // 인텐트-채팅방 인덱스, 포스트 인덱스
-        chatroomIndex = intent.getStringExtra("chatroomIndex")
-        postIndex = intent.getStringExtra("postIndex")
+        // 인텐트
+        chatroomIndex = intent.getStringExtra("chatroomIndex")      // 채팅방 아이디
+        postIndex = intent.getStringExtra("postIndex")              // 포스트 아이디
+        opponentId = intent.getStringExtra("opponentId")            // 상대방 아이디
+        oppoentNickname = intent.getStringExtra("oppoentNickname")  // 상대방 닉네임
         // 파이어베이스에서 데이터 불러오기
         loadChatDetail()
         loadPostName()
@@ -155,7 +159,7 @@ class ChatDetailActivity : AppCompatActivity() {
         }
     }
 
-    // 파이어베이스에서 포스트 이름 불러오기
+    // 파이어베이스에서 포스트 이름 불러오기+툴바 닉네임 변경
     @SuppressLint("SetTextI18n")
     fun loadPostName(){
         if (user != null) {
@@ -163,6 +167,7 @@ class ChatDetailActivity : AppCompatActivity() {
                 ?.addOnSuccessListener { value ->
                     var title = value.data?.get("title") as String
                     binding.chatDetailContext.text = "\"$title\" 글을 통해 시작된 쪽지입니다."
+                    binding.ChatName.text = oppoentNickname
                 }
         }
     }
