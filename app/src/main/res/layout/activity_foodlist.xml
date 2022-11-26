@@ -11,6 +11,19 @@
     android:background="#FFFFFF"
     >
 
+    <TextView
+        android:id="@+id/textNoFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:text="음식을 추가해 주세요."
+        android:textColor="#B4B4B4"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nestedScrollView" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbFoodlist"
         android:layout_width="wrap_content"

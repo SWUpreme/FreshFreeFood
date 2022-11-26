@@ -74,7 +74,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:max="50"
+        android:max="30"
         android:progressDrawable="@drawable/progressbar_envlevel"
         app:layout_constraintEnd_toEndOf="@+id/imageView12"
         app:layout_constraintStart_toStartOf="@+id/imageView12"
