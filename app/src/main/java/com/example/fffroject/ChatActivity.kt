@@ -104,6 +104,7 @@ class ChatActivity : AppCompatActivity() {
                                                     "context" to Chatcontent.text.toString(),
                                                     "from" to user?.uid,
                                                     "to" to to,
+                                                    "wroteId" to user?.uid,
                                                     "sendedAt" to curTime,
                                                     "count" to chatCount
                                                 )
@@ -170,6 +171,7 @@ class ChatActivity : AppCompatActivity() {
                                                             "context" to Chatcontent.text.toString(),
                                                             "from" to user?.uid,
                                                             "to" to to,
+                                                            "wroteId" to user?.uid,
                                                             "sendedAt" to curTime,
                                                             "count" to  chatCount
                                                         )

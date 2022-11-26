@@ -77,7 +77,7 @@ data class ChatDTO(
 }
 
 */
-//채팅방
+// 채팅방
 data class ChatRoom(
     var index : String? = null,
     var context :  String? =  null,
@@ -85,7 +85,15 @@ data class ChatRoom(
     var to : String? = null,
     var sendedAt : String? = null
 )
-
+// 상세 채팅 리스트
+data class ChatDetail(
+    var index : String? = null,
+    var wroteId :  String? =  null,
+    var context :  String? =  null,
+    var from : String? = null,
+    var to : String? = null,
+    var sendedAt : String? = null
+)
 
 data class MyChat(
     var context :  String? =  null,
