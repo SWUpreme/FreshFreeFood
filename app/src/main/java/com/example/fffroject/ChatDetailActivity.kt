@@ -98,6 +98,13 @@ class ChatDetailActivity : AppCompatActivity() {
 
         // 별점 보내기 버튼
         binding.btnSendStar.setOnClickListener{
+            // 별점 보내기 완료로 변경
+            db?.collection("post")?.document(postIndex.toString())
+                ?.update(
+                    "pointDone", true
+                )
+                ?.addOnSuccessListener {}
+                ?.addOnFailureListener {}
             val intent = Intent(this, SharePointActivity::class.java)
             intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
             intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
@@ -196,21 +203,8 @@ class ChatDetailActivity : AppCompatActivity() {
     // 나눔자=거래완료, 피나눔자=별점보내기(나눔이 완료됐다면) 버튼 보이기
     fun checkBtn(){
         if (user != null) {
-            db?.collection("post")?.document(postIndex.toString())?.get()
-                ?.addOnSuccessListener { value ->
-                    var done = value.data?.get("done")
-                    if(done == true){
-                        // 나눔자가 나눔 완료했다면
-                    }else{
-
-                    }
-                }
             if(giverId==user!!.uid){
                 // 유저가 나눔자라면
-                binding.btnShareComplete.visibility = View.VISIBLE
-                binding.btnSendStar.visibility = View.GONE
-            }else{
-                // 유저가 피나눔자라면
                 if (user != null) {
                     db?.collection("post")?.document(postIndex.toString())?.get()
                         ?.addOnSuccessListener { value ->
@@ -218,7 +212,32 @@ class ChatDetailActivity : AppCompatActivity() {
                             if(done == true){
                                 // 나눔자가 나눔 완료했다면
                                 binding.btnShareComplete.visibility = View.GONE
-                                binding.btnSendStar.visibility = View.VISIBLE
+                                binding.btnSendStar.visibility = View.GONE
+                            }else{
+                                // 나눔 완료되지 않았다면
+                                binding.btnShareComplete.visibility = View.VISIBLE
+                                binding.btnSendStar.visibility = View.GONE
+                            }
+                        }
+                }
+            }else{
+                // 유저가 피나눔자라면
+                if (user != null) {
+                    db?.collection("post")?.document(postIndex.toString())?.get()
+                        ?.addOnSuccessListener { value ->
+                            var done = value.data?.get("done")            // 나눔완료 변수
+                            var pointDone = value.data?.get("pointDone")  // 포인트 주기 완료 변수
+                            if(done == true){
+                                // 나눔자가 나눔 완료했다면
+                                if(pointDone==true){
+                                    // 피나눔자가 포인트를 줬다면
+                                    binding.btnShareComplete.visibility = View.GONE
+                                    binding.btnSendStar.visibility = View.GONE
+                                }else{
+                                    // 피나눔자가 포인트를 안 줬다면
+                                    binding.btnShareComplete.visibility = View.GONE
+                                    binding.btnSendStar.visibility = View.VISIBLE
+                                }
                             }else{
                                 // 나눔 완료되지 않았다면
                                 binding.btnShareComplete.visibility = View.GONE
