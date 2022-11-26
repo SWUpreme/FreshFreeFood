@@ -88,7 +88,8 @@ class AuthActivity : AppCompatActivity() {
                                             var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                                             firestore?.collection("user")?.document(user.uid)
                                                 ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
-                                                    "contribution" to 0, "envlevel" to 1, "nowRegion" to "n", "login" to nowdate))
+                                                    "contribution" to 0, "envlevel" to 1,"sharepoint" to 0,
+                                                    "nowRegion" to "n", "login" to nowdate))
                                         }
                                     }
 

@@ -44,6 +44,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     lateinit var toolbar_fridgename : TextView
     lateinit var spinner_foodlist : Spinner
 
+    lateinit var text_nofood: TextView
+
     var name : String? = null
     var index : String? = null
 
@@ -120,6 +122,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // 파이어베이스에서 식품 리스트 값 불러오기
         //loadData()
 
+        text_nofood = findViewById(R.id.textNoFood)
+
         recyclerview_foodlist = findViewById(R.id.recyclerviewFoodlist)
         recyclerview_foodlist.adapter = RecyclerviewAdapter()
         recyclerview_foodlist.layoutManager = LinearLayoutManager(this)
@@ -189,6 +193,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     fun getfoodCount(){
         var text_food_count = findViewById<TextView>(R.id.textShowCount)
         text_food_count.text = "상품 " + foodcount + "개"
+        if (foodcount > 0) {
+            text_nofood.visibility = View.INVISIBLE
+        }
     }
 
 
@@ -449,28 +456,28 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.addOnSuccessListener { Toast.makeText(this, "환경 기여도가 상승했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
         // envlevel과 contribution 설정 및 상호 연동
-        firestore?.collection("user")?.document(user!!.uid)
-            ?.get()?.addOnSuccessListener { document ->
-                var contribution = document?.data?.get("contribution").toString().toInt()
-                var rest = 0
-                if (contribution > 29) {
-                    rest = contribution % 30 + 1
-                    firestore?.collection("user")?.document(user!!.uid)
-                        ?.update("contribution", rest)
-                        ?.addOnSuccessListener { }
-                        ?.addOnFailureListener { }
-                    firestore?.collection("user")?.document(user!!.uid)
-                        ?.update("envlevel", FieldValue.increment(1))
-                        ?.addOnSuccessListener { Toast.makeText(this, "환경 기여 레벨이 상승했어요!", Toast.LENGTH_SHORT).show() }
-                        ?.addOnFailureListener { }
-                }
-                else {
-                    firestore?.collection("user")?.document(user!!.uid)
-                        ?.update("contribution", contribution)
-                        ?.addOnSuccessListener { }
-                        ?.addOnFailureListener { }
-                }
-            }
+//        firestore?.collection("user")?.document(user!!.uid)
+//            ?.get()?.addOnSuccessListener { document ->
+//                var contribution = document?.data?.get("contribution").toString().toInt()
+//                var rest = 0
+//                if (contribution > 29) {
+//                    rest = contribution % 30 + 1
+//                    firestore?.collection("user")?.document(user!!.uid)
+//                        ?.update("contribution", rest)
+//                        ?.addOnSuccessListener { }
+//                        ?.addOnFailureListener { }
+//                    firestore?.collection("user")?.document(user!!.uid)
+//                        ?.update("envlevel", FieldValue.increment(1))
+//                        ?.addOnSuccessListener { Toast.makeText(this, "환경 기여 레벨이 상승했어요!", Toast.LENGTH_SHORT).show() }
+//                        ?.addOnFailureListener { }
+//                }
+//                else {
+//                    firestore?.collection("user")?.document(user!!.uid)
+//                        ?.update("contribution", contribution)
+//                        ?.addOnSuccessListener { }
+//                        ?.addOnFailureListener { }
+//                }
+//            }
     }
 
     fun foodDelete(foodindex: String) {

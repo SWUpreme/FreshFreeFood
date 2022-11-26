@@ -68,6 +68,8 @@ class MypageFragment : Fragment() {
             val intent = Intent(activity, AuthActivity::class.java)
             activity?.let { ContextCompat.startActivity(it, intent, null) }
             // startActivity(Intent(activity, AuthActivity::class.java))
+//            val intent = Intent(view.context, SharePointActivity::class.java)
+//            ContextCompat.startActivity(view.context, intent, null)
         }
 
         // 나의 나눔 버튼 눌렀을 경우

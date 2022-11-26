@@ -29,10 +29,18 @@
                 android:text="냉장고 멤버 보기"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/btnMemberDrop"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@color/zxing_transparent"
+                android:text="냉장고 나가기"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnFridgeOptionClose"
+            android:id="@+id/btnFridgememOptionClose"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@drawable/dialog_background_round"
