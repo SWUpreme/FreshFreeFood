@@ -58,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/btnShareComplete"
                     android:layout_width="wrap_content"
@@ -66,7 +67,8 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/btn_background_round_gray"
                     android:text="거래 완료"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <Button
                     android:id="@+id/btnSendStar"
@@ -78,7 +80,8 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="거래 후기 별점 보내기"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
             </LinearLayout>
 
 
@@ -91,6 +94,12 @@
                 android:backgroundTint="#00FFFFFF">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/imageView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/line_gray" />
 
             <LinearLayout
                 android:id="@+id/chatDetailBottom"

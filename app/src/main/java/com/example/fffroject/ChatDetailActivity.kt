@@ -2,6 +2,7 @@
 
 package com.example.fffroject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -35,7 +36,8 @@ class ChatDetailActivity : AppCompatActivity() {
     //리사이클러뷰
     lateinit var recyclerview: RecyclerView
 
-    var intentChatroomIndex: String? = null
+    var chatroomIndex: String? = null
+    var postIndex: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +50,12 @@ class ChatDetailActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()                                // 파이어베이스 인증 객체
         user = auth!!.currentUser
         db = FirebaseFirestore.getInstance()                             // 파이어베이스 인스턴스 초기화
-        // 인텐트-채팅방 인덱스
-        intentChatroomIndex = intent.getStringExtra("chatroomIndex")
+        // 인텐트-채팅방 인덱스, 포스트 인덱스
+        chatroomIndex = intent.getStringExtra("chatroomIndex")
+        postIndex = intent.getStringExtra("postIndex")
         // 파이어베이스에서 데이터 불러오기
         loadChatDetail()
-
-        binding.toolbChatDetail.setOnMenuItemClickListener {
-            when (it.itemId) {
-                // 툴바 버튼 클릭 시
-                R.id.btnChatDetail -> {
-                    val intent = Intent(this, ChatActivity::class.java)
-                    intent.putExtra("Index", intentChatroomIndex)
-                    ContextCompat.startActivity(this, intent, null)
-
-                    true
-                }
-                else -> false
-            }
-        }
+        loadPostName()
 
         //리사이클러뷰
         recyclerview = binding.chatDetailRecyclerView                     // 리사이클러뷰 바인딩
@@ -74,6 +64,20 @@ class ChatDetailActivity : AppCompatActivity() {
         // 리사이클러 뷰 구분선_커스텀 diver
         val customDecoration = CustomDiverItemDecoration(4f, 10f, resources.getColor(R.color.diver_gray))
         recyclerview.addItemDecoration(customDecoration)
+
+        binding.toolbChatDetail.setOnMenuItemClickListener {
+            when (it.itemId) {
+                // 툴바 버튼 클릭 시
+                R.id.btnChatDetail -> {
+                    val intent = Intent(this, ChatActivity::class.java)
+                    intent.putExtra("Index", chatroomIndex)
+                    ContextCompat.startActivity(this, intent, null)
+
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     // 뷰 홀더
@@ -102,7 +106,6 @@ class ChatDetailActivity : AppCompatActivity() {
             tfContext = viewHolder.findViewById(R.id.chatDetailContext)
             tfTime = viewHolder.findViewById(R.id.chatDetailTime)
 
-
             //tfFromTo.text = chatDetailList!![position].wroteId
             var wroteId = chatDetailList!![position].wroteId
             tfContext.text = chatDetailList!![position].context
@@ -129,11 +132,11 @@ class ChatDetailActivity : AppCompatActivity() {
         }
     }
 
-
+    // 파이어베이스에서 채팅 데이터 불러오기
     fun loadChatDetail() {
         if (user != null) {
             // 채팅 불러오기
-            db?.collection("chatroom")?.document(intentChatroomIndex.toString())
+            db?.collection("chatroom")?.document(chatroomIndex.toString())
                 ?.collection("chat")
                 ?.orderBy("sendedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
@@ -148,6 +151,18 @@ class ChatDetailActivity : AppCompatActivity() {
                         }
                     }
                     recyclerview.adapter?.notifyDataSetChanged()
+                }
+        }
+    }
+
+    // 파이어베이스에서 포스트 이름 불러오기
+    @SuppressLint("SetTextI18n")
+    fun loadPostName(){
+        if (user != null) {
+            db?.collection("post")?.document(postIndex.toString())?.get()
+                ?.addOnSuccessListener { value ->
+                    var title = value.data?.get("title") as String
+                    binding.chatDetailContext.text = "\"$title\" 글을 통해 시작된 쪽지입니다."
                 }
         }
     }

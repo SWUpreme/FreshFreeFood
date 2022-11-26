@@ -81,6 +81,7 @@ data class ChatDTO(
 data class ChatRoom(
     var index : String? = null,
     var context :  String? =  null,
+    var postid :  String? =  null,
     var from : String? = null,
     var to : String? = null,
     var sendedAt : String? = null
