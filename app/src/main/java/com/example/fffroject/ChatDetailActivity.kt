@@ -197,9 +197,23 @@ class ChatDetailActivity : AppCompatActivity() {
                 binding.btnSendStar.visibility = View.GONE
             }else{
                 // 유저가 피나눔자라면
-                binding.btnShareComplete.visibility = View.GONE
-                binding.btnSendStar.visibility = View.VISIBLE
+                if (user != null) {
+                    db?.collection("post")?.document(postIndex.toString())?.get()
+                        ?.addOnSuccessListener { value ->
+                            var done = value.data?.get("done")
+                            if(done == true){
+                                // 나눔자가 나눔 완료했다면
+                                binding.btnShareComplete.visibility = View.GONE
+                                binding.btnSendStar.visibility = View.VISIBLE
+                            }else{
+                                // 나눔 완료되지 않았다면
+                                binding.btnShareComplete.visibility = View.GONE
+                                binding.btnSendStar.visibility = View.GONE
+                            }
+                        }
+                }
             }
         }
     }
+
 }
