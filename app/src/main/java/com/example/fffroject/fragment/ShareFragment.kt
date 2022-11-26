@@ -217,6 +217,7 @@ class ShareFragment : Fragment() {
                     if (user != null) {
                         db?.collection("post")
                             ?.whereEqualTo("region", presentRegion)
+                            ?.whereEqualTo("done", false)
                             ?.orderBy("dateTime", Query.Direction.DESCENDING)
                             ?.addSnapshotListener { value, error ->
                                 postAllList.clear()
