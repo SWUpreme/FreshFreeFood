@@ -11,13 +11,34 @@ import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import android.media.RingtoneManager
 import android.util.Log
+import com.example.fffroject.fragment.FoodList
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 //AlertReceiver class에서 알림 기능을 동작하도록
 class AlertReceiver  : BroadcastReceiver() {
+    var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore? = null
+    var user : FirebaseUser? = null
+    var index : String? = null
+    lateinit var foodlist: ArrayList<FoodList>
     lateinit var notificationManager: NotificationManager
     override fun onReceive(context: Context, intent: Intent) {
         notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        foodlist = arrayListOf<FoodList>()
+
+        // 파이어베이스 인증 객체
+        auth = FirebaseAuth.getInstance()
+        user = auth!!.currentUser
+        // 파이어스토어 인스턴스 초기화
+        firestore = FirebaseFirestore.getInstance()
 
         createNotificationChannel(context)
         deliverNotification(context)
@@ -45,7 +66,7 @@ class AlertReceiver  : BroadcastReceiver() {
         }
     }
 
-    private fun deliverNotification(context: Context){
+    private fun deliverNotification(context: Context) {
         val contentIntent = Intent(context, FoodListActivity::class.java)
         val contentPendingIntent = PendingIntent.getActivity(
             context,
@@ -60,17 +81,20 @@ class AlertReceiver  : BroadcastReceiver() {
              */
         )
 
-        val builder1 = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-            .setContentTitle("FFF") // 제목
-            .setContentText("냉장고") // 내용
-            .setContentIntent(contentPendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
-        notificationManager?.notify(NOTIFICATION_ID, builder1.build())
 
-    }
+
+                            val builder1 = NotificationCompat.Builder(context, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+                                .setContentTitle("FFF") // 제목
+                                .setContentText("임박") // 내용
+                                .setContentIntent(contentPendingIntent)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setAutoCancel(true)
+                                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                            notificationManager?.notify(NOTIFICATION_ID, builder1.build())
+                        }
+
+
 
     companion object {
         private const val NOTIFICATION_ID = 0
