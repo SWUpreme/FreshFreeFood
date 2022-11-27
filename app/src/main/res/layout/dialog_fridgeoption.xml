@@ -26,42 +26,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
+                android:fontFamily="@font/roboto_regular"
                 android:text="냉장고 이름 변경"
-                android:textSize="16sp"/>
+                android:textColor="#71ABFF"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/btnFridgeMemberAdd"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
+                android:fontFamily="@font/roboto_regular"
                 android:text="냉장고 멤버 추가"
-                android:textSize="16sp" />
+                android:textColor="#71ABFF"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
-                android:text="냉장고 공유"
-                android:textSize="16sp" />
+                android:fontFamily="@font/roboto_regular"
+                android:text="냉장고 멤버 보기"
+                android:textColor="#71ABFF"
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/btnFridgeDelete"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
+                android:fontFamily="@font/roboto_regular"
                 android:text="냉장고 삭제"
-                android:textSize="16sp"/>
+                android:textColor="#71ABFF"
+                android:textSize="17sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btnFridgeOptionClose"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/dialog_background_round"
+            android:fontFamily="@font/roboto_bold"
             android:text="취소"
-            android:textSize="16sp"
-            android:layout_marginBottom="10dp"/>
+            android:textColor="#71ABFF"
+            android:textSize="17sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,13 +70,10 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable/txt_background_round2_white.xml" value="0.254" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_auth.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_barcode.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_detail.xml" value="0.35774647887323946" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.536" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_detail.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.72" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist_to_share.xml" value="0.152" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -153,6 +150,8 @@
         <entry key="app/src/main/res/layout/dialog_fixnickname.xml" value="0.2644927536231884" />
         <entry key="app/src/main/res/layout/dialog_fridgeoption.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/dialog_memberoption.xml" value="0.2644927536231884" />
+        <entry key="app/src/main/res/layout/dialog_postoption.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/dialog_sharedone.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/dialog_treegrade.xml" value="0.4590438400489697" />
         <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.3793640136718751" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.29140603953394395" />
