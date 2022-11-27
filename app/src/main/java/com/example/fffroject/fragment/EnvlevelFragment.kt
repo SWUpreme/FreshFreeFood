@@ -302,12 +302,12 @@ class EnvlevelFragment: Fragment() {
                             3 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_bedge3)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge4)}
                             4 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)
                                 img_tree4.setColorFilter(null)
-                                img_topbedge.setImageResource(R.drawable.eco_img_bedge4)}
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge3)}
                             5 -> {img_tree1.setColorFilter(null)
                                 img_tree2.setColorFilter(null)
                                 img_tree3.setColorFilter(null)

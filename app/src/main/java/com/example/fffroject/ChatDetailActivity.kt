@@ -108,6 +108,7 @@ class ChatDetailActivity : AppCompatActivity() {
             val intent = Intent(this, SharePointActivity::class.java)
             intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
             intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
+            intent.putExtra("postIndex", postIndex)                     // 포스트 인덱스
             ContextCompat.startActivity(this, intent, null)
         }
     }

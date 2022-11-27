@@ -30,6 +30,8 @@ class SharePointActivity : AppCompatActivity(){
 
     // intent값 받아온 것
     var giver : String? = null
+    var givername :  String? = null
+    var postindex : String? = null
 
     // 후기 보내기 버튼
     lateinit var btn_review_send: Button
@@ -45,8 +47,9 @@ class SharePointActivity : AppCompatActivity(){
         firestore = FirebaseFirestore.getInstance()
 
         // intent와 연결(FridgeFragment에서 넘겨 준 것들)
-        //giver = intent.getStringExtra("name")    // 공유해준사람의 uid
-        giver = "pNN9vZHj9jg3wcxscAVNqv0iAsZ2"
+        giver = intent.getStringExtra("opponentId")    // 공유해준사람의 uid
+        givername = intent.getStringExtra("oppoentNickname")    // 공유해준사람의 닉네임
+        postindex = intent.getStringExtra("postIndex")    // 포스트 인덱스
 
         // 별점 버튼 연결
         btn_star1 = findViewById(R.id.btnStar1)
@@ -113,7 +116,16 @@ class SharePointActivity : AppCompatActivity(){
 
         btn_review_send.setOnClickListener {
             Toast.makeText(this, "후기가 전송되었습니다.", Toast.LENGTH_SHORT).show()
+            // 별점 보내기 완료로 변경
+            firestore?.collection("post")?.document(postindex.toString())
+                ?.update(
+                    "pointDone", true
+                )
+                ?.addOnSuccessListener {}
+                ?.addOnFailureListener {}
             pointUp(giver.toString(), point)
+            val intent = Intent(this, ChatListActivity::class.java)
+            ContextCompat.startActivity(this, intent, null)
             finish()
         }
     }
