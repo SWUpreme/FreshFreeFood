@@ -38,12 +38,13 @@ class ChatDetailActivity : AppCompatActivity() {
     var user: FirebaseUser? = null
     // Data에 있는 ChatDetail
     lateinit var chatDetailList: ArrayList<ChatDetail>
-    //리사이클러뷰
+    // 리사이클러뷰
     lateinit var recyclerview: RecyclerView
-
+    // 인텐트
     var chatroomIndex: String? = null
     var postIndex: String? = null
     var giverId: String? = null
+    var takerId: String? = null
     var opponentId: String? = null
     var oppoentNickname: String? = null
 
@@ -63,6 +64,7 @@ class ChatDetailActivity : AppCompatActivity() {
         postIndex = intent.getStringExtra("postIndex")              // 포스트 아이디
         opponentId = intent.getStringExtra("opponentId")            // 상대방 아이디
         giverId = intent.getStringExtra("giverId")                  // 나눔자 아이디
+        takerId = intent.getStringExtra("takerId")                  // 피나눔자 아이디
         oppoentNickname = intent.getStringExtra("oppoentNickname")  // 상대방 닉네임
         // 파이어베이스에서 데이터 불러오기
         loadChatDetail()    // 쪽지 불러오기
@@ -81,8 +83,12 @@ class ChatDetailActivity : AppCompatActivity() {
         binding.toolbChatDetail.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.btnChatContent -> {
-                    val intent = Intent(this, ChatActivity::class.java)
-                    intent.putExtra("Index", chatroomIndex)
+                    val intent = Intent(this, ChatSendExistActivity::class.java)
+                    intent.putExtra("chatroomId", chatroomIndex)
+                    intent.putExtra("postId", postIndex)
+                    intent.putExtra("opponentId", opponentId)
+                    intent.putExtra("giverId", giverId)
+                    intent.putExtra("takerId", takerId)
                     ContextCompat.startActivity(this, intent, null)
                     true
                 }

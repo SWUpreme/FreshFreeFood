@@ -20,7 +20,7 @@ import java.util.*
 import java.text.SimpleDateFormat
 
 class ChatActivity : AppCompatActivity() {
-
+    // 파이어스토어
     var auth: FirebaseAuth? = null
     var db: FirebaseFirestore? = null
     var user: FirebaseUser? = null
@@ -28,12 +28,10 @@ class ChatActivity : AppCompatActivity() {
     //sharedetail에서 받아온 것
     var postid: String? = null
     var giver: String? = null
-
     var chatCount : Int  =0       // 채팅 개수
 
     //채팅 edit
     lateinit var Chatcontent: EditText
-    lateinit var chatlist: ArrayList<MyChat>
     lateinit var chatroomid: String
     lateinit var chatid: String
 
@@ -41,8 +39,6 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-
-        chatlist = arrayListOf<MyChat>()
 
         // Firestore 초기화
         auth = FirebaseAuth.getInstance()
@@ -57,7 +53,6 @@ class ChatActivity : AppCompatActivity() {
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM/dd hh:mm")
         val curTime = dateFormat.format(time)
-
 
         //toolbar 쪽지 보내기 눌렀을 때
         toolbChat.setOnMenuItemClickListener {
