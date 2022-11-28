@@ -26,19 +26,18 @@ class AlertReceiver  : BroadcastReceiver() {
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
     var user : FirebaseUser? = null
-    var index : String? = null
     lateinit var foodlist: ArrayList<FoodList>
+
+    lateinit var foodindex: String
     lateinit var notificationManager: NotificationManager
     override fun onReceive(context: Context, intent: Intent) {
-        notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
         foodlist = arrayListOf<FoodList>()
-
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
+        notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         createNotificationChannel(context)
         deliverNotification(context)
@@ -81,20 +80,53 @@ class AlertReceiver  : BroadcastReceiver() {
              */
         )
 
+        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+            ?.get()
+            ?.addOnCompleteListener { task ->
+                if (task.result?.size() != 0) {
+                    var count = 0
+                    var doc = task.result.documents?.get(0)
+                    foodindex = doc?.get("index").toString()
 
+                    firestore?.collection("fridge")?.document("$foodindex")
+                        ?.collection("food")
+                        ?.get()
+                        ?.addOnSuccessListener() { task ->
+                            count = task.size()
 
-                            val builder1 = NotificationCompat.Builder(context, CHANNEL_ID)
-                                .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-                                .setContentTitle("FFF") // 제목
-                                .setContentText("임박") // 내용
-                                .setContentIntent(contentPendingIntent)
-                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setAutoCancel(true)
-                                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                            notificationManager?.notify(NOTIFICATION_ID, builder1.build())
+                            for (i in 0 until task.size()){
+                                var doc = task.documents?.get(i)
+                                var dates = doc.get("deadline").toString()
+                                var formatter = SimpleDateFormat("yyyy.MM.dd")
+                                var nowdate = LocalDate.now().format(
+                                    DateTimeFormatter.ofPattern(
+                                        "yyyy.MM.dd"
+                                    )
+                                )
+                                var date = formatter.parse(dates).time
+                                var day = formatter.parse(nowdate).time
+                                var d_day = (date - day)/ (60 * 60 * 24 * 1000)
+                                if (d_day.toInt() < 3){
+
+                                    Log.d("성공:", "${d_day.toString()}")
+                                    val builder1 = NotificationCompat.Builder(context, CHANNEL_ID)
+                                        .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+                                        .setContentTitle("FFF") // 제목
+
+                                        .setContentText("의 유통기한이 하루 남았습니다!") // 내용
+                                        .setContentIntent(contentPendingIntent)
+                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                        .setAutoCancel(true)
+                                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                                    // Log.d("성공:", "${foodlist.get(0).name.toString()}")
+                                    notificationManager?.notify(NOTIFICATION_ID, builder1.build())
+                                }
+                            }
                         }
+                }
+            }
 
-
+    }
 
     companion object {
         private const val NOTIFICATION_ID = 0
