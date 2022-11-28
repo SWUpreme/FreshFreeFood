@@ -106,6 +106,11 @@ class OpenApiActivity : AppCompatActivity() {
                 var day = formatter.parse(purchasedAt).time
                 var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)
 
+                //식품 시간순 정렬
+                val nowTime = System.currentTimeMillis()
+                val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
+                val dateTime = timeformatter.format(nowTime)
+
                 if (d_day.toInt() >= 0){
                     if (user != null) {
                         var food_deadline =
@@ -122,7 +127,8 @@ class OpenApiActivity : AppCompatActivity() {
                                     "deadline" to food_deadline,
                                     "purchaseAt" to purchasedAt,
                                     "count" to binding.count.text.toString().toInt(),
-                                    "done" to done
+                                    "done" to done,
+                                    "addTime" to dateTime
                                 )
                             )
 
