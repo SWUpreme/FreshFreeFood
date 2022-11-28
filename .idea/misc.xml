@@ -70,13 +70,11 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/drawable/txt_background_round2_white.xml" value="0.254" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_auth.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_barcode.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_detail.xml" value="0.35774647887323946" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.536" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_detail.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_send_exist.xml" value="0.2171875" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.72" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist_to_share.xml" value="0.152" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.2" />

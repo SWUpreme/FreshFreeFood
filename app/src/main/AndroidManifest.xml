@@ -20,6 +20,9 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChatSendExistActivity"
+            android:exported="false" />
+        <activity
             android:name=".FcmActivity"
             android:exported="false">
             <meta-data
@@ -123,11 +126,11 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-        <!--BroadcastReceiver 부팅 시 실행-->
-        <receiver android:name=".AlertReceiver"
-            android:exported="false"
-            android:enabled="true">
+        </provider> <!-- BroadcastReceiver 부팅 시 실행 -->
+        <receiver
+            android:name=".AlertReceiver"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
