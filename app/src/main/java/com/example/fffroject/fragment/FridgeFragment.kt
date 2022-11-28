@@ -605,7 +605,7 @@ class FridgeFragment : Fragment() {
                                         for (count: Int in 0..(membercount - 1)) {
                                             var doc = task.documents?.get(count)
                                             var membername = doc.get("nickname").toString()
-                                            text_name = text_name + ", " + membername
+                                            text_name = text_name + "\n\n" + membername
                                         }
                                     }
                                     text_member.setText(text_name)
