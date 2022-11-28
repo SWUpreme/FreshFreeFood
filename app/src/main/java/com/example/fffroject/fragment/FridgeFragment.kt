@@ -29,6 +29,7 @@ import androidx.fragment.app.findFragment
 import com.example.fffroject.databinding.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.dialog_fridgeoption.*
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 
@@ -348,6 +349,11 @@ class FridgeFragment : Fragment() {
         }
 
         // 냉장고 멤버 보기
+        var btn_show_member = memberview.findViewById<Button>(R.id.btnShowMember)
+        btn_show_member.setOnClickListener {
+            showMember(index)
+            memberalertDialog?.dismiss()
+        }
 
         // 취소 선택시
         var btn_memberoption_close = memberview.findViewById<Button>(R.id.btnFridgememOptionClose)
