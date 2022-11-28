@@ -29,6 +29,7 @@ import androidx.fragment.app.findFragment
 import com.example.fffroject.databinding.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 
 class FridgeFragment : Fragment() {
@@ -144,6 +145,8 @@ class FridgeFragment : Fragment() {
                     if (document != null) {
                         // 해당하는 냉장고의 owner 받아오기
                         var owner = document.data?.get("owner").toString()
+                        // current음식 설정을 위해(삭제/먹었음시 바로 디비에 올리고 갱신은 복잡해)
+                        foodname.setText(document.data?.get("current").toString())
                         // 내가 member인 경우
                         if (owner != user!!.uid) {
                             fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back3)
@@ -299,6 +302,13 @@ class FridgeFragment : Fragment() {
             optionalertDialog?.dismiss()
         }
 
+        // 냉장고 멤버 보기 선택시
+        var btn_show_member = optionview.findViewById<Button>(R.id.btnShowMember)
+        btn_show_member.setOnClickListener {
+            showMember(index)
+            optionalertDialog?.dismiss()
+        }
+
         // 냉장고 삭제 버튼 선택시
         var btn_delete_fridge = optionview.findViewById<Button>(R.id.btnFridgeDelete)
         btn_delete_fridge.setOnClickListener {
@@ -336,6 +346,8 @@ class FridgeFragment : Fragment() {
             dropMember(index, fname, fcount)
             memberalertDialog?.dismiss()
         }
+
+        // 냉장고 멤버 보기
 
         // 취소 선택시
         var btn_memberoption_close = memberview.findViewById<Button>(R.id.btnFridgememOptionClose)
@@ -547,6 +559,55 @@ class FridgeFragment : Fragment() {
         }
     }
 
+    // 냉장고 멤버 보기
+    fun showMember(index: String) {
+        val showmemdial = DialogShowmemberBinding.inflate(layoutInflater)
+        val showmemview = showmemdial.root
+        val showmemDialog = context?.let {
+            androidx.appcompat.app.AlertDialog.Builder(it).run {
+                setView(showmemdial.root)
+                show()
+            }
+        }//.setCanceledOnTouchOutside(true)  //외부 터치시 닫기
+        //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
+        showmemDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        var text_member = showmemview.findViewById<TextView>(R.id.textMember)
+
+        text_member.setText("")
+        var text_name = ""
+        // owner 이름 추가해주기
+        firestore?.collection("fridge")?.document(index)?.get()
+            ?.addOnSuccessListener { document ->
+                if (document != null) {
+                    // 해당하는 냉장고의 owner 받아오기
+                    var ownerid = document.data?.get("owner").toString()
+                    firestore?.collection("user")?.document(ownerid)?.get()
+                        ?.addOnSuccessListener { document ->
+                            if (document != null) {
+                                var owner = document.data?.get("nickname").toString()
+                                text_name = owner
+                                text_member.setText(text_name)
+                            }
+                        }
+                }
+                // 멤버 이름 추가해주기
+                var membercount = 0
+                firestore?.collection("fridge")?.document(index)
+                    ?.collection("member")?.get()
+                    ?.addOnSuccessListener { task ->
+                        membercount = task.size()
+                        if (membercount != 0) {
+                            for (count: Int in 0..(membercount - 1)) {
+                                var doc = task.documents?.get(count)
+                                var membername = doc.get("nickname").toString()
+                                text_name = text_name + ", " + membername
+                            }
+                        }
+                        text_member.setText(text_name)
+                    }
+            }
+    }
 
     // 냉장고 삭제
     fun deleteFridge(index: String, fname: String) {

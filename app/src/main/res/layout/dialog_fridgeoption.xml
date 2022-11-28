@@ -42,7 +42,7 @@
                 android:textSize="17sp" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnShowMember"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:background="@color/zxing_transparent"
