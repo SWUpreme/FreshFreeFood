@@ -595,23 +595,23 @@ class FridgeFragment : Fragment() {
                                 text_name = owner
                                 text_member.setText(text_name)
                             }
+                            // 멤버 이름 추가해주기
+                            var membercount = 0
+                            firestore?.collection("fridge")?.document(index)
+                                ?.collection("member")?.get()
+                                ?.addOnSuccessListener { task ->
+                                    membercount = task.size()
+                                    if (membercount != 0) {
+                                        for (count: Int in 0..(membercount - 1)) {
+                                            var doc = task.documents?.get(count)
+                                            var membername = doc.get("nickname").toString()
+                                            text_name = text_name + ", " + membername
+                                        }
+                                    }
+                                    text_member.setText(text_name)
+                                }
                         }
                 }
-                // 멤버 이름 추가해주기
-                var membercount = 0
-                firestore?.collection("fridge")?.document(index)
-                    ?.collection("member")?.get()
-                    ?.addOnSuccessListener { task ->
-                        membercount = task.size()
-                        if (membercount != 0) {
-                            for (count: Int in 0..(membercount - 1)) {
-                                var doc = task.documents?.get(count)
-                                var membername = doc.get("nickname").toString()
-                                text_name = text_name + ", " + membername
-                            }
-                        }
-                        text_member.setText(text_name)
-                    }
             }
     }
 
