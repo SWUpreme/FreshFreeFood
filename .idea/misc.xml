@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.11990407673860912" />
         <entry key="..\:/FreshFreeFood/app/src/main/res/drawable-v24/bg_receive_message.xml" value="0.1" />
         <entry key="..\:/FreshFreeFood/app/src/main/res/drawable-v24/bg_send_message.xml" value="0.1" />
         <entry key="..\:/FreshFreeFood/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
@@ -75,8 +76,6 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_send_exist.xml" value="0.2171875" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.72" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist_to_share.xml" value="0.152" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -141,6 +140,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.31288178698851327" />
         <entry key="app/src/main/res/layout/activity_myshare.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/activity_recyclerview.xml" value="0.3077858880778589" />
+        <entry key="app/src/main/res/layout/activity_region_select.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/activity_sharedetail.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/activity_sharepoint.xml" value="0.31443470137578683" />
         <entry key="app/src/main/res/layout/activity_sharepost.xml" value="0.49941603066264717" />
         <entry key="app/src/main/res/layout/activity_write.xml" value="0.375" />
@@ -156,7 +157,7 @@
         <entry key="app/src/main/res/layout/dialog_memberoption.xml" value="0.2644927536231884" />
         <entry key="app/src/main/res/layout/dialog_postoption.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/dialog_sharedone.xml" value="0.26811594202898553" />
-        <entry key="app/src/main/res/layout/dialog_showmember.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/dialog_showmember.xml" value="0.5135245724000793" />
         <entry key="app/src/main/res/layout/dialog_treegrade.xml" value="0.4590438400489697" />
         <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.3793640136718751" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.29140603953394395" />
