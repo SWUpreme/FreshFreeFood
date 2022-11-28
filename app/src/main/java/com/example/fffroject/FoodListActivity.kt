@@ -453,7 +453,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
             ?.delete()
-            ?.addOnSuccessListener { Toast.makeText(this, "환경 기여도가 상승했습니다.", Toast.LENGTH_SHORT).show() }
+            ?.addOnSuccessListener { Toast.makeText(this, "냉장고 털기 횟수가 증가했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
         // envlevel과 contribution 설정 및 상호 연동
 //        firestore?.collection("user")?.document(user!!.uid)

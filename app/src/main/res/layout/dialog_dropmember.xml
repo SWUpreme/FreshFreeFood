@@ -69,19 +69,21 @@
                     android:id="@+id/textFridgenameDrop"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="'나의냉장고'"
                     android:textAlignment="textEnd"
                     android:textColor="#30353D"
-                    android:textSize="16sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textFridgeDelete"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_regular"
                     android:text=" 에서 나가시겠습니까?"
                     android:textAlignment="textStart"
                     android:textColor="#30353D"
-                    android:textSize="16sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <Button
