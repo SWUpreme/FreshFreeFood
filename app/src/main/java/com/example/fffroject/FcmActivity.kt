@@ -111,7 +111,7 @@ class FcmActivity : AppCompatActivity() {
                 }
 
                     //saveNoticeData("noticeStatus", isNoticeOn)
-                    //addAlarm(hour.toInt(), minute.toInt())
+                    addAlarm(hour.toInt(), minute.toInt())
                     val pref = getSharedPreferences("my_pref", 0)
                     val edit = pref.edit()
                     edit.putInt("noticeHour", hour)

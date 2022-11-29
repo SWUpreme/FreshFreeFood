@@ -22,13 +22,13 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 //AlertReceiver class에서 알림 기능을 동작하도록
-class AlertReceiver  : BroadcastReceiver() {
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore? = null
-    var user : FirebaseUser? = null
+class AlertReceiver : BroadcastReceiver() {
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null
+    var user: FirebaseUser? = null
     lateinit var foodlist: ArrayList<FoodList>
+    lateinit var fridgeindex: String
 
-    lateinit var foodindex: String
     lateinit var notificationManager: NotificationManager
     override fun onReceive(context: Context, intent: Intent) {
         foodlist = arrayListOf<FoodList>()
@@ -37,13 +37,14 @@ class AlertReceiver  : BroadcastReceiver() {
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
-        notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         createNotificationChannel(context)
         deliverNotification(context)
     }
 
-    private fun createNotificationChannel(context: Context){
+    private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 CHANNEL_ID, // 채널의 아이디
@@ -61,7 +62,8 @@ class AlertReceiver  : BroadcastReceiver() {
             notificationChannel.enableVibration(true) // 진동 여부
             notificationChannel.description = context.getString(R.string.app_name) // 채널 정보
             notificationManager?.createNotificationChannel(
-                notificationChannel)
+                notificationChannel
+            )
         }
     }
 
@@ -81,19 +83,37 @@ class AlertReceiver  : BroadcastReceiver() {
         )
 
         firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+            ?.whereEqualTo("status", true)
             ?.get()
             ?.addOnCompleteListener { task ->
+                var count = 0
+                var compare = "3000.12.31" //비교대상
+                var mazinoname = ""
+                count = task.result.size()
                 if (task.result?.size() != 0) {
-                    var count = 0
-                    var doc = task.result.documents?.get(0)
-                    foodindex = doc?.get("index").toString()
+                    for (i in 0 until count) {
 
-                    firestore?.collection("fridge")?.document("$foodindex")
-                        ?.collection("food")
-                        ?.get()
-                        ?.addOnSuccessListener() { task ->
-                            count = task.size()
+                        var doc = task.result.documents?.get(i)
+                        fridgeindex = doc?.get("index").toString()
+                        Log.d("성공:", "${doc.toString()}")
 
+                        //index를 가지고 food에 접근
+                        firestore?.collection("fridge")?.document("$fridgeindex")
+                            ?.collection("food")
+                            ?.orderBy("deadline", Query.Direction.ASCENDING)//유통기한 임박순
+                            ?.get()
+                            ?.addOnSuccessListener() { task ->
+
+                                // 가장 임박한 식품 가져오기
+                                var sheet = task.documents?.get(0)
+                                var current = sheet.get("deadline").toString()
+                                if (current < compare) {
+                                    compare = current
+                                    mazinoname = sheet.get("name").toString()
+                                }
+
+                                Log.d("성공:", "${compare}")
+/*
                             for (i in 0 until task.size()){
                                 var doc = task.documents?.get(i)
                                 var dates = doc.get("deadline").toString()
@@ -106,23 +126,23 @@ class AlertReceiver  : BroadcastReceiver() {
                                 var date = formatter.parse(dates).time
                                 var day = formatter.parse(nowdate).time
                                 var d_day = (date - day)/ (60 * 60 * 24 * 1000)
-                                if (d_day.toInt() < 3){
+                                if (d_day.toInt() < 3){*/
+//                                var name = firestore?.collection("fridge")?.document("$fridgeindex")
+//                                    ?.collection("food")?.document("name")?.get().toString()
+                                // Log.d("성공:", "${d_day.toString()}")
+                                val builder1 = NotificationCompat.Builder(context, CHANNEL_ID)
+                                    .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+                                    .setContentTitle("FFF") // 제목
 
-                                    Log.d("성공:", "${d_day.toString()}")
-                                    val builder1 = NotificationCompat.Builder(context, CHANNEL_ID)
-                                        .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-                                        .setContentTitle("FFF") // 제목
-
-                                        .setContentText("의 유통기한이 하루 남았습니다!") // 내용
-                                        .setContentIntent(contentPendingIntent)
-                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                        .setAutoCancel(true)
-                                        .setDefaults(NotificationCompat.DEFAULT_ALL)
-                                    // Log.d("성공:", "${foodlist.get(0).name.toString()}")
-                                    notificationManager?.notify(NOTIFICATION_ID, builder1.build())
-                                }
+                                    .setContentText(mazinoname + "의 유통기한이 하루 남았습니다!") // 내용
+                                    .setContentIntent(contentPendingIntent)
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setAutoCancel(true)
+                                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                                // Log.d("성공:", "${foodlist.get(0).name.toString()}")
+                                notificationManager?.notify(NOTIFICATION_ID, builder1.build())
                             }
-                        }
+                    }
                 }
             }
 
