@@ -22,11 +22,11 @@ import java.lang.reflect.Array.getInt
 
 class FcmActivity : AppCompatActivity() {
 
+
     //알람 시간 변수
     var myampm: String = ""
-
-    var myHour: Int = -1
-    var myMin: Int = -1
+    var myhour: Int = -1
+    var mymin: Int = -1
 
     // 전역 변수로 바인딩 객체 선언
     private var mBinding: ActivityFcmBinding? = null
@@ -72,52 +72,59 @@ class FcmActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
 
 
-            val timeSetListener = TimePickerDialog.OnTimeSetListener {timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
+            val timeSetListener =
+                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                    cal.set(Calendar.HOUR_OF_DAY, hour)
+                    cal.set(Calendar.MINUTE, minute)
 
-                myHour = hour
-                myMin = minute
+                    myhour = hour.toInt()
+                    mymin = minute.toInt()
 
-                if(hour >= 13) {
-                    myampm  = "오후"
-                    var timestr : Int = myHour - 12
-                    if (timestr  < 10 && myMin < 10) {
-                        binding.Alarm.text = "오후 0$timestr:0$myMin"
-                    } else if (timestr < 10) {
-                        binding.Alarm.text = "오후 0$timestr:$myMin"
-                    } else if (myMin < 10) {
-                        binding.Alarm.text = "오후 $timestr:0$myMin"
-                    } else {
-                        binding.Alarm.text = "오후 $timestr:$myMin"
-                    }
-                } else {
-                    myampm = "오전"
-                    if(myHour == 0) {
-                        if(myMin < 10) {
-                            binding.Alarm.text = "오전 12:0$myMin"
+                    if(hour >= 13) {
+                        myampm = "오후"
+                        var timestr: Int = myhour - 12
+                        if (timestr in 0..9 && mymin in 0..9) {
+                            binding.Alarm.text = "오후 0$timestr:0$mymin"
+                        } else if (timestr in 0..9) {
+                            binding.Alarm.text = "오후 0$timestr:$mymin"
+                        } else if (mymin in 0..9) {
+                            binding.Alarm.text = "오후 $timestr:0$mymin"
                         } else {
-                            binding.Alarm.text = "오전 12:$myMin"
+                            binding.Alarm.text = "오후 $timestr:$mymin"
                         }
-                    } else if(myHour < 10 && myMin < 10) {
-                        binding.Alarm.text = "오전 0$myHour:0$myMin"
-                    } else if (myHour < 10) {
-                        binding.Alarm.text = "오전 0$myHour:$myMin"
-                    } else if (myMin < 10) {
-                        binding.Alarm.text = "오전 $myHour:0$myMin"
+
                     } else {
-                        binding.Alarm.text = "오전 $myHour:$myMin"
+                        myampm = "오전"
+                        if (myhour == 0) {
+                            if (mymin in 0..9) {
+                                binding.Alarm.text = "오전 12:0$mymin"
+                            } else {
+                                binding.Alarm.text = "오전 12:$mymin"
+                            }
+                        } else if (myhour in 0..9 && mymin in 0..9) {
+                            binding.Alarm.text = "오전 0$myhour:0$mymin"
+                        } else if (myhour in 0..9) {
+                            binding.Alarm.text = "오전 0$myhour:$mymin"
+                        } else if (mymin in 0..9) {
+                            binding.Alarm.text = "오전 $myhour:0$mymin"
+                        } else {
+                            binding.Alarm.text = "오전 $myhour:$mymin"
+                        }
+
+
                     }
-                }
+
 
                     //saveNoticeData("noticeStatus", isNoticeOn)
-                    addAlarm(hour.toInt(), minute.toInt())
+                    addAlarm(myhour.toInt(), mymin.toInt())
                     val pref = getSharedPreferences("my_pref", 0)
                     val edit = pref.edit()
-                    edit.putInt("noticeHour", hour)
-                    edit.putInt("noticeMinute", minute)
+                    edit.putInt("noticeHour", myhour)
+                    edit.putInt("noticeMinute", mymin)
                     edit.apply()
-                    Log.d("시간:", "${hour}")
+                    Log.d("시간:", "${myhour}")
+
+
 
                 }
 
@@ -134,9 +141,7 @@ class FcmActivity : AppCompatActivity() {
 /*
             dialog.setButton(TimePickerDialog.BUTTON_POSITIVE, "확인",
                 DialogInterface.OnClickListener { dialogInterface, i ->
-
                 })
-
             dialog.setButton(TimePickerDialog.BUTTON_NEGATIVE, "취소",
                 DialogInterface.OnClickListener { dialogInterface, i ->
                     binding.RefAlarm.isChecked = false
@@ -146,7 +151,9 @@ class FcmActivity : AppCompatActivity() {
         }
 
         binding.Alarm.setOnClickListener {
-            getTime(binding.Alarm, this)
+            if(isNoticeOn != false) {
+                getTime(binding.Alarm, this)
+            }
 
         }
 
@@ -199,9 +206,11 @@ class FcmActivity : AppCompatActivity() {
         binding.RefAlarm.isChecked = isNoticeOn
         // on/off 따른 텍스트 색상 변경
         if(isNoticeOn) {
+            true
 
         }
         else {
+            false
 
         }
 
@@ -209,15 +218,49 @@ class FcmActivity : AppCompatActivity() {
     }
     fun loadNoticeTime() {
         val pref = getSharedPreferences("my_pref", MODE_PRIVATE)
+        myhour = pref.getInt("noticeHour", myhour)
+        mymin = pref.getInt("noticeMinute", mymin)
+        if(myhour >= 13) {
+            myampm = "오후"
+            var timestr: Int = myhour - 12
+            if (timestr in 0..9 && mymin in 0..9) {
+                binding.Alarm.text = "오후 0$timestr:0$mymin"
+            } else if (timestr in 0..9) {
+                binding.Alarm.text = "오후 0$timestr:$mymin"
+            } else if (mymin in 0..9) {
+                binding.Alarm.text = "오후 $timestr:0$mymin"
+            } else {
+                binding.Alarm.text = "오후 $timestr:$mymin"
+            }
+
+
+        } else {
+            myampm = "오전"
+            if (myhour == 0) {
+                if (mymin in 0..9) {
+                    binding.Alarm.text = "오전 12:0$mymin"
+                } else {
+                    binding.Alarm.text = "오전 12:$mymin"
+                }
+            } else if (myhour in 0..9 && mymin in 0..9) {
+                binding.Alarm.text = "오전 0$myhour:0$mymin"
+            } else if (myhour in 0..9) {
+                binding.Alarm.text = "오전 0$myhour:$mymin"
+            } else if (mymin in 0..9) {
+                binding.Alarm.text = "오전 $myhour:0$mymin"
+            } else {
+                binding.Alarm.text = "오전 $myhour:$mymin"
+            }
+
+
 
 /*
-
         myhour = pref.getInt("noticeHour", myhour)
         mymin = pref.getInt("noticeMinute", mymin)
         binding.Alarm.text = "$myampm $myhour:$mymin"
 */
 
-
+        }
     }
 
 
