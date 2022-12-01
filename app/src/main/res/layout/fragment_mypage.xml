@@ -6,6 +6,57 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <ImageView
+        android:id="@+id/imageView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button7"
+        app:srcCompat="@drawable/line_gray" />
+
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMypageNickname"
+        app:srcCompat="@drawable/line_gray" />
+
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMypageAlarm"
+        app:srcCompat="@drawable/line_gray" />
+
+    <ImageView
+        android:id="@+id/imageView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMypageMessage"
+        app:srcCompat="@drawable/line_gray" />
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMypageShare"
+        app:srcCompat="@drawable/line_gray" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbMypage"
         android:layout_width="0dp"
@@ -82,12 +133,12 @@
         android:id="@+id/btnMypageMessage"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="4dp"
         android:background="@color/zxing_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMypageShare"
+        app:layout_constraintTop_toBottomOf="@+id/imageView20"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -127,12 +178,12 @@
         android:id="@+id/btnMypageAlarm"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="4dp"
         android:background="@color/zxing_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMypageMessage"
+        app:layout_constraintTop_toBottomOf="@+id/imageView21"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -172,11 +223,11 @@
         android:id="@+id/btnMypageNickname"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="4dp"
         android:background="@color/zxing_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMypageAlarm"
+        app:layout_constraintTop_toBottomOf="@+id/imageView22"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -206,12 +257,12 @@
         android:id="@+id/button7"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="4dp"
         android:background="@color/zxing_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMypageNickname"
+        app:layout_constraintTop_toBottomOf="@+id/imageView23"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -259,7 +310,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView24" />
 
     <ImageView
         android:id="@+id/imageView16"
