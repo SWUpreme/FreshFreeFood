@@ -578,10 +578,19 @@ class FridgeFragment : Fragment() {
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
         showmemDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        var text_owner = showmemview.findViewById<TextView>(R.id.textOwner)
         var text_member = showmemview.findViewById<TextView>(R.id.textMember)
+        var btn_member_close = showmemview.findViewById<ImageButton>(R.id.btnMemberShowClose)
 
+        text_owner.setText("")
         text_member.setText("")
         var text_name = ""
+
+        // 취소 버튼 눌렀을 경우
+        btn_member_close.setOnClickListener{
+            showmemDialog?.dismiss()
+        }
+
         // owner 이름 추가해주기
         firestore?.collection("fridge")?.document(index)?.get()
             ?.addOnSuccessListener { document ->
@@ -592,24 +601,60 @@ class FridgeFragment : Fragment() {
                         ?.addOnSuccessListener { document ->
                             if (document != null) {
                                 var owner = document.data?.get("nickname").toString()
-                                text_name = owner
-                                text_member.setText(text_name)
+                                text_owner.setText(owner)
                             }
-                            // 멤버 이름 추가해주기
-                            var membercount = 0
-                            firestore?.collection("fridge")?.document(index)
-                                ?.collection("member")?.get()
-                                ?.addOnSuccessListener { task ->
-                                    membercount = task.size()
-                                    if (membercount != 0) {
-                                        for (count: Int in 0..(membercount - 1)) {
-                                            var doc = task.documents?.get(count)
-                                            var membername = doc.get("nickname").toString()
-                                            text_name = text_name + "\n\n" + membername
+//                            // 멤버 이름 추가해주기
+//                            var membercount = 0
+//                            firestore?.collection("fridge")?.document(index)
+//                                ?.collection("member")?.get()
+//                                ?.addOnSuccessListener { task ->
+//                                    membercount = task.size()
+//                                    if (membercount != 0) {
+//                                        for (count: Int in 0..(membercount - 1)) {
+//                                            var doc = task.documents?.get(count)
+//                                            var membername = doc.get("nickname").toString()
+//                                            text_name = text_name + "\n\n" + membername
+//                                        }
+//                                    }
+//                                    text_member.setText(text_name)
+//                                }
+                        }
+                    // 멤버 이름 추가해주기
+                    var membercount = 0
+                    firestore?.collection("fridge")?.document(index)
+                        ?.collection("member")?.get()
+                        ?.addOnSuccessListener { task ->
+                            membercount = task.size()
+//                            if (membercount != 0) {
+//                                for (count: Int in 0..(membercount - 1)) {
+//                                    var doc = task.documents?.get(count)
+//                                    var membername = doc.get("nickname").toString()
+//                                    if (count == 0) {
+//                                        text_name = membername
+//                                    }
+//                                    else {
+//                                        text_name = text_name + "\n\n" + membername
+//                                    }
+//                                }
+//                            }
+                            if (membercount != 0) {
+                                for (count: Int in 0..(membercount - 1)) {
+                                    var doc = task.documents?.get(count)
+                                    var memberuid = doc.data?.get("uid").toString()
+                                    firestore?.collection("user")?.document(memberuid)?.get()
+                                        ?.addOnSuccessListener { tasks ->
+                                            var memname = tasks.data?.get("nickname").toString()
+                                            if (count == 0) {
+                                                text_name = memname
+                                            }
+                                            else {
+                                                text_name = text_name + "\n\n" + memname
+                                            }
+                                            text_member.setText(text_name)
                                         }
-                                    }
-                                    text_member.setText(text_name)
+
                                 }
+                            }
                         }
                 }
             }
