@@ -767,6 +767,11 @@ class FridgeFragment : Fragment() {
         drop_member_ok.setOnClickListener {
             // membercount 줄여주기
             if (user != null) {
+                firestore?.collection("fridge")?.document(index)?.collection("member")
+                    ?.document(user!!.uid)
+                    ?.delete()
+                    ?.addOnSuccessListener { }
+                    ?.addOnFailureListener { }
                 // member의 membercount 줄이기
                 firestore?.collection("fridge")?.document(index)
                     ?.collection("member")?.get()
@@ -818,11 +823,11 @@ class FridgeFragment : Fragment() {
 //                ?.addOnFailureListener { }
 
             // fridge의 member에서 해당 멤버 삭제
-            firestore?.collection("fridge")?.document(index)?.collection("member")
-                ?.document(user!!.uid)
-                ?.delete()
-                ?.addOnSuccessListener { }
-                ?.addOnFailureListener { }
+//            firestore?.collection("fridge")?.document(index)?.collection("member")
+//                ?.document(user!!.uid)
+//                ?.delete()
+//                ?.addOnSuccessListener { }
+//                ?.addOnFailureListener { }
             // myfridge에서 냉장고 삭제
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                 ?.document(index)
