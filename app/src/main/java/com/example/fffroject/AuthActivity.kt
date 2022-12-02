@@ -40,10 +40,10 @@ class AuthActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         if (FFFroject.checkAuth()) {
-            //changeVisibility("login")
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         } else {
-            //changeVisibility("logout")
+
         }
 
         val requestLauncher = registerForActivityResult(
@@ -66,23 +66,12 @@ class AuthActivity : AppCompatActivity() {
                             var user = auth!!.currentUser
 
                             if (user != null) {
-
-                                Toast.makeText(
-                                    this, "로그인 되었습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                                 var nickname = user?.email?.split("@")?.get(0)
-
-
-//                                firestore?.collection("user")?.document(user.uid)
-//                                    ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
-//                                        "contribution" to 0))
-
 
                                 firestore?.collection("user")?.document(user?.uid)
                                     ?.get()?.addOnSuccessListener { snapShot ->
                                         if(snapShot.exists() == true) {
-                                            Toast.makeText(this, "기존 유저입니다.", Toast.LENGTH_LONG).show()
+                                            Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_LONG).show()
                                         }
                                         else{
                                             var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
@@ -90,32 +79,18 @@ class AuthActivity : AppCompatActivity() {
                                                 ?.set(hashMapOf("email" to user?.email, "uid" to user?.uid, "nickname" to nickname,
                                                     "contribution" to 0, "envlevel" to 1,"sharepoint" to 0,
                                                     "nowRegion" to "n", "login" to nowdate))
+                                            Toast.makeText(this, "회원가입 되었습니다.", Toast.LENGTH_LONG).show()
                                         }
                                     }
-
                             }
-                            //changeVisibility("login")
                             moveMainPage(task.result?.user)
                         } else {
                             // 구글 로그인 실패
-                            //changeVisibility("logout")
                         }
                     }
             } catch (e: ApiException) {
-                //changeVisibility("logout")
             }
         }
-
-//        binding.btnLogout.setOnClickListener {
-//            // 구글 계정 로그아웃
-//            Toast.makeText(
-//                baseContext, "로그아웃 누름",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            FFFroject.auth.signOut()
-//            FFFroject.email = null
-//            changeVisibility("logout")
-//        }
 
         binding.btnLoginGoogle.setOnClickListener {
             // 구글 로그인
@@ -130,22 +105,6 @@ class AuthActivity : AppCompatActivity() {
             requestLauncher.launch(signInIntent)
         }
 
-    }
-
-    fun changeVisibility(mode: String) {
-        if (mode === "login") {
-            binding.run {
-//                texLoginCheck.text = "${FFFroject.email} 님 안녕하세요!"
-//                btnLogout.visibility = View.VISIBLE
-                btnLoginGoogle.visibility = View.GONE
-            }
-        } else if (mode === "logout") {
-            binding.run {
-                //texLoginCheck.text = "로그인 해 주세요!"
-                //btnLogout.visibility = View.GONE
-                btnLoginGoogle.visibility = View.VISIBLE
-            }
-        }
     }
 
     // 로그인 성공 후 메인페이지로 이동
