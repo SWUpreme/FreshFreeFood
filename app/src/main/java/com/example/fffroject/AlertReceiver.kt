@@ -148,6 +148,7 @@ class AlertReceiver : BroadcastReceiver() {
                                 if (task.size() != 0) {
                                     var total = task.documents?.get(i)
                                     var expiration = total.get("deadline").toString()
+
                                     var formatter = SimpleDateFormat("yyyy.MM.dd")
                                     var nowdate = LocalDate.now()
                                         .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
