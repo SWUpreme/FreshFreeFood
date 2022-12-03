@@ -159,7 +159,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         var btn_food_eat = findViewById<Button>(R.id.btnFoodEat)
         btn_food_eat.setOnClickListener {
-//            Toast.makeText(this, selectFood.toString(), Toast.LENGTH_SHORT).show()
             if (eatfoodindex!=""){
                 eatDone(eatfoodindex)
                 selectFood = preselect

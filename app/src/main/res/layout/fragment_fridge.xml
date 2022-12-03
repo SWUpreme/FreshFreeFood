@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/roboto_bold"
             android:text="냉장고"
             android:textColor="#30353D"
             android:textSize="18sp"
