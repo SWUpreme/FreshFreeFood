@@ -58,9 +58,6 @@ class FridgeFragment : Fragment() {
 
     lateinit var text_fridge_name: TextView
 
-//    fun newInstance() : FridgeFragment {
-//        return FridgeFragment()
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,7 +102,6 @@ class FridgeFragment : Fragment() {
                 else -> false
             }
         }
-
         return view
     }
 
@@ -506,13 +502,11 @@ class FridgeFragment : Fragment() {
                                                 firestore?.collection("fridge")?.document(index)
                                                     ?.collection("member")?.get()
                                                     ?.addOnSuccessListener { task ->
-                                                        //Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
                                                         if (membercount != 0) {
                                                             for (count: Int in 0..(membercount - 2)) {
                                                                 var doc = task.documents?.get(count)
                                                                 var memberuid =
                                                                     doc.get("uid").toString()
-                                                                //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
                                                                 firestore?.collection("user")
                                                                     ?.document(memberuid)
                                                                     ?.collection("myfridge")
@@ -538,7 +532,6 @@ class FridgeFragment : Fragment() {
                                                     ?.addOnFailureListener { }
                                             }
                                             ?.addOnFailureListener { }
-                                        //Toast.makeText(context, "등록되었습니다.", Toast.LENGTH_SHORT).show()
                                         addmemberDialog?.dismiss()
                                     }
                                     // 기존에 등록된 멤버인 경우
@@ -603,21 +596,6 @@ class FridgeFragment : Fragment() {
                                 var owner = document.data?.get("nickname").toString()
                                 text_owner.setText(owner)
                             }
-//                            // 멤버 이름 추가해주기
-//                            var membercount = 0
-//                            firestore?.collection("fridge")?.document(index)
-//                                ?.collection("member")?.get()
-//                                ?.addOnSuccessListener { task ->
-//                                    membercount = task.size()
-//                                    if (membercount != 0) {
-//                                        for (count: Int in 0..(membercount - 1)) {
-//                                            var doc = task.documents?.get(count)
-//                                            var membername = doc.get("nickname").toString()
-//                                            text_name = text_name + "\n\n" + membername
-//                                        }
-//                                    }
-//                                    text_member.setText(text_name)
-//                                }
                         }
                     // 멤버 이름 추가해주기
                     var membercount = 0
@@ -625,18 +603,6 @@ class FridgeFragment : Fragment() {
                         ?.collection("member")?.get()
                         ?.addOnSuccessListener { task ->
                             membercount = task.size()
-//                            if (membercount != 0) {
-//                                for (count: Int in 0..(membercount - 1)) {
-//                                    var doc = task.documents?.get(count)
-//                                    var membername = doc.get("nickname").toString()
-//                                    if (count == 0) {
-//                                        text_name = membername
-//                                    }
-//                                    else {
-//                                        text_name = text_name + "\n\n" + membername
-//                                    }
-//                                }
-//                            }
                             if (membercount != 0) {
                                 for (count: Int in 0..(membercount - 1)) {
                                     var doc = task.documents?.get(count)
@@ -686,12 +652,12 @@ class FridgeFragment : Fragment() {
                 ?.collection("member")?.get()
                 ?.addOnSuccessListener { task ->
                     membercount = task.size()
-                    Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
                     if (membercount != 0) {
                         for (count: Int in 0..(membercount - 1)) {
                             var doc = task.documents?.get(count)
                             var memberuid = doc.get("uid").toString()
-                            Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
                             firestore?.collection("user")?.document(memberuid)
                                 ?.collection("myfridge")
                                 ?.document(index)
@@ -701,23 +667,7 @@ class FridgeFragment : Fragment() {
                         }
                     }
                 }
-//                ?.addSnapshotListener { value, error ->
-//                    if (value != null) {
-//                        var i = 0
-//                        for (snapshot in value.documents) {
-//                            var memberuid = value?.documents.get(i).toString()
-////                                firestore?.collection("fridge")?.document(index)
-////                                ?.collection("member")?.document("uid")?.get().toString()
-//                            Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
-//                            firestore?.collection("user")?.document(memberuid)?.collection("myfridge")
-//                                ?.document(index)
-//                                ?.update("status", false)
-//                                ?.addOnSuccessListener { }
-//                                ?.addOnFailureListener { }
-//                            i += i + 1
-//                        }
-//                    }
-//                }
+
             // 나의 냉장고 status 변경해주기
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                 ?.document(index)
@@ -777,7 +727,6 @@ class FridgeFragment : Fragment() {
                     ?.collection("member")?.get()
                     ?.addOnSuccessListener { task ->
                         if (fcount > 2) {
-                            Toast.makeText(activity, fcount.toString(), Toast.LENGTH_SHORT).show()
                             for (count: Int in 0..(fcount - 2)) {
                                 var doc = task.documents?.get(count)
                                 var memberuid = doc.get("uid").toString()
@@ -789,17 +738,6 @@ class FridgeFragment : Fragment() {
                                     ?.addOnFailureListener { }
                             }
                         }
-//                        else if (fcount == 2) {
-//                            var doc = task.documents?.get(0)
-//                            var memberuid = doc.get("uid").toString()
-//                            //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
-//                            firestore?.collection("user")?.document(memberuid)
-//                                ?.collection("myfridge")
-//                                ?.document(index)
-//                                ?.update("member", FieldValue.increment(-1))
-//                                ?.addOnSuccessListener { }
-//                                ?.addOnFailureListener { }
-//                        }
                     }
                 // owner의 membercount 줄이기
                 firestore?.collection("fridge")?.document(index)?.get()
