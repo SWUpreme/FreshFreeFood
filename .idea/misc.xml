@@ -133,7 +133,7 @@
         <entry key="app/src/main/res/drawable/txt_background_round2_blue.xml" value="0.1355" />
         <entry key="app/src/main/res/drawable/txt_background_round2_white.xml" value="0.1355" />
         <entry key="app/src/main/res/drawable/txt_background_spinner.xml" value="0.1205" />
-        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.35595880038496386" />
+        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.1945406485294951" />
         <entry key="app/src/main/res/layout/activity_barcode.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.1265625" />
         <entry key="app/src/main/res/layout/activity_foodlist.xml" value="0.38104448742746616" />
@@ -161,7 +161,7 @@
         <entry key="app/src/main/res/layout/dialog_treegrade.xml" value="0.4590438400489697" />
         <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.3793640136718751" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.29140603953394395" />
-        <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.29196624755859385" />
+        <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.4060356652949246" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/item_foodlist.xml" value="0.5696" />
         <entry key="app/src/main/res/layout/item_fridgelist.xml" value="0.36910052290311884" />

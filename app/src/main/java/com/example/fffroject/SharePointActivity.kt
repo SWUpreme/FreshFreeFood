@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -35,6 +36,8 @@ class SharePointActivity : AppCompatActivity(){
 
     // 후기 보내기 버튼
     lateinit var btn_review_send: Button
+    // 나눔자 이름
+    lateinit var text_giver : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,10 @@ class SharePointActivity : AppCompatActivity(){
         giver = intent.getStringExtra("opponentId")    // 공유해준사람의 uid
         givername = intent.getStringExtra("oppoentNickname")    // 공유해준사람의 닉네임
         postindex = intent.getStringExtra("postIndex")    // 포스트 인덱스
+
+        // 공유해준사람 이름 연결
+        text_giver = findViewById(R.id.textShareName)
+        text_giver.setText(givername)
 
         // 별점 버튼 연결
         btn_star1 = findViewById(R.id.btnStar1)

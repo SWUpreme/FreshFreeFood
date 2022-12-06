@@ -246,13 +246,6 @@ class EnvlevelFragment: Fragment() {
         }
     }
 
-    fun showGrade() {
-        val grademenu = PopupMenu(context, btn_show_grade)
-        grademenu.menuInflater.inflate(R.menu.env_treegrade, grademenu.menu)
-        grademenu.show()
-    }
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun setContri() {
         // 마지막 로그인 년.월 불러오기
@@ -348,7 +341,8 @@ class EnvlevelFragment: Fragment() {
                                 img_tree8.setColorFilter(null)
                                 img_tree9.setColorFilter(null)
                                 img_topbedge.setImageResource(R.drawable.eco_img_bedge9)}
-                            else -> { }
+                            else -> {  img_tree1.setColorFilter(null)
+                                img_topbedge.setImageResource(R.drawable.eco_img_bedge1)}
                         }
                     }
                 }

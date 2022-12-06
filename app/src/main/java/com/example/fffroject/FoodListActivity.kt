@@ -55,6 +55,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     var preselect = -1
     var eatfoodindex : String = ""
     var foodcount = 0
+    var eatfoodcount = 0
 
     var foodname : String? = null
     var foodlistdeadline : String? = null
@@ -158,7 +159,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         var btn_food_eat = findViewById<Button>(R.id.btnFoodEat)
         btn_food_eat.setOnClickListener {
-//            Toast.makeText(this, selectFood.toString(), Toast.LENGTH_SHORT).show()
             if (eatfoodindex!=""){
                 eatDone(eatfoodindex)
                 selectFood = preselect
@@ -341,17 +341,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     }
 
 
-//    interface OnItemClickListener{
-//        fun onClick(v: View, position: Int)
-//    }
-//
-//    private lateinit var itemClickListener : OnItemClickListener
-//
-//    fun setItemClicklistener(onItemClickListener: OnItemClickListener, function: () -> Unit){
-//        this.itemClickListener = onItemClickListener
-//    }
-
-
     // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
     fun loadData() {
         firestore?.collection("fridge")?.document(index.toString())
@@ -406,7 +395,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     fun loadDataDate() {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
-            ?.orderBy("purchaseAt", Query.Direction.DESCENDING)
+            ?.orderBy("addTime", Query.Direction.DESCENDING)
             ?.addSnapshotListener { value, error ->
                 foodlist.clear()
                 if (value != null) {
@@ -426,9 +415,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
 
     }
-
-
-
 
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
@@ -455,29 +441,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.delete()
             ?.addOnSuccessListener { Toast.makeText(this, "냉장고 털기 횟수가 증가했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
-        // envlevel과 contribution 설정 및 상호 연동
-//        firestore?.collection("user")?.document(user!!.uid)
-//            ?.get()?.addOnSuccessListener { document ->
-//                var contribution = document?.data?.get("contribution").toString().toInt()
-//                var rest = 0
-//                if (contribution > 29) {
-//                    rest = contribution % 30 + 1
-//                    firestore?.collection("user")?.document(user!!.uid)
-//                        ?.update("contribution", rest)
-//                        ?.addOnSuccessListener { }
-//                        ?.addOnFailureListener { }
-//                    firestore?.collection("user")?.document(user!!.uid)
-//                        ?.update("envlevel", FieldValue.increment(1))
-//                        ?.addOnSuccessListener { Toast.makeText(this, "환경 기여 레벨이 상승했어요!", Toast.LENGTH_SHORT).show() }
-//                        ?.addOnFailureListener { }
-//                }
-//                else {
-//                    firestore?.collection("user")?.document(user!!.uid)
-//                        ?.update("contribution", contribution)
-//                        ?.addOnSuccessListener { }
-//                        ?.addOnFailureListener { }
-//                }
-//            }
     }
 
     fun foodDelete(foodindex: String) {
@@ -523,8 +486,5 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         intent.putExtra("foodlistpurchase", foodlistpurchase)
         ContextCompat.startActivity(this, intent, null)
     }
-
-
-
 }
 
