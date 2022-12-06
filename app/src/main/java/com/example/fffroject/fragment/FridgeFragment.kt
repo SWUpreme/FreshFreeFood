@@ -123,18 +123,25 @@ class FridgeFragment : Fragment() {
             var foodname: TextView
             var btn_option: Button
             var member: TextView
+            var peopleback: Button
             var fridgeback: ConstraintLayout
+            var text_current : TextView
 
             fridgename = viewHolder.findViewById(R.id.textFridgeName)
             foodname = viewHolder.findViewById(R.id.textCurrentFood)
             member = viewHolder.findViewById(R.id.textMemberCount)
             fridgeback = viewHolder.findViewById(R.id.cardviewFridge)
+            peopleback = viewHolder.findViewById(R.id.btnPeople)
+            text_current = viewHolder.findViewById(R.id.textCurrent)
 
             // 리사이클러뷰 아이템 정보
             fridgename.text = fridgelist!![position].name
             fridgeid = fridgelist!![position].index!!
             foodname.text = fridgelist!![position].current
             member.text = fridgelist!![position].member.toString()
+
+            // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
+            btn_option = viewHolder.findViewById(R.id.btnFridgeOption)
 
             // 냉장고 뒷배경 설정
             firestore?.collection("fridge")?.document(fridgeid)?.get()
@@ -146,18 +153,26 @@ class FridgeFragment : Fragment() {
                         foodname.setText(document.data?.get("current").toString())
                         // 내가 member인 경우
                         if (owner != user!!.uid) {
-                            fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back3)
-                            member.setTextColor(Color.parseColor("#7096CC"))
+                            fridgeback.setBackgroundResource(R.drawable.img_btn_fridge_member)
+                            btn_option.setBackgroundResource(R.drawable.btn_fridgemore_blue)
+                            peopleback.setBackgroundResource(R.drawable.img_btn_peopleblue)
+                            fridgename.setTextColor(Color.parseColor("#71ABFF"))
+                            foodname.setTextColor(Color.parseColor("#71ABFF"))
+                            text_current.setTextColor(Color.parseColor("#71ABFF"))
+                            member.setTextColor(Color.parseColor("#FFFFFF"))
                         }
                         // 내가 owner인 경우
                         else {
-                            fridgeback.setBackgroundResource(R.drawable.ic_btn_fridge_back)
+                            fridgeback.setBackgroundResource(R.drawable.img_btn_fridge_owner)
+                            btn_option.setBackgroundResource(R.drawable.btn_fridgemore)
+                            peopleback.setBackgroundResource(R.drawable.img_btn_peoplewhite)
+                            fridgename.setTextColor(Color.parseColor("#FFFFFF"))
+                            foodname.setTextColor(Color.parseColor("#FFFFFF"))
+                            text_current.setTextColor(Color.parseColor("#FFFFFF"))
+                            member.setTextColor(Color.parseColor("#71ABFF"))
                         }
                     }
                 }
-
-            // 리사이클러뷰의 아이템에 버튼이 있으므로 inner class에서 냉장고 삭제를 해야 함
-            btn_option = viewHolder.findViewById(R.id.btnFridgeOption)
 
             // 냉장고별 옵션 선택
             var index = fridgelist!![position].index
@@ -598,10 +613,11 @@ class FridgeFragment : Fragment() {
                             }
                         }
                     // 멤버 이름 추가해주기
-                    var membercount = 0
+                    //var membercount = 0
                     firestore?.collection("fridge")?.document(index)
                         ?.collection("member")?.get()
                         ?.addOnSuccessListener { task ->
+                            var membercount = 0
                             membercount = task.size()
                             if (membercount != 0) {
                                 for (count: Int in 0..(membercount - 1)) {
@@ -610,11 +626,14 @@ class FridgeFragment : Fragment() {
                                     firestore?.collection("user")?.document(memberuid)?.get()
                                         ?.addOnSuccessListener { tasks ->
                                             var memname = tasks.data?.get("nickname").toString()
+                                            //Toast.makeText(context, count.toString() + memname, Toast.LENGTH_SHORT).show()
                                             if (count == 0) {
                                                 text_name = memname
+                                                //Toast.makeText(context, memname, Toast.LENGTH_SHORT).show()
                                             }
                                             else {
                                                 text_name = text_name + "\n\n" + memname
+                                                //Toast.makeText(context, memname, Toast.LENGTH_SHORT).show()
                                             }
                                             text_member.setText(text_name)
                                         }
