@@ -1,10 +1,8 @@
 # :fork_and_knife: FreshFreeFood - 식품 유통기한 관리 및 무료 나눔 앱
 <p>
-전 세계적으로 전염병 확산을 막기 위해 사회적 거리두기, 재택 근무 등이 지속되며 반려동물 입양에 대한 관심도 커졌습니다. 이러한 현상에 대해 ‘펜데믹 퍼피’라는 신조어가 등장할 만큼 반려동물 입양이 급증했습니다. 많은 사람들이 고립감 해소를 위해 반려 동물을 충동적으로 입양했지만, 양육에 부담을 느껴 포기하고 유기하는 현상에 대해 심각성을 느꼈습니다. 
+‘제로 푸드 웨이스트’란 생산과 소비, 폐기 과정에서 음식물이 버려지지 않는 것을 말합니다. 이를 위해 본 논문은 유통 기한을 관리하며 동시에 타인에게 식품을 무료 나눔 할 수 있는 어플리케이션을 개발하였습니다. FFF를 통해 식품을 유통기한 입력을 통해 관리하고, 식품 리스트에서 무료 나눔 버튼을 통해 추가 입력 없이 쉽게 나눔 게시글을 작성할 수 있습니다. 또한 식품의 이름을 바코드 인식으로 처리해 편리한 입력이 가능합니다.
 </p>
-<p>
-이에 대한 해결책이 필요하다 여겼고, 반려동물에 대한 인식 교육이 초등학생 때부터 이루어진다면 생명 감수성을 기를 수 있고 성인이 되어서도 생명에 책임감을 가질 수 있다고 예상했습니다. 교육의 효과를 높이고자 초등학생이 쉽게 접근할 수 있고 흥미를 가질 수 있는 게임을 제작했습니다.
-</p>
+
  
 # :information_desk_person: 프로젝트 소개
 <p>
@@ -12,17 +10,13 @@
   <img src="https://user-images.githubusercontent.com/63528205/207350442-6d678e1a-86c3-4f7d-865f-264a9878720b.png"  width="500"/>
 </p>
 <p>
-  <img src="https://user-images.githubusercontent.com/63528205/205498749-bd87f896-2562-43fd-9943-577f39cfde69.png"  width="500"/>
-  <img src="https://user-images.githubusercontent.com/63528205/205498786-f186b03f-0135-4737-ade8-5f4f1db5b38a.png"  width="500"/>
+  <img src="https://user-images.githubusercontent.com/63528205/207353457-46ddf68c-f666-437e-a114-9cd25bb2013b.png"  width="500"/>
+  <img src="https://user-images.githubusercontent.com/63528205/207353588-37d9d516-cdd9-4d33-9317-26a7c9a626a0.png"  width="500"/>
 </p>
 <p>
-  <img src="https://user-images.githubusercontent.com/63528205/205498821-a5eea4ae-54be-42ce-bbc4-bec99d979ee4.png"  width="500"/>
-  <img src="https://user-images.githubusercontent.com/63528205/205498847-9528096e-3d5b-41ca-a73a-a10de44a79bd.png"  width="500"/>
+  <img src="https://user-images.githubusercontent.com/63528205/207353801-1c9e48ec-556d-445f-92c5-c02539a34d11.png"  width="500"/>
+  <img src="https://user-images.githubusercontent.com/63528205/207353844-b20c0217-d34e-40ce-9ded-738a4e1cef50.png"  width="500"/>
 </p>
-<p>
-  <img src="https://user-images.githubusercontent.com/63528205/205498882-8874bd70-d604-4b55-9620-181336482019.png"  width="500"/>
-</p>
-
 
 # :dog2: 인트로
 <h3>1. 게임 첫 시작 시 30분 간의 종료</h3>
