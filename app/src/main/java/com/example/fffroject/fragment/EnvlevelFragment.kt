@@ -137,22 +137,11 @@ class EnvlevelFragment: Fragment() {
         // 달이 갱신되면 냉장고 털기 0으로 설정해주기
         setContri()
 
-        //setSharepoint()
         // 파이어베이스에서 환경 기여도 가져와서 설정
         loadEnvLev()
 
         // 등급 보여주는 버튼을 눌렀을 때
         btn_show_grade.setOnClickListener {
-//            val treegradedial = DialogTreegradeBinding.inflate(layoutInflater)
-//            val treegradeview = treegradedial.root
-//            val treegradealertDialog = context?.let {
-//                androidx.appcompat.app.AlertDialog.Builder(it).run {
-//                    setView(treegradedial.root)
-//                    show()
-//                }
-//            }
-//            //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
-//            treegradealertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             img_gradebox.visibility = View.VISIBLE
             text_grade.visibility = View.VISIBLE
             text_grade2.visibility = View.VISIBLE
@@ -173,14 +162,6 @@ class EnvlevelFragment: Fragment() {
             }
         }
 
-
-//        var formatter = SimpleDateFormat("yyyy.MM.dd")
-//        var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-//        //var nowyear = nowdate.split(".").get(0)
-//        var nowmonth = nowdate.split(".")?.get(1)
-//        text_nowmonth.setText(nowmonth + "월!")
-//        var day = formatter.parse(nowdate).time
-
         return view
     }
 
@@ -193,56 +174,13 @@ class EnvlevelFragment: Fragment() {
                     if (document != null) {
                         envpercent = document?.data?.get("contribution").toString().toInt()
                         sharepoint = document?.data?.get("sharepoint").toString().toInt()
-                        // sharepoint가 30이 넘는 경우
-//                        var rest = 0
-//                        if (sharepoint > 29) {
-//                            rest = sharepoint % 30
-//                            firestore?.collection("user")?.document(user!!.uid)
-//                                ?.update("sharepoint", rest)
-//                                ?.addOnSuccessListener { }
-//                                ?.addOnFailureListener { }
-//                            firestore?.collection("user")?.document(user!!.uid)
-//                                ?.update("envlevel", FieldValue.increment(1))
-//                                ?.addOnSuccessListener {
-//                                    Toast.makeText(context,"환경 기여 레벨이 상승했어요!",Toast.LENGTH_SHORT).show()
-//                                }
-//                                ?.addOnFailureListener { }
-//                        }
+
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
                         progress_envlevel.progress = sharepoint
                         text_envcontri.text = sharepoint.toString() + "/30"
                         text_fridgeenv.text = envpercent.toString() + "회"
                     }
                 }
-
-        }
-    }
-
-    fun setSharepoint() {
-        if (user != null) {
-            firestore?.collection("user")?.document(user!!.uid)
-                ?.get()?.addOnSuccessListener { document ->
-                    if (document != null) {
-                        sharepoint = document?.data?.get("sharepoint").toString().toInt()
-                        // sharepoint가 30이 넘는 경우
-                        var rest = 0
-                        if (sharepoint > 29) {
-                            rest = sharepoint % 30
-                            firestore?.collection("user")?.document(user!!.uid)
-                                ?.update("sharepoint", rest)
-                                ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }
-                            firestore?.collection("user")?.document(user!!.uid)
-                                ?.update("envlevel", FieldValue.increment(1))
-                                ?.addOnSuccessListener {
-                                    Toast.makeText(context,"환경 기여 레벨이 상승했어요!",Toast.LENGTH_SHORT).show()
-                                }
-                                ?.addOnFailureListener { }
-                        }
-
-                    }
-                }
-
         }
     }
 
