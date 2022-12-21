@@ -49,7 +49,6 @@ class FcmActivity : AppCompatActivity() {
 
         // 현재 알람 설정 상태 확인
         loadNoticeData()
-
         loadNoticeTime()
 
         //스위치 현재 상태 확인
@@ -67,32 +66,39 @@ class FcmActivity : AppCompatActivity() {
             }
         })
 
+        //현재 시간 가져오기
         fun getTime(button: Button, context: Context) {
             //if(!isNoticeOn) return
             val cal = Calendar.getInstance()
 
-
+            // TimePicker 클릭 이벤트
             val timeSetListener =
                 TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                     cal.set(Calendar.HOUR_OF_DAY, hour)
                     cal.set(Calendar.MINUTE, minute)
 
-                    myhour = hour.toInt()
-                    mymin = minute.toInt()
+                    // 알람 시간 변수 저장
+                    myhour = hour.toInt()  //시간
+                    mymin = minute.toInt()  //분
 
+                    //오후일 때
                     if(hour >= 13) {
                         myampm = "오후"
-                        var timestr: Int = myhour - 12
+                        var timestr: Int = myhour - 12  //myhour - 12 해줘야 12~23시를 1~11시로 표현 가능
                         if (timestr in 0..9 && mymin in 0..9) {
                             binding.Alarm.text = "오후 0$timestr:0$mymin"
+
+                            //시간이 만약 1의 자리일 경우 앞에 0을 넣어주는 함수
                         } else if (timestr in 0..9) {
                             binding.Alarm.text = "오후 0$timestr:$mymin"
                         } else if (mymin in 0..9) {
                             binding.Alarm.text = "오후 $timestr:0$mymin"
+                            //만약 10~11일 경우 그냥 출력
                         } else {
                             binding.Alarm.text = "오후 $timestr:$mymin"
                         }
 
+                    //오전일 때
                     } else {
                         myampm = "오전"
                         if (myhour == 0) {
@@ -103,10 +109,13 @@ class FcmActivity : AppCompatActivity() {
                             }
                         } else if (myhour in 0..9 && mymin in 0..9) {
                             binding.Alarm.text = "오전 0$myhour:0$mymin"
+
+                            //시간이 만약 1의 자리일 경우 앞에 0을 넣어주는 함수
                         } else if (myhour in 0..9) {
                             binding.Alarm.text = "오전 0$myhour:$mymin"
                         } else if (mymin in 0..9) {
                             binding.Alarm.text = "오전 $myhour:0$mymin"
+                            //만약 10~11일 경우 그냥 출력
                         } else {
                             binding.Alarm.text = "오전 $myhour:$mymin"
                         }
@@ -114,11 +123,10 @@ class FcmActivity : AppCompatActivity() {
 
                     }
 
-
-                    //saveNoticeData("noticeStatus", isNoticeOn)
+                    //시간 저장
                     addAlarm(myhour.toInt(), mymin.toInt())
                     val pref = getSharedPreferences("my_pref", 0)
-                    val edit = pref.edit()
+                    val edit = pref.edit()  //수정
                     edit.putInt("noticeHour", myhour)
                     edit.putInt("noticeMinute", mymin)
                     edit.apply()
@@ -150,14 +158,13 @@ class FcmActivity : AppCompatActivity() {
             dialog.show()
         }
 
+        //알람 클릭 시
         binding.Alarm.setOnClickListener {
             if(isNoticeOn != false) {
                 getTime(binding.Alarm, this)
             }
 
         }
-
-
 
     }
 
@@ -168,6 +175,8 @@ class FcmActivity : AppCompatActivity() {
         var alarmManager : AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         var intent = Intent(this, AlertReceiver::class.java)
 
+
+        //AlertReceiver
         var pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
         var calendar = Calendar.getInstance()
 
@@ -218,22 +227,26 @@ class FcmActivity : AppCompatActivity() {
     }
     fun loadNoticeTime() {
         val pref = getSharedPreferences("my_pref", MODE_PRIVATE)
-        myhour = pref.getInt("noticeHour", myhour)
-        mymin = pref.getInt("noticeMinute", mymin)
+        myhour = pref.getInt("noticeHour", myhour)  //시간
+        mymin = pref.getInt("noticeMinute", mymin)  //분
+
+        //오후일 때
         if(myhour >= 13) {
             myampm = "오후"
-            var timestr: Int = myhour - 12
+            var timestr: Int = myhour - 12 //myhour - 12 해줘야 12~23시를 1~11시로 표현 가능
             if (timestr in 0..9 && mymin in 0..9) {
                 binding.Alarm.text = "오후 0$timestr:0$mymin"
+                //시간이 만약 1의 자리일 경우 앞에 0을 넣어주는 함수
             } else if (timestr in 0..9) {
                 binding.Alarm.text = "오후 0$timestr:$mymin"
             } else if (mymin in 0..9) {
                 binding.Alarm.text = "오후 $timestr:0$mymin"
+                //만약 10~11일 경우 그냥 출력
             } else {
                 binding.Alarm.text = "오후 $timestr:$mymin"
             }
 
-
+        //오전일 때
         } else {
             myampm = "오전"
             if (myhour == 0) {
@@ -244,21 +257,15 @@ class FcmActivity : AppCompatActivity() {
                 }
             } else if (myhour in 0..9 && mymin in 0..9) {
                 binding.Alarm.text = "오전 0$myhour:0$mymin"
+                //시간이 만약 1의 자리일 경우 앞에 0을 넣어주는 함수
             } else if (myhour in 0..9) {
                 binding.Alarm.text = "오전 0$myhour:$mymin"
             } else if (mymin in 0..9) {
                 binding.Alarm.text = "오전 $myhour:0$mymin"
+                //만약 10~11일 경우 그냥 출력
             } else {
                 binding.Alarm.text = "오전 $myhour:$mymin"
             }
-
-
-
-/*
-        myhour = pref.getInt("noticeHour", myhour)
-        mymin = pref.getInt("noticeMinute", mymin)
-        binding.Alarm.text = "$myampm $myhour:$mymin"
-*/
 
         }
     }

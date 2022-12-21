@@ -69,31 +69,19 @@ class OpenApiActivity : AppCompatActivity() {
         foodlist = arrayListOf<FoodList>()
 
 
+        //파이어스토어
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         firestore = FirebaseFirestore.getInstance()
-/*
-        name = findViewById(R.id.name)
-        deadline_year = findViewById(R.id.fdeadlineYear)
-        deadline_month = findViewById(R.id.fdeadlineMonth)
-        api_layout = findViewById(R.id.apilayout)
 
-        deadline_day = findViewById(R.id.fdeadlineDate)
-        purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
-        purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
-
-        purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
-        count = findViewById(R.id.count)
-        upload_btn = findViewById(R.id.upload_btn)
-*/
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 
         //날짜 계산
         var now = LocalDate.now().toString()
         var nowdate = now.split("-")
-        binding.fpurchasedAtYear.setText(nowdate[0])
-        binding.fpurchasedAtMonth.setText(nowdate[1])
-        binding.fpurchasedAtDate.setText(nowdate[2])
+        binding.fpurchasedAtYear.setText(nowdate[0])  //년
+        binding.fpurchasedAtMonth.setText(nowdate[1]) //월
+        binding.fpurchasedAtDate.setText(nowdate[2])  //일
 
         // 데이터 추가
         binding.uploadBtn.setOnClickListener {
@@ -113,11 +101,14 @@ class OpenApiActivity : AppCompatActivity() {
 
                 if (d_day.toInt() >= 0){
                     if (user != null) {
+                        //유통기한 형식
                         var food_deadline =
                             binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
+                        //구매일 형식
                         var purchasedAt =
                             binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
                         foodindex = UUID.randomUUID().toString()
+                        //food에 저장
                         firestore?.collection("fridge")?.document("$fridgeindex")
                             ?.collection("food")?.document("$foodindex")
                             ?.set(
@@ -147,6 +138,7 @@ class OpenApiActivity : AppCompatActivity() {
 
     }
 
+    //다 작성했는지 확인
     private fun checkAllWritten(): Boolean{
         return (binding.name.length()>0 && binding.fdeadlineYear.length()>0 && binding.fdeadlineMonth.length()>0 && binding.fdeadlineDate.length()>0
                 && binding.fpurchasedAtYear.length()>0 && binding.fpurchasedAtMonth.length()>0 && binding.fpurchasedAtDate.length()>0
@@ -161,14 +153,15 @@ class OpenApiActivity : AppCompatActivity() {
 
         override fun run() {
             // var apiview = api_layout
-            var key = "74cb78df7c2b4d38b2f7"
+            var key = "74cb78df7c2b4d38b2f7"  //사용자 키
             // API 정보를 가지고 있는 주소
             val site = "https://openapi.foodsafetykorea.go.kr/api/"+key+"/C005/json/1/5/BAR_CD="+barcode
 
             val url = URL(site)
-            val conn = url.openConnection()
+            val conn = url.openConnection()  //url객체에서 openConnection() 메서드를 호출하여 연결을 생성
             val input = conn.getInputStream()
             val isr = InputStreamReader(input)
+
             // br: 라인 단위로 데이터를 읽어오기 위해서 만듦
             val br = BufferedReader(isr)
 
