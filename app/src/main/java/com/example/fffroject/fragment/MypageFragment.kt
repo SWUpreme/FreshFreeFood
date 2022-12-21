@@ -22,8 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MypageFragment : Fragment() {
 
-    //lateinit var binding: FragmentMypageBinding
-
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var user : FirebaseUser? = null
@@ -45,8 +43,6 @@ class MypageFragment : Fragment() {
     ): View? {
         var view = LayoutInflater.from(activity).inflate(R.layout.fragment_mypage, container, false)
 
-        //binding = FragmentMypageBinding.inflate(layoutInflater)
-
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
@@ -64,12 +60,8 @@ class MypageFragment : Fragment() {
         btn_logout.setOnClickListener {
             Toast.makeText(context,"로그아웃되셨습니다.", Toast.LENGTH_SHORT).show()
             auth?.signOut()
-            // FFFroject.email = null
             val intent = Intent(activity, AuthActivity::class.java)
             activity?.let { ContextCompat.startActivity(it, intent, null) }
-            // startActivity(Intent(activity, AuthActivity::class.java))
-//            val intent = Intent(view.context, SharePointActivity::class.java)
-//            ContextCompat.startActivity(view.context, intent, null)
         }
 
         // 나의 나눔 버튼 눌렀을 경우
@@ -94,24 +86,6 @@ class MypageFragment : Fragment() {
             val intent = Intent(view.context, FcmActivity::class.java)
             ContextCompat.startActivity(view.context, intent, null)
         }
-
-
-
-        // 로그아웃 처리
-//        binding.btnLogoutGoogle.setOnClickListener {
-            // 구글 계정 로그아웃
-//            Toast.makeText(
-//                baseContext, "로그아웃 누름",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            Toast.makeText(context,"로그아웃누름", Toast.LENGTH_SHORT).show()
-//            FFFroject.auth.signOut()
-//            FFFroject.email = null
-//            //changeVisibility("logout")
-//            //val intent = Intent(activity, AuthActivity::class.java)
-//            //activity?.let { ContextCompat.startActivity(it, intent, null) }
-//            startActivity(Intent(activity, AuthActivity::class.java))
-        //}
 
         return view
     }
