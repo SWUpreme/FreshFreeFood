@@ -118,11 +118,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
         }
 
-
-
-        // 파이어베이스에서 식품 리스트 값 불러오기
-        //loadData()
-
         text_nofood = findViewById(R.id.textNoFood)
 
         recyclerview_foodlist = findViewById(R.id.recyclerviewFoodlist)
@@ -141,8 +136,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         recyclerview_foodlist.apply {
             layoutManager = LinearLayoutManager(applicationContext)
-            //adapter = swipeAdapter
-            //addItemDecoration(RecyclerView.ItemDecoration())
             recyclerview_foodlist.addItemDecoration(customDecoration)
 
             setOnTouchListener { _, _ ->
@@ -150,12 +143,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 false
             }
         }
-
-        // 다른 곳 터치 시 기존 선택 뷰 닫기 (근데 안됨)
-//        recyclerview_foodlist.setOnTouchListener { _, _ ->
-//            swipeHelperCallback.removePreviousClamp(recyclerview_foodlist)
-//            false
-//        }
 
         var btn_food_eat = findViewById<Button>(R.id.btnFoodEat)
         btn_food_eat.setOnClickListener {
@@ -177,17 +164,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
-
-
-//    fun onDialogBtnClicked(view: View){
-//        Log.d(TAG, "FoodListActivity - onDialogBtnClicked() called")
-//
-//        val myCustomDialog = MyCustomDialog(this, this)
-//
-//        myCustomDialog.show()
-//
-//    }
-
     // 음식 개수 세는 함수
     // OnCreate에서 수행시 업데이트가 제대로 되지 않는 문제로 함수를 따로 뺌(foodcount가 제대로 되지 않음)
     fun getfoodCount(){
@@ -197,7 +173,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             text_nofood.visibility = View.INVISIBLE
         }
     }
-
 
     // 바코드 버튼 클릭
     override fun onBarcodeBtnClicked() {
@@ -226,16 +201,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             return FoodlistViewHolder(view)
         }
 
-
-
-//        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-//            init {
-//                itemView.setOnClickListener {
-//                    Log.d("click", this.toString())
-//                }
-//            }
-//        }
-
         // view와 실제 데이터 연결
         @RequiresApi(Build.VERSION_CODES.O)
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -252,8 +217,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             food_name = viewHolder.findViewById(R.id.textFoodName)
             food_count = viewHolder.findViewById(R.id.textFoodCount)
             food_deadline = viewHolder.findViewById(R.id.textFoodDeadline)
-            //btn_eat = viewHolder.findViewById(R.id.btnFoodlistEat)
-//            btn_food_eat = viewHolder.findViewById(R.id.btnFoodEat)
             food_dday = viewHolder.findViewById(R.id.textDday)
 
             food_delete = viewHolder.findViewById(R.id.tvRemove)
@@ -352,16 +315,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     for (snapshot in value.documents) {
                         var done = firestore?.collection("fridge")?.document(index.toString())
                             ?.collection("food")?.document("done")?.get().toString().toBoolean()
-                        //Toast.makeText(this, done.toString(), Toast.LENGTH_SHORT).show()
-//                        firestore?.collection("fridge")?.document(index.toString())
-//                            ?.collection("food")
-//                            ?.whereEqualTo("done", "false")
-//                            ?.get()
-//                            ?.addOnSuccessListener {
-//                                var item = snapshot.toObject(FoodList::class.java)
-//                                if (item != null) {
-//                                    foodlist.add(item)
-//                                }
                         var item = snapshot.toObject(FoodList::class.java)
                         if (item != null && done == false) {
                             foodlist.add(item)
@@ -389,7 +342,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
 
     }
-
 
     // 냉장고별 식품 리스트 최신등록순
     fun loadDataDate() {
@@ -419,7 +371,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
         firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
-        //recyclerview_foodlist.adapter?.notifyDataSetChanged()
         // 비어있는 경우 업데이트가 안되어서 If문으로 수정
         // 처음에 loadData에서 시도했으나 음식이 없는 경우 foodlist가 아예 생성이 안되어 한개 있는걸 할 때로 변경
         // 따라서 deleteFood에도 적용시켜주어야 함

@@ -65,21 +65,6 @@ data class food(
 
 )
 
-/*
-data class ChatDTO(
-    var users: ArrayList<String> = arrayListOf()
-)
-{
-    data class MessageDTO(
-        var context :  String? =  null,
-        var from : String? = null,
-        var index : String? = null,
-        var to : String? = null,
-        var sendedAt : String? = null,
-    )
-}
-
-*/
 // 채팅방
 data class ChatRoom(
     var index : String? = null,

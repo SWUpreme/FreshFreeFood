@@ -626,14 +626,11 @@ class FridgeFragment : Fragment() {
                                     firestore?.collection("user")?.document(memberuid)?.get()
                                         ?.addOnSuccessListener { tasks ->
                                             var memname = tasks.data?.get("nickname").toString()
-                                            //Toast.makeText(context, count.toString() + memname, Toast.LENGTH_SHORT).show()
                                             if (count == 0) {
                                                 text_name = memname
-                                                //Toast.makeText(context, memname, Toast.LENGTH_SHORT).show()
                                             }
                                             else {
                                                 text_name = text_name + "\n\n" + memname
-                                                //Toast.makeText(context, memname, Toast.LENGTH_SHORT).show()
                                             }
                                             text_member.setText(text_name)
                                         }
@@ -671,12 +668,10 @@ class FridgeFragment : Fragment() {
                 ?.collection("member")?.get()
                 ?.addOnSuccessListener { task ->
                     membercount = task.size()
-                    //Toast.makeText(activity, membercount.toString(), Toast.LENGTH_SHORT).show()
                     if (membercount != 0) {
                         for (count: Int in 0..(membercount - 1)) {
                             var doc = task.documents?.get(count)
                             var memberuid = doc.get("uid").toString()
-                            //Toast.makeText(activity, memberuid, Toast.LENGTH_SHORT).show()
                             firestore?.collection("user")?.document(memberuid)
                                 ?.collection("myfridge")
                                 ?.document(index)
@@ -695,7 +690,7 @@ class FridgeFragment : Fragment() {
                     Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
                 ?.addOnFailureListener { }
-            // 냉장고 완전삭제
+            // 나의 냉장고 완전삭제 할 경우 해당 코드 사용
 //            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
 //                ?.document(index)
 //                ?.delete()
@@ -772,19 +767,6 @@ class FridgeFragment : Fragment() {
                         }
                     }
             }
-            // 나의 냉장고에서 멤버 수 업데이트
-//            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-//                ?.document(index)
-//                ?.update("member", FieldValue.increment(-1))
-//                ?.addOnSuccessListener { }
-//                ?.addOnFailureListener { }
-
-            // fridge의 member에서 해당 멤버 삭제
-//            firestore?.collection("fridge")?.document(index)?.collection("member")
-//                ?.document(user!!.uid)
-//                ?.delete()
-//                ?.addOnSuccessListener { }
-//                ?.addOnFailureListener { }
             // myfridge에서 냉장고 삭제
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                 ?.document(index)

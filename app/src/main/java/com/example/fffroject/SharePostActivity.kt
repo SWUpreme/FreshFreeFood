@@ -385,7 +385,7 @@ class SharePostActivity : AppCompatActivity() {
     }
 
     // 데이터 저장
-    private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
+    private fun addPostDB(title: String, deadline: String, purchasedAt: String, name: String, region: String,
     location: String, content: String){
         //유저가 존재한다면
         if (user != null){
