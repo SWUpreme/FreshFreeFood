@@ -64,31 +64,19 @@ class WriteActivity : AppCompatActivity() {
         foodlist = arrayListOf<FoodList>()
 
 
+        //파이어스토어
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         firestore = FirebaseFirestore.getInstance()
-/*
-        name = findViewById(R.id.name)
-        deadline_year = findViewById(R.id.fdeadlineYear)
-        deadline_month = findViewById(R.id.fdeadlineMonth)
-        api_layout = findViewById(R.id.apilayout)
 
-        deadline_day = findViewById(R.id.fdeadlineDate)
-        purchasedAt_year = findViewById(R.id.fpurchasedAtYear)
-        purchasedAt_month = findViewById(R.id.fpurchasedAtMonth)
-
-        purchasedAt_day = findViewById(R.id.fpurchasedAtDate)
-        count = findViewById(R.id.count)
-        upload_btn = findViewById(R.id.upload_btn)
-*/
         fridgeindex = intent.getStringExtra("index")  // 냉장고 id
 
         //날짜 계산
         var now = LocalDate.now().toString()
         var nowdate = now.split("-")
-        binding.fpurchasedAtYear.setText(nowdate[0])
-        binding.fpurchasedAtMonth.setText(nowdate[1])
-        binding.fpurchasedAtDate.setText(nowdate[2])
+        binding.fpurchasedAtYear.setText(nowdate[0])  //년
+        binding.fpurchasedAtMonth.setText(nowdate[1]) //월
+        binding.fpurchasedAtDate.setText(nowdate[2])  //일
 
         // 데이터 추가
         binding.uploadBtn.setOnClickListener {
@@ -99,7 +87,7 @@ class WriteActivity : AppCompatActivity() {
                 var deadline = formatter.parse(food_deadline).time
                 var purchasedAt = binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
                 var day = formatter.parse(purchasedAt).time
-                var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)
+                var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)  //(각 시간값에 따른 차이점)
 
                 //식품 시간순 정렬
                 val nowTime = System.currentTimeMillis()
@@ -108,11 +96,14 @@ class WriteActivity : AppCompatActivity() {
 
                 if (d_day.toInt() >= 0){
                     if (user != null) {
+                        //유통기한 형식
                         var food_deadline =
                             binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
+                        //구매일 형식
                         var purchasedAt =
                             binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
                         foodindex = UUID.randomUUID().toString()
+                        //food에 저장
                         firestore?.collection("fridge")?.document("$fridgeindex")
                             ?.collection("food")?.document("$foodindex")
                             ?.set(
@@ -130,7 +121,7 @@ class WriteActivity : AppCompatActivity() {
                     }
                     Toast.makeText(this, "등록되었습니다.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, AlertReceiver::class.java)
-                    intent.putExtra("index", fridgeindex)
+                    intent.putExtra("index", fridgeindex)  //AlertReceiver에 냉장고인덱스 넘겨주기
                     finish()
                 }
                 else {
@@ -144,11 +135,12 @@ class WriteActivity : AppCompatActivity() {
 
     }
 
+
+    //다 작성했는지 확인
     private fun checkAllWritten(): Boolean{
         return (binding.name.length()>0 && binding.fdeadlineYear.length()>0 && binding.fdeadlineMonth.length()>0 && binding.fdeadlineDate.length()>0
                 && binding.fpurchasedAtYear.length()>0 && binding.fpurchasedAtMonth.length()>0 && binding.fpurchasedAtDate.length()>0
                 && binding.count.length()>0)
-
 
     }
 
