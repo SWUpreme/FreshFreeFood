@@ -154,9 +154,7 @@ class SharePointActivity : AppCompatActivity(){
                             ?.addOnFailureListener { }
                         firestore?.collection("user")?.document(giver)
                             ?.update("envlevel", FieldValue.increment(1))
-                            ?.addOnSuccessListener {
-                                //Toast.makeText(this,"환경 기여 레벨이 상승했어요!",Toast.LENGTH_SHORT).show()
-                            }
+                            ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                     }
                     else {
