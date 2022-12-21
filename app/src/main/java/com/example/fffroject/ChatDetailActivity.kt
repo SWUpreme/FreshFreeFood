@@ -145,7 +145,6 @@ class ChatDetailActivity : AppCompatActivity() {
             tfContext = viewHolder.findViewById(R.id.chatDetailContext)
             tfTime = viewHolder.findViewById(R.id.chatDetailTime)
 
-            //tfFromTo.text = chatDetailList!![position].wroteId
             var wroteId = chatDetailList!![position].wroteId
             tfContext.text = chatDetailList!![position].context
             tfTime.text = chatDetailList!![position].sendedAt
@@ -280,8 +279,5 @@ class ChatDetailActivity : AppCompatActivity() {
             // 거래 완료 후 전체 쪽지방 화면으로 돌아가기
             finish()
         })
-
-
     }
-
 }

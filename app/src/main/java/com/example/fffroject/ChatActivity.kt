@@ -25,12 +25,12 @@ class ChatActivity : AppCompatActivity() {
     var db: FirebaseFirestore? = null
     var user: FirebaseUser? = null
 
-    //sharedetail에서 받아온 것
+    // sharedetail 액티비티에서 받아온 것
     var postid: String? = null
     var giver: String? = null
     var chatCount : Int  =0       // 채팅 개수
 
-    //채팅 edit
+    // 바인딩
     lateinit var Chatcontent: EditText
     lateinit var chatroomid: String
     lateinit var chatid: String
@@ -58,8 +58,10 @@ class ChatActivity : AppCompatActivity() {
         toolbChat.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.btnChatContent -> {
+                    // 글을 작성했다면
                     if (Chatcontent.text.toString().length != 0) {
                         if (user != null) {
+                            // 유저의 채팅에 같은 게시글에서 작성된 쪽지의 존재 여부 확인
                             db?.collection("user")?.document(user?.uid!!)?.collection("mychat")
                                 ?.whereEqualTo("postid", postid)?.get()
                                 ?.addOnCompleteListener { task ->

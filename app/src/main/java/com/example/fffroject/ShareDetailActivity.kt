@@ -41,19 +41,9 @@ class ShareDetailActivity: AppCompatActivity()  {
     // 툴바
     lateinit var toolbar_sharedetail: Toolbar
 
-    // Data에 있는 PostDetail
-    //lateinit var postDetailList: ArrayList<PostDetail>
     // 화면 구성 내용
     lateinit var detailIndex : String
     lateinit var detailWriter : String
-    lateinit var detailTitle : String
-    lateinit var detailName : String
-    lateinit var detailRegion : String
-    lateinit var detailLocation : String
-    lateinit var detailDeadline : String
-    lateinit var detailCreatedAt : String
-    lateinit var detailPurchasedAt : String
-    lateinit var detailContent : String
     lateinit var detailFlag : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,10 +62,6 @@ class ShareDetailActivity: AppCompatActivity()  {
         storage = FirebaseStorage.getInstance()
         // 상단 툴바 사용
         toolbar_sharedetail = findViewById(R.id.toolbSharedetail)
-        // postDetail 초기화
-        //postDetailList = arrayListOf<PostDetail>()
-        // 상단 툴바 버튼 사용
-        //var btnGotoMessage: Button = findViewById(R.id.btnGotoMessage)
 
         // ShareFragment Intent 연결
         detailIndex = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
@@ -171,7 +157,6 @@ class ShareDetailActivity: AppCompatActivity()  {
                     val toast = Toast.makeText(this, "게시글 가져오기 실패", Toast.LENGTH_SHORT)
                     toast.show()
                 }
-
         }
 
     }
