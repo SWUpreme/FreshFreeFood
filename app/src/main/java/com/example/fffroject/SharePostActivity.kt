@@ -106,7 +106,6 @@ class SharePostActivity : AppCompatActivity() {
 //        getSupportActionBar()?.setHomeAsUpIndicator(R.drawable.ic_x_rec)
 //        getSupportActionBar()?.setDisplayShowTitleEnabled(false)    // 기본 타이틀 숨기기
 
-
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
@@ -221,10 +220,6 @@ class SharePostActivity : AppCompatActivity() {
         return (Integer.parseInt(binding.deadlineDate.text.toString())>0 && Integer.parseInt(binding.deadlineDate.text.toString())<=31
                 && Integer.parseInt(binding.purchasedAtDate.text.toString())>0 && Integer.parseInt(binding.purchasedAtDate.text.toString())<=31)
     }
-
-//    private fun checkCompareDate(): Bollean{
-//        return()
-//    }
 
     // 양식 작성 여부 확인
     private fun checkAllWritten(): Boolean{
@@ -395,9 +390,6 @@ class SharePostActivity : AppCompatActivity() {
             date = nowdate.format(ofPattern("yyyy.MM.dd"))
             createdAt = date.toString()
 
-//            nowDateTime = LocalDateTime.now()
-//            val formatter = DateTimeFormatter.ISO_DATE
-//            dateTime = nowDateTime.format(formatter)
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
             val dateTime = timeformatter.format(nowTime)

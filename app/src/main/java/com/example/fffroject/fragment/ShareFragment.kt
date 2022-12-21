@@ -46,6 +46,7 @@ class ShareFragment : Fragment() {
     lateinit var toolbar_sharepost: Toolbar
     lateinit var txtNoRegion: TextView
 
+    // 현재 지역
     lateinit var presentRegion : String
 
     // Data에 있는 PostAll
@@ -58,6 +59,7 @@ class ShareFragment : Fragment() {
     ): View? {
         var view = LayoutInflater.from(activity).inflate(R.layout.fragment_share, container, false)
 
+        // 전체 게시글 리스트
         postAllList = arrayListOf<PostAll>()
 
         // 파이어베이스 인증 객체
@@ -91,11 +93,12 @@ class ShareFragment : Fragment() {
             when(it.itemId) {
                 R.id.btnPlus -> {
                     if(txtRegionSelect.text != "나눔 지역을 선택해주세요."){
+                        // 지역 선택이 되어 있을 시
                         val intent = Intent(activity, SharePostActivity::class.java)
                         intent.putExtra("region", txtRegionSelect.text)
                         startActivity(intent)
                     }else{
-                        //양식 작성 안되어 있을 시
+                        // 지역 선택이 안 되어 있을 시
                         Toast.makeText(activity, "나눔 지역을 선택해주세요.", Toast.LENGTH_SHORT).show()
                     }
                     true
@@ -107,20 +110,19 @@ class ShareFragment : Fragment() {
         // 주소 검색 웹뷰 화면으로 이동
         btnSelectRegion.setOnClickListener{
             val intent = Intent(activity, RegionSelectActivity::class.java)
-            //startActivity(intent)
             startForResult.launch(intent)
         }
-
         return view
     }
 
-    // 콜백 받는 부분
+    // 웹뷰 화면의 콜백 받는 부분
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         // RegionSelectActivity로부터 결과값을 이곳으로 전달
         if (it.resultCode == Activity.RESULT_OK) {
             if(it.data != null){
                 var regionData : String? = it.data!!.getStringExtra("data")
                 txtRegionSelect.text = regionData
+                // 받아온 지역을 db에 저장
                 db?.collection("user")?.document(user?.uid.toString())
                     ?.update("nowRegion", regionData)
                     ?.addOnSuccessListener {}
@@ -131,7 +133,6 @@ class ShareFragment : Fragment() {
 
 
     // 뷰 홀더
-    //inner class ShareViewHolder(val binding: ItemSharelistBinding): RecyclerView.ViewHolder(binding.root)
     inner class ShareViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     // 뷰 어댑터
@@ -175,11 +176,13 @@ class ShareFragment : Fragment() {
 
             // 냉장고에서 넘기기 여부 확인 후 색상 변경
             if(listFlag==true){
+                // 냉장고 페이지에서 작성된 게시글이라면
                 listRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
                 listLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
                 listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.white))
                 listLocation.setTextColor(ContextCompat.getColor(context!!, R.color.white))
             }else{
+                // 무료 나눔 페이지에서 작성된 게시글이라면
                 listRegion.setBackgroundResource(R.drawable.txt_background_round2_white)
                 listLocation.setBackgroundResource(R.drawable.txt_background_round2_white)
                 listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
@@ -200,9 +203,6 @@ class ShareFragment : Fragment() {
 
     // 파이어베이스에서 데이터 불러오는 함수
     private fun loadData() {
-        // 현재 지역 이름
-        //presentRegion = txtRegionSelect.text as String
-
         if(user != null){
             // 현재 지역 설정 조회
             db?.collection("user")?.document(user?.uid.toString())?.get()?.addOnSuccessListener { value ->

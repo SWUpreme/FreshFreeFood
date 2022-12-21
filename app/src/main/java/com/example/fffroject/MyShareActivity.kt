@@ -68,7 +68,6 @@ class MyShareActivity: AppCompatActivity() {
     }
 
     // 뷰 홀더
-    //inner class ShareViewHolder(val binding: ItemSharelistBinding): RecyclerView.ViewHolder(binding.root)
     inner class ShareViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     // 뷰 어댑터
