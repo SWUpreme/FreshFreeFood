@@ -59,7 +59,9 @@
                 android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="60dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,20 +72,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="'나의냉장고'"
-                    android:textAlignment="textEnd"
+                    android:text="'나의냉장고' 을(를) 삭제하시겠습니까?"
+                    android:textAlignment="center"
                     android:textColor="#30353D"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/textFridgeDelete"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text=" 을(를) 삭제하시겠습니까?"
-                    android:textAlignment="textStart"
-                    android:textColor="#30353D"
-                    android:textSize="17sp" />
             </LinearLayout>
 
             <Button
