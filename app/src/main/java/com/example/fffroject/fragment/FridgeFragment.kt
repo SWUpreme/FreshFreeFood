@@ -657,7 +657,7 @@ class FridgeFragment : Fragment() {
 
         // 다이얼로그의 냉장고 이름 연동해주기
         var fridgename = deleteview.findViewById<TextView>(R.id.textFridgenameDelete)
-        fridgename.setText("'" + fname + "'")
+        fridgename.setText("'" + fname + "'" + " 을(를) 삭제하시겠습니까?")
 
         // 다이얼로그의 확인 버튼과 연동해주기
         var delete_fridge_ok = deleteview.findViewById<Button>(R.id.btnFridgedelOk)
