@@ -216,6 +216,7 @@ class FridgeFragment : Fragment() {
         }
     }
 
+    // 냉장고 추가 부분 수정 완료
     // 냉장고 추가
     fun addFridge() {
         val builder = AlertDialog.Builder(activity)
@@ -244,7 +245,7 @@ class FridgeFragment : Fragment() {
         btn_addfridge.setOnClickListener {
             // 최근 입력순 정렬 위한 시간 추가
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
             val dateTime = timeformatter.format(nowTime)
             if (edt_fridgename.text.toString() != null) {
                 if (user != null) {
@@ -252,10 +253,14 @@ class FridgeFragment : Fragment() {
                     firestore?.collection("fridge")?.document("$fridgeid")
                         ?.set(
                             hashMapOf(
-                                "index" to fridgeid,
-                                "name" to edt_fridgename.text.toString(),
+                                "fridgeId" to fridgeid,
+                                "fridgeName" to edt_fridgename.text.toString(),
                                 "owner" to user?.uid,
-                                "current" to "냉장고가 비었습니다"
+                                "current" to "냉장고가 비었습니다",
+                                // 이하 추가
+                                "createdAt" to dateTime.toString(),
+                                "updatedAt" to dateTime.toString(),
+                                "status" to "active"
                             )
                         )
                         ?.addOnSuccessListener { }
@@ -264,10 +269,10 @@ class FridgeFragment : Fragment() {
                         ?.document("$fridgeid")
                         ?.set(
                             hashMapOf(
-                                "index" to fridgeid,
-                                "name" to edt_fridgename.text.toString(),
+                                "fridgeId" to fridgeid,
+                                "fridgeName" to edt_fridgename.text.toString(),
                                 "current" to "냉장고가 비었습니다",
-                                "status" to true,
+                                "status" to "active",
                                 "member" to 1,
                                 "addTime" to dateTime
                             )
