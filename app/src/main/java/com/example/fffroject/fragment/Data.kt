@@ -6,12 +6,14 @@ import kotlin.collections.HashMap
 
 // 나의 냉장고 리스트
 data class MyFridge(
-    var index : String? = null,
-    var name : String? = null,
+    var fridgeId : String? = null,
+    var fridgeName : String? = null,
     var current : String? = null,
-    var status : Boolean? = null,
+    //var status : Boolean? = null,
     var member : Int? = null,
-    var addTime : String? = null
+    var createdAt : String? = null,
+    var updatedAt : String? = null,
+    var status : String? = null
 )
 
 // 나눔 전체 게시글 리스트
