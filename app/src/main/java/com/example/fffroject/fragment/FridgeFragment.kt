@@ -218,7 +218,7 @@ class FridgeFragment : Fragment() {
         }
     }
 
-    // 냉장고 추가 부분 수정 완료
+    // 냉장고 추가 부분 완전히 수정 완료(이상없음 확인)
     // 냉장고 추가
     fun addFridge() {
         val builder = AlertDialog.Builder(activity)
@@ -276,7 +276,7 @@ class FridgeFragment : Fragment() {
                                 "current" to "냉장고가 비었습니다",
                                 "status" to "active",
                                 "member" to 1,
-                                "addTime" to dateTime
+                                "createdAt" to dateTime
                             )
                         )
                         ?.addOnSuccessListener { }
@@ -383,7 +383,7 @@ class FridgeFragment : Fragment() {
         }
     }
 
-    // 업데이트 시간 넣어주기기    // 냉장고 이름 변경 수정 완료
+    // 업데이트 시간 넣어주기, X표시 안먹음    // 냉장고 이름 변경 수정 완료
     // 냉장고 이름 변경
     fun fixnameFridge(fridgeId: String, fridgeName: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
@@ -406,10 +406,18 @@ class FridgeFragment : Fragment() {
         // 냉장고 이름 업데이트
         var fix_fridgename_ok = fixfridgeview.findViewById<Button>(R.id.btnFridgenameFix)
         fix_fridgename_ok.setOnClickListener {
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
+
             if (fridgename.length() > 0) {
                 if (user != null) {
                     firestore?.collection("fridge")?.document(fridgeId)
                         ?.update("fridgeName", fridgename.text.toString())
+                        ?.addOnSuccessListener { }
+                        ?.addOnFailureListener { }
+                    firestore?.collection("fridge")?.document(fridgeId)
+                        ?.update("updatedAt", dateTime)
                         ?.addOnSuccessListener { }
                         ?.addOnFailureListener { }
                     firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -619,8 +627,8 @@ class FridgeFragment : Fragment() {
         btn_member_close.setOnClickListener{
             showmemDialog?.dismiss()
         }
-
         // owner 이름 추가해주기
+        // 상태가 active인지 delete인지 확인하는 부분 추가
         firestore?.collection("fridge")?.document(index)?.get()
             ?.addOnSuccessListener { document ->
                 if (document != null) {
@@ -664,6 +672,7 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고 삭제
+    // 삭제버튼까지 수정 완료
     fun deleteFridge(index: String, fname: String) {
         val deletedial = DialogDeletefridgeBinding.inflate(layoutInflater)
         val deleteview = deletedial.root
@@ -683,6 +692,9 @@ class FridgeFragment : Fragment() {
         // 다이얼로그의 확인 버튼과 연동해주기
         var delete_fridge_ok = deleteview.findViewById<Button>(R.id.btnFridgedelOk)
         delete_fridge_ok.setOnClickListener {
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
             // 멤버의 냉장고 status 변경해주기
             var membercount = 0
             firestore?.collection("fridge")?.document(index)
@@ -696,7 +708,14 @@ class FridgeFragment : Fragment() {
                             firestore?.collection("user")?.document(memberuid)
                                 ?.collection("myfridge")
                                 ?.document(index)
-                                ?.update("status", false)
+                                ?.update("status", "delete")
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+
+                            firestore?.collection("user")?.document(memberuid)
+                                ?.collection("myfridge")
+                                ?.document(index)
+                                ?.update("updatedAt", dateTime)
                                 ?.addOnSuccessListener { }
                                 ?.addOnFailureListener { }
                         }
@@ -706,10 +725,15 @@ class FridgeFragment : Fragment() {
             // 나의 냉장고 status 변경해주기
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                 ?.document(index)
-                ?.update("status", false)
+                ?.update("status", "delete")
                 ?.addOnSuccessListener {
                     Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
+                ?.addOnFailureListener { }
+            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                ?.document(index)
+                ?.update("updatedAt", dateTime)
+                ?.addOnSuccessListener { }
                 ?.addOnFailureListener { }
             // 나의 냉장고 완전삭제 할 경우 해당 코드 사용
 //            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -812,8 +836,8 @@ class FridgeFragment : Fragment() {
         if (user != null) {
             // visible이 true인 냉장고만 가져오
             firestore?.collection("user")?.document(user!!.uid)
-                ?.collection("myfridge")?.whereEqualTo("status", true)
-                ?.orderBy("addTime", Query.Direction.DESCENDING)
+                ?.collection("myfridge")?.whereEqualTo("status", "active")
+                ?.orderBy("createdAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     fridgelist.clear()
                     if (value != null) {

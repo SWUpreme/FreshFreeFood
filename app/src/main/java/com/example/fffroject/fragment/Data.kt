@@ -12,7 +12,7 @@ data class MyFridge(
     //var status : Boolean? = null,
     var member : Int? = null,
     var createdAt : String? = null,
-    var updatedAt : String? = null,
+    //var updatedAt : String? = null,
     var status : String? = null
 )
 
