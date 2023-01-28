@@ -461,6 +461,11 @@ class FridgeFragment : Fragment() {
                 Toast.makeText(context, "냉장고 이름을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+        // X버튼 연동
+        var btn_fixfridge_close = fixfridgeview.findViewById<ImageButton>(R.id.btnNicknameClose)
+        btn_fixfridge_close.setOnClickListener {
+            fixfridgeDialog?.dismiss()
+        }
     }
 
     // 수정 하긴 했는데 다시 확인해보기
