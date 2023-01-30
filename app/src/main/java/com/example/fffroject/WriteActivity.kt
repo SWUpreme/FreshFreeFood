@@ -47,7 +47,7 @@ class WriteActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
 
     var fridgeindex : String? = null
-    var done = false
+    //var done = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,52 +81,69 @@ class WriteActivity : AppCompatActivity() {
         // 데이터 추가
         binding.uploadBtn.setOnClickListener {
             if (checkAllWritten()) {
-                //화면에 현재 날짜, 시간 정보를 나타내고자 사용
-                var formatter = SimpleDateFormat("yyyy.MM.dd")
-                var food_deadline = binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
-                var deadline = formatter.parse(food_deadline).time
-                var purchasedAt = binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
-                var day = formatter.parse(purchasedAt).time
-                var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)  //(각 시간값에 따른 차이점)
+                if(checkYear()){
+                    if(checkMonth()){
+                        if(checkDate()){
+                            //화면에 현재 날짜, 시간 정보를 나타내고자 사용
+                            var formatter = SimpleDateFormat("yyyy.MM.dd")
+                            var food_deadline = binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
+                            var deadline = formatter.parse(food_deadline).time
+                            var purchasedAt = binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
+                            var day = formatter.parse(purchasedAt).time
+                            var d_day = (deadline - day)/ (60 * 60 * 24 * 1000)  //(각 시간값에 따른 차이점)
 
-                //식품 시간순 정렬
-                val nowTime = System.currentTimeMillis()
-                val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
-                val dateTime = timeformatter.format(nowTime)
+                            //식품 시간순 정렬
+                            val nowTime = System.currentTimeMillis()
+                            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                            val dateTime = timeformatter.format(nowTime)
 
-                if (d_day.toInt() >= 0){
-                    if (user != null) {
-                        //유통기한 형식
-                        var food_deadline =
-                            binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
-                        //구매일 형식
-                        var purchasedAt =
-                            binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
-                        foodindex = UUID.randomUUID().toString()
-                        //food에 저장
-                        firestore?.collection("fridge")?.document("$fridgeindex")
-                            ?.collection("food")?.document("$foodindex")
-                            ?.set(
-                                hashMapOf(
-                                    "index" to foodindex,
-                                    "name" to binding.name.text.toString(),
-                                    "deadline" to food_deadline,
-                                    "purchaseAt" to purchasedAt,
-                                    "count" to binding.count.text.toString().toInt(),
-                                    "done" to done,
-                                    "addTime" to dateTime
-                                )
-                            )
+                            if (d_day.toInt() >= 0){
+                                if (user != null) {
+                                    //유통기한 형식
+                                    var food_deadline =
+                                        binding.fdeadlineYear.text.toString() + "." + binding.fdeadlineMonth.text.toString() + "." + binding.fdeadlineDate.text.toString()
+                                    //구매일 형식
+                                    var purchasedAt =
+                                        binding.fpurchasedAtYear.text.toString() + "." + binding.fpurchasedAtMonth.text.toString() + "." + binding.fpurchasedAtDate.text.toString()
+                                    foodindex = UUID.randomUUID().toString()
+                                    //food에 저장
+                                    firestore?.collection("fridge")?.document("$fridgeindex")
+                                        ?.collection("food")?.document("$foodindex")
+                                        ?.set(
+                                            hashMapOf(
+                                                "foodId" to foodindex,
+                                                "foodName" to binding.name.text.toString(),
+                                                "deadline" to food_deadline,
+                                                "purchaseAt" to purchasedAt,
+                                                "count" to binding.count.text.toString().toInt(),
+                                                "status" to "active",
+                                                "createdAt" to dateTime.toString(),
+                                                "updatedAt" to dateTime.toString()
+                                            )
+                                        )
 
+                                }
+                                Toast.makeText(this, "등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, AlertReceiver::class.java)
+                                intent.putExtra("index", fridgeindex)  //AlertReceiver에 냉장고인덱스 넘겨주기
+                                finish()
+                            }
+                            else {
+                                Toast.makeText(this, "유통기한이 이미 지난 제품입니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this, "정확한 날짜를 입력하세요.", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "정확한 달을 입력하세요.", Toast.LENGTH_SHORT).show()
                     }
-                    Toast.makeText(this, "등록되었습니다.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, AlertReceiver::class.java)
-                    intent.putExtra("index", fridgeindex)  //AlertReceiver에 냉장고인덱스 넘겨주기
-                    finish()
+
+                } else {
+                    Toast.makeText(this, "정확한 년도를 입력하세요.", Toast.LENGTH_SHORT).show()
                 }
-                else {
-                    Toast.makeText(this, "유통기한이 이미 지난 제품입니다.", Toast.LENGTH_SHORT).show()
-                }
+
+
+
             } else {
                 Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
@@ -142,6 +159,24 @@ class WriteActivity : AppCompatActivity() {
                 && binding.fpurchasedAtYear.length()>0 && binding.fpurchasedAtMonth.length()>0 && binding.fpurchasedAtDate.length()>0
                 && binding.count.length()>0)
 
+    }
+
+    //날짜 형식 확인
+    private fun checkDate(): Boolean{
+        return (Integer.parseInt(binding.fdeadlineDate.text.toString()) in 1..31
+                && Integer.parseInt(binding.fpurchasedAtDate.text.toString())>0 && Integer.parseInt(binding.fpurchasedAtDate.text.toString())<=31)
+    }
+
+    //달 형식 확인
+    private fun checkMonth(): Boolean{
+        return (Integer.parseInt(binding.fdeadlineMonth.text.toString()) in 1..12
+                && Integer.parseInt(binding.fpurchasedAtMonth.text.toString())>0 && Integer.parseInt(binding.fpurchasedAtMonth.text.toString())<=12)
+    }
+
+    //년 형식 확인
+    private fun checkYear(): Boolean{
+        return(Integer.parseInt(binding.fdeadlineYear.text.toString()) in 2000..2100
+                && Integer.parseInt(binding.fpurchasedAtYear.text.toString())>2020 && Integer.parseInt(binding.fpurchasedAtYear.text.toString())<=2100)
     }
 
 }
