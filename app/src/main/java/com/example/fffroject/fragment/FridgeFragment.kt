@@ -501,12 +501,12 @@ class FridgeFragment : Fragment() {
                 val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
                 val dateTime = timeformatter.format(nowTime)
 
-                firestore?.collection("user")?.whereEqualTo("memEmail", addmember)?.get()
+                firestore?.collection("user")?.whereEqualTo("email", addmember)?.get()
                     ?.addOnSuccessListener { document ->
                         if (document.size() != 0) {
                             // 해당하는 아이디의 사람이 있다면 uid 받아오기
                             var sheet = document.documents?.get(0)
-                            memberuid = sheet.get("uid").toString()
+                            memberuid = sheet.get("userId").toString()
                             membername = sheet.get("nickname").toString()
                             // 상태 받아와서 active인지 확인해주기
                             memberstatus = sheet.get("status").toString()
@@ -597,7 +597,13 @@ class FridgeFragment : Fragment() {
                                                         if (memberstatus == "active") {
                                                             Toast.makeText(context, "이미 등록된 멤버입니다.", Toast.LENGTH_SHORT).show()
                                                         } else if (memberstatus == "delete") {
-
+                                                            firestore?.collection("user")?.document(user!!.uid)
+                                                                ?.collection("myfridge")?.document(fridgeId)
+                                                                ?.update("status", "active")
+                                                                ?.addOnSuccessListener {
+                                                                    Toast.makeText(context,"등록되었습니다.",Toast.LENGTH_SHORT).show()
+                                                                }
+                                                                ?.addOnFailureListener { }
                                                         }
                                                     }
                                                 }
