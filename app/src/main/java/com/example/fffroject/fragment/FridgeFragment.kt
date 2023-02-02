@@ -629,6 +629,12 @@ class FridgeFragment : Fragment() {
                                                                             addmemberDialog?.dismiss()
                                                                         }
                                                                         ?.addOnFailureListener { }
+                                                                    // 멤버의 냉장고에서 냉장고 status active로 변경
+                                                                    firestore?.collection("user")?.document(memberuid)
+                                                                        ?.collection("myfridge")?.document(fridgeId)
+                                                                        ?.update("status", "active")
+                                                                        ?.addOnSuccessListener {  }
+                                                                        ?.addOnFailureListener {  }
                                                                 }
                                                                 ?.addOnFailureListener { }
                                                         }
