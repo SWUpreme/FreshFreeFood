@@ -468,10 +468,7 @@ class FridgeFragment : Fragment() {
         }
     }
 
-    // 냉장고 멤버 추가 delete->active 변경 및 인원수 조정까지 수정 완료 했지만
-    // 냉장고 delete방법에 따라 어떻게 바뀌는지 확인하나
-    // 나갔다 들어온 냉장고의 경우 myfridge 의 냉장고 status active로 바꿔줘야함
-    // 냉장고에 멤버 추가
+    // 냉장고에 멤버 추가 수정 전부 완료 및 확인 완료
     fun addMember(fridgeId: String, fridgeName: String, current: String, fcount: Int, ftime: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val addmemberdial = DialogAddmemberBinding.inflate(layoutInflater)
