@@ -469,6 +469,7 @@ class FridgeFragment : Fragment() {
     }
 
     // 냉장고에 멤버 추가 수정 전부 완료 및 확인 완료
+    // updatedAt 수정해줘야함 확인하기
     fun addMember(fridgeId: String, fridgeName: String, current: String, fcount: Int, ftime: String) {
         //뷰 바인딩을 적용한 XML 파일 초기화
         val addmemberdial = DialogAddmemberBinding.inflate(layoutInflater)
@@ -660,7 +661,7 @@ class FridgeFragment : Fragment() {
         }
     }
 
-    // 냉장고 멤버 보기
+    // 냉장고 멤버 보기 멤버 상태별 여부 완료
     fun showMember(index: String) {
         val showmemdial = DialogShowmemberBinding.inflate(layoutInflater)
         val showmemview = showmemdial.root
@@ -700,7 +701,7 @@ class FridgeFragment : Fragment() {
                             }
                         }
                     // 멤버 이름 추가해주기
-                    //var membercount = 0
+                    // 멤버 active인지 확인
                     firestore?.collection("fridge")?.document(index)
                         ?.collection("member")?.get()
                         ?.addOnSuccessListener { task ->
@@ -709,18 +710,29 @@ class FridgeFragment : Fragment() {
                             if (membercount != 0) {
                                 for (count: Int in 0..(membercount - 1)) {
                                     var doc = task.documents?.get(count)
-                                    var memberuid = doc.data?.get("uid").toString()
-                                    firestore?.collection("user")?.document(memberuid)?.get()
-                                        ?.addOnSuccessListener { tasks ->
-                                            var memname = tasks.data?.get("nickname").toString()
-                                            if (count == 0) {
-                                                text_name = memname
-                                            }
-                                            else {
-                                                text_name = text_name + "\n\n" + memname
-                                            }
-                                            text_member.setText(text_name)
+                                    //var memberuid = doc.data?.get("uid").toString()
+                                    var membernickname = doc.data?.get("memNickname").toString()
+                                    var memberstatus = doc.data?.get("status").toString()
+//                                    firestore?.collection("user")?.document(memberuid)?.get()
+//                                        ?.addOnSuccessListener { tasks ->
+//                                            var memname = tasks.data?.get("nickname").toString()
+//                                            if (count == 0) {
+//                                                text_name = memname
+//                                            }
+//                                            else {
+//                                                text_name = text_name + "\n\n" + memname
+//                                            }
+//                                            text_member.setText(text_name)
+//                                        }
+                                    if (memberstatus == "active") {
+                                        if (count == 0) {
+                                            text_name = membernickname
                                         }
+                                        else {
+                                            text_name = text_name + "\n\n" + membernickname
+                                        }
+                                        text_member.setText(text_name)
+                                    }
 
                                 }
                             }
