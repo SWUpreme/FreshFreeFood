@@ -781,13 +781,6 @@ class FridgeFragment : Fragment() {
                                 ?.update("status", "delete")
                                 ?.addOnSuccessListener { }
                                 ?.addOnFailureListener { }
-
-                            firestore?.collection("user")?.document(memberuid)
-                                ?.collection("myfridge")
-                                ?.document(index)
-                                ?.update("updatedAt", dateTime)
-                                ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }
                         }
                     }
                 }
@@ -800,8 +793,13 @@ class FridgeFragment : Fragment() {
                     Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
                 ?.addOnFailureListener { }
-            firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
-                ?.document(index)
+
+            // fridge status delete로 바꾸기
+            firestore?.collection("fridge")?.document(fridgeid)
+                ?.update("status", "delete")
+                ?.addOnSuccessListener { }
+                ?.addOnFailureListener { }
+            firestore?.collection("fridge")?.document(fridgeid)
                 ?.update("updatedAt", dateTime)
                 ?.addOnSuccessListener { }
                 ?.addOnFailureListener { }
