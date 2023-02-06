@@ -1,7 +1,6 @@
 package com.example.fffroject.fragment
 
 import android.app.Activity
-import android.app.DownloadManager
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -16,19 +15,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sharepost.*
 
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.fragment_share.*
 import java.util.*
 
 class ShareFragment : Fragment() {
@@ -154,47 +149,47 @@ class ShareFragment : Fragment() {
 
             // 바인딩
             val viewHolder = (holder as ShareViewHolder).itemView
-            var listTitle: TextView = viewHolder.findViewById(R.id.listTitle)
-            var listRegion: TextView = viewHolder.findViewById(R.id.listRegion)
-            var listLocation: TextView = viewHolder.findViewById(R.id.listLocation)
-            var listName: TextView = viewHolder.findViewById(R.id.listName)
-            var listDeadline: TextView = viewHolder.findViewById(R.id.listDeadline)
-            var listCreatedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
+            var title: TextView = viewHolder.findViewById(R.id.listTitle)
+            var region: TextView = viewHolder.findViewById(R.id.listRegion)
+            var location: TextView = viewHolder.findViewById(R.id.listLocation)
+            var foodName: TextView = viewHolder.findViewById(R.id.listName)
+            var deadline: TextView = viewHolder.findViewById(R.id.listDeadline)
+            var postedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
 
             // 뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
-            listTitle.text = postAllList!![position].title
-            listRegion.text = postAllList!![position].region
-            listLocation.text = postAllList!![position].location
-            listName.text = postAllList!![position].name
-            listDeadline.text = postAllList!![position].deadline
-            listCreatedAt.text = postAllList!![position].createdAt
+            title.text = postAllList!![position].title
+            region.text = postAllList!![position].region
+            location.text = postAllList!![position].location
+            foodName.text = postAllList!![position].foodName
+            deadline.text = postAllList!![position].deadline
+            postedAt.text = postAllList!![position].postedAt
 
             // 출력 외 게시글 요소
-            var listFlag = postAllList!![position].flag
-            var listIndex = postAllList!![position].index
-            var listWriter = postAllList!![position].writer
+            var fridgeToss = postAllList!![position].fridgeToss
+            var postId = postAllList!![position].postId
+            var writer = postAllList!![position].writer
 
             // 냉장고에서 넘기기 여부 확인 후 색상 변경
-            if(listFlag==true){
+            if(fridgeToss==true){
                 // 냉장고 페이지에서 작성된 게시글이라면
-                listRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
-                listLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
-                listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.white))
-                listLocation.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                region.setBackgroundResource(R.drawable.txt_background_round2_blue)
+                location.setBackgroundResource(R.drawable.txt_background_round2_blue)
+                region.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                location.setTextColor(ContextCompat.getColor(context!!, R.color.white))
             }else{
                 // 무료 나눔 페이지에서 작성된 게시글이라면
-                listRegion.setBackgroundResource(R.drawable.txt_background_round2_white)
-                listLocation.setBackgroundResource(R.drawable.txt_background_round2_white)
-                listRegion.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
-                listLocation.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
+                region.setBackgroundResource(R.drawable.txt_background_round2_white)
+                location.setBackgroundResource(R.drawable.txt_background_round2_white)
+                region.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
+                location.setTextColor(ContextCompat.getColor(context!!, R.color.blueblack))
             }
 
             // 객체 클릭 이벤트
             viewHolder.setOnClickListener{
                 val intent = Intent(viewHolder.context, ShareDetailActivity::class.java)
-                intent.putExtra("detailIndex", listIndex.toString())
-                intent.putExtra("detailFlag", listFlag.toString())
-                intent.putExtra("detailWriter", listWriter.toString())
+                intent.putExtra("detailIndex", postId.toString())
+                intent.putExtra("detailFlag", fridgeToss.toString())
+                intent.putExtra("detailWriter", writer.toString())
                 ContextCompat.startActivity(viewHolder.context, intent, null)
             }
 
@@ -217,8 +212,8 @@ class ShareFragment : Fragment() {
                     if (user != null) {
                         db?.collection("post")
                             ?.whereEqualTo("region", presentRegion)
-                            ?.whereEqualTo("done", false)
-                            ?.orderBy("dateTime", Query.Direction.DESCENDING)
+                            ?.whereEqualTo("status", "active")
+                            ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                             ?.addSnapshotListener { value, error ->
                                 postAllList.clear()
                                 if (value != null) {

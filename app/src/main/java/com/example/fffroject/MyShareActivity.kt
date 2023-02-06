@@ -1,6 +1,5 @@
 package com.example.fffroject
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.databinding.*
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.example.fffroject.fragment.PostAll
-import com.example.fffroject.fragment.ShareFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -89,63 +87,63 @@ class MyShareActivity: AppCompatActivity() {
 
             // 바인딩
             val viewHolder = (holder as ShareViewHolder).itemView
-            var listTitle: TextView = viewHolder.findViewById(R.id.listTitle)
-            var listRegion: TextView = viewHolder.findViewById(R.id.listRegion)
-            var listLocation: TextView = viewHolder.findViewById(R.id.listLocation)
-            var listName: TextView = viewHolder.findViewById(R.id.listName)
-            var listDeadline: TextView = viewHolder.findViewById(R.id.listDeadline)
-            var listCreatedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
-            var listBtnmore: Button = viewHolder.findViewById(R.id.listBtnmore)
+            var title: TextView = viewHolder.findViewById(R.id.listTitle)
+            var region: TextView = viewHolder.findViewById(R.id.listRegion)
+            var location: TextView = viewHolder.findViewById(R.id.listLocation)
+            var foodName: TextView = viewHolder.findViewById(R.id.listName)
+            var deadline: TextView = viewHolder.findViewById(R.id.listDeadline)
+            var postedAt: TextView = viewHolder.findViewById(R.id.listCreatedAt)
+            var btnmore: Button = viewHolder.findViewById(R.id.listBtnmore)
 
             // 뷰에 데이터 출력 (리사이클러 뷰 아이템 정보)
-            listRegion.text = postAllList!![position].region
-            listLocation.text = postAllList!![position].location
-            listName.text = postAllList!![position].name
-            listDeadline.text = postAllList!![position].deadline
-            listCreatedAt.text = postAllList!![position].createdAt
+            region.text = postAllList!![position].region
+            location.text = postAllList!![position].location
+            foodName.text = postAllList!![position].foodName
+            deadline.text = postAllList!![position].deadline
+            postedAt.text = postAllList!![position].postedAt
 
             // 출력 외 게시글 요소
-            var listFlag = postAllList!![position].flag
-            var listIndex = postAllList!![position].index
-            var listWriter = postAllList!![position].writer
-            var done = postAllList!![position].done
+            var fridgeToss = postAllList!![position].fridgeToss
+            var postId = postAllList!![position].postId
+            var writer = postAllList!![position].writer
+            var status = postAllList!![position].status
 
             // 냉장고에서 넘기기 여부 확인 후 색상 변경
-            if(listFlag==true){
-                listRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
-                listLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
-                listRegion.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.white))
-                listLocation.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.white))
+            if(fridgeToss==true){
+                region.setBackgroundResource(R.drawable.txt_background_round2_blue)
+                location.setBackgroundResource(R.drawable.txt_background_round2_blue)
+                region.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.white))
+                location.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.white))
             }else{
-                listRegion.setBackgroundResource(R.drawable.txt_background_round2_white)
-                listLocation.setBackgroundResource(R.drawable.txt_background_round2_white)
-                listRegion.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
-                listLocation.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
+                region.setBackgroundResource(R.drawable.txt_background_round2_white)
+                location.setBackgroundResource(R.drawable.txt_background_round2_white)
+                region.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
+                location.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
             }
 
             // 거래 완료 타이틀 표시
-           if(done == true){
+           if(status.equals("shareDone")||status.equals("pointDone")){
                // 완료된 거래라면
-               var title= postAllList!![position].title
-               listTitle.text = "(거래완료) "+title
-               listTitle.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.deep_gray))
+               var originTitle= postAllList!![position].title
+               title.text = "(거래완료) "+originTitle
+               title.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.deep_gray))
            }else{
                // 진행중인 거래라면
-               listTitle.text = postAllList!![position].title
+               title.text = postAllList!![position].title
            }
 
             // 객체 클릭 이벤트
             viewHolder.setOnClickListener{
                 val intent = Intent(viewHolder.context, ShareDetailActivity::class.java)
-                intent.putExtra("detailIndex", listIndex.toString())
-                intent.putExtra("detailFlag", listFlag.toString())
-                intent.putExtra("detailWriter", listWriter.toString())
+                intent.putExtra("detailIndex", postId.toString())
+                intent.putExtra("detailFlag", fridgeToss.toString())
+                intent.putExtra("detailWriter", writer.toString())
                 ContextCompat.startActivity(viewHolder.context, intent, null)
             }
 
-            listBtnmore.setOnClickListener{
-                if (listIndex != null) {
-                    showDialogMoreOption(listIndex, viewHolder)
+            btnmore.setOnClickListener{
+                if (postId != null) {
+                    showDialogMoreOption(postId, viewHolder)
                 }
             }
 
@@ -157,7 +155,7 @@ class MyShareActivity: AppCompatActivity() {
         if (user != null) {
             db?.collection("post")
                 ?.whereEqualTo("writer", user?.uid.toString())
-                ?.orderBy("dateTime", Query.Direction.DESCENDING)
+                ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     postAllList.clear()
                     if (value != null) {
@@ -181,7 +179,7 @@ class MyShareActivity: AppCompatActivity() {
     }
 
     // 게시글 아이템 더보기 다이얼로그
-    private fun showDialogMoreOption(index: String, viewHolder: View){
+    private fun showDialogMoreOption(postId: String, viewHolder: View){
         //뷰 바인딩을 적용한 XML 파일 초기화
         val dialogBinding = DialogPostoptionBinding.inflate(layoutInflater)
         val alertDialog = AlertDialog.Builder(this).run {
@@ -199,14 +197,14 @@ class MyShareActivity: AppCompatActivity() {
             alertDialog.dismiss()
             // 게시글 수정 액티비티 실행
             val intent = Intent(viewHolder.context, ShareUpdateActivity::class.java)
-            intent.putExtra("index", index)
+            intent.putExtra("postId", postId)
             ContextCompat.startActivity(viewHolder.context, intent, null)
         })
 
         // 삭제 버튼
         dialogBinding.btnPostDelete.setOnClickListener(View.OnClickListener {
             alertDialog.dismiss()
-            showDialogDelete(index)
+            showDialogDelete(postId)
         })
 
         // 취소 버튼
@@ -216,7 +214,7 @@ class MyShareActivity: AppCompatActivity() {
     }
 
     // 게시글 삭제 다이얼로그
-    private fun showDialogDelete(index: String){
+    private fun showDialogDelete(postId: String){
         //뷰 바인딩을 적용한 XML 파일 초기화
         val dialogBinding = DialogDeletepostBinding.inflate(layoutInflater)
         val alertDialog = AlertDialog.Builder(this).run {
@@ -228,7 +226,7 @@ class MyShareActivity: AppCompatActivity() {
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 게시글 타이틀 불러오기
-        db?.collection("post")?.document(index)?.get()
+        db?.collection("post")?.document(postId)?.get()
             ?.addOnSuccessListener {value->
                 var postTitle = value.data?.get("title") as String
                 dialogBinding.textPostDelete.text = "'"+postTitle+"' 게시글을 삭제하시겠습니까?"
@@ -242,7 +240,7 @@ class MyShareActivity: AppCompatActivity() {
 
         // 삭제 확인 버튼
         dialogBinding.btnPostDelete.setOnClickListener(View.OnClickListener {
-            db?.collection("post")?.document(index)
+            db?.collection("post")?.document(postId)
                 ?.delete()
                 ?.addOnSuccessListener {
                     Toast.makeText(this, "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()

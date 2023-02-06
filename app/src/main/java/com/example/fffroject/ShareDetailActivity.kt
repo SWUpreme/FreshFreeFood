@@ -4,8 +4,6 @@ import android.graphics.BitmapFactory
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,13 +14,9 @@ import com.example.fffroject.fragment.PostDetail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_sharedetail.*
-import kotlinx.android.synthetic.main.activity_sharepost.*
-import kotlinx.android.synthetic.main.fragment_share.*
-import kotlinx.android.synthetic.main.item_sharelist.*
 
 
 class ShareDetailActivity: AppCompatActivity()  {
@@ -42,9 +36,9 @@ class ShareDetailActivity: AppCompatActivity()  {
     lateinit var toolbar_sharedetail: Toolbar
 
     // 화면 구성 내용
-    lateinit var detailIndex : String
-    lateinit var detailWriter : String
-    lateinit var detailFlag : String
+    lateinit var postId : String
+    lateinit var writer : String
+    lateinit var fridgeToss : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +58,9 @@ class ShareDetailActivity: AppCompatActivity()  {
         toolbar_sharedetail = findViewById(R.id.toolbSharedetail)
 
         // ShareFragment Intent 연결
-        detailIndex = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
-        detailWriter = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
-        detailFlag = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
+        postId = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
+        writer = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
+        fridgeToss = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
 
         // 메세지 버튼
         toolbSharedetail.setOnMenuItemClickListener {
@@ -75,15 +69,15 @@ class ShareDetailActivity: AppCompatActivity()  {
                     // 본인 글일 시 , 메시지 버튼 숨기기
                     if(user != null){
                         var userString = user?.uid
-                        if(userString.equals(detailWriter)){
+                        if(userString.equals(writer)){
                             // 내가 작성한 글이라면
                             Log.d("user", "it's mine")
                             Toast.makeText(this, "자신이 작성한 나눔글입니다.", Toast.LENGTH_SHORT).show()
                             //btnGotoMessage.setVisibility(View.GONE)
                         }else{
                             val intent = Intent(applicationContext, ChatActivity::class.java)
-                            intent.putExtra("detailIndex", detailIndex)
-                            intent.putExtra("detailWriter", detailWriter)
+                            intent.putExtra("detailIndex", postId)
+                            intent.putExtra("detailWriter", writer)
                             startActivity(intent)
                             Log.d("user", "it's not mine")
                         }
@@ -95,7 +89,7 @@ class ShareDetailActivity: AppCompatActivity()  {
         }
 
         // 냉장고에서 넘기기 여부 확인 후 색상 변경
-        if(detailFlag=="true"){
+        if(fridgeToss=="true"){
             binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
             binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
             binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -116,7 +110,7 @@ class ShareDetailActivity: AppCompatActivity()  {
         // 유저가 존재한다면
         if (user != null) {
             // 해당 인덱스의 게시글 가져오기
-            var detailDocRef = db?.collection("post")?.document(detailIndex.toString())
+            var detailDocRef = db?.collection("post")?.document(postId.toString())
             detailDocRef?.get()
                 ?.addOnSuccessListener { documentSnapshot ->
                     var item = documentSnapshot.toObject(PostDetail::class.java)
@@ -129,9 +123,9 @@ class ShareDetailActivity: AppCompatActivity()  {
                     binding.detailPurchasedAt.text = item?.purchasedAt!!
                     binding.detailContent.text = item?.content!!
 
-                    Log.d("aaa", detailWriter)
+                    Log.d("aaa", writer)
                     // 게시글 작성 유저 정보 가져오기
-                    db?.collection("user")?.document(detailWriter)?.get()
+                    db?.collection("user")?.document(writer)?.get()
                         ?.addOnSuccessListener { value ->
                             var dbUserNickname = value.data?.get("nickname") as String
                             var dbEnvLevel = value.data?.get("envlevel").toString()
@@ -151,7 +145,7 @@ class ShareDetailActivity: AppCompatActivity()  {
                             binding.detailEnvLevel.text = dbEnvLevel
                         }
 
-                    downloadImage(detailIndex)
+                    downloadImage(postId)
                 }
                 ?.addOnFailureListener {
                     val toast = Toast.makeText(this, "게시글 가져오기 실패", Toast.LENGTH_SHORT)
