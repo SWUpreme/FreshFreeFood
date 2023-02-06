@@ -79,7 +79,7 @@ class SharePostActivity : AppCompatActivity() {
     lateinit var postId: String
     lateinit var nowdate: LocalDate
     lateinit var date : String
-    lateinit var createdAt: String
+    lateinit var postedAt: String
 
     lateinit var regionIntent: String
 
@@ -138,12 +138,12 @@ class SharePostActivity : AppCompatActivity() {
                                         var title = binding.title.text.toString()
                                         var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
                                         var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
-                                        var name = binding.name.text.toString()
+                                        var foodName = binding.name.text.toString()
                                         var region = binding.region.text.toString()
                                         var location = binding.location.text.toString()
                                         var content = binding.context.text.toString()
                                         // db 저장
-                                        addPostDB(title, deadline, purchasedAt, name, region, location, content)
+                                        addPostDB(title, deadline, purchasedAt, foodName, region, location, content)
                                         // 전체 게시글로 되돌아가기
                                         finish()
                                     }else{
@@ -380,7 +380,7 @@ class SharePostActivity : AppCompatActivity() {
     }
 
     // 데이터 저장
-    private fun addPostDB(title: String, deadline: String, purchasedAt: String, name: String, region: String,
+    private fun addPostDB(title: String, deadline: String, purchasedAt: String, foodName: String, region: String,
     location: String, content: String){
         //유저가 존재한다면
         if (user != null){
@@ -388,7 +388,7 @@ class SharePostActivity : AppCompatActivity() {
             //게시글 등록 날짜
             nowdate = LocalDate.now()
             date = nowdate.format(ofPattern("yyyy.MM.dd"))
-            createdAt = date.toString()
+            postedAt = date
 
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
@@ -398,20 +398,20 @@ class SharePostActivity : AppCompatActivity() {
             db?.collection("post")?.document("$postId")
                 ?.set(
                     hashMapOf(
-                        "index" to postId,
+                        "postId" to postId,
                         "writer" to user?.uid,
                         "title" to title,
-                        "name" to name,
+                        "foodName" to foodName,
                         "deadline" to deadline,
                         "purchasedAt" to purchasedAt,
                         "region" to region,
                         "location" to location,
                         "content" to content,
-                        "createdAt" to createdAt,
-                        "dateTime" to dateTime,
-                        "flag" to false,
-                        "done" to false,
-                        "pointDone" to false
+                        "postedAt" to postedAt,
+                        "fridgeToss" to false,
+                        "createdAt" to dateTime,
+                        "updatedAt" to dateTime,
+                        "status" to "active"
                     )
                 )
                 ?.addOnSuccessListener {

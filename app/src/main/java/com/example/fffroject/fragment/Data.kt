@@ -16,17 +16,16 @@ data class MyFridge(
 
 // 나눔 전체 게시글 리스트
 data class PostAll(
-    var index :  String? =  null,
+    var postId :  String? =  null,
     var writer : String? = null,
     var title : String? = null,
     var region : String? = null,
     var location : String? = null,
-    var name : String? = null,
+    var foodName : String? = null,
     var deadline : String? = null,
-    var createdAt : String? = null,
-    var flag : Boolean? = null,
-    var done : Boolean? = null,
-    var pointDone : Boolean? = null
+    var postedAt : String? = null,
+    var fridgeToss : Boolean? = null,
+    var status : String? = null
 )
 
 // 나눔 세부 게시글 리스트

@@ -72,7 +72,7 @@ class ShareUpdateActivity : AppCompatActivity() {
     lateinit var postId: String
     lateinit var nowdate: LocalDate
     lateinit var date : String
-    lateinit var createdAt: String
+    lateinit var postedAt: String
 
     lateinit var indexIntent: String
     var isImageChange: Boolean = false      // 이미지 변환 확인 변수
@@ -96,7 +96,7 @@ class ShareUpdateActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
 
         // MyShareActivity Intent 연결
-        indexIntent = intent.getStringExtra("index")!!
+        indexIntent = intent.getStringExtra("postId")!!
 
         // 상단 툴바 사용
         toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
@@ -124,12 +124,12 @@ class ShareUpdateActivity : AppCompatActivity() {
                                         var title = binding.title.text.toString()
                                         var deadline = binding.deadlineYear.text.toString()+"."+binding.deadlineMonth.text.toString()+"."+binding.deadlineDate.text.toString()
                                         var purchasedAt = binding.purchasedAtYear.text.toString()+"."+ binding.purchasedAtMonth.text.toString()+"."+ binding.purchasedAtDate.text.toString()
-                                        var name = binding.name.text.toString()
+                                        var foodName = binding.name.text.toString()
                                         var region = binding.region.text.toString()
                                         var location = binding.location.text.toString()
                                         var content = binding.context.text.toString()
                                         // db 저장
-                                        addPostDB(title, deadline, purchasedAt, name, region, location, content)
+                                        addPostDB(title, deadline, purchasedAt, foodName, region, location, content)
                                         // 전체 게시글로 되돌아가기
                                         finish()
                                     }else{
@@ -187,7 +187,7 @@ class ShareUpdateActivity : AppCompatActivity() {
                     binding.purchasedAtYear.setText(purchasedAt.split('.')[0])      // 구매일
                     binding.purchasedAtMonth.setText(purchasedAt.split('.')[1])
                     binding.purchasedAtDate.setText(purchasedAt.split('.')[2])
-                    binding.name.setText(value.data?.get("name") as String)                   // 상품명
+                    binding.name.setText(value.data?.get("foodName") as String)                   // 상품명
                     binding.region.setText(value.data?.get("region") as String)               // 지역
                     binding.location.setText(value.data?.get("location") as String)           // 거래희망위치
                     binding.context.setText(value.data?.get("content") as String)             // 게시글내용
@@ -416,7 +416,7 @@ class ShareUpdateActivity : AppCompatActivity() {
     }
 
     // 데이터 저장
-    private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
+    private fun addPostDB(title: String, purchasedAt: String, deadline: String, foodName: String, region: String,
                           location: String, content: String){
         //유저가 존재한다면
         if (user != null){
@@ -424,7 +424,7 @@ class ShareUpdateActivity : AppCompatActivity() {
             //게시글 등록 날짜
             nowdate = LocalDate.now()
             date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-            createdAt = date.toString()
+            postedAt = date.toString()
 
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
@@ -434,19 +434,20 @@ class ShareUpdateActivity : AppCompatActivity() {
             db?.collection("post")?.document("$postId")
                 ?.set(
                     hashMapOf(
-                        "index" to postId,
+                        "postId" to postId,
                         "writer" to user?.uid,
                         "title" to title,
-                        "name" to name,
+                        "foodName" to foodName,
                         "deadline" to deadline,
                         "purchasedAt" to purchasedAt,
                         "region" to region,
                         "location" to location,
                         "content" to content,
-                        "createdAt" to createdAt,
-                        "dateTime" to dateTime,
-                        "flag" to false,
-                        "done" to false
+                        "postedAt" to postedAt,
+//                        "fridgeToss" to false,
+//                        "createdAt" to dateTime,
+                        "updatedAt" to dateTime
+//                        "status" to "active"
                     )
                 )
                 ?.addOnSuccessListener {
