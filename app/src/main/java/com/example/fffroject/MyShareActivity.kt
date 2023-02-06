@@ -27,6 +27,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_share.*
 import java.util.ArrayList
 
+// 나의 나눔
 class MyShareActivity: AppCompatActivity() {
     // 바인딩 객체
     lateinit var binding: ActivityMyshareBinding
