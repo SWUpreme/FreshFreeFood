@@ -48,23 +48,25 @@ data class PostDetail(
 
 // 식품 리스트 데이터
 data class FoodList(
-    var index : String? = null,
-    var name : String? = null,
+    var foodId : String? = null,
+    var foodName : String? = null,
     var deadline : String? = null,
     var purchaseAt : String? = null,
     var count : Int = 0,
-    var done :  Boolean = false
+    var status :  String? = null,
+    var createdAt : String? = null,
+    var updatedAt : String? = null
 )
 
 //입력
-data class food(
-    var name :String? = null,
-    var deadline : String? = null,
-    var purchasedAt : String? = null,
-    var count : String? = null,
-    var addTime : String? = null
-
-)
+//data class food(
+//    var name :String? = null,
+//    var deadline : String? = null,
+//    var purchasedAt : String? = null,
+//    var count : String? = null,
+//    var addTime : String? = null
+//
+//)
 
 // 채팅방
 data class ChatRoom(
