@@ -108,14 +108,14 @@ class ExRecyclerView : AppCompatActivity(), MyCustomDialogInterface {
             var food_dday: TextView
             var food_delete: TextView
 
-            var food_index = foodlist!![position].index.toString()
+            var food_index = foodlist!![position].foodId.toString()
 
             food_name = viewHolder.findViewById(R.id.exFoodName)
 
             food_delete = viewHolder.findViewById(R.id.foodRemove)
 
             // 리사이클러뷰 아이템 정보
-            food_name.text = foodlist!![position].name
+            food_name.text = foodlist!![position].foodName
 
             // 삭제 텍스트뷰 클릭시 토스트 표시
             food_delete.setOnClickListener {
