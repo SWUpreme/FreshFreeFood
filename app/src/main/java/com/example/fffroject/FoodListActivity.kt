@@ -378,7 +378,19 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
-        firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
+        firestore?.collection("fridge")?.document(index.toString())?.collection("food")
+            ?.document(foodindex)?.get()
+            ?.addOnSuccessListener { document ->
+                if (document != null) {
+                    var foodcount = document.data?.get("count").toString().toDouble()
+                    firestore?.collection("user")?.document(user!!.uid)?.update("eatCount", FieldValue.increment(foodcount))
+                }
+            }
+        //firestore?.collection("user")?.document(user!!.uid)?.update("eatCount", FieldValue.increment(1))
+        firestore?.collection("user")?.document(user!!.uid)?.update("updatedAt", dateTime)
         // 비어있는 경우 업데이트가 안되어서 If문으로 수정
         // 처음에 loadData에서 시도했으나 음식이 없는 경우 foodlist가 아예 생성이 안되어 한개 있는걸 할 때로 변경
         // 따라서 deleteFood에도 적용시켜주어야 함
@@ -397,9 +409,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
-            ?.delete()
+            ?.update("status", "eatDone")
             ?.addOnSuccessListener { Toast.makeText(this, "냉장고 털기 횟수가 증가했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)
+            ?.update("updatedAt", dateTime)
     }
 
     fun foodDelete(foodindex: String) {
