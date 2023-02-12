@@ -376,6 +376,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
+    // 수정완료
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
         val nowTime = System.currentTimeMillis()
@@ -389,7 +390,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     firestore?.collection("user")?.document(user!!.uid)?.update("eatCount", FieldValue.increment(foodcount))
                 }
             }
-        //firestore?.collection("user")?.document(user!!.uid)?.update("eatCount", FieldValue.increment(1))
         firestore?.collection("user")?.document(user!!.uid)?.update("updatedAt", dateTime)
         // 비어있는 경우 업데이트가 안되어서 If문으로 수정
         // 처음에 loadData에서 시도했으나 음식이 없는 경우 foodlist가 아예 생성이 안되어 한개 있는걸 할 때로 변경
@@ -418,6 +418,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     }
 
     fun foodDelete(foodindex: String) {
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
         if (foodcount == 1) {
             // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -431,11 +434,21 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 ?.addOnSuccessListener { }
                 ?.addOnFailureListener { }
         }
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.update("updatedAt", dateTime)
+            ?.addOnSuccessListener { }
+            ?.addOnFailureListener { }
 
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
-            ?.delete()
+            ?.update("status", "delete")
             ?.addOnSuccessListener { Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show() }
+            ?.addOnFailureListener { }
+
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)
+            ?.update("updatedAt", dateTime)
+            ?.addOnSuccessListener { }
             ?.addOnFailureListener { }
     }
 
