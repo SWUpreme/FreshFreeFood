@@ -454,14 +454,24 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     fun countMinus(foodindex: String, count: Int) {
         if (count > 1) {
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(-1))
+            firestore?.collection("fridge")?.document(index.toString())
+                ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
         }
     }
 
     fun countPlus(foodindex: String, count: Int) {
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
     }
 
     // 무료 나눔 포스트 작성 페이지로 데이터 전달
