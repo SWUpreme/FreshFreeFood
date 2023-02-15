@@ -172,7 +172,7 @@ class EnvlevelFragment: Fragment() {
             firestore?.collection("user")?.document(user!!.uid)
                 ?.get()?.addOnSuccessListener { document ->
                     if (document != null) {
-                        envpercent = document?.data?.get("contribution").toString().toInt()
+                        envpercent = document?.data?.get("eatCount").toString().toInt()
                         sharepoint = document?.data?.get("sharepoint").toString().toInt()
 
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
@@ -195,18 +195,25 @@ class EnvlevelFragment: Fragment() {
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
                         // 현재 년.월 받아오기
                         var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+                        val nowTime = System.currentTimeMillis()
+                        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                        val dateTime = timeformatter.format(nowTime)
                         //var nowyear = nowdate.split(".").get(0)
                         var nowmonth = nowdate.split(".")?.get(1)
                         text_nowmonth.setText(nowmonth + "월!")
-                        logindate = document?.data?.get("login").toString()
+                        logindate = document?.data?.get("loginDate").toString()
                         logindate = logindate.split(".")?.get(0) + "." + logindate.split(".")?.get(1)
                         if ((nowdate.split(".").get(0) + "." + nowdate.split(".").get(1))!=logindate){
                             firestore?.collection("user")?.document(user!!.uid)
-                                ?.update("contribution", 0)
+                                ?.update("eatCount", 0)
                                 ?.addOnSuccessListener { loadEnvLev() }
                                 ?.addOnFailureListener { }
                             firestore?.collection("user")?.document(user!!.uid)
-                                ?.update("login", nowdate)
+                                ?.update("loginDate", dateTime)
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("updatedAt", dateTime)
                                 ?.addOnSuccessListener { }
                                 ?.addOnFailureListener { }
                         }
