@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import kotlin.math.log
 
 class MypageFragment : Fragment() {
@@ -129,10 +130,17 @@ class MypageFragment : Fragment() {
         btn_nickname_fix.setOnClickListener {
             if(edt_mypage_nickname.length() > 0) {
                 if(user != null) {
+                    val nowTime = System.currentTimeMillis()
+                    val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                    val dateTime = timeformatter.format(nowTime)
                     firestore?.collection("user")?.document(user!!.uid)
                         ?.update("nickname", edt_mypage_nickname.text.toString())
                         ?.addOnSuccessListener { Toast.makeText(context, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                            nicknamealertDialog?.dismiss()}
+                            nicknamealertDialog?.dismiss()
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("updatedAt", dateTime)
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }}
                         ?.addOnFailureListener { Toast.makeText(context, "다시 입력해 주세요.", Toast.LENGTH_SHORT).show() }
                 }
             }
