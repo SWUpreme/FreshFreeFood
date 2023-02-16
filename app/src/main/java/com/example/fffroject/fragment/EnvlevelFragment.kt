@@ -202,14 +202,24 @@ class EnvlevelFragment: Fragment() {
                         var nowmonth = nowdate.split(".")?.get(1)
                         text_nowmonth.setText(nowmonth + "월!")
                         logindate = document?.data?.get("loginDate").toString()
-                        logindate = logindate.split(".")?.get(0) + "." + logindate.split(".")?.get(1)
-                        if ((nowdate.split(".").get(0) + "." + nowdate.split(".").get(1))!=logindate){
+                        var loginmonth = logindate.split(".")?.get(0) + "." + logindate.split(".")?.get(1)
+                        if ((nowdate.split(".").get(0) + "." + nowdate.split(".").get(1))!= loginmonth){
                             firestore?.collection("user")?.document(user!!.uid)
                                 ?.update("eatCount", 0)
                                 ?.addOnSuccessListener { loadEnvLev() }
                                 ?.addOnFailureListener { }
                             firestore?.collection("user")?.document(user!!.uid)
-                                ?.update("loginDate", dateTime)
+                                ?.update("loginDate", nowdate)
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("updatedAt", dateTime)
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                        }
+                        else if (nowdate != logindate) {
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("loginDate", nowdate)
                                 ?.addOnSuccessListener { }
                                 ?.addOnFailureListener { }
                             firestore?.collection("user")?.document(user!!.uid)
