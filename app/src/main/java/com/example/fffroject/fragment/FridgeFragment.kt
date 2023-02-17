@@ -429,10 +429,7 @@ class FridgeFragment : Fragment() {
                         }
                         ?.addOnFailureListener {
                             Toast.makeText(
-                                context,
-                                "다시 입력해 주세요.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                context,"다시 입력해 주세요.",Toast.LENGTH_SHORT).show()
                         }
                     // 멤버의 냉장고 이름도 변경해주기
                     var membercount = 0
@@ -446,7 +443,7 @@ class FridgeFragment : Fragment() {
                                 // 멤버의 myfridge의 냉장고명 바꿔주기
                                 for (count: Int in 0..(membercount - 1)) {
                                     var doc = task.documents?.get(count)
-                                    var memberuid = doc.get("uid").toString()
+                                    var memberuid = doc.get("userId").toString()
                                     firestore?.collection("user")?.document(memberuid)
                                         ?.collection("myfridge")
                                         ?.document(fridgeId)
