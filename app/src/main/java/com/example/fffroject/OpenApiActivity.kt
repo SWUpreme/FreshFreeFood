@@ -99,7 +99,7 @@ class OpenApiActivity : AppCompatActivity() {
 
                             //식품 시간순 정렬
                             val nowTime = System.currentTimeMillis()
-                            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
                             val dateTime = timeformatter.format(nowTime)
 
                             if (d_day.toInt() >= 0){

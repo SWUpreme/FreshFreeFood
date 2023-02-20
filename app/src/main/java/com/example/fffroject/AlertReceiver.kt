@@ -90,16 +90,17 @@ class AlertReceiver : BroadcastReceiver() {
 
                         // 해당하는 나의 냉장고에서 냉장고id 받아오기
                         var docindex = task.result.documents?.get(i)
-                        fridgeindex = docindex?.get("index").toString()
+                        fridgeindex = docindex?.get("fridgeId").toString()
 
                         // 해당하는 나의 냉장고에서 냉장고 이름 받아오기
                         var docname = task.result.documents?.get(i)
-                        fridgename = docname?.get("name").toString()
+                        fridgename = docname?.get("fridgeName").toString()
 
 
                         //index를 가지고 food에 접근
                         firestore?.collection("fridge")?.document("$fridgeindex")
                             ?.collection("food")
+                            ?.whereEqualTo("status", "active")
                             ?.orderBy("deadline", Query.Direction.ASCENDING) //유통기한 임박순
                             ?.get()
                             ?.addOnSuccessListener() { task ->
@@ -118,8 +119,8 @@ class AlertReceiver : BroadcastReceiver() {
                                         mazinoname = sheet.get("foodName").toString()  //식품 이름 가져오기
 
                                         val contentIntent = Intent(context, FoodListActivity::class.java)
-                                        contentIntent.putExtra("index", fridgeindex) //인덱스
-                                        contentIntent.putExtra("name", fridgename)  //이름
+                                        contentIntent.putExtra("fridgeId", fridgeindex) //인덱스
+                                        contentIntent.putExtra("fridgeName", fridgename)  //이름
 
                                         val contentPendingIntent = PendingIntent.getActivity(
                                             context,
@@ -142,44 +143,74 @@ class AlertReceiver : BroadcastReceiver() {
                                             NOTIFICATION_ID,
                                             builder1.build()
                                         )
+
+                                        //냉장고 음식이 모두 유통기한이 지났을 시
+                                        if (current < nowdate) {
+                                            val contentIntent = Intent(context, FoodListActivity::class.java)
+                                            contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
+                                            contentIntent.putExtra("fridgeName", fridgename)    //이름
+
+                                            val contentPendingIntent = PendingIntent.getActivity(
+                                                context,
+                                                NOTIFICATION_ID, // requestCode
+                                                contentIntent, // 알림 클릭 시 이동할 인텐트
+                                                PendingIntent.FLAG_MUTABLE
+                                            )
+
+                                            //NotificationCompat.Builder 객체
+                                            val builder2 =
+                                                NotificationCompat.Builder(context, CHANNEL_ID)
+                                                    .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+                                                    .setContentTitle("FFF") // 제목
+                                                    .setContentText("유통기한이 지난 식품이 있어요...") // 내용
+                                                    .setContentIntent(contentPendingIntent)
+                                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                                    .setAutoCancel(true)
+                                                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                                            notificationManager?.notify(
+                                                NOTIFICATION_ID,
+                                                builder2.build()
+                                            )
+                                            Log.d("성공:", "${current}")
+                                        }
                                     }
 
-                                    //냉장고 음식이 모두 유통기한이 지났을 시
-                                    if (current < nowdate) {
-                                        val contentIntent = Intent(context, FoodListActivity::class.java)
-                                        contentIntent.putExtra("index", fridgeindex)  //인덱스
-                                        contentIntent.putExtra("name", fridgename)    //이름
-
-                                        val contentPendingIntent = PendingIntent.getActivity(
-                                            context,
-                                            NOTIFICATION_ID, // requestCode
-                                            contentIntent, // 알림 클릭 시 이동할 인텐트
-                                            PendingIntent.FLAG_MUTABLE
-                                        )
-
-                                        //NotificationCompat.Builder 객체
-                                        val builder2 =
-                                            NotificationCompat.Builder(context, CHANNEL_ID)
-                                                .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-                                                .setContentTitle("FFF") // 제목
-                                                .setContentText("유통기한이 지난 식품이 있어요...") // 내용
-                                                .setContentIntent(contentPendingIntent)
-                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                                .setAutoCancel(true)
-                                                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                                        notificationManager?.notify(
-                                            NOTIFICATION_ID,
-                                            builder2.build()
-                                        )
-                                        Log.d("성공:", "${compare}")
-                                    }
+//                                    //냉장고 음식이 모두 유통기한이 지났을 시
+//                                    if (current < nowdate) {
+//                                        val contentIntent = Intent(context, FoodListActivity::class.java)
+//                                        contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
+//                                        contentIntent.putExtra("fridgeName", fridgename)    //이름
+//
+//                                        val contentPendingIntent = PendingIntent.getActivity(
+//                                            context,
+//                                            NOTIFICATION_ID, // requestCode
+//                                            contentIntent, // 알림 클릭 시 이동할 인텐트
+//                                            PendingIntent.FLAG_MUTABLE
+//                                        )
+//
+//                                        //NotificationCompat.Builder 객체
+//                                        val builder2 =
+//                                            NotificationCompat.Builder(context, CHANNEL_ID)
+//                                                .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+//                                                .setContentTitle("FFF") // 제목
+//                                                .setContentText("유통기한이 지난 식품이 있어요...") // 내용
+//                                                .setContentIntent(contentPendingIntent)
+//                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                                                .setAutoCancel(true)
+//                                                .setDefaults(NotificationCompat.DEFAULT_ALL)
+//                                        notificationManager?.notify(
+//                                            NOTIFICATION_ID,
+//                                            builder2.build()
+//                                        )
+//                                        Log.d("성공:", "${compare}")
+//                                    }
                                 }
 
                                 //냉장고에 음식 없을 시
                                 if (mazinoname == "") {
                                     val contentIntent = Intent(context, FoodListActivity::class.java)
-                                    contentIntent.putExtra("index", fridgeindex)  //인덱스
-                                    contentIntent.putExtra("name", fridgename)    //이름
+                                    contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
+                                    contentIntent.putExtra("fridgeName", fridgename)    //이름
 
                                     val contentPendingIntent = PendingIntent.getActivity(
                                         context,
