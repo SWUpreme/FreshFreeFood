@@ -20,6 +20,13 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".KeywordActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ChatSendExistActivity"
             android:exported="false" />
         <activity
@@ -92,17 +99,7 @@
         <activity
             android:name=".SharePointActivity"
             android:exported="true" />
-        <activity
-            android:name=".BarCodeActivity"
-            android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity
             android:name=".AuthActivity"
             android:exported="true"
