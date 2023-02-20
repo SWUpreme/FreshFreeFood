@@ -712,12 +712,22 @@ class FridgeFragment : Fragment() {
                             if (membercount != 0) {
                                 for (count: Int in 0..(membercount - 1)) {
                                     var doc = task.documents?.get(count)
-                                    //var memberuid = doc.data?.get("uid").toString()
+                                    var memberuid = doc.data?.get("userId").toString()
                                     var membernickname = doc.data?.get("memNickname").toString()
-                                    var memberstatus = doc.data?.get("status").toString()
-//                                    firestore?.collection("user")?.document(memberuid)?.get()
-//                                        ?.addOnSuccessListener { tasks ->
-//                                            var memname = tasks.data?.get("nickname").toString()
+//                                    var memberstatus = doc.data?.get("status").toString()
+                                    firestore?.collection("user")?.document(memberuid)?.get()
+                                        ?.addOnSuccessListener { tasks ->
+                                            var memname = tasks.data?.get("nickname").toString()
+                                            var memberstatus = tasks.data?.get("status").toString()
+                                            if (memberstatus == "active") {
+                                                if (text_name == "") {
+                                                    text_name = memname
+                                                }
+                                                else {
+                                                    text_name = text_name + "\n\n" + memname
+                                                }
+                                                text_member.setText(text_name)
+                                            }
 //                                            if (count == 0) {
 //                                                text_name = memname
 //                                            }
@@ -725,16 +735,27 @@ class FridgeFragment : Fragment() {
 //                                                text_name = text_name + "\n\n" + memname
 //                                            }
 //                                            text_member.setText(text_name)
+////                                            if (count == 0) {
+////                                                Toast.makeText(context, count.toString(), Toast.LENGTH_SHORT).show()
+////                                                if (memberstatus == "active")
+////                                                    text_name = memname
+////                                            }
+////                                            else {
+////
+////                                                if (memberstatus == "active")
+////                                                    text_name = text_name + "\n\n" + memname
+////                                            }
+////                                            text_member.setText(text_name)
+                                        }
+//                                    if (memberstatus == "active") {
+//                                        if (text_name == "") {
+//                                            text_name = membernickname
 //                                        }
-                                    if (memberstatus == "active") {
-                                        if (count == 0) {
-                                            text_name = membernickname
-                                        }
-                                        else {
-                                            text_name = text_name + "\n\n" + membernickname
-                                        }
-                                        text_member.setText(text_name)
-                                    }
+//                                        else {
+//                                            text_name = text_name + "\n\n" + membernickname
+//                                        }
+//                                        text_member.setText(text_name)
+//                                    }
 
                                 }
                             }
