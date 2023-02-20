@@ -427,7 +427,7 @@ class ShareUpdateActivity : AppCompatActivity() {
             postedAt = date.toString()
 
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
             val dateTime = timeformatter.format(nowTime)
 
             // 변경 db 내용

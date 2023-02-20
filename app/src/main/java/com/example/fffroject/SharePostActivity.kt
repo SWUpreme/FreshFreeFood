@@ -391,7 +391,7 @@ class SharePostActivity : AppCompatActivity() {
             postedAt = date
 
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
             val dateTime = timeformatter.format(nowTime)
 
             //db 전송

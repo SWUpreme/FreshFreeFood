@@ -51,7 +51,7 @@ class ChatActivity : AppCompatActivity() {
         val simpleTime = dateFormat.format(time)
 
         val nowTime = System.currentTimeMillis()
-        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
         val fullTime = timeformatter.format(nowTime)
 
         //toolbar 쪽지 보내기 눌렀을 때
