@@ -18,7 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_sharedetail.*
 
-
+// 상세 나눔
 class ShareDetailActivity: AppCompatActivity()  {
 
     val TAG: String = "로그"
@@ -117,9 +117,9 @@ class ShareDetailActivity: AppCompatActivity()  {
                     binding.detailTitle.text = item?.title!!
                     binding.detailRegion.text = item?.region!!
                     binding.detailLocation.text = item?.location!!
-                    binding.detailName.text = item?.name!!
+                    binding.detailName.text = item?.foodName!!
                     binding.detailDeadline.text = item?.deadline!!
-                    binding.detailCreatedAt.text = item?.createdAt!!
+                    binding.detailCreatedAt.text = item?.postedAt!!
                     binding.detailPurchasedAt.text = item?.purchasedAt!!
                     binding.detailContent.text = item?.content!!
 

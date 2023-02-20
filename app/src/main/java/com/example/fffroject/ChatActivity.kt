@@ -7,11 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.example.fffroject.fragment.MyChat
-import com.example.fffroject.fragment.MyFridge
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,14 +22,14 @@ class ChatActivity : AppCompatActivity() {
     var user: FirebaseUser? = null
 
     // sharedetail 액티비티에서 받아온 것
-    var postid: String? = null
+    var postId: String? = null
     var giver: String? = null
     var chatCount : Int  =0       // 채팅 개수
 
     // 바인딩
     lateinit var Chatcontent: EditText
-    lateinit var chatroomid: String
-    lateinit var chatid: String
+    lateinit var chatroomId: String
+    lateinit var chatId: String
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +43,16 @@ class ChatActivity : AppCompatActivity() {
         Chatcontent = findViewById(R.id.ChatContent)
 
         //ShareDetail에서 받아 온 인덱스
-        postid = intent.getStringExtra("detailIndex")!!     // 포스트 아이디
+        postId = intent.getStringExtra("detailIndex")!!     // 포스트 아이디
         giver = intent.getStringExtra("detailWriter")!!        // 나눔자 아이디
 
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM/dd hh:mm")
-        val curTime = dateFormat.format(time)
+        val simpleTime = dateFormat.format(time)
+
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val fullTime = timeformatter.format(nowTime)
 
         //toolbar 쪽지 보내기 눌렀을 때
         toolbChat.setOnMenuItemClickListener {
@@ -63,26 +63,29 @@ class ChatActivity : AppCompatActivity() {
                         if (user != null) {
                             // 유저의 채팅에 같은 게시글에서 작성된 쪽지의 존재 여부 확인
                             db?.collection("user")?.document(user?.uid!!)?.collection("mychat")
-                                ?.whereEqualTo("postid", postid)?.get()
+                                ?.whereEqualTo("postId", postId)?.get()
                                 ?.addOnCompleteListener { task ->
 
-                                    chatid = UUID.randomUUID().toString()            // 채팅 아이디 생성
+                                    chatId = UUID.randomUUID().toString()            // 채팅 아이디 생성
 
                                     // 기존에 채팅방이 존재하지 않는다면
                                     if (task.result?.size() == 0) {
                                         Log.d("chatError", "사이즈가 영입니다")
-                                        chatroomid = UUID.randomUUID().toString()
+                                        chatroomId = UUID.randomUUID().toString()
 
                                         // chatroom에 채팅방 생성
-                                        db?.collection("chatroom")?.document("$chatroomid")
+                                        db?.collection("chatroom")?.document("$chatroomId")
                                             ?.set(
                                                 hashMapOf(
-                                                    "index" to chatroomid,
-                                                    "postid" to postid,
+                                                    "chatroomId" to chatroomId,
+                                                    "postId" to postId,
                                                     "context" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
-                                                    "sendedAt" to curTime
+                                                    "sendedAt" to simpleTime,
+                                                    "createdAt" to fullTime,
+                                                    "updatedAt" to fullTime,
+                                                    "status" to "active"
                                                 )
                                             )
                                             ?.addOnSuccessListener {
@@ -93,17 +96,20 @@ class ChatActivity : AppCompatActivity() {
                                             }
 
                                         // chatroom에 새로운 채팅 생성
-                                        db?.collection("chatroom")?.document("$chatroomid")
-                                            ?.collection("chat")?.document("$chatid")
+                                        db?.collection("chatroom")?.document("$chatroomId")
+                                            ?.collection("chat")?.document("$chatId")
                                             ?.set(
                                                 hashMapOf(
-                                                    "index" to chatid,
+                                                    "chatId" to chatId,
                                                     "context" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
-                                                    "wroteId" to user?.uid,
-                                                    "sendedAt" to curTime,
-                                                    "count" to chatCount
+                                                    "writer" to user?.uid,
+                                                    "sendedAt" to simpleTime,
+                                                    "count" to chatCount,
+                                                    "createdAt" to fullTime,
+                                                    "updatedAt" to fullTime,
+                                                    "status" to "active"
                                                 )
                                             )
                                             ?.addOnSuccessListener {}
@@ -112,16 +118,19 @@ class ChatActivity : AppCompatActivity() {
                                         // 내 mychat에 새로운 채팅방 생성
                                         db?.collection("user")?.document(user!!.uid)
                                             ?.collection("mychat")
-                                            ?.document("$chatroomid")
+                                            ?.document("$chatroomId")
                                             ?.set(
                                                 hashMapOf(
-                                                    "index" to chatroomid,
-                                                    "postid" to postid,
+                                                    "chatroomId" to chatroomId,
+                                                    "postId" to postId,
                                                     "context" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "opponentId" to giver,
-                                                    "sendedAt" to curTime
+                                                    "sendedAt" to simpleTime,
+                                                    "createdAt" to fullTime,
+                                                    "updatedAt" to fullTime,
+                                                    "status" to "active"
                                                 )
                                             )
                                             ?.addOnSuccessListener {}
@@ -130,16 +139,19 @@ class ChatActivity : AppCompatActivity() {
                                         // 상대방 mychat에 새로운 채팅방 생성
                                         db?.collection("user")?.document(giver.toString())
                                             ?.collection("mychat")
-                                            ?.document("$chatroomid")
+                                            ?.document("$chatroomId")
                                             ?.set(
                                                 hashMapOf(
-                                                    "index" to chatroomid,
-                                                    "postid" to postid,
+                                                    "chatroomId" to chatroomId,
+                                                    "postId" to postId,
                                                     "context" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "opponentId" to giver,
-                                                    "sendedAt" to curTime
+                                                    "sendedAt" to simpleTime,
+                                                    "createdAt" to fullTime,
+                                                    "updatedAt" to fullTime,
+                                                    "status" to "active"
                                                 )
                                             )
                                             ?.addOnSuccessListener {}
@@ -151,26 +163,29 @@ class ChatActivity : AppCompatActivity() {
 
                                         // 해당하는 나의 채팅창을 찾아서(포스트 인덱스로) 채팅룸id 받아오기
                                         var doc = task.result.documents?.get(0)
-                                        chatroomid = doc?.get("index").toString()
+                                        chatroomId = doc?.get("index").toString()
 
                                         // 채팅방 내의 채팅 개수 세기
-                                        db?.collection("chatroom")?.document("$chatroomid")
+                                        db?.collection("chatroom")?.document("$chatroomId")
                                             ?.collection("chat")
                                             ?.get()
                                             ?.addOnSuccessListener() { task ->
                                                 chatCount= task.size()+1
                                                 // 전체 채팅룸에 채팅 올리기
-                                                db?.collection("chatroom")?.document("$chatroomid")
-                                                    ?.collection("chat")?.document("$chatid")
+                                                db?.collection("chatroom")?.document("$chatroomId")
+                                                    ?.collection("chat")?.document("$chatId")
                                                     ?.set(
                                                         hashMapOf(
-                                                            "index" to chatid,
+                                                            "chatId" to chatId,
                                                             "context" to Chatcontent.text.toString(),
                                                             "taker" to user?.uid,
                                                             "giver" to giver,
-                                                            "wroteId" to user?.uid,
-                                                            "sendedAt" to curTime,
-                                                            "count" to  chatCount
+                                                            "writer" to user?.uid,
+                                                            "sendedAt" to simpleTime,
+                                                            "count" to  chatCount,
+                                                            "createdAt" to fullTime,
+                                                            "updatedAt" to fullTime,
+                                                            "status" to "active"
                                                         )
                                                     )
                                                     ?.addOnSuccessListener {
@@ -182,10 +197,10 @@ class ChatActivity : AppCompatActivity() {
                                             }
 
                                         // 나의 최신 채팅/채팅시간 업데이트
-                                        db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomid!!)
+                                        db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
-                                                "sendedAt", curTime
+                                                "sendedAt", simpleTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -193,10 +208,10 @@ class ChatActivity : AppCompatActivity() {
                                             }
 
                                         // 상대의 최신 채팅/채팅시간 업데이트
-                                        db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomid!!)
+                                        db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
-                                                "sendedAt", curTime
+                                                "sendedAt", simpleTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -204,10 +219,10 @@ class ChatActivity : AppCompatActivity() {
                                             }
 
                                         // 채팅룸의 최신 채팅/채팅시간 업데이트
-                                        db?.collection("chatroom")?.document("$chatroomid")
+                                        db?.collection("chatroom")?.document("$chatroomId")
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
-                                                "sendedAt", curTime
+                                                "sendedAt", simpleTime
                                             )
                                             ?.addOnSuccessListener {
                                             }

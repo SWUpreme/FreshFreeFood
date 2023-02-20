@@ -13,16 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.databinding.ActivityChatDetailBinding
-import com.example.fffroject.databinding.ActivityChatListBinding
-import com.example.fffroject.databinding.DialogDeletepostBinding
 import com.example.fffroject.databinding.DialogSharedoneBinding
 import com.example.fffroject.fragment.ChatDetail
-import com.example.fffroject.fragment.ChatRoom
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -41,8 +37,8 @@ class ChatDetailActivity : AppCompatActivity() {
     // 리사이클러뷰
     lateinit var recyclerview: RecyclerView
     // 인텐트
-    var chatroomIndex: String? = null
-    var postIndex: String? = null
+    var chatroomId: String? = null
+    var postId: String? = null
     var giverId: String? = null
     var takerId: String? = null
     var opponentId: String? = null
@@ -60,8 +56,8 @@ class ChatDetailActivity : AppCompatActivity() {
         user = auth!!.currentUser
         db = FirebaseFirestore.getInstance()                             // 파이어베이스 인스턴스 초기화
         // 인텐트
-        chatroomIndex = intent.getStringExtra("chatroomIndex")      // 채팅방 아이디
-        postIndex = intent.getStringExtra("postIndex")              // 포스트 아이디
+        chatroomId = intent.getStringExtra("chatroomIndex")      // 채팅방 아이디
+        postId = intent.getStringExtra("postIndex")              // 포스트 아이디
         opponentId = intent.getStringExtra("opponentId")            // 상대방 아이디
         giverId = intent.getStringExtra("giverId")                  // 나눔자 아이디
         takerId = intent.getStringExtra("takerId")                  // 피나눔자 아이디
@@ -84,8 +80,8 @@ class ChatDetailActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.btnChatContent -> {
                     val intent = Intent(this, ChatSendExistActivity::class.java)
-                    intent.putExtra("chatroomId", chatroomIndex)
-                    intent.putExtra("postId", postIndex)
+                    intent.putExtra("chatroomId", chatroomId)
+                    intent.putExtra("postId", postId)
                     intent.putExtra("opponentId", opponentId)
                     intent.putExtra("giverId", giverId)
                     intent.putExtra("takerId", takerId)
@@ -99,13 +95,13 @@ class ChatDetailActivity : AppCompatActivity() {
         // 거래완료 버튼
         binding.btnShareComplete.setOnClickListener{
             // 거래완료 다이얼로그 생성
-            showDialogDelete(postIndex.toString())
+            showDialogDelete(postId.toString())
         }
 
         // 별점 보내기 버튼
         binding.btnSendStar.setOnClickListener{
             // 별점 보내기 완료로 변경
-            db?.collection("post")?.document(postIndex.toString())
+            db?.collection("post")?.document(postId.toString())
                 ?.update(
                     "pointDone", true
                 )
@@ -114,7 +110,7 @@ class ChatDetailActivity : AppCompatActivity() {
             val intent = Intent(this, SharePointActivity::class.java)
             intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
             intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
-            intent.putExtra("postIndex", postIndex)                     // 포스트 인덱스
+            intent.putExtra("postIndex", postId)                     // 포스트 인덱스
             ContextCompat.startActivity(this, intent, null)
         }
     }
@@ -145,7 +141,7 @@ class ChatDetailActivity : AppCompatActivity() {
             tfContext = viewHolder.findViewById(R.id.chatDetailContext)
             tfTime = viewHolder.findViewById(R.id.chatDetailTime)
 
-            var wroteId = chatDetailList!![position].wroteId
+            var wroteId = chatDetailList!![position].writer
             tfContext.text = chatDetailList!![position].context
             tfTime.text = chatDetailList!![position].sendedAt
 
@@ -168,9 +164,9 @@ class ChatDetailActivity : AppCompatActivity() {
     fun loadChatDetail() {
         if (user != null) {
             // 채팅 불러오기
-            db?.collection("chatroom")?.document(chatroomIndex.toString())
+            db?.collection("chatroom")?.document(chatroomId.toString())
                 ?.collection("chat")
-                ?.orderBy("count", Query.Direction.DESCENDING)
+                ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     chatDetailList.clear()
                     if (value != null) {
@@ -191,7 +187,7 @@ class ChatDetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun loadPostName(){
         if (user != null) {
-            db?.collection("post")?.document(postIndex.toString())?.get()
+            db?.collection("post")?.document(postId.toString())?.get()
                 ?.addOnSuccessListener { value ->
                     var title = value.data?.get("title") as String
                     binding.chatDetailContext.text = "\"$title\" 글을 통해 시작된 쪽지입니다."
@@ -206,7 +202,7 @@ class ChatDetailActivity : AppCompatActivity() {
             if(giverId==user!!.uid){
                 // 유저가 나눔자라면
                 if (user != null) {
-                    db?.collection("post")?.document(postIndex.toString())?.get()
+                    db?.collection("post")?.document(postId.toString())?.get()
                         ?.addOnSuccessListener { value ->
                             var done = value.data?.get("done")
                             if(done == true){
@@ -223,7 +219,7 @@ class ChatDetailActivity : AppCompatActivity() {
             }else{
                 // 유저가 피나눔자라면
                 if (user != null) {
-                    db?.collection("post")?.document(postIndex.toString())?.get()
+                    db?.collection("post")?.document(postId.toString())?.get()
                         ?.addOnSuccessListener { value ->
                             var done = value.data?.get("done")            // 나눔완료 변수
                             var pointDone = value.data?.get("pointDone")  // 포인트 주기 완료 변수

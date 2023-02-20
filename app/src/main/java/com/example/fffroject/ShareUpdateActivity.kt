@@ -427,29 +427,25 @@ class ShareUpdateActivity : AppCompatActivity() {
             postedAt = date.toString()
 
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
             val dateTime = timeformatter.format(nowTime)
+
+            // 변경 db 내용
+            var map= mutableMapOf<String,Any>()
+            map["postId"] = postId
+            map["title"] = title
+            map["foodName"] = foodName
+            map["deadline"] = deadline
+            map["purchasedAt"] = purchasedAt
+            map["region"] = region
+            map["location"] = location
+            map["content"] = content
+            map["postedAt"] = postedAt
+            map["updatedAt"] = dateTime
 
             //db 전송
             db?.collection("post")?.document("$postId")
-                ?.set(
-                    hashMapOf(
-                        "postId" to postId,
-                        "writer" to user?.uid,
-                        "title" to title,
-                        "foodName" to foodName,
-                        "deadline" to deadline,
-                        "purchasedAt" to purchasedAt,
-                        "region" to region,
-                        "location" to location,
-                        "content" to content,
-                        "postedAt" to postedAt,
-//                        "fridgeToss" to false,
-//                        "createdAt" to dateTime,
-                        "updatedAt" to dateTime
-//                        "status" to "active"
-                    )
-                )
+                ?.update(map)
                 ?.addOnSuccessListener {
                     //  스토리지에 데이터 저장 후 postId값으로 스토리지에 이미지 업로드
                     if(isImageChange){

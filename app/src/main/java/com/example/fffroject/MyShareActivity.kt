@@ -25,6 +25,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_share.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 import java.util.ArrayList
 
 // 나의 나눔
@@ -156,6 +159,7 @@ class MyShareActivity: AppCompatActivity() {
         if (user != null) {
             db?.collection("post")
                 ?.whereEqualTo("writer", user?.uid.toString())
+                ?.whereEqualTo("status", "active")
                 ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     postAllList.clear()
@@ -241,13 +245,24 @@ class MyShareActivity: AppCompatActivity() {
 
         // 삭제 확인 버튼
         dialogBinding.btnPostDelete.setOnClickListener(View.OnClickListener {
+            //게시글 등록 날짜
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
+
+            var map= mutableMapOf<String,Any>()
+            map["status"] = "delete"
+            map["updatedAt"] = dateTime
+
             db?.collection("post")?.document(postId)
-                ?.delete()
+                ?.update(map)
                 ?.addOnSuccessListener {
                     Toast.makeText(this, "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
                 ?.addOnFailureListener { }
             alertDialog.dismiss()
+
+
         })
     }
 }

@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.util.*
 
+// 무료나눔 전체 리사이클러뷰
 class ShareFragment : Fragment() {
     // 파이어스토어
     var auth: FirebaseAuth? = null

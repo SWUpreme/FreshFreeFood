@@ -12,21 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.databinding.ActivityChatListBinding
-import com.example.fffroject.databinding.ActivityMyshareBinding
 import com.example.fffroject.fragment.ChatRoom
 import com.example.fffroject.fragment.CustomDiverItemDecoration
-import com.example.fffroject.fragment.MyChat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_chat_list.*
-import kotlinx.android.synthetic.main.activity_myshare.*
-import kotlinx.android.synthetic.main.activity_myshare.txtNoRegion
-import kotlinx.android.synthetic.main.activity_sharedetail.*
-import kotlinx.android.synthetic.main.fragment_share.*
-import kotlinx.android.synthetic.main.item_chat_list.*
 
 class ChatListActivity : AppCompatActivity() {
     // 바인딩 객체
@@ -88,10 +79,10 @@ class ChatListActivity : AppCompatActivity() {
             var chatTime: TextView = viewHolder.findViewById(R.id.chat_tv_time)
 
             // 뷰 데이터 출력 외 정보
-            var chatroomIndex = chatRoomList!![position].index
+            var chatroomId = chatRoomList!![position].chatroomId
             var giver = chatRoomList!![position].giver        // 나눔자
             var taker = chatRoomList!![position].taker            // 피나눔자
-            var postid = chatRoomList!![position].postid  // 포스트 아이디
+            var postId = chatRoomList!![position].postId  // 포스트 아이디
             var opponentId : String = ""                           // 상대방 유저 인덱스를 저장할 변수
             var oppoentNickname : String = ""                               // 상대방 닉네임
 
@@ -128,8 +119,8 @@ class ChatListActivity : AppCompatActivity() {
             // 객체 클릭 이벤트
             viewHolder.setOnClickListener {
                 val intent = Intent(viewHolder.context, ChatDetailActivity::class.java)
-                intent.putExtra("chatroomIndex", chatroomIndex.toString())
-                intent.putExtra("postIndex", postid.toString())
+                intent.putExtra("chatroomIndex", chatroomId.toString())
+                intent.putExtra("postIndex", postId.toString())
                 intent.putExtra("opponentId", opponentId)
                 intent.putExtra("oppoentNickname", oppoentNickname)
                 intent.putExtra("giverId", giver)
@@ -144,7 +135,7 @@ class ChatListActivity : AppCompatActivity() {
         if (user != null) {
             db?.collection("user")?.document(user!!.uid)
                 ?.collection("mychat")
-                ?.orderBy("sendedAt", Query.Direction.DESCENDING)
+                ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     chatRoomList.clear()
                     if (value != null) {

@@ -32,14 +32,14 @@ data class PostAll(
 
 // 나눔 세부 게시글 리스트
 data class PostDetail(
-    var index :  String? =  null,
+    var postId :  String? =  null,
     var title : String? = null,
     var region : String? = null,
     var location : String? = null,
-    var name : String? = null,
+    var foodName : String? = null,
     var deadline : String? = null,
-    var createdAt : String? = null,
-    var flag : Boolean? = null,
+    var postedAt : String? = null,
+    var fridgeToss : Boolean? = null,
     var writer : String? = null,
     var purchasedAt : String? = null,
     var content : String? = null,
@@ -68,17 +68,17 @@ data class food(
 
 // 채팅방
 data class ChatRoom(
-    var index : String? = null,
+    var chatroomId : String? = null,
     var context :  String? =  null,
-    var postid :  String? =  null,
+    var postId :  String? =  null,
     var taker : String? = null,
     var giver : String? = null,
     var sendedAt : String? = null
 )
 // 상세 채팅 리스트
 data class ChatDetail(
-    var index : String? = null,
-    var wroteId :  String? =  null,
+    var chatId : String? = null,
+    var writer :  String? =  null,
     var context :  String? =  null,
     var taker : String? = null,
     var giver : String? = null,
