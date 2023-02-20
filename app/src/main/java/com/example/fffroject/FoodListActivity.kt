@@ -225,10 +225,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             btn_plus = viewHolder.findViewById(R.id.btnFoodPlus)
 
             // 리사이클러뷰 아이템 정보
-            food_name.text = foodlist!![position].name
+            food_name.text = foodlist!![position].foodName
             food_count.text = foodlist!![position].count.toString()
             food_deadline.text = foodlist!![position].deadline + " 까지"
-            var food_index = foodlist!![position].index.toString()
+            var food_index = foodlist!![position].foodId.toString()
             var deadline = foodlist!![position].deadline
 
             var formatter = SimpleDateFormat("yyyy.MM.dd")
@@ -287,9 +287,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 if(selectFood == preselect) preselect = -1
                 else preselect = selectFood
                 selectFood = position
-                eatfoodindex = foodlist!![position].index.toString()
+                eatfoodindex = foodlist!![position].foodId.toString()
                 // 이하는 포스트 이동을 위한 intent를 위해 추가
-                foodname = foodlist!![position].name
+                foodname = foodlist!![position].foodName
                 foodlistdeadline = foodlist!![position].deadline
                 foodlistpurchase = foodlist!![position].purchaseAt
                 notifyDataSetChanged()
@@ -304,19 +304,25 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     }
 
 
+    // 현재 여기 수정중~ 수정하다 아아쏟음 개빡친다 하... 수정완..
     // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
     fun loadData() {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
+            ?.whereEqualTo("status", "active")
             ?.orderBy("deadline", Query.Direction.ASCENDING)
             ?.addSnapshotListener { value, error ->
                 foodlist.clear()
                 if (value != null) {
                     for (snapshot in value.documents) {
-                        var done = firestore?.collection("fridge")?.document(index.toString())
-                            ?.collection("food")?.document("done")?.get().toString().toBoolean()
+//                        var status = firestore?.collection("fridge")?.document(index.toString())
+//                            ?.collection("food")?.document("count")?.get().toString()
+//                        Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
                         var item = snapshot.toObject(FoodList::class.java)
-                        if (item != null && done == false) {
+//                        if (item != null && status == "active") {
+//                            foodlist.add(item)
+//                        }
+                        if (item != null) {
                             foodlist.add(item)
                         }
                         
@@ -325,12 +331,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
                         firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                             ?.document(index.toString())
-                            ?.update("current", foodlist.get(0).name.toString())
+                            ?.update("current", foodlist.get(0).foodName.toString())
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                         // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
                         firestore?.collection("fridge")?.document(index.toString())
-                            ?.update("current", foodlist.get(0).name.toString())
+                            ?.update("current", foodlist.get(0).foodName.toString())
                             ?.addOnSuccessListener { }
                             ?.addOnFailureListener { }
                     }
@@ -343,19 +349,21 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
+    // 여기 수정중
     // 냉장고별 식품 리스트 최신등록순
     fun loadDataDate() {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
-            ?.orderBy("addTime", Query.Direction.DESCENDING)
+            ?.whereEqualTo("status", "active")
+            ?.orderBy("createdAt", Query.Direction.DESCENDING)
             ?.addSnapshotListener { value, error ->
                 foodlist.clear()
                 if (value != null) {
                     for (snapshot in value.documents) {
-                        var done = firestore?.collection("fridge")?.document(index.toString())
-                            ?.collection("food")?.document("done")?.get().toString().toBoolean()
+//                        var status = firestore?.collection("fridge")?.document(index.toString())
+//                            ?.collection("food")?.document("status")?.get().toString()
                         var item = snapshot.toObject(FoodList::class.java)
-                        if (item != null && done == false) {
+                        if (item != null) {
                             foodlist.add(item)
                         }
                     }
@@ -368,9 +376,21 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
+    // 수정완료
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
-        firestore?.collection("user")?.document(user!!.uid)?.update("contribution", FieldValue.increment(1))
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
+        firestore?.collection("fridge")?.document(index.toString())?.collection("food")
+            ?.document(foodindex)?.get()
+            ?.addOnSuccessListener { document ->
+                if (document != null) {
+                    var foodcount = document.data?.get("count").toString().toDouble()
+                    firestore?.collection("user")?.document(user!!.uid)?.update("eatCount", FieldValue.increment(foodcount))
+                }
+            }
+        firestore?.collection("user")?.document(user!!.uid)?.update("updatedAt", dateTime)
         // 비어있는 경우 업데이트가 안되어서 If문으로 수정
         // 처음에 loadData에서 시도했으나 음식이 없는 경우 foodlist가 아예 생성이 안되어 한개 있는걸 할 때로 변경
         // 따라서 deleteFood에도 적용시켜주어야 함
@@ -389,12 +409,18 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
-            ?.delete()
+            ?.update("status", "eatDone")
             ?.addOnSuccessListener { Toast.makeText(this, "냉장고 털기 횟수가 증가했습니다.", Toast.LENGTH_SHORT).show() }
             ?.addOnFailureListener { }
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)
+            ?.update("updatedAt", dateTime)
     }
 
     fun foodDelete(foodindex: String) {
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
         if (foodcount == 1) {
             // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -408,24 +434,44 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 ?.addOnSuccessListener { }
                 ?.addOnFailureListener { }
         }
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.update("updatedAt", dateTime)
+            ?.addOnSuccessListener { }
+            ?.addOnFailureListener { }
 
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
-            ?.delete()
+            ?.update("status", "delete")
             ?.addOnSuccessListener { Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show() }
+            ?.addOnFailureListener { }
+
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)
+            ?.update("updatedAt", dateTime)
+            ?.addOnSuccessListener { }
             ?.addOnFailureListener { }
     }
 
     fun countMinus(foodindex: String, count: Int) {
         if (count > 1) {
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(-1))
+            firestore?.collection("fridge")?.document(index.toString())
+                ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
         }
     }
 
     fun countPlus(foodindex: String, count: Int) {
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
     }
 
     // 무료 나눔 포스트 작성 페이지로 데이터 전달

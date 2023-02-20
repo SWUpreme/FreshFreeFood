@@ -429,10 +429,7 @@ class FridgeFragment : Fragment() {
                         }
                         ?.addOnFailureListener {
                             Toast.makeText(
-                                context,
-                                "다시 입력해 주세요.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                context,"다시 입력해 주세요.",Toast.LENGTH_SHORT).show()
                         }
                     // 멤버의 냉장고 이름도 변경해주기
                     var membercount = 0
@@ -446,7 +443,7 @@ class FridgeFragment : Fragment() {
                                 // 멤버의 myfridge의 냉장고명 바꿔주기
                                 for (count: Int in 0..(membercount - 1)) {
                                     var doc = task.documents?.get(count)
-                                    var memberuid = doc.get("uid").toString()
+                                    var memberuid = doc.get("userId").toString()
                                     firestore?.collection("user")?.document(memberuid)
                                         ?.collection("myfridge")
                                         ?.document(fridgeId)
@@ -635,6 +632,11 @@ class FridgeFragment : Fragment() {
                                                                         ?.addOnFailureListener {  }
                                                                 }
                                                                 ?.addOnFailureListener { }
+                                                            firestore?.collection("fridge")?.document(fridgeId)
+                                                                ?.collection("member")?.document(memberuid)
+                                                                ?.update("updatedAt", dateTime)
+                                                                ?.addOnSuccessListener {  }
+                                                                ?.addOnFailureListener {  }
                                                         }
                                                     }
                                                 }
@@ -842,11 +844,19 @@ class FridgeFragment : Fragment() {
         // 다이얼로그의 확인 버튼과 연동해주기
         var drop_member_ok = dropview.findViewById<Button>(R.id.btnFridgedropOk)
         drop_member_ok.setOnClickListener {
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
             // membercount 줄여주기
             if (user != null) {
                 firestore?.collection("fridge")?.document(index)?.collection("member")
                     ?.document(user!!.uid)
-                    ?.delete()
+                    ?.update("status", "delete")
+                    ?.addOnSuccessListener { }
+                    ?.addOnFailureListener { }
+                firestore?.collection("fridge")?.document(index)?.collection("member")
+                    ?.document(user!!.uid)
+                    ?.update("updatedAt", dateTime)
                     ?.addOnSuccessListener { }
                     ?.addOnFailureListener { }
                 // member의 membercount 줄이기
@@ -883,7 +893,7 @@ class FridgeFragment : Fragment() {
             // myfridge에서 냉장고 삭제
             firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
                 ?.document(index)
-                ?.delete()
+                ?.update("status","delete")
                 ?.addOnSuccessListener {
                     Toast.makeText(activity, "냉장고에서 나갔습니다.", Toast.LENGTH_SHORT).show()
                     dropalertDialog?.dismiss()

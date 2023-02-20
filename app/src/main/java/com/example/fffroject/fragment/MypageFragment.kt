@@ -16,15 +16,20 @@ import androidx.fragment.app.Fragment
 import com.example.fffroject.*
 import com.example.fffroject.databinding.DialogFixnicknameBinding
 import com.example.fffroject.databinding.FragmentMypageBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import kotlin.math.log
 
 class MypageFragment : Fragment() {
 
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var user : FirebaseUser? = null
+
 
     lateinit var btn_logout: Button
     lateinit var btn_mypage_share: Button
@@ -48,6 +53,13 @@ class MypageFragment : Fragment() {
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
+        val loginGoogle = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_client_id))   // default_web_client_id 인데 오류발생(이미사용되고있어서)
+            // strings.xml에서 새로 선언 후 json의 oatuh에서 client id 옆부분을 넣어서 바꿔줌 -> 오류 안남
+            .requestEmail()
+            .build()
+        var googleSigninClient = GoogleSignIn.getClient(view.context, loginGoogle)
 
         // 버튼 연동
         btn_logout = view.findViewById(R.id.btnLogout)
@@ -60,6 +72,7 @@ class MypageFragment : Fragment() {
         btn_logout.setOnClickListener {
             Toast.makeText(context,"로그아웃되셨습니다.", Toast.LENGTH_SHORT).show()
             auth?.signOut()
+            googleSigninClient!!.signOut()
             val intent = Intent(activity, AuthActivity::class.java)
             activity?.let { ContextCompat.startActivity(it, intent, null) }
         }
@@ -117,10 +130,17 @@ class MypageFragment : Fragment() {
         btn_nickname_fix.setOnClickListener {
             if(edt_mypage_nickname.length() > 0) {
                 if(user != null) {
+                    val nowTime = System.currentTimeMillis()
+                    val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                    val dateTime = timeformatter.format(nowTime)
                     firestore?.collection("user")?.document(user!!.uid)
                         ?.update("nickname", edt_mypage_nickname.text.toString())
                         ?.addOnSuccessListener { Toast.makeText(context, "이름이 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                            nicknamealertDialog?.dismiss()}
+                            nicknamealertDialog?.dismiss()
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.update("updatedAt", dateTime)
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }}
                         ?.addOnFailureListener { Toast.makeText(context, "다시 입력해 주세요.", Toast.LENGTH_SHORT).show() }
                 }
             }
