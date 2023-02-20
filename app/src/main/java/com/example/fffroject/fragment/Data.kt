@@ -100,3 +100,8 @@ data class Chat(
     var to : String? = null,
     var sendedAt : String? = null,
 )
+
+data class KeyWord(
+    var keyword: String = "",
+
+)
