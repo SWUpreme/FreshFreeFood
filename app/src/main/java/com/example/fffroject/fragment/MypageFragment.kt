@@ -131,7 +131,7 @@ class MypageFragment : Fragment() {
             if(edt_mypage_nickname.length() > 0) {
                 if(user != null) {
                     val nowTime = System.currentTimeMillis()
-                    val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                    val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
                     val dateTime = timeformatter.format(nowTime)
                     firestore?.collection("user")?.document(user!!.uid)
                         ?.update("nickname", edt_mypage_nickname.text.toString())
@@ -140,7 +140,37 @@ class MypageFragment : Fragment() {
                             firestore?.collection("user")?.document(user!!.uid)
                                 ?.update("updatedAt", dateTime)
                                 ?.addOnSuccessListener { }
-                                ?.addOnFailureListener { }}
+                                ?.addOnFailureListener { }
+
+                            // 닉네임 변경시 내가 멤버로 속한 냉장고에서도 업데이트
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.collection("myfridge")?.get()
+                                ?.addOnSuccessListener { task ->
+                                    var fridgesize = task.size()
+                                    for (count: Int in 0..(fridgesize - 1)) {
+                                        var doc = task.documents?.get(count)
+                                        var fridgeid = doc.get("fridgeId").toString()
+                                        firestore?.collection("fridge")?.document(fridgeid)?.get()
+                                            ?.addOnSuccessListener { document ->
+                                                if (document != null) {
+                                                    var ownerid =
+                                                        document.data?.get("owner").toString()
+                                                    if (ownerid != user!!.uid) {
+                                                        firestore?.collection("fridge")?.document(fridgeid)
+                                                            ?.collection("member")?.document(user!!.uid)
+                                                            ?.update("memNickname",edt_mypage_nickname.text.toString())
+                                                            ?.addOnSuccessListener {
+                                                                firestore?.collection("fridge")?.document(fridgeid)
+                                                                    ?.collection("member")?.document(user!!.uid)
+                                                                    ?.update("updatedAt",dateTime.toString())
+                                                            }
+                                                            ?.addOnFailureListener { }
+                                                    }
+                                                }
+                                            }
+                                    }
+                                }
+                        }
                         ?.addOnFailureListener { Toast.makeText(context, "다시 입력해 주세요.", Toast.LENGTH_SHORT).show() }
                 }
             }
