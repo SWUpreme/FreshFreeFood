@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.share
 
 import android.content.Intent
 import android.graphics.Color
@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fffroject.R
 import com.example.fffroject.databinding.*
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.example.fffroject.fragment.PostAll
@@ -25,8 +26,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_share.*
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 
@@ -121,8 +120,12 @@ class MyShareActivity: AppCompatActivity() {
             }else{
                 region.setBackgroundResource(R.drawable.txt_background_round2_white)
                 location.setBackgroundResource(R.drawable.txt_background_round2_white)
-                region.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
-                location.setTextColor(ContextCompat.getColor(this@MyShareActivity!!, R.color.blueblack))
+                region.setTextColor(ContextCompat.getColor(this@MyShareActivity!!,
+                    R.color.blueblack
+                ))
+                location.setTextColor(ContextCompat.getColor(this@MyShareActivity!!,
+                    R.color.blueblack
+                ))
             }
 
             // 거래 완료 타이틀 표시

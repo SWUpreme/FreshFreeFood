@@ -14,15 +14,15 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.fffroject.*
+import com.example.fffroject.chat.ChatListActivity
 import com.example.fffroject.databinding.DialogFixnicknameBinding
-import com.example.fffroject.databinding.FragmentMypageBinding
+import com.example.fffroject.share.MyShareActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
-import kotlin.math.log
 
 class MypageFragment : Fragment() {
 

@@ -1,6 +1,6 @@
 
 
-package com.example.fffroject
+package com.example.fffroject.chat
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fffroject.R
+import com.example.fffroject.SharePointActivity
 import com.example.fffroject.databinding.ActivityChatDetailBinding
 import com.example.fffroject.databinding.DialogSharedoneBinding
 import com.example.fffroject.fragment.ChatDetail

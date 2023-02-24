@@ -1,8 +1,9 @@
-package com.example.fffroject
+package com.example.fffroject.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityChatSendExistBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

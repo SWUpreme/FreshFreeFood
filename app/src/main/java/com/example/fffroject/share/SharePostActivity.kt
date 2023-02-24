@@ -1,6 +1,5 @@
-package com.example.fffroject
+package com.example.fffroject.share
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,7 +12,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
-import android.text.Layout
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -27,24 +25,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
+import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
-import com.example.fffroject.fragment.ShareFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 import com.jakewharton.threetenabp.AndroidThreeTen
 import java.util.*
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatter.*
 import java.io.ByteArrayOutputStream
 import java.io.File

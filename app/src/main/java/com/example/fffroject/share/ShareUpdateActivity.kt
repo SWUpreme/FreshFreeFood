@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.share
 
 import android.app.Activity
 import android.content.Context
@@ -27,6 +27,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.fffroject.R
+import com.example.fffroject.RegionSelectActivity
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.android.material.snackbar.Snackbar

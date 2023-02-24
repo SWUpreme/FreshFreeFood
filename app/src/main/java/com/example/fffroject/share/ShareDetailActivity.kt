@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.share
 
 import android.graphics.BitmapFactory
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.example.fffroject.R
+import com.example.fffroject.chat.ChatActivity
 //import com.example.directmessage.ChatActivity
 import com.example.fffroject.databinding.ActivitySharedetailBinding
 import com.example.fffroject.fragment.PostDetail
