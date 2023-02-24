@@ -126,7 +126,7 @@ class SharePointActivity : AppCompatActivity(){
             // 별점 보내기 완료로 변경
             firestore?.collection("post")?.document(postindex.toString())
                 ?.update(
-                    "pointDone", true
+                    "status", "pointDone"
                 )
                 ?.addOnSuccessListener {}
                 ?.addOnFailureListener {}

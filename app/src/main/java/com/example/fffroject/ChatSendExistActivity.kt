@@ -3,12 +3,10 @@ package com.example.fffroject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.fffroject.databinding.ActivityChatDetailBinding
 import com.example.fffroject.databinding.ActivityChatSendExistBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_chat.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,8 +26,6 @@ class ChatSendExistActivity : AppCompatActivity() {
     var takerId: String? = null
     var opponentId: String? = null
 
-    var chatCount : Int  =0       // 채팅 개수
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 바인딩
@@ -48,7 +44,10 @@ class ChatSendExistActivity : AppCompatActivity() {
         // 현재 시간
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM/dd hh:mm")
-        val curTime = dateFormat.format(time)
+        val simpleTime = dateFormat.format(time)
+
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+        val fullTime = timeformatter.format(time)
 
         lateinit var chatid: String
 
@@ -60,61 +59,58 @@ class ChatSendExistActivity : AppCompatActivity() {
                         if (user != null) {
                             chatid = UUID.randomUUID().toString()            // 채팅 아이디 생성
 
-                            // 채팅방 내의 채팅 개수 세기
+                            // 전체 채팅룸에 채팅 올리기
                             db?.collection("chatroom")?.document("$chatroomId")
-                                ?.collection("chat")
-                                ?.get()
-                                ?.addOnSuccessListener() { task ->
-                                    chatCount= task.size()+1
-
-                                    // 전체 채팅룸에 채팅 올리기
-                                    db?.collection("chatroom")?.document("$chatroomId")
-                                        ?.collection("chat")?.document("$chatid")
-                                        ?.set(
-                                            hashMapOf(
-                                                "index" to chatid,
-                                                "context" to binding.ChatContent.text.toString(),
-                                                "taker" to takerId,
-                                                "giver" to giverId,
-                                                "wroteId" to user?.uid,
-                                                "sendedAt" to curTime,
-                                                "count" to  chatCount
-                                            )
-                                        )
-                                        ?.addOnSuccessListener {
-                                            Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
-                                        }
-                                        ?.addOnFailureListener {
-                                            Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                        }
-
-                                    // 나의 최신 채팅/채팅시간 업데이트
-                                    db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document("$chatroomId")
-                                        ?.update(
-                                            "context", binding.ChatContent.text.toString(),
-                                            "sendedAt", curTime
-                                        )
-                                        ?.addOnSuccessListener {}
-                                        ?.addOnFailureListener {}
-
-                                    // 상대의 최신 채팅/채팅시간 업데이트
-                                    db?.collection("user")?.document("$opponentId")?.collection("mychat")?.document("$chatroomId")
-                                        ?.update(
-                                            "context", binding.ChatContent.text.toString(),
-                                            "sendedAt", curTime
-                                        )
-                                        ?.addOnSuccessListener {}
-                                        ?.addOnFailureListener {}
-
-                                    // 채팅룸의 최신 채팅/채팅시간 업데이트
-                                    db?.collection("chatroom")?.document("$chatroomId")
-                                        ?.update(
-                                            "context", binding.ChatContent.text.toString(),
-                                            "sendedAt", curTime
-                                        )
-                                        ?.addOnSuccessListener {}
-                                        ?.addOnFailureListener {}
+                                ?.collection("chat")?.document("$chatid")
+                                ?.set(
+                                    hashMapOf(
+                                        "chatId" to chatid,
+                                        "context" to binding.ChatContent.text.toString(),
+                                        "taker" to takerId,
+                                        "giver" to giverId,
+                                        "writer" to user?.uid,
+                                        "sendedAt" to simpleTime,
+                                        "createdAt" to fullTime,
+                                        "updatedAt" to fullTime,
+                                        "status" to "active"
+                                    )
+                                )
+                                ?.addOnSuccessListener {
+                                    Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
                                 }
+                                ?.addOnFailureListener {
+                                    Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                }
+
+                            // 나의 최신 채팅/채팅시간 업데이트
+                            db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document("$chatroomId")
+                                ?.update(
+                                    "context", binding.ChatContent.text.toString(),
+                                    "sendedAt", simpleTime,
+                                    "updatedAt", fullTime
+                                )
+                                ?.addOnSuccessListener {}
+                                ?.addOnFailureListener {}
+
+                            // 상대의 최신 채팅/채팅시간 업데이트
+                            db?.collection("user")?.document("$opponentId")?.collection("mychat")?.document("$chatroomId")
+                                ?.update(
+                                    "context", binding.ChatContent.text.toString(),
+                                    "sendedAt", simpleTime,
+                                    "updatedAt", fullTime
+                                )
+                                ?.addOnSuccessListener {}
+                                ?.addOnFailureListener {}
+
+                            // 채팅룸의 최신 채팅/채팅시간 업데이트
+                            db?.collection("chatroom")?.document("$chatroomId")
+                                ?.update(
+                                    "context", binding.ChatContent.text.toString(),
+                                    "sendedAt", simpleTime,
+                                    "updatedAt", fullTime
+                                )
+                                ?.addOnSuccessListener {}
+                                ?.addOnFailureListener {}
                         }
                         // 쪽지 전송 완료 후 세부 쪽지로 돌아가기
                         finish()
