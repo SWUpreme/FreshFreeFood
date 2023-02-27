@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.example.fffroject.fragment.FoodList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,16 +25,13 @@ import java.util.*
 
 //AlertReceiver class에서 알림 기능을 동작하도록
 class AlertReceiver : BroadcastReceiver() {
-    //파이어스토어
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var user: FirebaseUser? = null
-
-    //받아오는 냉장고 인덱스, 이름
     var fridgeindex : String? = null
     var fridgename : String? = null
 
-    lateinit var notificationManager: NotificationManager  //알람 매니저
+    lateinit var notificationManager: NotificationManager
 
     //onReceive: 알람 시간이 되었을 때 동작
     @RequiresApi(Build.VERSION_CODES.O)
@@ -52,7 +50,6 @@ class AlertReceiver : BroadcastReceiver() {
         deliverNotification(context)
     }
 
-    //채널 생성
     private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
@@ -70,9 +67,19 @@ class AlertReceiver : BroadcastReceiver() {
         }
     }
 
-    //노티피케이션을 등록
     @RequiresApi(Build.VERSION_CODES.O)
     private fun deliverNotification(context: Context) {
+//        val contentIntent = Intent(context, FoodListActivity::class.java)
+//        contentIntent.putExtra("index", fridgeindex)
+//        contentIntent.putExtra("name", fridgename)
+//
+//        val contentPendingIntent = PendingIntent.getActivity(
+//            context,
+//            NOTIFICATION_ID, // requestCode
+//            contentIntent, // 알림 클릭 시 이동할 인텐트
+//            PendingIntent.FLAG_MUTABLE
+//        )
+
 
         // 내 냉장고에서 status가 true인 것만 불러오기
         firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -82,9 +89,10 @@ class AlertReceiver : BroadcastReceiver() {
                 var count = 0
                 var compare = "3000.12.31" //비교대상
                 var mazinoname = ""  //식품이름
+                var fname = ""
+                var findex = ""
                 count = task.result.size()
 
-                //0이 아니라면
                 if (task.result?.size() != 0) {
                     for (i in 0 until count) {
 
@@ -117,20 +125,27 @@ class AlertReceiver : BroadcastReceiver() {
                                     if (current < compare) {
                                         compare = current
                                         mazinoname = sheet.get("foodName").toString()  //식품 이름 가져오기
+                                        fridgeindex = docindex?.get("fridgeId").toString()
+                                        fridgename = docname?.get("fridgeName").toString()
+//                                        fname = fridgename.toString()
+//                                        findex = fridgeindex.toString()
+
 
                                         val contentIntent = Intent(context, FoodListActivity::class.java)
-                                        contentIntent.putExtra("fridgeId", fridgeindex) //인덱스
-                                        contentIntent.putExtra("fridgeName", fridgename)  //이름
+                                        contentIntent.putExtra("index", fridgeindex) //인덱스
+                                        contentIntent.putExtra("name", fridgename)  //이름
+                                        Log.d("성공:", "${fridgename}")
+
 
                                         val contentPendingIntent = PendingIntent.getActivity(
                                             context,
                                             NOTIFICATION_ID, // requestCode
                                             contentIntent, // 알림 클릭 시 이동할 인텐트
-                                            PendingIntent.FLAG_MUTABLE
+                                            PendingIntent.FLAG_IMMUTABLE
                                         )
 
-                                        //NotificationCompat.Builder 객체
                                         val builder1 =
+
                                             NotificationCompat.Builder(context, CHANNEL_ID)
                                                 .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
                                                 .setContentTitle("FFF") // 제목
@@ -143,83 +158,55 @@ class AlertReceiver : BroadcastReceiver() {
                                             NOTIFICATION_ID,
                                             builder1.build()
                                         )
-
-                                        //냉장고 음식이 모두 유통기한이 지났을 시
-                                        if (current < nowdate) {
-                                            val contentIntent = Intent(context, FoodListActivity::class.java)
-                                            contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
-                                            contentIntent.putExtra("fridgeName", fridgename)    //이름
-
-                                            val contentPendingIntent = PendingIntent.getActivity(
-                                                context,
-                                                NOTIFICATION_ID, // requestCode
-                                                contentIntent, // 알림 클릭 시 이동할 인텐트
-                                                PendingIntent.FLAG_MUTABLE
-                                            )
-
-                                            //NotificationCompat.Builder 객체
-                                            val builder2 =
-                                                NotificationCompat.Builder(context, CHANNEL_ID)
-                                                    .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-                                                    .setContentTitle("FFF") // 제목
-                                                    .setContentText("유통기한이 지난 식품이 있어요...") // 내용
-                                                    .setContentIntent(contentPendingIntent)
-                                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                                    .setAutoCancel(true)
-                                                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                                            notificationManager?.notify(
-                                                NOTIFICATION_ID,
-                                                builder2.build()
-                                            )
-                                            Log.d("성공:", "${current}")
-                                        }
                                     }
 
-//                                    //냉장고 음식이 모두 유통기한이 지났을 시
-//                                    if (current < nowdate) {
-//                                        val contentIntent = Intent(context, FoodListActivity::class.java)
-//                                        contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
-//                                        contentIntent.putExtra("fridgeName", fridgename)    //이름
-//
-//                                        val contentPendingIntent = PendingIntent.getActivity(
-//                                            context,
-//                                            NOTIFICATION_ID, // requestCode
-//                                            contentIntent, // 알림 클릭 시 이동할 인텐트
-//                                            PendingIntent.FLAG_MUTABLE
-//                                        )
-//
-//                                        //NotificationCompat.Builder 객체
-//                                        val builder2 =
-//                                            NotificationCompat.Builder(context, CHANNEL_ID)
-//                                                .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-//                                                .setContentTitle("FFF") // 제목
-//                                                .setContentText("유통기한이 지난 식품이 있어요...") // 내용
-//                                                .setContentIntent(contentPendingIntent)
-//                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                                                .setAutoCancel(true)
-//                                                .setDefaults(NotificationCompat.DEFAULT_ALL)
-//                                        notificationManager?.notify(
-//                                            NOTIFICATION_ID,
-//                                            builder2.build()
-//                                        )
-//                                        Log.d("성공:", "${compare}")
-//                                    }
+                                    //냉장고 음식이 모두 유통기한이 지났을 시
+                                    if (current < nowdate) {
+//                                        fname = fridgename.toString()
+//                                        findex = fridgeindex.toString()
+                                        fridgeindex = docindex?.get("fridgeId").toString()
+                                        fridgename = docname?.get("fridgeName").toString()
+                                        val contentIntent = Intent(context, FoodListActivity::class.java)
+                                        contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
+                                        contentIntent.putExtra("fridgeName", fridgename)    //이름
+
+                                        val contentPendingIntent = PendingIntent.getActivity(
+                                            context,
+                                            NOTIFICATION_ID, // requestCode
+                                            contentIntent, // 알림 클릭 시 이동할 인텐트
+                                            PendingIntent.FLAG_IMMUTABLE
+                                        )
+                                        val builder2 =
+                                            NotificationCompat.Builder(context, CHANNEL_ID)
+                                                .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+                                                .setContentTitle("FFF") // 제목
+                                                .setContentText("유통기한이 지난 식품이 있어요...") // 내용
+                                                .setContentIntent(contentPendingIntent)
+                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                                .setAutoCancel(true)
+                                                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                                        notificationManager?.notify(
+                                            NOTIFICATION_ID,
+                                            builder2.build()
+                                        )
+                                        Log.d("성공:", "${compare}")
+                                    }
                                 }
 
                                 //냉장고에 음식 없을 시
                                 if (mazinoname == "") {
+                                    fridgeindex = docindex?.get("fridgeId").toString()
+                                    fridgename = docname?.get("fridgeName").toString()
                                     val contentIntent = Intent(context, FoodListActivity::class.java)
-                                    contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
-                                    contentIntent.putExtra("fridgeName", fridgename)    //이름
+                                    contentIntent.putExtra("index", fridgeindex)  //인덱스
+                                    contentIntent.putExtra("name", fridgename)    //이름
 
                                     val contentPendingIntent = PendingIntent.getActivity(
                                         context,
                                         NOTIFICATION_ID, // requestCode
                                         contentIntent, // 알림 클릭 시 이동할 인텐트
-                                        PendingIntent.FLAG_MUTABLE
+                                        PendingIntent.FLAG_IMMUTABLE
                                     )
-
-                                    //NotificationCompat.Builder 객체
                                     val builder3 =
                                         NotificationCompat.Builder(context, CHANNEL_ID)
                                             .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
@@ -244,10 +231,9 @@ class AlertReceiver : BroadcastReceiver() {
 
 
     }
-
     companion object {
         private const val NOTIFICATION_ID = 0
-        private const val CHANNEL_ID = "channel_id"  //채널 아이디
-        private const val CHANNEL_NAME = "ChannelName"  //채널 이름
+        private const val CHANNEL_ID = "channel_id"
+        private const val CHANNEL_NAME = "ChannelName"
     }
 }

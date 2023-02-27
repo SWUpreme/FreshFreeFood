@@ -19,13 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".KeywordActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".ChatSendExistActivity"
             android:exported="false" />
