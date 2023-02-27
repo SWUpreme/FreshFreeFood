@@ -24,6 +24,9 @@
             android:name=".ChatSendExistActivity"
             android:exported="false" />
         <activity
+            android:name=".KeywordActivity"
+            android:exported="false" />
+        <activity
             android:name=".FcmActivity"
             android:exported="false">
             <meta-data
