@@ -81,6 +81,7 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_my_share_main.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_myshare.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_mysharemain.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_mysharetab.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_recyclerview.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_region_select.xml" value="0.4" />
@@ -108,6 +109,7 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_foodlist.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_fridgelist.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_loading.xml" value="0.2484375" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_mysharelist.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_recycler.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_regionlist.xml" value="0.2484375" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_sharelist.xml" value="0.264" />
