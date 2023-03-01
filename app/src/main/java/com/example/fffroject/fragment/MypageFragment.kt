@@ -17,6 +17,7 @@ import com.example.fffroject.*
 import com.example.fffroject.chat.ChatListActivity
 import com.example.fffroject.databinding.DialogFixnicknameBinding
 import com.example.fffroject.share.MyShareActivity
+import com.example.fffroject.share.MyShareMainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -79,7 +80,7 @@ class MypageFragment : Fragment() {
 
         // 나의 나눔 버튼 눌렀을 경우
         btn_mypage_share.setOnClickListener {
-            val intent = Intent(view.context, MyShareActivity::class.java)
+            val intent = Intent(view.context, MyShareMainActivity::class.java)
             ContextCompat.startActivity(view.context, intent, null)
         }
 
