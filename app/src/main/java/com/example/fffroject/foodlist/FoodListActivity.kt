@@ -23,6 +23,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.fffroject.*
+import com.example.fffroject.foodinput.OpenApiActivity
+import com.example.fffroject.foodinput.WriteActivity
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
@@ -80,6 +82,8 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         name = intent.getStringExtra("name")    // 냉장고 이름
         index = intent.getStringExtra("index")  // 냉장고 id
 
+
+        Log.d("성공:", "${name}")
         // 상단 툴바 사용
         toolbar_foodlist = findViewById(R.id.toolbFoodlist)
         toolbar_fridgename = findViewById(R.id.textFridgeID)

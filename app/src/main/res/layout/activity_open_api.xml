@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:id="@+id/apilayout"
-    tools:context=".OpenApiActivity">
+    tools:context=".foodinput.OpenApiActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbWrite"
