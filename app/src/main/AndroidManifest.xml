@@ -24,10 +24,10 @@
             android:name=".ChatSendExistActivity"
             android:exported="false" />
         <activity
-            android:name=".KeywordActivity"
+            android:name=".keyword.KeywordActivity"
             android:exported="false" />
         <activity
-            android:name=".FcmActivity"
+            android:name=".alarm.FcmActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -37,7 +37,7 @@
             android:name=".ShareUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".OpenApiActivity"
+            android:name=".foodinput.OpenApiActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false">
             <meta-data
@@ -75,7 +75,7 @@
             android:name=".FoodListActivity"
             android:exported="true" />
         <activity
-            android:name=".WriteActivity"
+            android:name=".foodinput.WriteActivity"
             android:exported="true"
             android:parentActivityName=".FoodListActivity" />
         <activity
@@ -122,7 +122,7 @@
                 android:resource="@xml/file_paths" />
         </provider> <!-- BroadcastReceiver 부팅 시 실행 -->
         <receiver
-            android:name=".AlertReceiver"
+            android:name=".alarm.AlertReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

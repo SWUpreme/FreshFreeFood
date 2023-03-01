@@ -22,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.example.fffroject.foodinput.OpenApiActivity
+import com.example.fffroject.foodinput.WriteActivity
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query

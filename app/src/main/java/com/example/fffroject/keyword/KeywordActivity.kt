@@ -1,10 +1,12 @@
-package com.example.fffroject
+package com.example.fffroject.keyword
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fffroject.KeyWordAdapter
+import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityKeywordBinding
 import com.example.fffroject.fragment.KeyWord
 import com.google.firebase.auth.FirebaseAuth

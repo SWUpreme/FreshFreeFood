@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,16 +9,14 @@ import android.content.Intent
 import android.os.Build
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
-import android.media.RingtoneManager
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.example.fffroject.fragment.FoodList
+import com.example.fffroject.FoodListActivity
+import com.example.fffroject.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*

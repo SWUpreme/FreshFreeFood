@@ -1,10 +1,9 @@
-package com.example.fffroject
+package com.example.fffroject.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
@@ -13,11 +12,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CompoundButton
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityFcmBinding
-import java.lang.reflect.Array.getInt
 
 
 class FcmActivity : AppCompatActivity() {
