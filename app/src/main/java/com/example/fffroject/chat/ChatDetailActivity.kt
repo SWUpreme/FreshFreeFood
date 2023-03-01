@@ -1,6 +1,6 @@
 
 
-package com.example.fffroject
+package com.example.fffroject.chat
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fffroject.R
+import com.example.fffroject.SharePointActivity
 import com.example.fffroject.databinding.ActivityChatDetailBinding
 import com.example.fffroject.databinding.DialogSharedoneBinding
 import com.example.fffroject.fragment.ChatDetail
@@ -204,8 +206,8 @@ class ChatDetailActivity : AppCompatActivity() {
                 if (user != null) {
                     db?.collection("post")?.document(postId.toString())?.get()
                         ?.addOnSuccessListener { value ->
-                            var done = value.data?.get("done")
-                            if(done == true){
+                            var status :String = value.data?.get("status") as String
+                            if(status.equals("shareDone") || status.equals("pointDone")){
                                 // 나눔자가 나눔 완료했다면
                                 binding.btnShareComplete.visibility = View.GONE
                                 binding.btnSendStar.visibility = View.GONE
@@ -221,21 +223,34 @@ class ChatDetailActivity : AppCompatActivity() {
                 if (user != null) {
                     db?.collection("post")?.document(postId.toString())?.get()
                         ?.addOnSuccessListener { value ->
-                            var done = value.data?.get("done")            // 나눔완료 변수
-                            var pointDone = value.data?.get("pointDone")  // 포인트 주기 완료 변수
-                            if(done == true){
-                                // 나눔자가 나눔 완료했다면
-                                if(pointDone==true){
-                                    // 피나눔자가 포인트를 줬다면
-                                    binding.btnShareComplete.visibility = View.GONE
-                                    binding.btnSendStar.visibility = View.GONE
-                                }else{
-                                    // 피나눔자가 포인트를 안 줬다면
-                                    binding.btnShareComplete.visibility = View.GONE
-                                    binding.btnSendStar.visibility = View.VISIBLE
-                                }
+                            var status :String = value.data?.get("status") as String
+//                            if(status.equals("shareDone") || status.equals("pointDone")){
+//                                // 나눔자가 나눔 완료했다면
+//                                if(pointDone==true){
+//                                    // 피나눔자가 포인트를 줬다면
+//                                    binding.btnShareComplete.visibility = View.GONE
+//                                    binding.btnSendStar.visibility = View.GONE
+//                                }else{
+//                                    // 피나눔자가 포인트를 안 줬다면
+//                                    binding.btnShareComplete.visibility = View.GONE
+//                                    binding.btnSendStar.visibility = View.VISIBLE
+//                                }
+//                            }else{
+//                                // 나눔 완료되지 않았다면
+//                                binding.btnShareComplete.visibility = View.GONE
+//                                binding.btnSendStar.visibility = View.GONE
+//                            }
+
+                            if(status.equals("shareDone")){
+                                // 나눔 완료 & 포인트 미지급
+                                binding.btnShareComplete.visibility = View.GONE
+                                binding.btnSendStar.visibility = View.VISIBLE
+                            }else if(status.equals("pointDone")){
+                                // 나눔 완료 & 포인트 지급
+                                binding.btnShareComplete.visibility = View.GONE
+                                binding.btnSendStar.visibility = View.GONE
                             }else{
-                                // 나눔 완료되지 않았다면
+                                // 나눔 미완료 & 포인트 미지급
                                 binding.btnShareComplete.visibility = View.GONE
                                 binding.btnSendStar.visibility = View.GONE
                             }
@@ -265,7 +280,7 @@ class ChatDetailActivity : AppCompatActivity() {
         dialogBinding.btnYes.setOnClickListener(View.OnClickListener {
             db?.collection("post")?.document(postIndex.toString())
                 ?.update(
-                    "done", true
+                    "status", "shareDone"
                 )
                 ?.addOnSuccessListener {
                     Toast.makeText(this, "나눔이 완료되었습니다.", Toast.LENGTH_SHORT).show()

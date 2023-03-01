@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.chat
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.fffroject.R
+import com.example.fffroject.share.ShareDetailActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,7 +26,6 @@ class ChatActivity : AppCompatActivity() {
     // sharedetail 액티비티에서 받아온 것
     var postId: String? = null
     var giver: String? = null
-    var chatCount : Int  =0       // 채팅 개수
 
     // 바인딩
     lateinit var Chatcontent: EditText
@@ -50,9 +51,8 @@ class ChatActivity : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("MM/dd hh:mm")
         val simpleTime = dateFormat.format(time)
 
-        val nowTime = System.currentTimeMillis()
-        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
-        val fullTime = timeformatter.format(nowTime)
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+        val fullTime = timeformatter.format(time)
 
         //toolbar 쪽지 보내기 눌렀을 때
         toolbChat.setOnMenuItemClickListener {
@@ -70,7 +70,6 @@ class ChatActivity : AppCompatActivity() {
 
                                     // 기존에 채팅방이 존재하지 않는다면
                                     if (task.result?.size() == 0) {
-                                        Log.d("chatError", "사이즈가 영입니다")
                                         chatroomId = UUID.randomUUID().toString()
 
                                         // chatroom에 채팅방 생성
@@ -106,7 +105,6 @@ class ChatActivity : AppCompatActivity() {
                                                     "giver" to giver,
                                                     "writer" to user?.uid,
                                                     "sendedAt" to simpleTime,
-                                                    "count" to chatCount,
                                                     "createdAt" to fullTime,
                                                     "updatedAt" to fullTime,
                                                     "status" to "active"
@@ -159,48 +157,39 @@ class ChatActivity : AppCompatActivity() {
 
                                     // 기존에 상대방과의 채팅방이 존재한다면
                                     } else {
-                                        Log.d("chatError", "사이즈가 영이 아니오")
-
                                         // 해당하는 나의 채팅창을 찾아서(포스트 인덱스로) 채팅룸id 받아오기
                                         var doc = task.result.documents?.get(0)
-                                        chatroomId = doc?.get("index").toString()
+                                        chatroomId = doc?.get("chatroomId").toString()
 
-                                        // 채팅방 내의 채팅 개수 세기
+                                        // 전체 채팅룸에 채팅 올리기
                                         db?.collection("chatroom")?.document("$chatroomId")
-                                            ?.collection("chat")
-                                            ?.get()
-                                            ?.addOnSuccessListener() { task ->
-                                                chatCount= task.size()+1
-                                                // 전체 채팅룸에 채팅 올리기
-                                                db?.collection("chatroom")?.document("$chatroomId")
-                                                    ?.collection("chat")?.document("$chatId")
-                                                    ?.set(
-                                                        hashMapOf(
-                                                            "chatId" to chatId,
-                                                            "context" to Chatcontent.text.toString(),
-                                                            "taker" to user?.uid,
-                                                            "giver" to giver,
-                                                            "writer" to user?.uid,
-                                                            "sendedAt" to simpleTime,
-                                                            "count" to  chatCount,
-                                                            "createdAt" to fullTime,
-                                                            "updatedAt" to fullTime,
-                                                            "status" to "active"
-                                                        )
-                                                    )
-                                                    ?.addOnSuccessListener {
-                                                        Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
-                                                    }
-                                                    ?.addOnFailureListener {
-                                                        Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                                    }
+                                            ?.collection("chat")?.document("$chatId")
+                                            ?.set(
+                                                hashMapOf(
+                                                    "chatId" to chatId,
+                                                    "context" to Chatcontent.text.toString(),
+                                                    "taker" to user?.uid,
+                                                    "giver" to giver,
+                                                    "writer" to user?.uid,
+                                                    "sendedAt" to simpleTime,
+                                                    "createdAt" to fullTime,
+                                                    "updatedAt" to fullTime,
+                                                    "status" to "active"
+                                                )
+                                            )
+                                            ?.addOnSuccessListener {
+                                                Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
+                                            }
+                                            ?.addOnFailureListener {
+                                                Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
                                             }
 
                                         // 나의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
-                                                "sendedAt", simpleTime
+                                                "sendedAt", simpleTime,
+                                                "updatedAt", fullTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -211,7 +200,8 @@ class ChatActivity : AppCompatActivity() {
                                         db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
-                                                "sendedAt", simpleTime
+                                                "sendedAt", simpleTime,
+                                                "updatedAt", fullTime
                                             )
                                             ?.addOnSuccessListener {
                                             }
@@ -222,7 +212,8 @@ class ChatActivity : AppCompatActivity() {
                                         db?.collection("chatroom")?.document("$chatroomId")
                                             ?.update(
                                                 "context", Chatcontent.text.toString(),
-                                                "sendedAt", simpleTime
+                                                "sendedAt", simpleTime,
+                                                "updatedAt", fullTime
                                             )
                                             ?.addOnSuccessListener {
                                             }

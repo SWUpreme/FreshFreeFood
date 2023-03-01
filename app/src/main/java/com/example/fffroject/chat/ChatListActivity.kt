@@ -1,5 +1,5 @@
 
-package com.example.fffroject
+package com.example.fffroject.chat
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityChatListBinding
 import com.example.fffroject.fragment.ChatRoom
 import com.example.fffroject.fragment.CustomDiverItemDecoration

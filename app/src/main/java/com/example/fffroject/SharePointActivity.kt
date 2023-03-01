@@ -1,13 +1,13 @@
 package com.example.fffroject
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.fffroject.chat.ChatListActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
@@ -126,7 +126,7 @@ class SharePointActivity : AppCompatActivity(){
             // 별점 보내기 완료로 변경
             firestore?.collection("post")?.document(postindex.toString())
                 ?.update(
-                    "pointDone", true
+                    "status", "pointDone"
                 )
                 ?.addOnSuccessListener {}
                 ?.addOnFailureListener {}

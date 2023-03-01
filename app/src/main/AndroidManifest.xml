@@ -21,7 +21,10 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ChatSendExistActivity"
+            android:name=".share.MyShareMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chat.ChatSendExistActivity"
             android:exported="false" />
         <activity
             android:name=".keyword.KeywordActivity"
@@ -34,7 +37,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ShareUpdateActivity"
+            android:name=".share.ShareUpdateActivity"
             android:exported="false" />
         <activity
             android:name=".foodinput.OpenApiActivity"
@@ -48,21 +51,21 @@
             android:name=".FoodlistToShareActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatListActivity"
+            android:name=".chat.ChatListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ChatDetailActivity"
+            android:name=".chat.ChatDetailActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ChatActivity"
+            android:name=".chat.ChatActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -82,21 +85,20 @@
             android:name=".ExRecyclerView"
             android:exported="true" />
         <activity
-            android:name=".SharePostActivity"
+            android:name=".share.SharePostActivity"
             android:exported="true" />
         <activity
-            android:name=".ShareDetailActivity"
+            android:name=".share.ShareDetailActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".MyShareActivity"
+            android:name=".share.MyShareActivity"
             android:exported="true" />
         <activity
             android:name=".SharePointActivity"
             android:exported="true" />
-
         <activity
             android:name=".AuthActivity"
             android:exported="true"

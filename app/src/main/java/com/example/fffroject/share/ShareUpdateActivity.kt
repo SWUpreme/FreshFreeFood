@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.share
 
 import android.app.Activity
 import android.content.Context
@@ -27,6 +27,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.fffroject.R
+import com.example.fffroject.RegionSelectActivity
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.android.material.snackbar.Snackbar
@@ -427,7 +429,7 @@ class ShareUpdateActivity : AppCompatActivity() {
             postedAt = date.toString()
 
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
             val dateTime = timeformatter.format(nowTime)
 
             // 변경 db 내용
