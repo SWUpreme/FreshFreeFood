@@ -19,13 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".KeywordActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+<!--        <activity-->
+<!--            android:name=".KeywordActivity"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
             android:name=".ChatSendExistActivity"
             android:exported="false" />
@@ -75,12 +75,12 @@
             android:name=".RegionSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".FoodListActivity"
+            android:name=".foodlist.FoodListActivity"
             android:exported="true" />
         <activity
             android:name=".WriteActivity"
             android:exported="true"
-            android:parentActivityName=".FoodListActivity" />
+            android:parentActivityName=".foodlist.FoodListActivity" />
         <activity
             android:name=".ExRecyclerView"
             android:exported="true" />

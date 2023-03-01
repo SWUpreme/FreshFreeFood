@@ -1,14 +1,12 @@
-package com.example.fffroject
+package com.example.fffroject.foodlist
 
 import android.graphics.Canvas
-import android.icu.lang.UCharacter
 import android.util.Log
 import android.view.View
-import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior.getTag
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.max
+import com.example.fffroject.R
 import kotlin.math.min
 
 // 스와이프 삭제를 위한 클래스 추가

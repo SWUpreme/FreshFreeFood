@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.foodlist
 
 import android.content.Intent
 import android.graphics.Color
@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.example.fffroject.*
 import com.example.fffroject.fragment.CustomDiverItemDecoration
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
@@ -99,7 +100,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // Spinner 설정
         spinner_foodlist = findViewById(R.id.spinFoodHow)
         val fooditems = resources.getStringArray(R.array.foodarray)
-        spinner_foodlist.adapter = ArrayAdapter.createFromResource(this, R.array.foodarray, R.layout.spinner_style)
+        spinner_foodlist.adapter = ArrayAdapter.createFromResource(this,
+            R.array.foodarray,
+            R.layout.spinner_style
+        )
 
         spinner_foodlist.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -270,14 +274,20 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
 
             if(selectFood == position && selectFood != preselect) {
-                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.diver_gray))
+                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context,
+                    R.color.diver_gray
+                ))
             }
             else if (selectFood == preselect){
-                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.white))
+                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context,
+                    R.color.white
+                ))
                 eatfoodindex = ""
             }
             else{
-                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context, R.color.white))
+                viewHolder.swipe_view.setBackgroundColor(ContextCompat.getColor(viewHolder.context,
+                    R.color.white
+                ))
             }
 
             // swipe_view click: 안됐던 이유: viewHolder.id 를 입력 하고 setOnClickListener 해야 함

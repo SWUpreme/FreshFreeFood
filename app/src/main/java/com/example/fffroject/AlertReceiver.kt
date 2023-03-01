@@ -9,18 +9,15 @@ import android.content.Intent
 import android.os.Build
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
-import android.media.RingtoneManager
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.fffroject.fragment.FoodList
+import com.example.fffroject.foodlist.FoodListActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 //AlertReceiver class에서 알림 기능을 동작하도록
 class AlertReceiver : BroadcastReceiver() {
