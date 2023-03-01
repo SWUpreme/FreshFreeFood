@@ -20,14 +20,9 @@
         android:theme="@style/Theme.FFFroject"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MyShareMainActivity"
+            android:name=".share.MyShareMainActivity"
             android:exported="false" />
-        <activity
-            android:name=".shareTrial.MyShareMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".share.MyShareMainActivity11"
-            android:exported="false" /> <!-- <activity -->
+        <!-- <activity -->
         <!-- android:name=".KeywordActivity" -->
         <!-- android:exported="false"> -->
         <!-- <meta-data -->
