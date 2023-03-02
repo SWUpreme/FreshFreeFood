@@ -182,7 +182,7 @@ class MyShareTabDone : Fragment() {
                     postAllList.clear()
                     if (value != null) {
                         // 나눔 없음 텍스트 INVISIBLE
-                        txtNoRegion.setVisibility(View.INVISIBLE)
+                        binding.txtNoRegion.setVisibility(View.INVISIBLE)
                         // 전체 게시글 리스트에 추가하기
                         for (snapshot in value.documents) {
                             var item = snapshot.toObject(PostAll::class.java)
@@ -193,7 +193,7 @@ class MyShareTabDone : Fragment() {
                         }
                     }else{
                         // 나눔 없음 텍스트 VISIBLE
-                        txtNoRegion.setVisibility(View.VISIBLE)
+                        binding.txtNoRegion.setVisibility(View.VISIBLE)
                     }
                     recyclerviewMyShare.adapter?.notifyDataSetChanged()
                 }

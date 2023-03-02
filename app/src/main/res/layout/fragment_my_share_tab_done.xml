@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:text="나눔 내역이 없습니다."
+        android:text="완료된 나눔이 없습니다."
         android:textColor="#B4B4B4"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
