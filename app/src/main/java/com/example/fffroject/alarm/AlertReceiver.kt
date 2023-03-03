@@ -78,6 +78,8 @@ class AlertReceiver : BroadcastReceiver() {
 //        )
 
 
+        //냉장고를 전체 돌아서 a,b로 나누기
+
         // 내 냉장고에서 status가 true인 것만 불러오기
         firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
             ?.whereEqualTo("status", "active")
