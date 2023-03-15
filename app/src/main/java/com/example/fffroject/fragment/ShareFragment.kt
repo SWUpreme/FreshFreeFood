@@ -36,7 +36,6 @@ class ShareFragment : Fragment() {
     var user: FirebaseUser? = null
 
     // 바인딩
-    lateinit var btnShareAdd: ImageButton
     lateinit var btnSelectRegion: ImageButton
     lateinit var txtRegionSelect: TextView
     lateinit var webView: WebView
@@ -67,7 +66,6 @@ class ShareFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         // 바인딩
-        btnShareAdd= view.findViewById(R.id.btnShareAdd)
         btnSelectRegion= view.findViewById(R.id.btnSelectRegion)
         txtRegionSelect = view.findViewById(R.id.txtRegionSelect)
         recyclerviewShare= view.findViewById(R.id.recyclerviewShare)

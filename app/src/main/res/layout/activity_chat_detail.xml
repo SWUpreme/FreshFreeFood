@@ -24,162 +24,180 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="유저"
             android:fontFamily="@font/roboto_medium"
+            android:text="유저"
             android:textColor="#30353D"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="173dp"
             tools:layout_editor_absoluteY="21dp" />
-
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="-10dp"
-        android:background="#00FFFFFF"
-        android:backgroundTint="#00FFFFFF"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:maxWidth="1440px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbChatDetail">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/btnSelectRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/btn_region_bg"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="#00FFFFFF"
             android:backgroundTint="#00FFFFFF"
-            android:orientation="vertical">
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnShareComplete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/btn_background_round_gray"
-                    android:text="거래 완료"
-                    android:textSize="15sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <Button
-                    android:id="@+id/btnSendStar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/btn_background_round_gray"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:text="거래 후기 별점 보내기"
-                    android:textSize="15sp"
-                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-            </LinearLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chatDetailRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#00FFFFFF"
-                android:backgroundTint="#00FFFFFF">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <ImageView
-                android:id="@+id/imageView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/line_gray" />
-
-            <LinearLayout
-                android:id="@+id/chatDetailBottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
                 android:background="#00FFFFFF"
                 android:backgroundTint="#00FFFFFF"
-                android:foregroundTint="#00FFFFFF"
-                app:cardBackgroundColor="#00FFFFFF">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginBottom="17dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnShareComplete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btn_background_round_gray"
+                        android:text="거래 완료"
+                        android:textSize="15sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <Button
+                        android:id="@+id/btnSendStar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btn_background_round_gray"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:text="거래 후기 별점 보내기"
+                        android:textSize="15sp"
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chatDetailRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#00FFFFFF"
+                    android:backgroundTint="#00FFFFFF">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/imageView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line_gray" />
+
+                <LinearLayout
+                    android:id="@+id/chatDetailBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:background="#00FFFFFF"
                     android:backgroundTint="#00FFFFFF"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:foregroundTint="#00FFFFFF"
+                    app:cardBackgroundColor="#00FFFFFF">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:layout_marginBottom="17dp"
                         android:background="#00FFFFFF"
                         android:backgroundTint="#00FFFFFF"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:background="#00FFFFFF"
+                            android:backgroundTint="#00FFFFFF"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/chatDetailFromTo"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:fontFamily="@font/roboto_bold"
-                                android:text="안내"
-                                android:textColor="#B4B4B4"
-                                android:textSize="17sp" />
+                                android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/chatDetailTime"
+                                <TextView
+                                    android:id="@+id/chatDetailFromTo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:text="안내"
+                                    android:textColor="#B4B4B4"
+                                    android:textSize="17sp" />
+
+                                <TextView
+                                    android:id="@+id/chatDetailTime"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text=""
+                                    android:textAlignment="viewEnd"
+                                    android:textColor="#95979B"
+                                    android:textSize="15sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text=""
-                                android:textAlignment="viewEnd"
-                                android:textColor="#95979B"
-                                android:textSize="15sp" />
+                                android:layout_marginBottom="5dp"
+                                android:gravity="start"
+                                android:orientation="horizontal">
 
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="start"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/chatDetailContext"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:layout_weight="60"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text="“우유 무료나눔해요!” 글을 통해 시작된 쪽지입니다."
-                                android:textColor="#95979B"
-                                android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/chatDetailContext"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_weight="60"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text="“우유 무료나눔해요!” 글을 통해 시작된 쪽지입니다."
+                                    android:textColor="#95979B"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
