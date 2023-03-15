@@ -174,7 +174,12 @@ class FcmActivity : AppCompatActivity() {
 
 
         //AlertReceiver
-        var pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
+        //var pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE) //기존 pendingIntent는 변경되지 않으며, 새로운 데이터를 추가한 pendingIntent를 보내도 무시함
+        }else {
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT) //pendingIntent가 이미 존재하는 경우, extra data를 모두 변경
+        }
         var calendar = Calendar.getInstance()
 
         calendar.set(java.util.Calendar.HOUR_OF_DAY, myhour)  //시간
@@ -194,10 +199,13 @@ class FcmActivity : AppCompatActivity() {
     // 알람 취소
     fun delAlarm(){
         // 알람 제거
+        // API 31 부터 PendingIntent 사용시 FLAG 변수로 FLAG_IMMUTABLE 또는 FLAG_MUTABLE 을 사용하여
+        // PendingIntent 사용시 변경 가능성을 명시적으로 지정해줘야 한다.
+        // 여러 버전들에 대해서 정상적으로 작동하기 위해서는 아래와 같이 조건문으로 작성해줘야 한다.
         val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.getBroadcast(this, 1, Intent(this, AlertReceiver::class.java), PendingIntent.FLAG_IMMUTABLE)
         }else {
-            PendingIntent.getBroadcast(this, 1, Intent(this, AlertReceiver::class.java), PendingIntent.FLAG_NO_CREATE)
+            PendingIntent.getBroadcast(this, 1, Intent(this, AlertReceiver::class.java), PendingIntent.FLAG_NO_CREATE)//pendingIntent가 존재하지 않는 경우 null을 리턴
         }
         pendingIntent?.cancel()
     }
