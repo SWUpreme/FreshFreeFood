@@ -41,7 +41,7 @@ class EnvlevelFragment: Fragment() {
     var logindate = ""
 
     // 환경 기여도 레벨
-    var envpercent = 0
+    var envpercent = ""
     var envlevel = 0
     var sharepoint = 0
 
@@ -172,7 +172,7 @@ class EnvlevelFragment: Fragment() {
             firestore?.collection("user")?.document(user!!.uid)
                 ?.get()?.addOnSuccessListener { document ->
                     if (document != null) {
-                        envpercent = document?.data?.get("eatCount").toString().toInt()
+                        envpercent = document?.data?.get("eatCount").toString().split(".")?.get(0)
                         sharepoint = document?.data?.get("sharepoint").toString().toInt()
 
                         // 해당 위치(if문 내부)를 벗어나면 값이 초기화되므로 내부에서 해결해준다.
@@ -196,7 +196,7 @@ class EnvlevelFragment: Fragment() {
                         // 현재 년.월 받아오기
                         var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                         val nowTime = System.currentTimeMillis()
-                        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
                         val dateTime = timeformatter.format(nowTime)
                         //var nowyear = nowdate.split(".").get(0)
                         var nowmonth = nowdate.split(".")?.get(1)

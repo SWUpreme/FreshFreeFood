@@ -7,41 +7,54 @@
     tools:context=".AuthActivity"
     android:background="@drawable/background_login">
 
-    <Button
-        android:id="@+id/btnLoginGoogle"
-        android:layout_width="280dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="110dp"
-        android:background="@drawable/img_btn_googlelogin"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="180dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_logo" />
+        app:layout_constraintWidth_max="1440px">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="135dp"
-        android:layout_height="14dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="138dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@drawable/img_text_login" />
+        <Button
+            android:id="@+id/btnLoginGoogle"
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="65dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/img_btn_googlelogin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="180dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="115dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_logo" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="135dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="138dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@drawable/img_text_login" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
