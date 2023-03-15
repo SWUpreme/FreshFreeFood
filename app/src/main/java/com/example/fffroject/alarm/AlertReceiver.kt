@@ -78,7 +78,7 @@ class AlertReceiver : BroadcastReceiver() {
 //        )
 
 
-        //냉장고를 전체 돌아서 a,b로 나누기
+
 
         // 내 냉장고에서 status가 true인 것만 불러오기
         firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
@@ -87,20 +87,22 @@ class AlertReceiver : BroadcastReceiver() {
             ?.addOnCompleteListener { task ->
                 var count = 0
                 var compare = "3000.12.31" //비교대상
+                var comparefridge = "3000.12.31" //비교대상
                 var mazinoname = ""  //식품이름
                 var fname = ""
                 var findex = ""
+                var expiry = false
                 count = task.result.size()
 
                 if (task.result?.size() != 0) {
-                    for (i in 0 until count) {
+                    for (sheet: Int in 0 until count) {
 
                         // 해당하는 나의 냉장고에서 냉장고id 받아오기
-                        var docindex = task.result.documents?.get(i)
+                        var docindex = task.result.documents?.get(sheet)
                         fridgeindex = docindex?.get("fridgeId").toString()
 
                         // 해당하는 나의 냉장고에서 냉장고 이름 받아오기
-                        var docname = task.result.documents?.get(i)
+                        var docname = task.result.documents?.get(sheet)
                         fridgename = docname?.get("fridgeName").toString()
 
 
@@ -113,30 +115,33 @@ class AlertReceiver : BroadcastReceiver() {
                             ?.addOnSuccessListener() { task ->
 
 
-                                    // 현재 날짜 가져오기
-                                    var nowdate = LocalDate.now()
-                                        .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+                                // 현재 날짜 가져오기
+                                var nowdate = LocalDate.now()
+                                    .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
 
-                                    //냉장고에 유통기한 지나지 않은 음식 있을 시
-                                    // 가장 임박한 식품 가져오기
-                                    // var sheet = task.documents?.get(0)
-                                    //var current = sheet.get("deadline").toString()
+                                //냉장고에 유통기한 지나지 않은 음식 있을 시
+                                // 가장 임박한 식품 가져오기
+                                // var sheet = task.documents?.get(0)
+                                //var current = sheet.get("deadline").toString()
+
 
                                     var deadlines = 0
                                     deadlines = task.size()
                                     if (deadlines != 0 ) {
-                                        for (count: Int in 0..(deadlines - 1)) {
+                                        for (i: Int in 0..(deadlines - 1)) {
+
 
                                             // 유통기한 받아오기
-                                            var doc = task.documents?.get(count)
+                                            var doc = task.documents?.get(i)
                                             var current = doc.get("deadline").toString()
 
-                                            // 유통기한 지나지 않았을 떄
-                                            if (current > nowdate) {
-                                                // 유통기한 임박했을 때
-                                                if (current < compare) {
-                                                    compare = current
-                                                }
+                                            // 유통기한 지났지 않았을 때
+                                            if (nowdate <= current) {
+                                                expiry = true
+                                                if (expiry) {
+                                                    if (current < compare) {
+                                                        compare = current
+
                                                 mazinoname = doc.get("foodName").toString()  //식품 이름 가져오기
                                                 fridgeindex = docindex?.get("fridgeId").toString()
                                                 fridgename = docname?.get("fridgeName").toString()
@@ -147,7 +152,7 @@ class AlertReceiver : BroadcastReceiver() {
                                                 val contentIntent = Intent(context, FoodListActivity::class.java)
                                                 contentIntent.putExtra("index", fridgeindex) //인덱스
                                                 contentIntent.putExtra("name", fridgename)  //이름
-                                                Log.d("성공:", "${fridgename}")
+                                                Log.d("넘어가는 냉장고:", "${fridgename}")
 
 
                                                 val contentPendingIntent = PendingIntent.getActivity(
@@ -162,7 +167,7 @@ class AlertReceiver : BroadcastReceiver() {
                                                     NotificationCompat.Builder(context, CHANNEL_ID)
                                                         .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
                                                         .setContentTitle("FFF") // 제목
-                                                        .setContentText(mazinoname + "의 유통기한이 임박해요! 이웃들에게 나눔을 해보세요!") // 내용
+                                                        .setContentText(mazinoname + "의 유통기한이 임박해요! 이웃들에게 나눔을 해보세요!")// 내용
                                                         .setContentIntent(contentPendingIntent)
                                                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                                                         .setAutoCancel(true)
@@ -171,10 +176,16 @@ class AlertReceiver : BroadcastReceiver() {
                                                     NOTIFICATION_ID,
                                                     builder1.build()
                                                 )
+                                                break
+
+                                                }
                                             }
 
+
+
                                             //냉장고 음식이 모두 유통기한이 지났을 시
-                                            if (current < nowdate) {
+
+                                            else {
 //                                        fname = fridgename.toString()
 //                                        findex = fridgeindex.toString()
                                                 fridgeindex = docindex?.get("fridgeId").toString()
@@ -205,43 +216,47 @@ class AlertReceiver : BroadcastReceiver() {
                                                 Log.d("성공:", "${compare}")
                                             }
 
-                                        }
-
-                                        //냉장고에 음식 없을 시
-                                        if (mazinoname == "") {
-                                            fridgeindex = docindex?.get("fridgeId").toString()
-                                            fridgename = docname?.get("fridgeName").toString()
-                                            val contentIntent = Intent(context, FoodListActivity::class.java)
-                                            contentIntent.putExtra("index", fridgeindex)  //인덱스
-                                            contentIntent.putExtra("name", fridgename)    //이름
-
-                                            val contentPendingIntent = PendingIntent.getActivity(
-                                                context,
-                                                NOTIFICATION_ID, // requestCode
-                                                contentIntent, // 알림 클릭 시 이동할 인텐트
-                                                PendingIntent.FLAG_IMMUTABLE
-                                            )
-                                            val builder3 =
-                                                NotificationCompat.Builder(context, CHANNEL_ID)
-                                                    .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
-                                                    .setContentTitle("FFF") // 제목
-                                                    .setContentText("냉장고를 채워주세요!") // 내용
-                                                    .setContentIntent(contentPendingIntent)
-                                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                                    .setAutoCancel(true)
-                                                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                                            notificationManager?.notify(
-                                                NOTIFICATION_ID,
-                                                builder3.build()
-                                            )
+                                            }
 
                                         }
 
+                                }
 
-                                    }
+                                //냉장고에 음식 없을 시
+                                if (mazinoname == "") {
+                                    fridgeindex = docindex?.get("fridgeId").toString()
+                                    fridgename = docname?.get("fridgeName").toString()
+                                    val contentIntent = Intent(context, FoodListActivity::class.java)
+                                    contentIntent.putExtra("index", fridgeindex)  //인덱스
+                                    contentIntent.putExtra("name", fridgename)    //이름
+
+                                    val contentPendingIntent = PendingIntent.getActivity(
+                                        context,
+                                        NOTIFICATION_ID, // requestCode
+                                        contentIntent, // 알림 클릭 시 이동할 인텐트
+                                        PendingIntent.FLAG_IMMUTABLE
+                                    )
+                                    val builder3 =
+                                        NotificationCompat.Builder(context, CHANNEL_ID)
+                                            .setSmallIcon(R.drawable.ic_launcher_foreground) // 아이콘
+                                            .setContentTitle("FFF") // 제목
+                                            .setContentText("냉장고를 채워주세요!") // 내용
+                                            .setContentIntent(contentPendingIntent)
+                                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                            .setAutoCancel(true)
+                                            .setDefaults(NotificationCompat.DEFAULT_ALL)
+                                    notificationManager?.notify(
+                                        NOTIFICATION_ID,
+                                        builder3.build()
+                                    )
+
+                                }
+
 
                             }
-                    }
+
+                            }
+
                 }
 
             }
