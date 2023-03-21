@@ -159,7 +159,7 @@ class AlertReceiver : BroadcastReceiver() {
                                                     context,
                                                     NOTIFICATION_ID, // requestCode
                                                     contentIntent, // 알림 클릭 시 이동할 인텐트
-                                                    PendingIntent.FLAG_IMMUTABLE
+                                                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                                                 )
 
                                                 val builder1 =
@@ -176,29 +176,31 @@ class AlertReceiver : BroadcastReceiver() {
                                                     NOTIFICATION_ID,
                                                     builder1.build()
                                                 )
-                                                break
+                                                //break
 
                                                 }
                                             }
-
+                                            }
 
 
                                             //냉장고 음식이 모두 유통기한이 지났을 시
 
-                                            else {
+                                           else {
 //                                        fname = fridgename.toString()
 //                                        findex = fridgeindex.toString()
                                                 fridgeindex = docindex?.get("fridgeId").toString()
                                                 fridgename = docname?.get("fridgeName").toString()
+
+                                                    Log.d("여기 되니:", "${fridgename}")
                                                 val contentIntent = Intent(context, FoodListActivity::class.java)
                                                 contentIntent.putExtra("fridgeId", fridgeindex)  //인덱스
                                                 contentIntent.putExtra("fridgeName", fridgename)    //이름
-
+                                                Log.d("여기는:", "${fridgename}")
                                                 val contentPendingIntent = PendingIntent.getActivity(
                                                     context,
                                                     NOTIFICATION_ID, // requestCode
                                                     contentIntent, // 알림 클릭 시 이동할 인텐트
-                                                    PendingIntent.FLAG_IMMUTABLE
+                                                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                                                 )
                                                 val builder2 =
                                                     NotificationCompat.Builder(context, CHANNEL_ID)
@@ -216,7 +218,7 @@ class AlertReceiver : BroadcastReceiver() {
                                                 Log.d("성공:", "${compare}")
                                             }
 
-                                            }
+
 
                                         }
 
@@ -234,7 +236,7 @@ class AlertReceiver : BroadcastReceiver() {
                                         context,
                                         NOTIFICATION_ID, // requestCode
                                         contentIntent, // 알림 클릭 시 이동할 인텐트
-                                        PendingIntent.FLAG_IMMUTABLE
+                                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                                     )
                                     val builder3 =
                                         NotificationCompat.Builder(context, CHANNEL_ID)
