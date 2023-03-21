@@ -37,440 +37,433 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <Button
-        android:id="@+id/btnSharepost33"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
-        android:outlineProvider="none"
-        android:text="완료"
-        android:textColor="#2196F3"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="-10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintWidth_max="1440px">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="40dp"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="40dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnSharepost33">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                <ImageButton
-                    android:id="@+id/btnCamera"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginRight="10dp"
-                    android:background="#00FFFFFF"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_camera"
-                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-
-                <ImageView
-                    android:id="@+id/imgFood"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/ic_noimg" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="제목"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/txt_background_round"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="게시글 제목을 입력해주세요."
-                android:maxLength="50"
-                android:minHeight="38dp"
-                android:nextFocusDown="@+id/deadlineYear"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:textColor="#30353D"
-                android:textColorHint="#E9E9E9"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/txtDeadline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="유통기한"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/deadlineYear"
-                    android:layout_width="80dp"
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/txt_background_round"
-                    android:fontFamily="@font/roboto_medium"
-                    android:inputType="date"
-                    android:maxLength="4"
-                    android:minHeight="38dp"
-                    android:nextFocusDown="@+id/deadlineMonth"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#30353D"
-                    android:textColorHint="#E9E9E9"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnSharepost33">
+
+                    <ImageButton
+                        android:id="@+id/btnCamera"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="10dp"
+                        android:background="#00FFFFFF"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_camera"
+                        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+                    <ImageView
+                        android:id="@+id/imgFood"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/ic_noimg" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/txtYear"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtTitle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="년"
-                    android:textColor="#30353D"
+                    android:text="제목"
+                    android:textColor="#B4B4B4"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/deadlineMonth"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/txt_background_round"
-                    android:fontFamily="@font/roboto_medium"
-                    android:inputType="date"
-                    android:maxLength="2"
-                    android:minHeight="38dp"
-                    android:nextFocusDown="@+id/deadlineDate"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#30353D"
-                    android:textColorHint="#E9E9E9"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/txtMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="월"
-                    android:textColor="#30353D"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/deadlineDate"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/txt_background_round"
-                    android:fontFamily="@font/roboto_medium"
-                    android:inputType="date"
-                    android:maxLength="2"
-                    android:minHeight="38dp"
-                    android:nextFocusDown="@+id/purchasedAtYear"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#30353D"
-                    android:textColorHint="#E9E9E9"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/txtDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="일"
-                    android:textColor="#30353D"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtPurchasedAt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="구매일"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/purchasedAtYear"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/txt_background_round"
-                    android:fontFamily="@font/roboto_medium"
-                    android:inputType="date"
-                    android:maxLength="4"
-                    android:minHeight="38dp"
-                    android:nextFocusDown="@+id/purchasedAtMonth"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#30353D"
-                    android:textColorHint="#E9E9E9"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/txtYear2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="년"
-                    android:textColor="#30353D"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/purchasedAtMonth"
-                    android:layout_width="39dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/txt_background_round"
-                    android:fontFamily="@font/roboto_medium"
-                    android:inputType="date"
-                    android:maxLength="2"
-                    android:minHeight="38dp"
-                    android:nextFocusDown="@+id/purchasedAtDate"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#30353D"
-                    android:textColorHint="#E9E9E9"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/txtMonth2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="월"
-                    android:textColor="#30353D"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/purchasedAtDate"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@drawable/txt_background_round"
-                    android:fontFamily="@font/roboto_medium"
-                    android:inputType="date"
-                    android:maxLength="2"
-                    android:minHeight="38dp"
-                    android:nextFocusDown="@+id/name"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#30353D"
-                    android:textColorHint="#E9E9E9"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/txtDate2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/roboto_medium"
-                    android:text="일"
-                    android:textColor="#30353D"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="제품명"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/txt_background_round"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="제품명을 입력해주세요."
-                android:maxLength="50"
-                android:minHeight="38dp"
-                android:nextFocusDown="@+id/region"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:textColor="#30353D"
-                android:textColorHint="#E9E9E9"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/txtRegion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="지역"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/region"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/txt_background_round"
-                android:clickable="false"
-                android:focusable="false"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="지역을 입력해주세요."
-                android:maxLength="50"
-                android:minHeight="38dp"
-                android:nextFocusDown="@+id/location"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:textAlignment="viewStart"
-                android:textColor="#30353D"
-                android:textColorHint="#E9E9E9"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/txtLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="거래 희망 위치"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/txt_background_round"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="거래 희망 위치를 입력해주세요."
-                android:maxLength="50"
-                android:minHeight="38dp"
-                android:nextFocusDown="@+id/context"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:textColor="#30353D"
-                android:textColorHint="#E9E9E9"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/txtContext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="게시글 내용"
-                android:textColor="#B4B4B4"
-                android:textSize="14sp" />
-
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/context"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/txt_background_round"
                     android:fontFamily="@font/roboto_medium"
-                    android:gravity="top"
-                    android:hint="게시글 내용을 작성해주세요."
-                    android:imeOptions="actionDone"
-                    android:inputType="textMultiLine"
-                    android:maxLength="150"
-                    android:maxLines="20"
+                    android:hint="게시글 제목을 입력해주세요."
+                    android:maxLength="50"
                     android:minHeight="38dp"
-                    android:minLines="3"
+                    android:nextFocusDown="@+id/deadlineYear"
                     android:paddingLeft="10dp"
-                    android:paddingTop="8dp"
-                    android:scrollbars="vertical"
+                    android:singleLine="true"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck" />
-            </androidx.core.widget.NestedScrollView>
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/txtDeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="유통기한"
+                    android:textColor="#B4B4B4"
+                    android:textSize="14sp" />
 
-    </androidx.core.widget.NestedScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <EditText
+                        android:id="@+id/deadlineYear"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:inputType="date"
+                        android:maxLength="4"
+                        android:minHeight="38dp"
+                        android:nextFocusDown="@+id/deadlineMonth"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/txtYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="년"
+                        android:textColor="#30353D"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/deadlineMonth"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:inputType="date"
+                        android:maxLength="2"
+                        android:minHeight="38dp"
+                        android:nextFocusDown="@+id/deadlineDate"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/txtMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="월"
+                        android:textColor="#30353D"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/deadlineDate"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:inputType="date"
+                        android:maxLength="2"
+                        android:minHeight="38dp"
+                        android:nextFocusDown="@+id/purchasedAtYear"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="일"
+                        android:textColor="#30353D"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtPurchasedAt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="구매일"
+                    android:textColor="#B4B4B4"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/purchasedAtYear"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:inputType="date"
+                        android:maxLength="4"
+                        android:minHeight="38dp"
+                        android:nextFocusDown="@+id/purchasedAtMonth"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/txtYear2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="년"
+                        android:textColor="#30353D"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/purchasedAtMonth"
+                        android:layout_width="39dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:inputType="date"
+                        android:maxLength="2"
+                        android:minHeight="38dp"
+                        android:nextFocusDown="@+id/purchasedAtDate"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/txtMonth2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="월"
+                        android:textColor="#30353D"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/purchasedAtDate"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:inputType="date"
+                        android:maxLength="2"
+                        android:minHeight="38dp"
+                        android:nextFocusDown="@+id/name"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/txtDate2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="일"
+                        android:textColor="#30353D"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="제품명"
+                    android:textColor="#B4B4B4"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
+                    android:hint="제품명을 입력해주세요."
+                    android:maxLength="50"
+                    android:minHeight="38dp"
+                    android:nextFocusDown="@+id/region"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="14sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/txtRegion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="지역"
+                    android:textColor="#B4B4B4"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/region"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:fontFamily="@font/roboto_medium"
+                    android:hint="지역을 입력해주세요."
+                    android:maxLength="50"
+                    android:minHeight="38dp"
+                    android:nextFocusDown="@+id/location"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="14sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/txtLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="거래 희망 위치"
+                    android:textColor="#B4B4B4"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/txt_background_round"
+                    android:fontFamily="@font/roboto_medium"
+                    android:hint="거래 희망 위치를 입력해주세요."
+                    android:maxLength="50"
+                    android:minHeight="38dp"
+                    android:nextFocusDown="@+id/context"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="#30353D"
+                    android:textColorHint="#E9E9E9"
+                    android:textSize="14sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/txtContext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="게시글 내용"
+                    android:textColor="#B4B4B4"
+                    android:textSize="14sp" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/context"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="top"
+                        android:hint="게시글 내용을 작성해주세요."
+                        android:imeOptions="actionDone"
+                        android:inputType="textMultiLine"
+                        android:maxLength="150"
+                        android:maxLines="20"
+                        android:minHeight="38dp"
+                        android:minLines="3"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:scrollbars="vertical"
+                        android:textColor="#30353D"
+                        android:textColorHint="#E9E9E9"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

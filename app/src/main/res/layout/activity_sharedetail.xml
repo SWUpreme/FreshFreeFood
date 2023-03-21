@@ -34,270 +34,280 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="-10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbSharedetail"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintWidth_max="1440px">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload">
-
-            <ImageView
-                android:id="@+id/detailimageView"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:cropToPadding="false"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_noimage" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload">
+
+                <ImageView
+                    android:id="@+id/detailimageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:cropToPadding="false"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_noimage" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="start"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/detailTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="제목입니당"
-                        android:textColor="#30353D"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/detailCreatedAt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="2022.05.30"
-                        android:textAlignment="viewEnd"
-                        android:textColor="#95979B"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="start"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/txtDetailLocation"
-                            android:layout_width="match_parent"
+                            android:id="@+id/detailTitle"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="12dp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="거래 장소"
-                            android:textAlignment="viewStart"
-                            android:textColor="#B4B4B4"
-                            android:textSize="14sp" />
+                            android:text="제목입니당"
+                            android:textColor="#30353D"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/txtDetailWriter"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="12dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="작성자"
-                            android:textAlignment="viewStart"
-                            android:textColor="#B4B4B4"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txtDetailDeadline"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="12dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="유통기한"
-                            android:textAlignment="viewStart"
-                            android:textColor="#B4B4B4"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txtDetailPurchasedAt"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="12dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="구매일"
-                            android:textAlignment="viewStart"
-                            android:textColor="#B4B4B4"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txtDetailName"
+                            android:id="@+id/detailCreatedAt"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="제품명"
-                            android:textAlignment="viewStart"
-                            android:textColor="#B4B4B4"
-                            android:textSize="14sp" />
-
+                            android:text="2022.05.30"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#95979B"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
+                        android:layout_marginBottom="20dp"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
+                            android:layout_weight="5"
+                            android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/detailRegion"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:background="@drawable/txt_background_round2_blue"
+                                android:id="@+id/txtDetailLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
                                 android:fontFamily="@font/roboto_medium"
-                                android:paddingLeft="8dp"
-                                android:paddingTop="3dp"
-                                android:paddingRight="8dp"
-                                android:paddingBottom="3dp"
-                                android:text="공릉동"
-                                android:textColor="#fff"
-                                android:textSize="11sp" />
+                                android:text="거래 장소"
+                                android:textAlignment="viewStart"
+                                android:textColor="#B4B4B4"
+                                android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/detailLocation"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/txt_background_round2_blue"
+                                android:id="@+id/txtDetailWriter"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
                                 android:fontFamily="@font/roboto_medium"
-                                android:paddingLeft="8dp"
-                                android:paddingTop="3dp"
-                                android:paddingRight="8dp"
-                                android:paddingBottom="3dp"
-                                android:text="태릉입구역"
-                                android:textColor="#fff"
-                                android:textSize="11sp" />
+                                android:text="작성자"
+                                android:textAlignment="viewStart"
+                                android:textColor="#B4B4B4"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/txtDetailDeadline"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="유통기한"
+                                android:textAlignment="viewStart"
+                                android:textColor="#B4B4B4"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/txtDetailPurchasedAt"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="구매일"
+                                android:textAlignment="viewStart"
+                                android:textColor="#B4B4B4"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/txtDetailName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="제품명"
+                                android:textAlignment="viewStart"
+                                android:textColor="#B4B4B4"
+                                android:textSize="14sp" />
+
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/detailRegion"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:background="@drawable/txt_background_round2_blue"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="3dp"
+                                    android:paddingRight="8dp"
+                                    android:paddingBottom="3dp"
+                                    android:text="공릉동"
+                                    android:textColor="#fff"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/detailLocation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/txt_background_round2_blue"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="3dp"
+                                    android:paddingRight="8dp"
+                                    android:paddingBottom="3dp"
+                                    android:text="태릉입구역"
+                                    android:textColor="#fff"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/detailEnvLevel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:background="@drawable/txt_background_round2_red"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="3dp"
+                                    android:paddingRight="8dp"
+                                    android:paddingBottom="3dp"
+                                    android:text="씨앗이"
+                                    android:textColor="#fff"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/detailWriter"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:text="홀리몰리"
+                                    android:textColor="#30353D"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
 
                             <TextView
-                                android:id="@+id/detailEnvLevel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:background="@drawable/txt_background_round2_red"
+                                android:id="@+id/detailDeadline"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
                                 android:fontFamily="@font/roboto_medium"
-                                android:paddingLeft="8dp"
-                                android:paddingTop="3dp"
-                                android:paddingRight="8dp"
-                                android:paddingBottom="3dp"
-                                android:text="씨앗이"
-                                android:textColor="#fff"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/detailWriter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text="홀리몰리"
+                                android:text="2022.10.10"
+                                android:textAlignment="viewStart"
                                 android:textColor="#30353D"
                                 android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/detailPurchasedAt"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="12dp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="2022.10.10"
+                                android:textAlignment="viewStart"
+                                android:textColor="#30353D"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/detailName"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="쌀과자"
+                                android:textAlignment="viewStart"
+                                android:textColor="#30353D"
+                                android:textSize="14sp" />
+
                         </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/detailDeadline"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="12dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="2022.10.10"
-                            android:textAlignment="viewStart"
-                            android:textColor="#30353D"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/detailPurchasedAt"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="12dp"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="2022.10.10"
-                            android:textAlignment="viewStart"
-                            android:textColor="#30353D"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/detailName"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/roboto_medium"
-                            android:text="쌀과자"
-                            android:textAlignment="viewStart"
-                            android:textColor="#30353D"
-                            android:textSize="14sp" />
-
                     </LinearLayout>
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/detailLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line_gray" />
+
+                <TextView
+                    android:id="@+id/detailContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="안 먹어서 나눔합니다."
+                    android:textAlignment="viewStart"
+                    android:textColor="#30353D"
+                    android:textSize="14sp" />
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/detailLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/line_gray" />
-
-            <TextView
-                android:id="@+id/detailContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="안 먹어서 나눔합니다."
-                android:textAlignment="viewStart"
-                android:textColor="#30353D"
-                android:textSize="14sp" />
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 
 
