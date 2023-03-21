@@ -34,26 +34,15 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:maxWidth="1440px"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbChatDetail">
-
-        <ImageButton
-            android:id="@+id/btnSelectRegion"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="centerCrop"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/btn_region_bg"
-            tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbChatDetail"
+        app:layout_constraintWidth_max="1440px">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView3"
