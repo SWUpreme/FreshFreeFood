@@ -58,6 +58,7 @@ class EnvlevelFragment: Fragment() {
     lateinit var img_topbedge: ImageView
     lateinit var img_gradebox: ImageView
     lateinit var env_back: ConstraintLayout
+    lateinit var env_scrollback: ConstraintLayout
     lateinit var recycler: LinearLayout
     lateinit var text_grade: TextView
     lateinit var text_grade2: TextView
@@ -113,6 +114,7 @@ class EnvlevelFragment: Fragment() {
         text_grade3 = view.findViewById(R.id.textGrade3)
         // 다른 부분 클릭시 등급표 안보이게 해주기 위해 영역 연결
         env_back = view.findViewById(R.id.envBack)
+        env_scrollback = view.findViewById(R.id.envScrollBack)
         recycler = view.findViewById(R.id.envLinear)
         // 처음엔 등급표 안보이게
         img_gradebox.visibility = View.INVISIBLE
@@ -154,6 +156,14 @@ class EnvlevelFragment: Fragment() {
                 text_grade2.visibility = View.INVISIBLE
                 text_grade3.visibility = View.INVISIBLE
             }
+
+            env_scrollback.setOnClickListener {
+                img_gradebox.visibility = View.INVISIBLE
+                text_grade.visibility = View.INVISIBLE
+                text_grade2.visibility = View.INVISIBLE
+                text_grade3.visibility = View.INVISIBLE
+            }
+
             recycler.setOnClickListener {
                 img_gradebox.visibility = View.INVISIBLE
                 text_grade.visibility = View.INVISIBLE

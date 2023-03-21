@@ -139,6 +139,7 @@
         <entry key="app/src/main/res/drawable-v24/rounded_corner_box.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/btn_fridge_list.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/ic_food_gray.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/layout_radius.xml" value="0.1855" />
         <entry key="app/src/main/res/drawable/menu_selector_color.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/progressbar_envlevel.xml" value="0.1595" />
         <entry key="app/src/main/res/drawable/spinner_style.xml" value="0.1345" />
@@ -174,7 +175,7 @@
         <entry key="app/src/main/res/layout/dialog_sharedone.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/dialog_showmember.xml" value="0.5135245724000793" />
         <entry key="app/src/main/res/layout/dialog_treegrade.xml" value="0.4590438400489697" />
-        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.22165373717846512" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.2073211669921875" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.23563690185546876" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.4060356652949246" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />

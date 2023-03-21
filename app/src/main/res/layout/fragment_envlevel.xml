@@ -7,16 +7,388 @@
     android:layout_height="match_parent"
     android:background="#F2F7FF">
 
-    <ImageView
-        android:id="@+id/imageView11"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="-40dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbShare"
-        app:srcCompat="@drawable/eco_envcount_background" />
+        app:layout_constraintWidth_max="1440px">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/envScrollBack"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="-30dp"
+                android:background="@drawable/layout_radius"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/eco_envcount_background" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="냉장고 털기"
+                android:textColor="#30353D"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView11"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textFridgeEnv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="3회"
+                android:textColor="#71ABFF"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="달성!"
+                android:textColor="#30353D"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textFridgeEnv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="-14dp"
+                app:layout_constraintEnd_toStartOf="@+id/imgTopBedge"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/eco_countbubble" />
+
+            <TextView
+                android:id="@+id/textNowMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="12월!"
+                android:textColor="#5399FF"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                app:layout_constraintStart_toStartOf="@+id/imageView13"
+                app:layout_constraintTop_toTopOf="@+id/imageView13" />
+
+            <ImageView
+                android:id="@+id/imgTopBedge"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/eco_img_bedge1" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="0dp"
+                android:layout_height="185dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"
+                android:background="@drawable/layout_radius"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView11"
+                app:srcCompat="@drawable/eco_progressbar_background" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="환경보호를 위해 무료나눔에 동참하고"
+                android:textColor="#30353D"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                app:layout_constraintStart_toStartOf="@+id/imageView12"
+                app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="뱃지를 모아보세요!"
+                android:textColor="#30353D"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                app:layout_constraintStart_toStartOf="@+id/imageView12"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:text="나눔 실천 평점"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView12"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <ProgressBar
+                android:id="@+id/progEnvLev"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:max="30"
+                android:progressDrawable="@drawable/progressbar_envlevel"
+                app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView12"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/textEnvContri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="0 / 30"
+                app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                app:layout_constraintTop_toBottomOf="@+id/progEnvLev" />
+
+            <LinearLayout
+                android:id="@+id/envLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="-30dp"
+                android:background="@drawable/layout_radius"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView12">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnGrade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:background="@color/white"
+                        android:text="나무 성장 단계" />
+
+                    <ImageView
+                        android:id="@+id/imageView14"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="5dp"
+                        app:srcCompat="@drawable/eco_img_showlevel" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/imgTree1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree1" />
+
+                    <ImageView
+                        android:id="@+id/imgTree2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree2" />
+
+                    <ImageView
+                        android:id="@+id/imgTree3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree3" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/imgTree4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree4" />
+
+                    <ImageView
+                        android:id="@+id/imgTree5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree5" />
+
+                    <ImageView
+                        android:id="@+id/imgTree6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/imgTree7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree7" />
+
+                    <ImageView
+                        android:id="@+id/imgTree8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree8" />
+
+                    <ImageView
+                        android:id="@+id/imgTree9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/eco_img_tree9" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgTreeGrade"
+                android:layout_width="200dp"
+                android:layout_height="179dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/envLinear"
+                app:srcCompat="@drawable/ic_treegrade_background" />
+
+            <TextView
+                android:id="@+id/textGrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:text="씨앗이-새싹이-세잎이"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
+                app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
+                app:layout_constraintTop_toTopOf="@+id/imgTreeGrade" />
+
+            <TextView
+                android:id="@+id/textGrade2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="묘목이-유목이-성목이"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
+                app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
+                app:layout_constraintTop_toBottomOf="@+id/textGrade" />
+
+            <TextView
+                android:id="@+id/textGrade3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="꽃잎이-낙엽이-과실이"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
+                app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
+                app:layout_constraintTop_toBottomOf="@+id/textGrade2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbShare"
@@ -42,368 +414,6 @@
             tools:layout_editor_absoluteX="181dp"
             tools:layout_editor_absoluteY="21dp" />
     </androidx.appcompat.widget.Toolbar>
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="0dp"
-        android:layout_height="185dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView11"
-        app:srcCompat="@drawable/eco_progressbar_background" />
-
-    <ImageView
-        android:id="@+id/imgTopBedge"
-        android:layout_width="100dp"
-        android:layout_height="90dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/eco_img_bedge1" />
-
-    <ProgressBar
-        android:id="@+id/progEnvLev"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:max="30"
-        android:progressDrawable="@drawable/progressbar_envlevel"
-        app:layout_constraintEnd_toEndOf="@+id/imageView12"
-        app:layout_constraintStart_toStartOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/textEnvContri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="0 / 30"
-        app:layout_constraintEnd_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/progEnvLev" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="환경보호를 위해 무료나눔에 동참하고"
-        android:textColor="#30353D"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView12" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_regular"
-        android:text="뱃지를 모아보세요!"
-        android:textColor="#30353D"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="나눔 실천 평점"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="-10dp"
-        android:background="@drawable/background_bedge"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12"
-        tools:ignore="SpeakableTextPresentCheck">
-
-        <LinearLayout
-            android:id="@+id/envLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:paddingBottom="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnGrade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:background="@color/white"
-                    android:text="나무 성장 단계" />
-
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:paddingLeft="5dp"
-                    app:srcCompat="@drawable/eco_img_showlevel" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp">
-
-                <ImageView
-                    android:id="@+id/imgTree1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree1" />
-
-                <ImageView
-                    android:id="@+id/imgTree2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree2" />
-
-                <ImageView
-                    android:id="@+id/imgTree3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree3" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp">
-
-                <ImageView
-                    android:id="@+id/imgTree4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree4" />
-
-                <ImageView
-                    android:id="@+id/imgTree5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree5" />
-
-                <ImageView
-                    android:id="@+id/imgTree6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree6" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/imgTree7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree7" />
-
-                <ImageView
-                    android:id="@+id/imgTree8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree8" />
-
-                <ImageView
-                    android:id="@+id/imgTree9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/eco_img_tree9" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/roboto_bold"
-        android:text="냉장고 털기"
-        android:textColor="#30353D"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbShare" />
-
-    <TextView
-        android:id="@+id/textFridgeEnv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="23dp"
-        android:fontFamily="@font/roboto_regular"
-        android:text="3회"
-        android:textColor="#71ABFF"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/toolbShare" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/roboto_bold"
-        android:text="달성!"
-        android:textColor="#30353D"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textFridgeEnv"
-        app:layout_constraintTop_toBottomOf="@+id/toolbShare" />
-
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="-15dp"
-        app:layout_constraintEnd_toStartOf="@+id/imgTopBedge"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/toolbShare"
-        app:srcCompat="@drawable/eco_countbubble" />
-
-    <TextView
-        android:id="@+id/textNowMonth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="12월!"
-        android:textColor="#5399FF"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView13"
-        app:layout_constraintStart_toStartOf="@+id/imageView13"
-        app:layout_constraintTop_toTopOf="@+id/imageView13" />
-
-    <ImageView
-        android:id="@+id/imgTreeGrade"
-        android:layout_width="200dp"
-        android:layout_height="179dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nestedScrollView2"
-        app:srcCompat="@drawable/ic_treegrade_background" />
-
-    <TextView
-        android:id="@+id/textGrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="씨앗이-새싹이-세잎이"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
-        app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
-        app:layout_constraintTop_toTopOf="@+id/imgTreeGrade" />
-
-    <TextView
-        android:id="@+id/textGrade2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="묘목이-유목이-성목이"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
-        app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
-        app:layout_constraintTop_toBottomOf="@+id/textGrade" />
-
-    <TextView
-        android:id="@+id/textGrade3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="꽃잎이-낙엽이-과실이"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/imgTreeGrade"
-        app:layout_constraintStart_toStartOf="@+id/imgTreeGrade"
-        app:layout_constraintTop_toBottomOf="@+id/textGrade2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
