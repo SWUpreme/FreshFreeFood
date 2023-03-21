@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:maxWidth="1440px"
+        android:maxWidth="800px"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -349,8 +349,8 @@
 
                     <Button
                         android:id="@+id/upload_btn"
-                        android:layout_width="320dp"
-                        android:layout_height="53dp"
+                        android:layout_width="245dp"
+                        android:layout_height="43dp"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="25dp"
