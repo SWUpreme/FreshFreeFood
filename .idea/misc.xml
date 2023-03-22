@@ -76,8 +76,8 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_list.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_chat_send_exist.xml" value="0.2171875" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_fcm.xml" value="0.23697916666666666" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.264" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist_to_share.xml" value="0.264" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist.xml" value="0.72" />
+        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_foodlist_to_share.xml" value="0.152" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_my_share_main.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/activity_myshare.xml" value="0.21666666666666667" />
@@ -106,7 +106,6 @@
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_mypage.xml" value="0.4" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_myshare_done.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_myshare_ing.xml" value="0.21666666666666667" />
-        <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.2" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/fragment_share.xml" value="0.3855932203389831" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_chat_detail.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/serak/project/FreshFreeFood/app/src/main/res/layout/item_chat_detail_list.xml" value="0.44991212653778556" />
@@ -176,7 +175,7 @@
         <entry key="app/src/main/res/layout/dialog_sharedone.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/dialog_showmember.xml" value="0.5135245724000793" />
         <entry key="app/src/main/res/layout/dialog_treegrade.xml" value="0.4590438400489697" />
-        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.2073211669921875" />
+        <entry key="app/src/main/res/layout/fragment_envlevel.xml" value="0.42694854736328125" />
         <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.23563690185546876" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.4060356652949246" />
         <entry key="app/src/main/res/layout/fragment_share.xml" value="0.23007246376811594" />
