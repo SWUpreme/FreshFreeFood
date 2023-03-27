@@ -32,9 +32,11 @@
             tools:layout_editor_absoluteX="173dp"
             tools:layout_editor_absoluteY="21dp" />
     </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,261 +50,261 @@
             android:orientation="vertical">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/ChatTitle"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/ChatTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="쪽지 알림"
+                        android:textColor="#30353D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/ChatTxt"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:padding="3dp"
+                    android:text="메세지 수신 알림"
+                    android:textColor="#95979B"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+                    tools:ignore="MissingConstraints" />
+
+                <Switch
+                    android:id="@+id/ChatAlaram"
+                    android:layout_width="100dp"
+                    android:layout_height="57dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:state_checked="false"
+                    android:switchMinWidth="50dp"
+                    android:switchPadding="9dp"
+                    android:thumb="@drawable/selector_thumb"
+                    android:track="@drawable/selector_switch"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/Line1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="쪽지 알림"
-                android:textColor="#30353D"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                app:srcCompat="@drawable/line_gray" />
 
-        </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        <TextView
-            android:id="@+id/ChatTxt"
-            android:layout_width="192dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto_medium"
-            android:padding="3dp"
-            android:text="메세지 수신 알림"
-            android:textColor="#95979B"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            tools:ignore="MissingConstraints" />
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
 
-        <Switch
-            android:id="@+id/ChatAlaram"
-            android:layout_width="100dp"
-            android:layout_height="57dp"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="25dp"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:state_checked="false"
-            android:switchMinWidth="50dp"
-            android:switchPadding="9dp"
-            android:thumb="@drawable/selector_thumb"
-            android:track="@drawable/selector_switch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                    <TextView
+                        android:id="@+id/KeyTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="키워드 알림"
+                        android:textColor="#30353D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
-    <ImageView
-        android:id="@+id/Line1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/line_gray" />
+                <TextView
+                    android:id="@+id/KeyTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:padding="3dp"
+                    android:text="설정한 키워드의 나눔글 알림"
+                    android:textColor="#95979B"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                    tools:ignore="MissingConstraints" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+                <Switch
+                    android:id="@+id/KeyAlarm"
+                    android:layout_width="100dp"
+                    android:layout_height="57dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:state_checked="false"
+                    android:switchMinWidth="50dp"
+                    android:switchPadding="9dp"
+                    android:thumb="@drawable/selector_thumb"
+                    android:track="@drawable/selector_switch"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/KeyTitle"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/Line2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="키워드 알림"
-                android:textColor="#30353D"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/KeyTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto_medium"
-            android:padding="3dp"
-            android:text="설정한 키워드의 나눔글 알림"
-            android:textColor="#95979B"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            tools:ignore="MissingConstraints" />
-
-        <Switch
-            android:id="@+id/KeyAlarm"
-            android:layout_width="100dp"
-            android:layout_height="57dp"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="25dp"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:state_checked="false"
-            android:switchMinWidth="50dp"
-            android:switchPadding="9dp"
-            android:thumb="@drawable/selector_thumb"
-            android:track="@drawable/selector_switch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints,TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/Line2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/line_gray" />
+                app:srcCompat="@drawable/line_gray" />
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/RefTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="냉장고 알림"
-                android:textColor="#30353D"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/RefTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="냉장고 알림"
+                        android:textColor="#30353D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        </LinearLayout>
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/RefTxt"
-            android:layout_width="192dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto_medium"
-            android:padding="3dp"
-            android:text="유통기한 임박 식품 알림"
-            android:textColor="#95979B"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            tools:ignore="MissingConstraints" />
+                <TextView
+                    android:id="@+id/RefTxt"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:padding="3dp"
+                    android:text="유통기한 임박 식품 알림"
+                    android:textColor="#95979B"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                    tools:ignore="MissingConstraints" />
 
-        <Switch
-            android:id="@+id/RefAlarm"
-            android:layout_width="100dp"
-            android:layout_height="57dp"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="25dp"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:state_checked="false"
-            android:switchMinWidth="50dp"
-            android:switchPadding="9dp"
-            android:thumb="@drawable/selector_thumb"
-            android:track="@drawable/selector_switch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                <Switch
+                    android:id="@+id/RefAlarm"
+                    android:layout_width="100dp"
+                    android:layout_height="57dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:state_checked="false"
+                    android:switchMinWidth="50dp"
+                    android:switchPadding="9dp"
+                    android:thumb="@drawable/selector_thumb"
+                    android:track="@drawable/selector_switch"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/AlarmTime"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:text="알림 시간"
-                android:textColor="#30353D"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/AlarmTime"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="알림 시간"
+                        android:textColor="#30353D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        </LinearLayout>
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/Alarm"
-            android:layout_width="121dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:layout_marginEnd="25dp"
-            android:fontFamily="@font/roboto_medium"
-            android:stateListAnimator="@null"
-            android:textColor="#71ABFF"
-            android:textSize="17sp"
-            android:text="오후 10:00"
-            android:backgroundTint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="5dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/Alarm"
+                    android:layout_width="121dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="25dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/roboto_medium"
+                    android:stateListAnimator="@null"
+                    android:text="오후 10:00"
+                    android:textColor="#71ABFF"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="5dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>
