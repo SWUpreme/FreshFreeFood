@@ -298,7 +298,7 @@
                     android:backgroundTint="@color/white"
                     android:fontFamily="@font/roboto_medium"
                     android:stateListAnimator="@null"
-                    android:text="오후 10:00"
+                    tools:text="오후 10:00"
                     android:textColor="#71ABFF"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"

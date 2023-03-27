@@ -1,10 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".keyword.KeywordActivity">
+    tools:context=".keyword.KeywordActivity"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbKeyAlarm"
+        app:layout_constraintWidth_max="1440px">
+
+        <EditText
+            android:id="@+id/keyword_input"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/black"
+            android:ems="10"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="키워드를 입력해주세요. (예: 소화기)"
+            android:inputType="textPersonName"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:textSize="14sp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/addkeyword_btn"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </EditText>
+
+        <TextView
+            android:id="@+id/addkeyword_btn"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="25dp"
+            android:gravity="center"
+            android:text="등록"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/keyword_input"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@id/keyword_input"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/keyword_input" />
+
+        <TextView
+            android:id="@+id/txtKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="24dp"
+            android:text="등록한 키워드"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/registered_keyword"
+            app:layout_constraintTop_toBottomOf="@id/keyword_input" />
+
+        <TextView
+            android:id="@+id/registered_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="#71ABFF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtKey"
+            app:layout_constraintLeft_toRightOf="@id/txtKey"
+            app:layout_constraintTop_toTopOf="@+id/txtKey"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="/20"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/registered_keyword"
+            app:layout_constraintLeft_toRightOf="@id/registered_keyword"
+            app:layout_constraintTop_toTopOf="@+id/registered_keyword" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtKey">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_keyword"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbKeyAlarm"
@@ -18,70 +137,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/keyword_alarm_top">
 
+
         <TextView
             android:id="@+id/txtToolbarKeyAlarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_medium"
-            android:text="키워드 설정"
+            android:text="알림 키워드 설정"
             android:textColor="#30353D"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="173dp"
             tools:layout_editor_absoluteY="21dp" />
+
+
     </androidx.appcompat.widget.Toolbar>
-
-
-    <TextView
-        android:id="@+id/txtKey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="키워드"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.094"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbKeyAlarm"
-        tools:ignore="MissingConstraints" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_keyword"
-        android:layout_width="379dp"
-        android:layout_height="228dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/keyword_input"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/keyword_input"
-        android:layout_width="245dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/txt_background_round"
-        android:hint="  추가할 키워드를 입력하세요."
-        android:textSize="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/addkeyword_btn"
-        app:layout_constraintHorizontal_bias="0.897"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtKey" />
-
-    <Button
-        android:id="@+id/addkeyword_btn"
-        android:layout_width="84dp"
-        android:layout_height="31dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/btn_background_round_gray"
-        android:text="추가하기"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/keyword_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/keyword_input"
-        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

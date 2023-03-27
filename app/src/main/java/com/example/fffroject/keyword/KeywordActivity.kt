@@ -2,8 +2,12 @@ package com.example.fffroject.keyword
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fffroject.KeyWordAdapter
 import com.example.fffroject.R
@@ -16,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
 import java.util.*
+
+
 
 class KeywordActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
@@ -30,6 +36,7 @@ class KeywordActivity : AppCompatActivity() {
     // Data에 있는 keyword와 연결
     val keywordList = arrayListOf<KeyWord>()
     val keyadapter = KeyWordAdapter(keywordList)
+    var count = 0 //키워드 수
     var mDocuments: List<DocumentSnapshot>? = null
     lateinit var keyid: String
 
@@ -43,6 +50,22 @@ class KeywordActivity : AppCompatActivity() {
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
+
+        binding.keywordInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var userinput = binding.keywordInput.text.toString()
+                if(userinput.length > 0){
+                    binding.addkeywordBtn.setTextColor(ContextCompat.getColor(applicationContext!!, R.color.chat_2))
+                }
+                else{
+
+                }
+            }
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
 
         //키워드 추가버튼 클릭 시
         mBinding?.addkeywordBtn?.setOnClickListener {
@@ -89,7 +112,7 @@ class KeywordActivity : AppCompatActivity() {
                 }
         }
 
-        mBinding?.recyclerviewKeyword?.layoutManager = LinearLayoutManager(this)
+        mBinding?.recyclerviewKeyword?.layoutManager = LinearLayoutManager(this).also { it.orientation = LinearLayoutManager.HORIZONTAL } //리사이클러뷰 가로로
         mBinding?.recyclerviewKeyword?.adapter = keyadapter
 
         //키워드 삭제
@@ -103,6 +126,12 @@ class KeywordActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    //키워드 수
+    fun getCount() {
+        var text_count = findViewById<TextView>(R.id.registered_keyword)
+        text_count.text = ""+ count
     }
 
     //
@@ -122,6 +151,8 @@ class KeywordActivity : AppCompatActivity() {
                                     val item = KeyWord(document["keyword"] as String)
                                     keywordList.add(item)
                                 }
+                                count = keywordList.size
+                                getCount()
                                 keyadapter.notifyDataSetChanged()
                             }
                         }

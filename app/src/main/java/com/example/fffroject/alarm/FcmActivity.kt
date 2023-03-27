@@ -23,8 +23,8 @@ class FcmActivity : AppCompatActivity() {
 
     //알람 시간 변수
     var myampm: String = ""
-    var myhour: Int = -1
-    var mymin: Int = -1
+    var myhour: Int = 0
+    var mymin: Int = 0
 
     // 전역 변수로 바인딩 객체 선언
     private var mBinding: ActivityFcmBinding? = null
