@@ -38,14 +38,15 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:maxWidth="800px"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbWrite">
+        app:layout_constraintTop_toBottomOf="@+id/toolbWrite"
+        app:layout_constraintWidth_max="1440px">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
@@ -78,7 +79,6 @@
                     android:textColor="#B4B4B4"
                     android:textSize="14sp" />
 
-
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
@@ -89,13 +89,13 @@
                     android:hint="상품 이름을 입력 해 주세요."
                     android:maxLength="50"
                     android:minHeight="38dp"
+                    android:nextFocusDown="@+id/fdeadlineYear"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:textColor="#30353D"
                     android:textColorHint="#E9E9E9"
                     android:textSize="14sp"
                     tools:ignore="TouchTargetSizeCheck" />
-
 
                 <TextView
                     android:id="@+id/txtDeadline"
@@ -106,7 +106,6 @@
                     android:text="유통기한"
                     android:textColor="#B4B4B4"
                     android:textSize="14sp" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -120,17 +119,17 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginRight="4dp"
                         android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
                         android:inputType="number"
                         android:maxLength="4"
                         android:minHeight="38dp"
-                        android:nextFocusDown="@+id/deadlineMonth"
+                        android:nextFocusDown="@+id/fdeadlineMonth"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textAlignment="viewEnd"
                         android:textColor="#30353D"
                         android:textColorHint="#E9E9E9"
                         android:textSize="14sp"
-
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     <TextView
@@ -143,7 +142,6 @@
                         android:textColor="#30353D"
                         android:textSize="14sp" />
 
-
                     <EditText
                         android:id="@+id/fdeadlineMonth"
                         android:layout_width="40dp"
@@ -152,17 +150,17 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginRight="4dp"
                         android:background="@drawable/txt_background_round"
+                        android:fontFamily="@font/roboto_medium"
                         android:inputType="number"
                         android:maxLength="2"
                         android:minHeight="38dp"
-                        android:nextFocusDown="@+id/deadlineDate"
+                        android:nextFocusDown="@+id/fdeadlineDate"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textAlignment="viewEnd"
                         android:textColor="#30353D"
                         android:textColorHint="#E9E9E9"
                         android:textSize="14sp"
-
                         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     <TextView
@@ -187,7 +185,7 @@
                         android:inputType="number"
                         android:maxLength="2"
                         android:minHeight="38dp"
-                        android:nextFocusDown="@+id/purchasedAtYear"
+                        android:nextFocusDown="@+id/fpurchasedAtYear"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textAlignment="viewEnd"
@@ -232,7 +230,7 @@
                         android:inputType="number"
                         android:maxLength="4"
                         android:minHeight="38dp"
-                        android:nextFocusDown="@+id/purchasedAtMonth"
+                        android:nextFocusDown="@+id/fpurchasedAtMonth"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textAlignment="viewEnd"
@@ -263,7 +261,7 @@
                         android:inputType="number"
                         android:maxLength="2"
                         android:minHeight="38dp"
-                        android:nextFocusDown="@+id/purchasedAtDate"
+                        android:nextFocusDown="@+id/fpurchasedAtDate"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textAlignment="viewEnd"
@@ -294,7 +292,7 @@
                         android:inputType="number"
                         android:maxLength="2"
                         android:minHeight="38dp"
-                        android:nextFocusDown="@+id/name"
+                        android:nextFocusDown="@+id/count"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textAlignment="viewEnd"
@@ -323,6 +321,7 @@
                     android:textColor="#B4B4B4"
                     android:textSize="14sp" />
 
+
                 <EditText
                     android:id="@+id/count"
                     android:layout_width="match_parent"
@@ -331,9 +330,9 @@
                     android:background="@drawable/txt_background_round"
                     android:fontFamily="@font/roboto_medium"
                     android:hint="제품 개수를 입력 해 주세요."
+                    android:inputType="number"
                     android:maxLength="50"
                     android:minHeight="38dp"
-                    android:inputType="number"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="1"
@@ -345,28 +344,26 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    app:layout_constraintWidth_max="1440px">
 
                     <Button
                         android:id="@+id/upload_btn"
-                        android:layout_width="245dp"
-                        android:layout_height="43dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/ic_btn_upload"
-                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="SpeakableTextPresentCheck" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             </LinearLayout>
-
-
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
