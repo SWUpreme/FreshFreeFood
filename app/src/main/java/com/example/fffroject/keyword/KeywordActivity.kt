@@ -8,11 +8,13 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fffroject.KeyWordAdapter
 import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityKeywordBinding
 import com.example.fffroject.fragment.KeyWord
+import com.example.fffroject.fragment.MyFridge
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
@@ -23,6 +25,7 @@ import java.util.*
 
 
 
+//코드 수정 예정
 class KeywordActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var user : FirebaseUser? = null
@@ -40,12 +43,18 @@ class KeywordActivity : AppCompatActivity() {
     var mDocuments: List<DocumentSnapshot>? = null
     lateinit var keyid: String
 
+
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityKeywordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadData()
+
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
@@ -66,6 +75,7 @@ class KeywordActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {
             }
         })
+
 
         //키워드 추가버튼 클릭 시
         mBinding?.addkeywordBtn?.setOnClickListener {
@@ -112,7 +122,8 @@ class KeywordActivity : AppCompatActivity() {
                 }
         }
 
-        mBinding?.recyclerviewKeyword?.layoutManager = LinearLayoutManager(this).also { it.orientation = LinearLayoutManager.HORIZONTAL } //리사이클러뷰 가로로
+        val gridLayoutManager = GridLayoutManager(applicationContext, 4)
+        mBinding?.recyclerviewKeyword?.layoutManager = gridLayoutManager
         mBinding?.recyclerviewKeyword?.adapter = keyadapter
 
         //키워드 삭제
@@ -125,51 +136,53 @@ class KeywordActivity : AppCompatActivity() {
             }
         }
 
-
+        (mBinding?.recyclerviewKeyword?.adapter as KeyWordAdapter).getDataFromFirestore()
     }
-
     //키워드 수
     fun getCount() {
         var text_count = findViewById<TextView>(R.id.registered_keyword)
         text_count.text = ""+ count
     }
 
-    //
-    fun loadData() {
 
-            firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
-                ?.orderBy("createdAt", Query.Direction.DESCENDING)
-                ?.addSnapshotListener { snapshot, exception ->
-                    if (exception != null) {
-                    } else {
-                        if (snapshot != null) {
-                            if (!snapshot.isEmpty) {
-                                keywordList.clear()
-                                mDocuments = snapshot.documents
-                                val documents = snapshot.documents
-                                for (document in documents) {
-                                    val item = KeyWord(document["keyword"] as String)
-                                    keywordList.add(item)
-                                }
-                                count = keywordList.size
-                                getCount()
-                                keyadapter.notifyDataSetChanged()
+
+    fun KeyWordAdapter.getDataFromFirestore() {
+        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
+            ?.orderBy("createdAt", Query.Direction.DESCENDING)
+            ?.addSnapshotListener { snapshot, exception ->
+
+                keywordList.clear()
+
+
+                if (snapshot != null) {
+                    if (!snapshot.isEmpty) {
+                        mDocuments = snapshot.documents
+                        val documents = snapshot.documents
+
+                        for (document in documents) {
+                            val item = KeyWord(document["keyword"] as String)
+                            if (item != null) {
+                                keywordList.add(item)
+
                             }
                         }
+
                     }
+                    count = keywordList.size
+                    getCount()
+                    keyadapter.notifyDataSetChanged()
+
                 }
+            }
+
+
     }
 
-
-    fun itemDelete(doc: DocumentSnapshot) {
+    fun itemDelete(doc: DocumentSnapshot){
         firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document(doc.id)
             ?.delete()
 
     }
-
-    //종료
-    override fun onDestroy() {
-        mBinding = null
-        super.onDestroy()
-    }
 }
+
+
