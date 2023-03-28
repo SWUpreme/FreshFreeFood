@@ -69,7 +69,7 @@ class ShareUpdateActivity : AppCompatActivity() {
     lateinit var imgFood : ImageView
 
     // 툴바
-    lateinit var toolbar_sharepost: Toolbar
+    lateinit var toolbar_shareupdate: Toolbar
 
     lateinit var postId: String
     lateinit var nowdate: LocalDate
@@ -101,7 +101,7 @@ class ShareUpdateActivity : AppCompatActivity() {
         indexIntent = intent.getStringExtra("postId")!!
 
         // 상단 툴바 사용
-        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
+        toolbar_shareupdate = findViewById(R.id.toolbSharepostUpdate)
 
         // 지역설정 버튼
         binding.region.setOnClickListener(){
@@ -110,7 +110,7 @@ class ShareUpdateActivity : AppCompatActivity() {
         }
 
         // 완료버튼-post db 저장
-        toolbar_sharepost.setOnMenuItemClickListener {
+        toolbar_shareupdate.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.btnPostUpload -> {
                     if(binding.imgFood.visibility == View.VISIBLE){

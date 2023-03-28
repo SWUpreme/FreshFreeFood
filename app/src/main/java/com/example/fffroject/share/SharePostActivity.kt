@@ -111,7 +111,7 @@ class SharePostActivity : AppCompatActivity() {
         binding.region.setText(regionIntent)
 
         // 상단 툴바 사용
-        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
+        toolbar_sharepost = findViewById(R.id.toolbSharepostUpdate)
 
         // 완료버튼-post db 저장
         toolbar_sharepost.setOnMenuItemClickListener {

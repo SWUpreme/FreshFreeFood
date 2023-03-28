@@ -61,7 +61,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload">
+                app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpdate">
 
                 <ImageView
                     android:id="@+id/detailimageView"
