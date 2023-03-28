@@ -6,9 +6,37 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
+<androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/background_top"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/alarm_top">
+
+        <TextView
+            android:id="@+id/txtToolbarAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_medium"
+            android:text="알림 설정"
+            android:textColor="#30353D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="173dp"
+            tools:layout_editor_absoluteY="21dp" />
+    </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,9 +49,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="91dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <LinearLayout
                     android:id="@+id/linearLayout5"
@@ -264,48 +295,21 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="right"
                     android:layout_marginEnd="25dp"
+                    android:backgroundTint="@color/white"
                     android:fontFamily="@font/roboto_medium"
                     android:stateListAnimator="@null"
+                    tools:text="오후 10:00"
                     android:textColor="#71ABFF"
                     android:textSize="17sp"
-                    android:text="오후 10:00"
-                    android:backgroundTint="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteY="5dp" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>
     </ScrollView>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbAlarm"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:background="@drawable/background_top"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/alarm_top">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/roboto_regular"
-            android:text="알림 설정"
-            android:textColor="#30353D"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:id="@+id/txtToolbarAlarm"
-            tools:layout_editor_absoluteX="181dp"
-            tools:layout_editor_absoluteY="21dp" />
-    </androidx.appcompat.widget.Toolbar>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

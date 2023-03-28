@@ -17,6 +17,7 @@ import com.example.fffroject.*
 import com.example.fffroject.alarm.FcmActivity
 import com.example.fffroject.chat.ChatListActivity
 import com.example.fffroject.databinding.DialogFixnicknameBinding
+import com.example.fffroject.keyword.KeywordActivity
 import com.example.fffroject.share.MyShareActivity
 import com.example.fffroject.share.MyShareMainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -38,6 +39,7 @@ class MypageFragment : Fragment() {
     lateinit var btn_mypage_message: Button
     lateinit var btn_mypage_alarm: Button
     lateinit var btn_mypage_nickname: Button
+    lateinit var btn_mypage_keyalarm: Button //임시
 
     lateinit var btn_nickname_close: ImageButton
     lateinit var edt_mypage_nickname: EditText
@@ -69,6 +71,8 @@ class MypageFragment : Fragment() {
         btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
         btn_mypage_alarm = view.findViewById(R.id.btnMypageAlarm)
         btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
+        btn_mypage_keyalarm = view.findViewById(R.id.button7)
+
 
         // 로그아웃 처리
         btn_logout.setOnClickListener {
@@ -99,6 +103,12 @@ class MypageFragment : Fragment() {
         // 임시 - 알람 버튼을 눌렀을 경우 후기 페이지로 이동
         btn_mypage_alarm.setOnClickListener {
             val intent = Intent(view.context, FcmActivity::class.java)
+            ContextCompat.startActivity(view.context, intent, null)
+        }
+
+        // 임시 - 도움말 버튼을 눌렀을 경우 키워드 알람 페이지로 이동
+        btn_mypage_keyalarm.setOnClickListener {
+            val intent = Intent(view.context, KeywordActivity::class.java)
             ContextCompat.startActivity(view.context, intent, null)
         }
 
