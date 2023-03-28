@@ -4,99 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     android:textAlignment="center">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
             android:background="@drawable/dialog_background_round"
             android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="73dp">
+            android:layout_marginBottom="15dp">
 
             <Button
                 android:id="@+id/btnPostUpdate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#00FFFFFF"
-                android:backgroundTint="#FFFFFF"
+                android:layout_height="55dp"
+                android:background="@color/zxing_transparent"
+                android:fontFamily="@font/roboto_regular"
                 android:text="게시글 수정"
-                android:textAlignment="center"
                 android:textColor="#71ABFF"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/btnPostUpdate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnPostUpdate"
-                app:srcCompat="@drawable/line_gray" />
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/btnPostDelete"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="#00FFFFFF"
-                android:backgroundTint="#FFFFFF"
+                android:layout_height="55dp"
+                android:background="@color/zxing_transparent"
+                android:fontFamily="@font/roboto_regular"
                 android:text="게시글 삭제"
-                android:textAlignment="center"
                 android:textColor="#71ABFF"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnPostUpdate"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:textSize="17sp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <Button
+            android:id="@+id/btnCancle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:layout_marginTop="5dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/dialog_background_round"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="73dp">
-
-            <Button
-                android:id="@+id/btnCancle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                android:backgroundTint="#FFFFFF"
-                android:text="취소"
-                android:textAlignment="center"
-                android:textColor="#71ABFF"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:fontFamily="@font/roboto_bold"
+            android:text="취소"
+            android:textColor="#71ABFF"
+            android:textSize="17sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

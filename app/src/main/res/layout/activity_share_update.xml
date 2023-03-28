@@ -9,7 +9,7 @@
     android:id="@+id/sharepostConst">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbSharepostUpload"
+        android:id="@+id/toolbSharepostUpdate"
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:background="@drawable/background_top"
@@ -19,7 +19,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:menu="@menu/sharepost_top_plus">
 
         <TextView
@@ -34,7 +33,6 @@
             android:textStyle="bold"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="21dp" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpload"
+        app:layout_constraintTop_toBottomOf="@+id/toolbSharepostUpdate"
         app:layout_constraintWidth_max="1440px">
 
         <androidx.core.widget.NestedScrollView

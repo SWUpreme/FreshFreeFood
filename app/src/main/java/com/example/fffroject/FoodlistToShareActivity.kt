@@ -1,7 +1,6 @@
 package com.example.fffroject
 
 import android.app.Activity
-import android.app.appsearch.SearchResult
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,7 +25,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
-import com.example.fffroject.databinding.ActivitySharepostBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -35,7 +33,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kotlinx.android.synthetic.main.fragment_share.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.ByteArrayOutputStream
@@ -141,7 +138,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
         }
 
         // 상단 툴바 사용
-        toolbar_sharepost = findViewById(R.id.toolbSharepostUpload)
+        toolbar_sharepost = findViewById(R.id.toolbSharepostUpdate)
 
         // 지역설정 버튼
         binding.region.setOnClickListener(){

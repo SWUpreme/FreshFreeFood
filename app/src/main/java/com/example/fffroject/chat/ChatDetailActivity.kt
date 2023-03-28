@@ -271,6 +271,11 @@ class ChatDetailActivity : AppCompatActivity() {
         //배경 투명으로 지정(모서리 둥근 배경 보이게 하기)
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        // 취소 버튼
+        dialogBinding.btnShareDone.setOnClickListener(View.OnClickListener {
+            alertDialog.dismiss()
+        })
+
         // 아니오 버튼 (거래완료하지않기)
         dialogBinding.btnNo.setOnClickListener(View.OnClickListener {
             alertDialog.dismiss()
