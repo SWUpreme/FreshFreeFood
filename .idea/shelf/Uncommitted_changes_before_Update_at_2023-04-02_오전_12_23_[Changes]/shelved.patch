@@ -1,0 +1,186 @@
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetDropDown\">\r\n    <targetSelectedWithDropDown>\r\n      <Target>\r\n        <type value=\"QUICK_BOOT_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\82104\\.android\\avd\\Pixel_3_API_30_1.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n    </targetSelectedWithDropDown>\r\n    <timeTargetWasSelectedWithDropDown value=\"2023-03-21T02:36:39.624236300Z\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1679965674960)
+@@ -7,11 +7,11 @@
+         <deviceKey>
+           <Key>
+             <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\82104\.android\avd\Pixel_3_API_30_1.avd" />
++            <value value="C:\Users\82104\.android\avd\Nexus_S_API_30.avd" />
+           </Key>
+         </deviceKey>
+       </Target>
+     </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2023-03-21T02:36:39.624236300Z" />
++    <timeTargetWasSelectedWithDropDown value="2023-03-28T00:01:43.414815400Z" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23_[Changes]/shelved.patch	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ /dev/null	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
+@@ -1,42 +0,0 @@
+-Index: .idea/deploymentTargetDropDown.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"deploymentTargetDropDown\">\n    <runningDeviceTargetSelectedWithDropDown>\n      <Target>\n        <type value=\"RUNNING_DEVICE_TARGET\" />\n        <deviceKey>\n          <Key>\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\n            <value value=\"$USER_HOME$/.android/avd/Pixel_4_API_30_2.avd\" />\n          </Key>\n        </deviceKey>\n      </Target>\n    </runningDeviceTargetSelectedWithDropDown>\n    <targetSelectedWithDropDown>\n    <runningDeviceTargetSelectedWithDropDown>\n      <Target>\n        <type value=\"RUNNING_DEVICE_TARGET\" />\n        <deviceKey>\n          <Key>\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\n            <value value=\"$USER_HOME$/.android/avd/Pixel_4_API_30_2.avd\" />\n          </Key>\n        </deviceKey>\n      </Target>\n    </runningDeviceTargetSelectedWithDropDown>\n    <timeTargetWasSelectedWithDropDown value=\"2023-03-15T06:21:55.030557Z\" />\n    </targetSelectedWithDropDown>\n    <timeTargetWasSelectedWithDropDown value=\"2023-03-15T06:47:50.240879Z\" />\n  </component>\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+---- a/.idea/deploymentTargetDropDown.xml	(revision 8fea0b94195a4762d4e42ff079139f62c4db00dc)
+-+++ b/.idea/deploymentTargetDropDown.xml	(date 1679387017221)
+-@@ -1,21 +1,9 @@
+- <?xml version="1.0" encoding="UTF-8"?>
+- <project version="4">
+-   <component name="deploymentTargetDropDown">
+--    <runningDeviceTargetSelectedWithDropDown>
+--      <Target>
+--        <type value="RUNNING_DEVICE_TARGET" />
+--        <deviceKey>
+--          <Key>
+--            <type value="VIRTUAL_DEVICE_PATH" />
+--            <value value="$USER_HOME$/.android/avd/Pixel_4_API_30_2.avd" />
+--          </Key>
+--        </deviceKey>
+--      </Target>
+--    </runningDeviceTargetSelectedWithDropDown>
+-     <targetSelectedWithDropDown>
+--    <runningDeviceTargetSelectedWithDropDown>
+-       <Target>
+--        <type value="RUNNING_DEVICE_TARGET" />
+-+        <type value="QUICK_BOOT_TARGET" />
+-         <deviceKey>
+-           <Key>
+-             <type value="VIRTUAL_DEVICE_PATH" />
+-@@ -23,8 +11,6 @@
+-           </Key>
+-         </deviceKey>
+-       </Target>
+--    </runningDeviceTargetSelectedWithDropDown>
+--    <timeTargetWasSelectedWithDropDown value="2023-03-15T06:21:55.030557Z" />
+-     </targetSelectedWithDropDown>
+-     <timeTargetWasSelectedWithDropDown value="2023-03-15T06:47:50.240879Z" />
+-   </component>
+Index: .idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52_[Changes]/shelved.patch	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ /dev/null	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
+@@ -1,37 +0,0 @@
+-Index: .idea/deploymentTargetDropDown.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"deploymentTargetDropDown\">\n    <targetSelectedWithDropDown>\n      <Target>\n        <type value=\"QUICK_BOOT_TARGET\" />\n        <deviceKey>\n          <Key>\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\n            <value value=\"$USER_HOME$/.android/avd/Pixel_4_API_30_2.avd\" />\n          </Key>\n        </deviceKey>\n      </Target>\n    </targetSelectedWithDropDown>\n    <timeTargetWasSelectedWithDropDown value=\"2023-03-06T09:00:03.182163Z\" />\n  </component>\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+---- a/.idea/deploymentTargetDropDown.xml	(revision 25d166a702fa261db356d3d9888e8e91f9cc846c)
+-+++ b/.idea/deploymentTargetDropDown.xml	(date 1678863052716)
+-@@ -1,6 +1,17 @@
+- <?xml version="1.0" encoding="UTF-8"?>
+- <project version="4">
+-   <component name="deploymentTargetDropDown">
+-+    <runningDeviceTargetSelectedWithDropDown>
+-+      <Target>
+-+        <type value="RUNNING_DEVICE_TARGET" />
+-+        <deviceKey>
+-+          <Key>
+-+            <type value="VIRTUAL_DEVICE_PATH" />
+-+            <value value="$USER_HOME$/.android/avd/Pixel_4_API_30_2.avd" />
+-+          </Key>
+-+        </deviceKey>
+-+      </Target>
+-+    </runningDeviceTargetSelectedWithDropDown>
+-     <targetSelectedWithDropDown>
+-       <Target>
+-         <type value="QUICK_BOOT_TARGET" />
+-@@ -12,6 +23,6 @@
+-         </deviceKey>
+-       </Target>
+-     </targetSelectedWithDropDown>
+--    <timeTargetWasSelectedWithDropDown value="2023-03-06T09:00:03.182163Z" />
+-+    <timeTargetWasSelectedWithDropDown value="2023-03-15T06:47:50.240879Z" />
+-   </component>
+- </project>
+-\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15_오후_4_00_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15_오후_4_00_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15_오후_4_00_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15_오후_4_00_[Changes]/shelved.patch	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ /dev/null	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
+@@ -1,25 +0,0 @@
+-Index: .idea/deploymentTargetDropDown.xml
+-===================================================================
+-diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+-deleted file mode 100644
+---- a/.idea/deploymentTargetDropDown.xml	(revision fad41d50b26fd93a2acf322dfd20576c7b052833)
+-+++ /dev/null	(revision fad41d50b26fd93a2acf322dfd20576c7b052833)
+-@@ -1,17 +0,0 @@
+--<?xml version="1.0" encoding="UTF-8"?>
+--<project version="4">
+--  <component name="deploymentTargetDropDown">
+--    <runningDeviceTargetSelectedWithDropDown>
+--      <Target>
+--        <type value="RUNNING_DEVICE_TARGET" />
+--        <deviceKey>
+--          <Key>
+--            <type value="VIRTUAL_DEVICE_PATH" />
+--            <value value="$USER_HOME$/.android/avd/Pixel_4_API_30_2.avd" />
+--          </Key>
+--        </deviceKey>
+--      </Target>
+--    </runningDeviceTargetSelectedWithDropDown>
+--    <timeTargetWasSelectedWithDropDown value="2023-03-15T06:21:55.030557Z" />
+--  </component>
+--</project>
+-\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52__Changes_.xml	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ /dev/null	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_2023_03_15_15_52_[Changes]" date="1678863198141" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_15_15_52_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 2023/03/15 15:52 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15__4_00__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15__4_00__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15__4_00__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15__4_00__Changes_.xml	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ /dev/null	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_2023-03-15_오후_4_00_[Changes]" date="1678863611477" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-03-15_오후_4_00_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2023-03-15 오후 4:00 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23__Changes_.xml	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
++++ /dev/null	(revision 0fcaf9f6b4e2f2cb12e33ffad197bf6a3b29bde1)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_2023_03_21_17_23_[Changes]" date="1679387053358" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2023_03_21_17_23_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 2023/03/21 17:23 [Changes]" />
+-</changelist>
+\ No newline at end of file
