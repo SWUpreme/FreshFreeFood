@@ -30,6 +30,7 @@ import androidx.core.content.FileProvider
 import com.example.fffroject.R
 import com.example.fffroject.RegionSelectActivity
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
+import com.example.fffroject.databinding.ActivityShareUpdateBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -55,7 +56,7 @@ class ShareUpdateActivity : AppCompatActivity() {
     lateinit var bitmap: Bitmap
 
     // 바인딩 객체
-    lateinit var binding: ActivityFoodlistToShareBinding
+    lateinit var binding: ActivityShareUpdateBinding
     lateinit var filePath: String
 
     // 파이어스토어 게시글 리스트
@@ -86,7 +87,7 @@ class ShareUpdateActivity : AppCompatActivity() {
         AndroidThreeTen.init(this);
 
         // 바인딩 객체 획득
-        binding = ActivityFoodlistToShareBinding.inflate(layoutInflater)
+        binding = ActivityShareUpdateBinding.inflate(layoutInflater)
         // 액티비티 화면 출력
         setContentView(binding.root)
         // 파이어베이스 인증 객체
