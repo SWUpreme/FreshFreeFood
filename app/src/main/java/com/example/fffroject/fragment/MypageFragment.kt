@@ -40,6 +40,7 @@ class MypageFragment : Fragment() {
     lateinit var btn_mypage_alarm: Button
     lateinit var btn_mypage_nickname: Button
     lateinit var btn_mypage_keyalarm: Button //임시
+    lateinit var btn_delete: Button
 
     lateinit var btn_nickname_close: ImageButton
     lateinit var edt_mypage_nickname: EditText
@@ -72,6 +73,7 @@ class MypageFragment : Fragment() {
         btn_mypage_alarm = view.findViewById(R.id.btnMypageAlarm)
         btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
         btn_mypage_keyalarm = view.findViewById(R.id.button7)
+        btn_delete = view.findViewById(R.id.btnDelete)
 
 
         // 로그아웃 처리
@@ -81,6 +83,21 @@ class MypageFragment : Fragment() {
             googleSigninClient!!.signOut()
             val intent = Intent(activity, AuthActivity::class.java)
             activity?.let { ContextCompat.startActivity(it, intent, null) }
+        }
+
+        // 회원탈퇴 처리
+        btn_delete.setOnClickListener {
+            Toast.makeText(context,"회원탈퇴되셨습니다.", Toast.LENGTH_SHORT).show()
+            firestore?.collection("user")?.document(user!!.uid)
+                ?.update("status", "delete")
+                ?.addOnSuccessListener {
+                }
+            user?.delete()
+            auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
+            googleSigninClient!!.revokeAccess()
+            val intent = Intent(activity, AuthActivity::class.java)
+            activity?.let { ContextCompat.startActivity(it, intent, null) }
+            //activity?.finishAffinity()        // 아예 앱 실행 종료
         }
 
         // 나의 나눔 버튼 눌렀을 경우
