@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityFcmBinding
+import com.example.fffroject.keyword.FireBaseMessagingService
 
 
 class FcmActivity : AppCompatActivity() {
@@ -58,6 +59,23 @@ class FcmActivity : AppCompatActivity() {
                 }else{
                     // on -> off
                     Toast.makeText(this@FcmActivity, "냉장고 알림이 꺼졌어요!", Toast.LENGTH_SHORT).show()
+                    delAlarm()
+                    false
+
+                }
+            }
+        })
+
+        //키워드 스위치 현재 상태 확인
+        binding.KeyAlarm.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                isNoticeOn = if(isChecked){
+                    Toast.makeText(this@FcmActivity, "키워드 알림이 켜졌어요!", Toast.LENGTH_SHORT).show()
+                    FireBaseMessagingService()
+                    true
+                }else{
+                    // on -> off
+                    Toast.makeText(this@FcmActivity, "키워드 알림이 꺼졌어요!", Toast.LENGTH_SHORT).show()
                     delAlarm()
                     false
 

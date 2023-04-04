@@ -91,7 +91,6 @@ class KeywordActivity : AppCompatActivity() {
                         "keyId" to keyid,
                         "keyword" to input.text.toString(),
                         "createdAt" to dateTime.toString(),
-                        "updatedAt" to dateTime.toString(),
                         "status" to "active"
                     )
                 )
@@ -179,10 +178,15 @@ class KeywordActivity : AppCompatActivity() {
     }
 
     fun itemDelete(doc: DocumentSnapshot){
+
+
         firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document(doc.id)
-            ?.delete()
+            ?.update("status", "delete")
+            ?.addOnSuccessListener {
+
+            }
+            ?.addOnFailureListener { }
 
     }
 }
-
 

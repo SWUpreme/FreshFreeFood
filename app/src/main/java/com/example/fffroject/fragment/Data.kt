@@ -95,5 +95,9 @@ data class Chat(
 
 data class KeyWord(
     var keyword: String = "",
+    var keyId : String? = null,
+    var status :  String? = null,
+    var createdAt : String? = null,
+
 
 )
