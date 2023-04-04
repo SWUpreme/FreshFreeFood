@@ -91,17 +91,12 @@ class MypageFragment : Fragment() {
             firestore?.collection("user")?.document(user!!.uid)
                 ?.update("status", "delete")
                 ?.addOnSuccessListener {
-                    user?.delete()
-                    auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
-                    googleSigninClient!!.revokeAccess()
-                    val intent = Intent(activity, AuthActivity::class.java)
-                    activity?.let { ContextCompat.startActivity(it, intent, null) }
                 }
-//            user?.delete()
-//            auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
-//            googleSigninClient!!.revokeAccess()
-//            val intent = Intent(activity, AuthActivity::class.java)
-//            activity?.let { ContextCompat.startActivity(it, intent, null) }
+            user?.delete()
+            auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
+            googleSigninClient!!.revokeAccess()
+            val intent = Intent(activity, AuthActivity::class.java)
+            activity?.let { ContextCompat.startActivity(it, intent, null) }
             //activity?.finishAffinity()        // 아예 앱 실행 종료
         }
 
