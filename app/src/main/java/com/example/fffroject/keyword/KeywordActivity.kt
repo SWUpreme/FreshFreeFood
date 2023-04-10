@@ -90,7 +90,8 @@ class KeywordActivity : AppCompatActivity() {
                     hashMapOf(
                         "keyId" to keyid,
                         "keyword" to input.text.toString(),
-                        "createdAt" to dateTime.toString(),
+                        "createdAt" to dateTime,
+                        "updatedAt" to dateTime,
                         "status" to "active"
                     )
                 )
@@ -178,13 +179,20 @@ class KeywordActivity : AppCompatActivity() {
     }
 
     fun itemDelete(doc: DocumentSnapshot){
-
+        val nowTime = System.currentTimeMillis()
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val dateTime = timeformatter.format(nowTime)
 
         firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document(doc.id)
             ?.update("status", "delete")
             ?.addOnSuccessListener {
 
             }
+            ?.addOnFailureListener { }
+
+        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document(doc.id)
+            ?.update("updatedAt", dateTime)
+            ?.addOnSuccessListener { }
             ?.addOnFailureListener { }
 
     }
