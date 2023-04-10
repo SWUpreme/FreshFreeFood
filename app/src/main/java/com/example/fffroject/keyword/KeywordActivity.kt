@@ -1,28 +1,30 @@
 package com.example.fffroject.keyword
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fffroject.KeyWordAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityKeywordBinding
 import com.example.fffroject.fragment.KeyWord
-import com.example.fffroject.fragment.MyFridge
+import com.google.android.flexbox.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_keyword.*
+import kotlinx.android.synthetic.main.fragment_share.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 
 //코드 수정 예정
@@ -37,12 +39,14 @@ class KeywordActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
 
     // Data에 있는 keyword와 연결
-    val keywordList = arrayListOf<KeyWord>()
-    val keyadapter = KeyWordAdapter(keywordList)
-    var count = 0 //키워드 수
-    var mDocuments: List<DocumentSnapshot>? = null
-    lateinit var keyid: String
 
+    lateinit var keywordList: ArrayList<KeyWord>
+    //val keyadapter = KeyWordAdapter(keywordList)
+    var count = 0 //키워드 수
+    //var mDocuments: List<DocumentSnapshot>? = null
+    lateinit var keyid: String
+    // 리사이클러뷰
+    lateinit var recyclerviewKeyword: RecyclerView
 
 
     override fun onDestroy() {
@@ -54,11 +58,27 @@ class KeywordActivity : AppCompatActivity() {
         mBinding = ActivityKeywordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        keywordList = arrayListOf<KeyWord>()
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
+
+        loadData()
+
+        val flexboxLayoutManager = FlexboxLayoutManager(applicationContext).apply {
+            flexWrap = FlexWrap.WRAP
+            flexDirection = FlexDirection.ROW
+            alignItems = AlignItems.STRETCH
+        }
+        recyclerviewKeyword = binding.recyclerviewKeyword
+        binding.recyclerviewKeyword.run{
+            layoutManager = flexboxLayoutManager
+            adapter = KeyWordAdapter()
+            setHasFixedSize(false)
+        }
+
+
 
         binding.keywordInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -75,7 +95,6 @@ class KeywordActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {
             }
         })
-
 
         //키워드 추가버튼 클릭 시
         mBinding?.addkeywordBtn?.setOnClickListener {
@@ -97,46 +116,51 @@ class KeywordActivity : AppCompatActivity() {
                 )
                 ?.addOnSuccessListener {
                     Toast.makeText(this, "키워드가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                    firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")!!
-                        .orderBy("createdAt", Query.Direction.DESCENDING)
-                        .addSnapshotListener { snapshot, exception ->
-                            if (exception != null) {
-                            } else {
-                                if (snapshot != null) {
-                                    if (!snapshot.isEmpty) {
-                                        keywordList.clear()
-                                        mDocuments = snapshot.documents
-                                        val documents = snapshot.documents
-                                        for (document in documents) {
-                                            val item = KeyWord(document["keyword"] as String)
-                                            keywordList.add(item)
-                                        }
-                                        keyadapter.notifyDataSetChanged()
-                                    }
-                                }
-                            }
-                        }
                 }
 
                 ?.addOnFailureListener { exception ->
                 }
         }
 
-        val gridLayoutManager = GridLayoutManager(applicationContext, 4)
-        mBinding?.recyclerviewKeyword?.layoutManager = gridLayoutManager
-        mBinding?.recyclerviewKeyword?.adapter = keyadapter
 
-        //키워드 삭제
-        (mBinding?.recyclerviewKeyword?.adapter as KeyWordAdapter)
-        keyadapter.itemClick = object : KeyWordAdapter.ItemClick {
-            override fun onClick(view: View, pos: Int) {
-                when (view.id) {
-                    R.id.delete_btn -> itemDelete(mDocuments!!.get(pos))
-                }
-            }
+    }
+
+    // 뷰 홀더
+    inner class KeywordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    // 뷰 어댑터
+    inner class KeyWordAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+        // 리사이클러뷰의 아이템 총 개수 반환
+        override fun getItemCount(): Int {
+            return keywordList.size
         }
 
-        (mBinding?.recyclerviewKeyword?.adapter as KeyWordAdapter).getDataFromFirestore()
+        // xml파일을 inflate하여 ViewHolder를 생성
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            var view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_keyword, parent, false)
+            return KeywordViewHolder(view)
+        }
+
+        // onCreateViewHolder에서 만든 view와 실제 데이터를 연결
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+            // 바인딩
+            val viewHolder = (holder as KeywordViewHolder).itemView
+            val keyword: TextView =viewHolder.findViewById(R.id.txtkeyword)
+            val delbtn: ImageView =viewHolder.findViewById(R.id.delete_btn)
+
+            keyword.text = keywordList!![position].keyword
+            var keyid = keywordList!![position].keyId.toString()
+
+            //키워드 삭제
+            delbtn.setOnClickListener{
+                itemDelete(keyid)
+                notifyItemRemoved(position)
+            }
+
+        }
     }
     //키워드 수
     fun getCount() {
@@ -144,57 +168,48 @@ class KeywordActivity : AppCompatActivity() {
         text_count.text = ""+ count
     }
 
-
-
-    fun KeyWordAdapter.getDataFromFirestore() {
+    private fun loadData() {
         firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
             ?.orderBy("createdAt", Query.Direction.DESCENDING)
-            ?.addSnapshotListener { snapshot, exception ->
-
+            ?.addSnapshotListener { value, error ->
                 keywordList.clear()
+                if (value != null) {
 
-
-                if (snapshot != null) {
-                    if (!snapshot.isEmpty) {
-                        mDocuments = snapshot.documents
-                        val documents = snapshot.documents
-
-                        for (document in documents) {
-                            val item = KeyWord(document["keyword"] as String)
-                            if (item != null) {
-                                keywordList.add(item)
-
-                            }
+                    for (snapshot in value.documents) {
+                        var item = snapshot.toObject(KeyWord::class.java)
+                        if (item != null) {
+                            keywordList.add(item)
                         }
-
                     }
-                    count = keywordList.size
-                    getCount()
-                    keyadapter.notifyDataSetChanged()
-
                 }
+                count = keywordList.size
+                getCount()
+                recyclerviewKeyword.adapter?.notifyDataSetChanged()
             }
-
 
     }
 
-    fun itemDelete(doc: DocumentSnapshot){
+
+
+
+
+    fun itemDelete(keyid: String){
+
         val nowTime = System.currentTimeMillis()
         val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
         val dateTime = timeformatter.format(nowTime)
 
-        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document(doc.id)
+        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document("$keyid")
             ?.update("status", "delete")
             ?.addOnSuccessListener {
 
             }
             ?.addOnFailureListener { }
 
-        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document(doc.id)
+        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")?.document("$keyid")
             ?.update("updatedAt", dateTime)
             ?.addOnSuccessListener { }
             ?.addOnFailureListener { }
 
     }
 }
-
