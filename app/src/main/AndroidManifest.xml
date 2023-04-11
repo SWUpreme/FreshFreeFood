@@ -48,7 +48,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".FoodlistToShareActivity"
+            android:name=".share.FoodlistToShareActivity"
             android:exported="false" />
         <activity
             android:name=".chat.ChatListActivity"

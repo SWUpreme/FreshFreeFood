@@ -1,4 +1,4 @@
-package com.example.fffroject
+package com.example.fffroject.share
 
 import android.app.Activity
 import android.content.Context
@@ -24,6 +24,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.fffroject.R
+import com.example.fffroject.RegionSelectActivity
 import com.example.fffroject.databinding.ActivityFoodlistToShareBinding
 import com.example.fffroject.databinding.DialogAddimageBinding
 import com.google.android.material.snackbar.Snackbar
@@ -69,7 +71,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
     lateinit var postId: String
     lateinit var nowdate: LocalDate
     lateinit var date : String
-    lateinit var createdAt: String
+    lateinit var postedAt: String
 
     lateinit var indexIntent: String
     lateinit var foodnameIntent: String
@@ -263,10 +265,6 @@ class FoodlistToShareActivity : AppCompatActivity() {
                 && Integer.parseInt(binding.purchasedAtDate.text.toString())>0 && Integer.parseInt(binding.purchasedAtDate.text.toString())<=31)
     }
 
-//    private fun checkCompareDate(): Bollean{
-//        return()
-//    }
-
     // 양식 작성 여부 확인
     private fun checkAllWritten(): Boolean{
         return (binding.title.length()>0 && binding.deadlineYear.length()>0 && binding.deadlineMonth.length()>0 && binding.deadlineDate.length()>0
@@ -426,7 +424,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
     }
 
     // 데이터 저장
-    private fun addPostDB(title: String, purchasedAt: String, deadline: String, name: String, region: String,
+    private fun addPostDB(title: String, purchasedAt: String, deadline: String, foodName: String, region: String,
                           location: String, content: String){
         //유저가 존재한다면
         if (user != null){
@@ -434,33 +432,30 @@ class FoodlistToShareActivity : AppCompatActivity() {
             //게시글 등록 날짜
             nowdate = LocalDate.now()
             date = nowdate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-            createdAt = date.toString()
+            postedAt = date.toString()
 
-//            nowDateTime = LocalDateTime.now()
-//            val formatter = DateTimeFormatter.ISO_DATE
-//            dateTime = nowDateTime.format(formatter)
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
             val dateTime = timeformatter.format(nowTime)
 
             //db 전송
             db?.collection("post")?.document("$postId")
                 ?.set(
                     hashMapOf(
-                        "index" to postId,
+                        "postId" to postId,
                         "writer" to user?.uid,
                         "title" to title,
-                        "name" to name,
+                        "foodName" to foodName,
                         "deadline" to deadline,
                         "purchasedAt" to purchasedAt,
                         "region" to region,
                         "location" to location,
                         "content" to content,
-                        "createdAt" to createdAt,
-                        "dateTime" to dateTime,
-                        "flag" to true,
-                        "done" to false,
-                        "pointDone" to false
+                        "postedAt" to postedAt,
+                        "fridgeToss" to false,
+                        "createdAt" to dateTime,
+                        "updatedAt" to dateTime,
+                        "status" to "active"
                     )
                 )
                 ?.addOnSuccessListener {
