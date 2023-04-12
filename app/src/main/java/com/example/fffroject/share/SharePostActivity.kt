@@ -386,6 +386,10 @@ class SharePostActivity : AppCompatActivity() {
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
             val dateTime = timeformatter.format(nowTime)
 
+            /*
+            -----------------민지 작성 공간-------------------
+             */
+
             //db 전송
             db?.collection("post")?.document("$postId")
                 ?.set(
