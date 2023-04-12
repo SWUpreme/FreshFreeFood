@@ -23,7 +23,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
     var user: FirebaseUser? = null
     var fridgeindex : String? = null
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
+    //메세지를 수신하는 메서드
+   override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
@@ -32,7 +34,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         firestore = FirebaseFirestore.getInstance()
 
 
-        // 내 냉장고에서 status가 true인 것만 불러오기
+
             firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
                 ?.whereEqualTo("status", "active")
                 ?.get()
@@ -44,12 +46,12 @@ class FireBaseMessagingService : FirebaseMessagingService() {
                         val strings = ArrayList<KeyWord>()
                         for (sheet: Int in 0 until count) {
 
-                            // 해당하는 나의 냉장고에서 냉장고id 받아오기
+
                             var docindex = task.result.documents?.get(sheet)
                             fridgeindex = docindex?.get("keyword").toString()
 
                             when (task.result?.size()) {
-                                1 -> if (remoteMessage.data["listTitle"]?.contains(fridgeindex!!.get(0))!!) {
+                                1 -> if (remoteMessage.data["listTitle"]?.contains(fridgeindex!!.get(sheet))!!) {
                                     sendNotification(
                                         remoteMessage.data["listTitle"]
                                     )
@@ -117,6 +119,8 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
     }
 
+
+
     override fun onDeletedMessages() {
         super.onDeletedMessages()
         Log.d(TAG, "onDeletedMessages: called")
@@ -127,7 +131,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "onNewToken: called")
     }
 
-    private fun sendNotification(messageBody: String?) {
+
+    //알림을 생성하는 메서드
+   private fun sendNotification(messageBody: String?) {
         // RequestCode, Id를 고유값으로 지정하여 알림이 개별 표시되도록 함
         val uniId: Int = (System.currentTimeMillis() / 1000).toInt()
 
