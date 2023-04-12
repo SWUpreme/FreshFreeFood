@@ -169,7 +169,8 @@ class KeywordActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
+        firestore?.collection("user")?.document(user!!.uid)
+            ?.collection("mykeyword")?.whereEqualTo("status", "active")
             ?.orderBy("createdAt", Query.Direction.DESCENDING)
             ?.addSnapshotListener { value, error ->
                 keywordList.clear()
