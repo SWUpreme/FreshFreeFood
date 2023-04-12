@@ -72,7 +72,7 @@ class MypageFragment : Fragment() {
         btn_mypage_message = view.findViewById(R.id.btnMypageMessage)
         btn_mypage_alarm = view.findViewById(R.id.btnMypageAlarm)
         btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
-        btn_mypage_keyalarm = view.findViewById(R.id.button7)
+        btn_mypage_keyalarm = view.findViewById(R.id.btnMypageKeyword)
         btn_delete = view.findViewById(R.id.btnDelete)
 
 

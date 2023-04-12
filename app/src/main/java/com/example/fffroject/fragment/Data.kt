@@ -98,6 +98,6 @@ data class KeyWord(
     var keyId : String? = null,
     var status :  String? = null,
     var createdAt : String? = null,
-
+    var updatedAt : String? = null,
 
 )
