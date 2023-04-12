@@ -26,6 +26,7 @@ import com.example.fffroject.*
 import com.example.fffroject.foodinput.OpenApiActivity
 import com.example.fffroject.foodinput.WriteActivity
 import com.example.fffroject.fragment.CustomDiverItemDecoration
+import com.example.fffroject.share.FoodlistToShareActivity
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query

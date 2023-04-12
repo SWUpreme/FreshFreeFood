@@ -48,7 +48,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".FoodlistToShareActivity"
+            android:name=".share.FoodlistToShareActivity"
             android:exported="false" />
         <activity
             android:name=".chat.ChatListActivity"
@@ -134,6 +134,14 @@
 
         <service
             android:name=".keyword.FireBaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".chat.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
