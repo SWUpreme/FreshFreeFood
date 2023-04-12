@@ -116,7 +116,7 @@ class MypageFragment : Fragment() {
                                 for (count: Int in 0..(document.size()-1)) {
                                     var doc = document.documents?.get(count)
                                     var fridgeid = doc.get("fridgeId").toString()
-                                    var memcount = doc.get("membercount").toString().toInt()
+                                    var memcount = doc.get("member").toString().toInt()
                                     firestore?.collection("fridge")?.document(fridgeid)?.get()
                                         ?.addOnSuccessListener { data ->
                                             // 내가 owner인 냉장고라면
@@ -136,6 +136,7 @@ class MypageFragment : Fragment() {
                                                     ?.addOnSuccessListener { task ->
                                                         Toast.makeText(context, fridgeid, Toast.LENGTH_SHORT)
                                                         var membercount = task.size()
+                                                        // 여기 잘 안되는거같음
                                                         if (membercount != 0) {
                                                             for (count: Int in 0..(membercount - 1)) {
                                                                 var doc = task.documents?.get(count)
