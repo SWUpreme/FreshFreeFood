@@ -185,13 +185,42 @@
 
     <Button
         android:id="@+id/btnCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/checkbox_grey"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textCheck"
         app:layout_constraintTop_toBottomOf="@+id/textView36"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="25dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="  안내사항을 모두 확인했으며, 이에 동의합니다."
+        android:textColor="#95979B"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+    <Button
+        android:id="@+id/btnDeleteOk"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/btn_checkok_grey"
+        android:fontFamily="@font/roboto_regular"
+        android:text="탈퇴하기"
+        android:textColor="#FFFFFF"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

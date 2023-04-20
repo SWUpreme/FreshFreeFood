@@ -88,132 +88,137 @@ class MypageFragment : Fragment() {
 
         // 회원탈퇴 처리
         btn_delete.setOnClickListener {
-            val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
-            val dateTime = timeformatter.format(nowTime)
+            val intent = Intent(view.context, UserDeleteActivity::class.java)
+            ContextCompat.startActivity(view.context, intent, null)
+//            val nowTime = System.currentTimeMillis()
+//            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+//            val dateTime = timeformatter.format(nowTime)
+//
+//            firestore?.collection("user")?.document(user!!.uid)
+//                ?.update("status", "delete")
+//                ?.addOnSuccessListener {
+//                    // Post의 status 바꾸기
+//                    firestore?.collection("post")?.whereEqualTo("writer", user!!.uid)?.get()
+//                        ?.addOnSuccessListener { document ->
+//                            if (document.size() != 0) {
+//                                var postid = ""
+//                                for (count: Int in 0..(document.size()-1)) {
+//                                    var doc = document.documents?.get(count)
+//                                    postid = doc.get("postId").toString()
+//                                    firestore?.collection("post")?.document(postid)
+//                                        ?.update("status", "delete")
+//                                }
+//                            }
+//                        }
+//                    // 냉장고(공유되는 냉장고) delete처리 해주기 내가 오너인거는 delete 멤버인거는 나가기처리
+//                    firestore?.collection("user")?.document(user!!.uid)
+//                        ?.collection("myfridge")?.get()
+//                        ?.addOnSuccessListener { document ->
+//                            if (document.size() != 0) {
+//                                for (count: Int in 0..(document.size()-1)) {
+//                                    var doc = document.documents?.get(count)
+//                                    var fridgeid = doc.get("fridgeId").toString()
+//                                    var memcount = doc.get("member").toString().toInt()
+//                                    firestore?.collection("fridge")?.document(fridgeid)?.get()
+//                                        ?.addOnSuccessListener { data ->
+//                                            // 내가 owner인 냉장고라면
+//                                            // 냉장고 delete
+//                                            if (data?.get("owner").toString() == user!!.uid) {
+//                                                firestore?.collection("fridge")?.document(fridgeid)
+//                                                    ?.update("status", "delete")
+//                                                    ?.addOnSuccessListener { }
+//                                                    ?.addOnFailureListener { }
+//                                                firestore?.collection("fridge")?.document(fridgeid)
+//                                                    ?.update("updatedAt", dateTime)
+//                                                    ?.addOnSuccessListener { }
+//                                                    ?.addOnFailureListener { }
+//
+//                                                firestore?.collection("fridge")?.document(fridgeid)
+//                                                    ?.collection("member")?.get()
+//                                                    ?.addOnSuccessListener { task ->
+//                                                        Toast.makeText(context, fridgeid, Toast.LENGTH_SHORT)
+//                                                        var membercount = task.size()
+//                                                        // 여기 잘 안되는거같음
+//                                                        if (membercount != 0) {
+//                                                            for (count: Int in 0..(membercount - 1)) {
+//                                                                var doc = task.documents?.get(count)
+//                                                                var memberuid = doc.get("userId").toString()
+//                                                                firestore?.collection("user")?.document(memberuid)
+//                                                                    ?.collection("myfridge")
+//                                                                    ?.document(fridgeid)
+//                                                                    ?.update("status", "delete")
+//                                                                    ?.addOnSuccessListener { }
+//                                                                    ?.addOnFailureListener { }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                            }
+//                                            // 내가 owner가 아니면
+//                                            else{
+//                                                firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+//                                                    ?.document(user!!.uid)
+//                                                    ?.update("status", "delete")
+//                                                    ?.addOnSuccessListener { }
+//                                                    ?.addOnFailureListener { }
+//                                                firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
+//                                                    ?.document(user!!.uid)
+//                                                    ?.update("updatedAt", dateTime)
+//                                                    ?.addOnSuccessListener { }
+//                                                    ?.addOnFailureListener { }
+//                                                // member의 membercount 줄이기
+//                                                firestore?.collection("fridge")?.document(fridgeid)
+//                                                    ?.collection("member")?.get()
+//                                                    ?.addOnSuccessListener { task ->
+//                                                        if (memcount > 2) {
+//                                                            for (count: Int in 0..(memcount - 2)) {
+//                                                                var doc = task.documents?.get(count)
+//                                                                var memberuid = doc.get("userId").toString()
+//                                                                firestore?.collection("user")?.document(memberuid)
+//                                                                    ?.collection("myfridge")
+//                                                                    ?.document(fridgeid)
+//                                                                    ?.update("member", FieldValue.increment(-1))
+//                                                                    ?.addOnSuccessListener { }
+//                                                                    ?.addOnFailureListener { }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                // owner의 membercount 줄이기
+//                                                firestore?.collection("fridge")?.document(fridgeid)?.get()
+//                                                    ?.addOnSuccessListener { document ->
+//                                                        if (document != null) {
+//                                                            // 해당하는 냉장고의 owner 받아오기
+//                                                            var owner = document.data?.get("owner").toString()
+//                                                            firestore?.collection("user")?.document(owner)?.collection("myfridge")
+//                                                                ?.document(fridgeid)
+//                                                                ?.update("member", FieldValue.increment(-1))
+//                                                                ?.addOnSuccessListener { }
+//                                                                ?.addOnFailureListener { }
+//                                                        }
+//                                                    }
+//                                            }
+//
+//                                        }
+//                                }
+//                            }
+//                        }
+//
+//                    // 유저의 status 바꾸기
+//                    firestore?.collection("user")?.document(user!!.uid)
+//                        ?.update("nickname", "(탈퇴유저)")
+//                    firestore?.collection("user")?.document(user!!.uid)
+//                        ?.update("updatedAt", dateTime)
+//                        ?.addOnSuccessListener {
+//                            user?.delete()
+//                            auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
+//                            googleSigninClient!!.revokeAccess()
+//                            Toast.makeText(context,"회원탈퇴되셨습니다.", Toast.LENGTH_SHORT).show()
+//                            val intent = Intent(activity, AuthActivity::class.java)
+//                            activity?.let { ContextCompat.startActivity(it, intent, null) }
+//                        }
+//                }
 
-            firestore?.collection("user")?.document(user!!.uid)
-                ?.update("status", "delete")
-                ?.addOnSuccessListener {
-                    // Post의 status 바꾸기
-                    firestore?.collection("post")?.whereEqualTo("writer", user!!.uid)?.get()
-                        ?.addOnSuccessListener { document ->
-                            if (document.size() != 0) {
-                                var postid = ""
-                                for (count: Int in 0..(document.size()-1)) {
-                                    var doc = document.documents?.get(count)
-                                    postid = doc.get("postId").toString()
-                                    firestore?.collection("post")?.document(postid)
-                                        ?.update("status", "delete")
-                                }
-                            }
-                        }
-                    // 냉장고(공유되는 냉장고) delete처리 해주기 내가 오너인거는 delete 멤버인거는 나가기처리
-                    firestore?.collection("user")?.document(user!!.uid)
-                        ?.collection("myfridge")?.get()
-                        ?.addOnSuccessListener { document ->
-                            if (document.size() != 0) {
-                                for (count: Int in 0..(document.size()-1)) {
-                                    var doc = document.documents?.get(count)
-                                    var fridgeid = doc.get("fridgeId").toString()
-                                    var memcount = doc.get("member").toString().toInt()
-                                    firestore?.collection("fridge")?.document(fridgeid)?.get()
-                                        ?.addOnSuccessListener { data ->
-                                            // 내가 owner인 냉장고라면
-                                            // 냉장고 delete
-                                            if (data?.get("owner").toString() == user!!.uid) {
-                                                firestore?.collection("fridge")?.document(fridgeid)
-                                                    ?.update("status", "delete")
-                                                    ?.addOnSuccessListener { }
-                                                    ?.addOnFailureListener { }
-                                                firestore?.collection("fridge")?.document(fridgeid)
-                                                    ?.update("updatedAt", dateTime)
-                                                    ?.addOnSuccessListener { }
-                                                    ?.addOnFailureListener { }
 
-                                                firestore?.collection("fridge")?.document(fridgeid)
-                                                    ?.collection("member")?.get()
-                                                    ?.addOnSuccessListener { task ->
-                                                        Toast.makeText(context, fridgeid, Toast.LENGTH_SHORT)
-                                                        var membercount = task.size()
-                                                        // 여기 잘 안되는거같음
-                                                        if (membercount != 0) {
-                                                            for (count: Int in 0..(membercount - 1)) {
-                                                                var doc = task.documents?.get(count)
-                                                                var memberuid = doc.get("userId").toString()
-                                                                firestore?.collection("user")?.document(memberuid)
-                                                                    ?.collection("myfridge")
-                                                                    ?.document(fridgeid)
-                                                                    ?.update("status", "delete")
-                                                                    ?.addOnSuccessListener { }
-                                                                    ?.addOnFailureListener { }
-                                                            }
-                                                        }
-                                                    }
-                                            }
-                                            // 내가 owner가 아니면
-                                            else{
-                                                firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
-                                                    ?.document(user!!.uid)
-                                                    ?.update("status", "delete")
-                                                    ?.addOnSuccessListener { }
-                                                    ?.addOnFailureListener { }
-                                                firestore?.collection("fridge")?.document(fridgeid)?.collection("member")
-                                                    ?.document(user!!.uid)
-                                                    ?.update("updatedAt", dateTime)
-                                                    ?.addOnSuccessListener { }
-                                                    ?.addOnFailureListener { }
-                                                // member의 membercount 줄이기
-                                                firestore?.collection("fridge")?.document(fridgeid)
-                                                    ?.collection("member")?.get()
-                                                    ?.addOnSuccessListener { task ->
-                                                        if (memcount > 2) {
-                                                            for (count: Int in 0..(memcount - 2)) {
-                                                                var doc = task.documents?.get(count)
-                                                                var memberuid = doc.get("userId").toString()
-                                                                firestore?.collection("user")?.document(memberuid)
-                                                                    ?.collection("myfridge")
-                                                                    ?.document(fridgeid)
-                                                                    ?.update("member", FieldValue.increment(-1))
-                                                                    ?.addOnSuccessListener { }
-                                                                    ?.addOnFailureListener { }
-                                                            }
-                                                        }
-                                                    }
-                                                // owner의 membercount 줄이기
-                                                firestore?.collection("fridge")?.document(fridgeid)?.get()
-                                                    ?.addOnSuccessListener { document ->
-                                                        if (document != null) {
-                                                            // 해당하는 냉장고의 owner 받아오기
-                                                            var owner = document.data?.get("owner").toString()
-                                                            firestore?.collection("user")?.document(owner)?.collection("myfridge")
-                                                                ?.document(fridgeid)
-                                                                ?.update("member", FieldValue.increment(-1))
-                                                                ?.addOnSuccessListener { }
-                                                                ?.addOnFailureListener { }
-                                                        }
-                                                    }
-                                            }
 
-                                        }
-                                }
-                            }
-                        }
-
-                    // 유저의 status 바꾸기
-                    firestore?.collection("user")?.document(user!!.uid)
-                        ?.update("nickname", "(탈퇴유저)")
-                    firestore?.collection("user")?.document(user!!.uid)
-                        ?.update("updatedAt", dateTime)
-                        ?.addOnSuccessListener {
-                            user?.delete()
-                            auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
-                            googleSigninClient!!.revokeAccess()
-                            Toast.makeText(context,"회원탈퇴되셨습니다.", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(activity, AuthActivity::class.java)
-                            activity?.let { ContextCompat.startActivity(it, intent, null) }
-                        }
-                }
 //            user?.delete()
 //            auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
 //            googleSigninClient!!.revokeAccess()

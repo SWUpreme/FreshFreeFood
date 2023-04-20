@@ -100,6 +100,9 @@
             android:name=".SharePointActivity"
             android:exported="true" />
         <activity
+            android:name=".UserDeleteActivity"
+            android:exported="true" />
+        <activity
             android:name=".AuthActivity"
             android:exported="true"
             tools:ignore="DuplicateActivity">
