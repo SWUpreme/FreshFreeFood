@@ -233,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="도움말"
+                    android:text="키워드"
                     android:textColor="#30353D"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnMypageKeyword"
