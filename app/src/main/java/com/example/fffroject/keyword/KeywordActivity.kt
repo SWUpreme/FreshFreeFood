@@ -4,6 +4,7 @@ package com.example.fffroject.keyword
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +18,12 @@ import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityKeywordBinding
 import com.example.fffroject.fragment.KeyWord
 import com.google.android.flexbox.*
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_keyword.*
 import kotlinx.android.synthetic.main.fragment_share.*
 import java.text.SimpleDateFormat
