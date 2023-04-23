@@ -126,7 +126,6 @@ class KeywordActivity : AppCompatActivity() {
         }
 
 
-
     }
 
     // 뷰 홀더
