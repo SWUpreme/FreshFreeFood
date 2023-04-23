@@ -2,6 +2,7 @@ package com.example.fffroject.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityChatSendExistBinding
@@ -58,60 +59,72 @@ class ChatSendExistActivity : AppCompatActivity() {
                 R.id.btnChatContent -> {
                     if (binding.ChatContent.text.toString().length != 0) {
                         if (user != null) {
-                            chatid = UUID.randomUUID().toString()            // 채팅 아이디 생성
 
-                            // 전체 채팅룸에 채팅 올리기
-                            db?.collection("chatroom")?.document("$chatroomId")
-                                ?.collection("chat")?.document("$chatid")
-                                ?.set(
-                                    hashMapOf(
-                                        "chatId" to chatid,
-                                        "context" to binding.ChatContent.text.toString(),
-                                        "taker" to takerId,
-                                        "giver" to giverId,
-                                        "writer" to user?.uid,
-                                        "sendedAt" to simpleTime,
-                                        "createdAt" to fullTime,
-                                        "updatedAt" to fullTime,
-                                        "status" to "active"
-                                    )
-                                )
-                                ?.addOnSuccessListener {
-                                    Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
-                                }
-                                ?.addOnFailureListener {
-                                    Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                }
+                            // 상대방 활동/비활동 확인
+                            db?.collection("user")?.document("$opponentId")?.get()
+                                ?.addOnSuccessListener { value ->
+                                    var opponentStatus = value.data?.get("status") as String
+                                    if (opponentStatus != "delete"){
+                                        // 상대방이 활동 유저라면
+                                        chatid = UUID.randomUUID().toString()            // 채팅 아이디 생성
 
-                            // 나의 최신 채팅/채팅시간 업데이트
-                            db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document("$chatroomId")
-                                ?.update(
-                                    "context", binding.ChatContent.text.toString(),
-                                    "sendedAt", simpleTime,
-                                    "updatedAt", fullTime
-                                )
-                                ?.addOnSuccessListener {}
-                                ?.addOnFailureListener {}
+                                        // 전체 채팅룸에 채팅 올리기
+                                        db?.collection("chatroom")?.document("$chatroomId")
+                                            ?.collection("chat")?.document("$chatid")
+                                            ?.set(
+                                                hashMapOf(
+                                                    "chatId" to chatid,
+                                                    "context" to binding.ChatContent.text.toString(),
+                                                    "taker" to takerId,
+                                                    "giver" to giverId,
+                                                    "writer" to user?.uid,
+                                                    "sendedAt" to simpleTime,
+                                                    "createdAt" to fullTime,
+                                                    "updatedAt" to fullTime,
+                                                    "status" to "active"
+                                                )
+                                            )
+                                            ?.addOnSuccessListener {
+                                                Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
+                                            }
+                                            ?.addOnFailureListener {
+                                                Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                            }
 
-                            // 상대의 최신 채팅/채팅시간 업데이트
-                            db?.collection("user")?.document("$opponentId")?.collection("mychat")?.document("$chatroomId")
-                                ?.update(
-                                    "context", binding.ChatContent.text.toString(),
-                                    "sendedAt", simpleTime,
-                                    "updatedAt", fullTime
-                                )
-                                ?.addOnSuccessListener {}
-                                ?.addOnFailureListener {}
+                                        // 나의 최신 채팅/채팅시간 업데이트
+                                        db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document("$chatroomId")
+                                            ?.update(
+                                                "context", binding.ChatContent.text.toString(),
+                                                "sendedAt", simpleTime,
+                                                "updatedAt", fullTime
+                                            )
+                                            ?.addOnSuccessListener {}
+                                            ?.addOnFailureListener {}
 
-                            // 채팅룸의 최신 채팅/채팅시간 업데이트
-                            db?.collection("chatroom")?.document("$chatroomId")
-                                ?.update(
-                                    "context", binding.ChatContent.text.toString(),
-                                    "sendedAt", simpleTime,
-                                    "updatedAt", fullTime
-                                )
-                                ?.addOnSuccessListener {}
-                                ?.addOnFailureListener {}
+                                        // 상대의 최신 채팅/채팅시간 업데이트
+                                        db?.collection("user")?.document("$opponentId")?.collection("mychat")?.document("$chatroomId")
+                                            ?.update(
+                                                "context", binding.ChatContent.text.toString(),
+                                                "sendedAt", simpleTime,
+                                                "updatedAt", fullTime
+                                            )
+                                            ?.addOnSuccessListener {}
+                                            ?.addOnFailureListener {}
+
+                                        // 채팅룸의 최신 채팅/채팅시간 업데이트
+                                        db?.collection("chatroom")?.document("$chatroomId")
+                                            ?.update(
+                                                "context", binding.ChatContent.text.toString(),
+                                                "sendedAt", simpleTime,
+                                                "updatedAt", fullTime
+                                            )
+                                            ?.addOnSuccessListener {}
+                                            ?.addOnFailureListener {}
+                                    }else {
+                                        // 상대방이 비활동 유저라면
+                                        Toast.makeText(this, "탈퇴한 유저에게 쪽지를 보낼 수 없습니다.", Toast.LENGTH_SHORT).show()
+                                    }
+                                } // 끝: 상대 활동/비활동 데이터 가져오기
                         }
                         // 쪽지 전송 완료 후 세부 쪽지로 돌아가기
                         finish()

@@ -32,7 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_share.*
 import java.text.SimpleDateFormat
-import java.util.ArrayList
+import java.util.*
 
 class MyShareTabDone : Fragment() {
     // 바인딩 객체
@@ -180,9 +180,9 @@ class MyShareTabDone : Fragment() {
                 ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     postAllList.clear()
-                    if (value != null) {
+                    if (value != null && !value.isEmpty) {
                         // 나눔 없음 텍스트 INVISIBLE
-                        binding.txtNoRegion.setVisibility(View.INVISIBLE)
+                        binding.txtNoDoneMyShare.setVisibility(View.INVISIBLE)
                         // 전체 게시글 리스트에 추가하기
                         for (snapshot in value.documents) {
                             var item = snapshot.toObject(PostAll::class.java)
@@ -193,7 +193,7 @@ class MyShareTabDone : Fragment() {
                         }
                     }else{
                         // 나눔 없음 텍스트 VISIBLE
-                        binding.txtNoRegion.setVisibility(View.VISIBLE)
+                        binding.txtNoDoneMyShare.setVisibility(View.VISIBLE)
                     }
                     recyclerviewMyShare.adapter?.notifyDataSetChanged()
                 }
