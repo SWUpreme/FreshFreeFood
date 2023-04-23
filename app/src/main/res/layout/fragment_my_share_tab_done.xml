@@ -8,7 +8,7 @@
     tools:context=".share.MyShareTabDone">
 
     <TextView
-        android:id="@+id/txtNoRegion"
+        android:id="@+id/txtNoDoneMyShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"

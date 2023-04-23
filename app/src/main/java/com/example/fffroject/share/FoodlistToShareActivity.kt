@@ -452,7 +452,7 @@ class FoodlistToShareActivity : AppCompatActivity() {
                         "location" to location,
                         "content" to content,
                         "postedAt" to postedAt,
-                        "fridgeToss" to false,
+                        "fridgeToss" to true,
                         "createdAt" to dateTime,
                         "updatedAt" to dateTime,
                         "status" to "active"

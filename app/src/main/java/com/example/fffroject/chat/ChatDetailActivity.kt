@@ -81,13 +81,25 @@ class ChatDetailActivity : AppCompatActivity() {
         binding.toolbChatDetail.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.btnChatContent -> {
-                    val intent = Intent(this, ChatSendExistActivity::class.java)
-                    intent.putExtra("chatroomId", chatroomId)
-                    intent.putExtra("postId", postId)
-                    intent.putExtra("opponentId", opponentId)
-                    intent.putExtra("giverId", giverId)
-                    intent.putExtra("takerId", takerId)
-                    ContextCompat.startActivity(this, intent, null)
+                    // 상대방 활동/비활동 확인
+                    db?.collection("user")?.document("$opponentId")?.get()
+                        ?.addOnSuccessListener { value ->
+                            var opponentStatus = value.data?.get("status") as String
+                            if (opponentStatus != "delete"){
+                                // 상대방이 활동 유저라면
+                                val intent = Intent(this, ChatSendExistActivity::class.java)
+                                intent.putExtra("chatroomId", chatroomId)
+                                intent.putExtra("postId", postId)
+                                intent.putExtra("opponentId", opponentId)
+                                intent.putExtra("giverId", giverId)
+                                intent.putExtra("takerId", takerId)
+                                ContextCompat.startActivity(this, intent, null)
+                            }else {
+                                // 상대방이 비활동 유저라면
+                                Toast.makeText(this, "탈퇴한 유저에게 쪽지를 전송할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        } // 끝: 상대 활동/비활동 데이터 가져오기
+
                     true
                 }
                 else -> false
@@ -96,24 +108,45 @@ class ChatDetailActivity : AppCompatActivity() {
 
         // 거래완료 버튼
         binding.btnShareComplete.setOnClickListener{
-            // 거래완료 다이얼로그 생성
-            showDialogDelete(postId.toString())
+            // 상대방 활동/비활동 확인
+            db?.collection("user")?.document("$opponentId")?.get()
+                ?.addOnSuccessListener { value ->
+                    var opponentStatus = value.data?.get("status") as String
+                    if (opponentStatus != "delete"){
+                        // 상대방이 활동 유저라면
+                        showDialogDelete(postId.toString()) // 거래완료 다이얼로그 생성
+                    }else {
+                        // 상대방이 비활동 유저라면
+                        Toast.makeText(this, "탈퇴한 유저와 거래를 진행할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } // 끝: 상대 활동/비활동 데이터 가져오기
         }
 
         // 별점 보내기 버튼
         binding.btnSendStar.setOnClickListener{
-            // 별점 보내기 완료로 변경
-            db?.collection("post")?.document(postId.toString())
-                ?.update(
-                    "pointDone", true
-                )
-                ?.addOnSuccessListener {}
-                ?.addOnFailureListener {}
-            val intent = Intent(this, SharePointActivity::class.java)
-            intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
-            intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
-            intent.putExtra("postIndex", postId)                     // 포스트 인덱스
-            ContextCompat.startActivity(this, intent, null)
+            // 상대방 활동/비활동 확인
+            db?.collection("user")?.document("$opponentId")?.get()
+                ?.addOnSuccessListener { value ->
+                    var opponentStatus = value.data?.get("status") as String
+                    if (opponentStatus != "delete"){
+                        // 상대방이 활동 유저라면
+                        // 별점 보내기 완료로 변경
+                        db?.collection("post")?.document(postId.toString())
+                            ?.update(
+                                "pointDone", true
+                            )
+                            ?.addOnSuccessListener {}
+                            ?.addOnFailureListener {}
+                        val intent = Intent(this, SharePointActivity::class.java)
+                        intent.putExtra("opponentId", opponentId)                   // 상대방 아이디
+                        intent.putExtra("oppoentNickname", oppoentNickname)         // 상대방 닉네임
+                        intent.putExtra("postIndex", postId)                     // 포스트 인덱스
+                        ContextCompat.startActivity(this, intent, null)
+                    }else {
+                        // 상대방이 비활동 유저라면
+                        Toast.makeText(this, "탈퇴한 유저에게 별점을 보낼 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } // 끝: 상대 활동/비활동 데이터 가져오기
         }
     }
 

@@ -217,7 +217,8 @@ class ShareFragment : Fragment() {
                             ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                             ?.addSnapshotListener { value, error ->
                                 postAllList.clear()
-                                if (value != null) {
+                                if (value != null && !value.isEmpty) {
+                                    txtNoRegion.setVisibility(View.INVISIBLE)
                                     for (snapshot in value.documents) {
                                         var item = snapshot.toObject(PostAll::class.java)
                                         if (item != null) {
@@ -225,6 +226,13 @@ class ShareFragment : Fragment() {
                                             postAllList.add(item)
                                         }
                                     }
+                                }
+                                // 현재 설정된 지역의 나눔이 없다면
+                                else{
+                                    // 지역 없음 텍스트 visible
+                                    txtNoRegion.setVisibility(View.VISIBLE)
+                                    // 안내 텍스트를 변경
+                                    txtNoRegion.text = "나눔을 시작해주세요."
                                 }
                                 recyclerviewShare.adapter?.notifyDataSetChanged()
                             }
@@ -234,7 +242,8 @@ class ShareFragment : Fragment() {
                 else{
                     // 지역 없음 텍스트 visible
                     txtNoRegion.setVisibility(View.VISIBLE)
-                    // 검색창 텍스트를 없음으로 변경
+                    // 검색창 텍스트와 안내 텍스트를 변경
+                    txtNoRegion.text = "나눔 할 지역을 검색해 주세요."
                     txtRegionSelect.text = "나눔 지역을 선택해주세요."
                 }
             }

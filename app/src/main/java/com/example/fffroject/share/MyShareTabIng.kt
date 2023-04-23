@@ -173,9 +173,9 @@ class MyShareTabIng : Fragment() {
                 ?.orderBy("updatedAt", Query.Direction.DESCENDING)
                 ?.addSnapshotListener { value, error ->
                     postAllList.clear()
-                    if (value != null) {
+                    if (value != null && !value.isEmpty) {
                         // 나눔 없음 텍스트 INVISIBLE
-                        binding.txtNoRegion.setVisibility(View.INVISIBLE)
+                        binding.txtNoIngMyShare.setVisibility(View.INVISIBLE)
                         // 전체 게시글 리스트에 추가하기
                         for (snapshot in value.documents) {
                             var item = snapshot.toObject(PostAll::class.java)
@@ -186,7 +186,7 @@ class MyShareTabIng : Fragment() {
                         }
                     }else{
                         // 나눔 없음 텍스트 VISIBLE
-                        binding.txtNoRegion.setVisibility(View.VISIBLE)
+                        binding.txtNoIngMyShare.setVisibility(View.VISIBLE)
                     }
                     recyclerviewMyShare.adapter?.notifyDataSetChanged()
                 }
