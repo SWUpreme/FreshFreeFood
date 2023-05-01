@@ -4,7 +4,6 @@ package com.example.fffroject.keyword
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +17,10 @@ import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityKeywordBinding
 import com.example.fffroject.fragment.KeyWord
 import com.google.android.flexbox.*
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_keyword.*
 import kotlinx.android.synthetic.main.fragment_share.*
 import java.text.SimpleDateFormat
@@ -101,28 +98,43 @@ class KeywordActivity : AppCompatActivity() {
 
         //키워드 추가버튼 클릭 시
         mBinding?.addkeywordBtn?.setOnClickListener {
-            val input = binding.keywordInput
-            keyid = UUID.randomUUID().toString()
-            val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
-            val dateTime = timeformatter.format(nowTime)
-            firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
-                ?.document("$keyid")
-                ?.set(
-                    hashMapOf(
-                        "keyId" to keyid,
-                        "keyword" to input.text.toString(),
-                        "createdAt" to dateTime,
-                        "updatedAt" to dateTime,
-                        "status" to "active"
-                    )
-                )
-                ?.addOnSuccessListener {
-                    Toast.makeText(this, "키워드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+
+                val input = binding.keywordInput
+            val input_tostring = input.text.toString()
+            val inputToKeyword = KeyWord(input_tostring)
+                keyid = UUID.randomUUID().toString()
+                val nowTime = System.currentTimeMillis()
+                val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+                val dateTime = timeformatter.format(nowTime)
+            if (input.length() <= 0) {
+                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+            }else {
+                if (count > 19) {
+                    Toast.makeText(this, "최대 20개까지 가능합니다.", Toast.LENGTH_SHORT).show()
+                }else if(inputToKeyword in keywordList) {
+                    Toast.makeText(this, "이미 등록.", Toast.LENGTH_SHORT).show()
+                }else {
+                    firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
+                        ?.document("$keyid")
+                        ?.set(
+                            hashMapOf(
+                                "keyId" to keyid,
+                                "keyword" to input.text.toString(),
+                                "createdAt" to dateTime,
+                                "updatedAt" to dateTime,
+                                "status" to "active"
+                            )
+                        )
+                        ?.addOnSuccessListener {
+                            Toast.makeText(this, "키워드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                        }
+
+                        ?.addOnFailureListener { exception ->
+                        }
                 }
 
-                ?.addOnFailureListener { exception ->
                 }
+
         }
 
 

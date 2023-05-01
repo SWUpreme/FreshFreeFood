@@ -216,6 +216,8 @@ class FcmActivity : AppCompatActivity() {
 
     // 알람 취소
     fun delAlarm(){
+        
+        //TODO.파이어베이스 UPDATE 코드 추가
         // 알람 제거
         // API 31 부터 PendingIntent 사용시 FLAG 변수로 FLAG_IMMUTABLE 또는 FLAG_MUTABLE 을 사용하여
         // PendingIntent 사용시 변경 가능성을 명시적으로 지정해줘야 한다.
