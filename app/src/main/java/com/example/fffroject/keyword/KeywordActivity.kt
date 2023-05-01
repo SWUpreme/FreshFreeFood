@@ -39,11 +39,9 @@ class KeywordActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
 
     // Data에 있는 keyword와 연결
-
     lateinit var keywordList: ArrayList<KeyWord>
-    //val keyadapter = KeyWordAdapter(keywordList)
+
     var count = 0 //키워드 수
-    //var mDocuments: List<DocumentSnapshot>? = null
     lateinit var keyid: String
     // 리사이클러뷰
     lateinit var recyclerviewKeyword: RecyclerView
@@ -99,20 +97,21 @@ class KeywordActivity : AppCompatActivity() {
         //키워드 추가버튼 클릭 시
         mBinding?.addkeywordBtn?.setOnClickListener {
 
-                val input = binding.keywordInput
+            val input = binding.keywordInput
             val input_tostring = input.text.toString()
             val inputToKeyword = KeyWord(input_tostring)
-                keyid = UUID.randomUUID().toString()
-                val nowTime = System.currentTimeMillis()
-                val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
-                val dateTime = timeformatter.format(nowTime)
+
+            keyid = UUID.randomUUID().toString()
+            val nowTime = System.currentTimeMillis()
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val dateTime = timeformatter.format(nowTime)
             if (input.length() <= 0) {
-                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }else {
                 if (count > 19) {
                     Toast.makeText(this, "최대 20개까지 가능합니다.", Toast.LENGTH_SHORT).show()
                 }else if(inputToKeyword in keywordList) {
-                    Toast.makeText(this, "이미 등록.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "이미 등록된 키워드입니다.", Toast.LENGTH_SHORT).show()
                 }else {
                     firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
                         ?.document("$keyid")
@@ -127,13 +126,14 @@ class KeywordActivity : AppCompatActivity() {
                         )
                         ?.addOnSuccessListener {
                             Toast.makeText(this, "키워드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                            input.setText(" ")
                         }
 
                         ?.addOnFailureListener { exception ->
                         }
                 }
 
-                }
+            }
 
         }
 

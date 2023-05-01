@@ -11,8 +11,10 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.fffroject.MainActivity
 import com.example.fffroject.R
 import com.example.fffroject.fragment.KeyWord
+import com.example.fffroject.fragment.ShareFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,10 +53,15 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         var title = remoteMessage.notification!!.title
         var fridgeName = remoteMessage.notification!!.body
 
+        val requestCode = 0
         val intent = Intent(this, KeywordActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
 
 
         val channelId = "my_channel"

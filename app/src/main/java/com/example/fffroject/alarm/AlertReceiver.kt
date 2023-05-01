@@ -176,16 +176,12 @@ class AlertReceiver : BroadcastReceiver() {
                                                         NOTIFICATION_ID,
                                                         builder1.build()
                                                     )
-                                                    break
+                                                   // break
 
                                                 }
                                             }
-
-
-
-                                            //냉장고 음식이 모두 유통기한이 지났을 시
-
-                                            else {
+                                        }
+                                            else  if (current < nowdate)   {
 //                                        fname = fridgename.toString()
 //                                        findex = fridgeindex.toString()
                                                 fridgeindex = docindex?.get("fridgeId").toString()
@@ -216,14 +212,19 @@ class AlertReceiver : BroadcastReceiver() {
                                                 Log.d("성공:", "${compare}")
                                             }
 
-                                        }
+
+                                            //냉장고 음식이 모두 유통기한이 지났을 시
+
+
+
+
 
                                     }
 
                                 }
 
                                 //냉장고에 음식 없을 시
-                                if (mazinoname == "") {
+                                else {
                                     fridgeindex = docindex?.get("fridgeId").toString()
                                     fridgename = docname?.get("fridgeName").toString()
                                     val contentIntent = Intent(context, FoodListActivity::class.java)
