@@ -181,6 +181,8 @@ class AlertReceiver : BroadcastReceiver() {
                                                 }
                                             }
                                         }
+                                        //냉장고 음식이 모두 유통기한이 지났을 시
+
                                             else  if (current < nowdate)   {
 //                                        fname = fridgename.toString()
 //                                        findex = fridgeindex.toString()
@@ -211,13 +213,6 @@ class AlertReceiver : BroadcastReceiver() {
                                                 )
                                                 Log.d("성공:", "${compare}")
                                             }
-
-
-                                            //냉장고 음식이 모두 유통기한이 지났을 시
-
-
-
-
 
                                     }
 
