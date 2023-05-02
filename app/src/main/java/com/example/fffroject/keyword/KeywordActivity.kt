@@ -4,6 +4,7 @@ package com.example.fffroject.keyword
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +46,7 @@ class KeywordActivity : AppCompatActivity() {
     lateinit var keyid: String
     // 리사이클러뷰
     lateinit var recyclerviewKeyword: RecyclerView
-
+    var docname : String? = null
 
     override fun onDestroy() {
         mBinding = null
@@ -98,45 +99,55 @@ class KeywordActivity : AppCompatActivity() {
         mBinding?.addkeywordBtn?.setOnClickListener {
 
             val input = binding.keywordInput
-            val input_tostring = input.text.toString()
-            val inputToKeyword = KeyWord(input_tostring)
-
+            //val input_tostring = input.text.toString()
+           // val inputToKeyword = KeyWord(input_tostring)
             keyid = UUID.randomUUID().toString()
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
             val dateTime = timeformatter.format(nowTime)
+
+            var usuableKeyword = true
+
+
             if (input.length() <= 0) {
                 Toast.makeText(this, "키워드를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            }else {
-                if (count > 19) {
-                    Toast.makeText(this, "최대 20개까지 가능합니다.", Toast.LENGTH_SHORT).show()
-                }else if(inputToKeyword in keywordList) {
-                    Toast.makeText(this, "이미 등록된 키워드입니다.", Toast.LENGTH_SHORT).show()
-                }else {
-                    firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
-                        ?.document("$keyid")
-                        ?.set(
-                            hashMapOf(
-                                "keyId" to keyid,
-                                "keyword" to input.text.toString(),
-                                "createdAt" to dateTime,
-                                "updatedAt" to dateTime,
-                                "status" to "active"
-                            )
-                        )
-                        ?.addOnSuccessListener {
-                            Toast.makeText(this, "키워드가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                            input.setText(" ")
-                        }
-
-                        ?.addOnFailureListener { exception ->
-                        }
-                }
-
+            }else if (count > 19) {
+                Toast.makeText(this, "최대 20개까지 가능합니다.", Toast.LENGTH_SHORT).show()
             }
+            else {
+                firestore?.collection("user")?.document(user!!.uid)
+                    ?.collection("mykeyword")
+                    ?.whereEqualTo("status", "active")
+                    ?.get()?.addOnSuccessListener { documnets ->
+                    for (document in documnets) {
+                        val existKeyword = document["keyword"].toString()
+                        if (existKeyword == binding.keywordInput.text.toString()) {
 
+                            usuableKeyword = false
+                        }
+
+                    }
+                    if (usuableKeyword == true) {
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("mykeyword")
+                            ?.document("$keyid")
+                            ?.set(
+                                hashMapOf(
+                                    "keyId" to keyid,
+                                    "keyword" to input.text.toString(),
+                                    "createdAt" to dateTime,
+                                    "updatedAt" to dateTime,
+                                    "status" to "active"
+                                )
+                            )
+
+                        Toast.makeText(this, "키워드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                    } else {
+
+                        Toast.makeText(this, "이미 등록된 키워드입니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
-
 
     }
 
