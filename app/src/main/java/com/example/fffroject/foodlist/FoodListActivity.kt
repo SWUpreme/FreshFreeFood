@@ -44,6 +44,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     // Data에 있는 FoodList와 연결
     lateinit var foodlist: ArrayList<FoodList>
+    //lateinit var newdata: ArrayList<FoodList>
     lateinit var recyclerview_foodlist: RecyclerView
     lateinit var toolbar_foodlist: Toolbar
     lateinit var toolbar_fridgename : TextView
@@ -78,6 +79,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     var isLoading = false
     var cursors = ""
     lateinit var lastvisible : DocumentSnapshot
+    var spinnerhow = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +90,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         foodlist = arrayListOf<FoodList>()
         foodlist.clear()
         Log.d("푸드리스트 클리어", cursor.toString())
+
+//        newdata = arrayListOf<FoodList>()
+//        newdata.clear()
 
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
@@ -129,9 +134,11 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 // 아이템이 클릭되면 맨 위인 position 0번부터 순서대로 동작하게 됩니다.
                 when(position) {
                     0 -> {
+                        spinnerhow = 0
                         loadData()
                     }
                     1 -> {
+                        spinnerhow = 1
                         loadDataDate()
                     }
                 }
@@ -283,7 +290,11 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     //(recyclerview_foodlist.adapter as LoadingViewHolder)
                     //loadData()
 
-                    scrollData()
+                    // spinner의 경우의 수 생각
+                    if (spinnerhow == 0){
+                        scrollData()
+                    }
+                    //scrollData()
                     isLoading = true
                     recyclerview_foodlist.adapter?.notifyItemRangeInserted((page-1) * 7, 7)
                 }
@@ -346,10 +357,16 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         // 여기까지는 맞게 되는거같다 이제 스크롤이 안되는듯
         override fun getItemViewType(position: Int): Int {
             // 게시물과 프로그레스바 아이템뷰를 구분할 기준이 필요하다.
-            return when (foodlist[position].foodName) {
-                " " -> VIEW_TYPE_LOADING
-                else -> VIEW_TYPE_ITEM
+            if (foodlist[position].foodName==" "){
+                return VIEW_TYPE_LOADING
             }
+            else {
+                return VIEW_TYPE_ITEM
+            }
+//            return when (foodlist[position].foodName) {
+//                " " -> VIEW_TYPE_LOADING
+//                else -> VIEW_TYPE_ITEM
+//            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -441,7 +458,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 // 마이너스 버튼 클릭시
                 btn_minus.setOnClickListener {
                     var count = foodlist!![position].count
-                    countMinus(food_index, count)
+                    countMinus(food_index, count, position)
+                    //changeData()
+                    //recyclerview_foodlist.adapter?.notifyDataSetChanged()
                 }
 
                 // 플러스 버튼 클릭시
@@ -587,7 +606,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 현재 여기 수정중~ 수정하다 아아쏟음 개빡친다 하... 수정완..
     // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
     fun loadData() {
-        Log.d("로드데이터 cursor: ", cursor.toString())
+        Log.d("loadData 로드데이터 cursor: ", cursor.toString())
         if (cursor == 0) {
             foodlist.clear()
             //recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
@@ -745,7 +764,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.startAfter(lastvisible)
             ?.limit(pagesize)
             ?.addSnapshotListener { value, error ->
-                //foodlist.clear()
                 if (value != null) {
                     for (snapshot in value.documents) {
 //                        var status = firestore?.collection("fridge")?.document(index.toString())
@@ -786,6 +804,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     //page++
                 }
             }
+        Log.d("cursor: ", cursor.toString())
         page++
     }
 
@@ -827,6 +846,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.addOnSuccessListener { document ->
                 if (document != null) {
                     var foodcount = document.data?.get("count").toString().toDouble()
+                    Log.d("음식개음: ", foodcount.toString())
                     firestore?.collection("user")?.document(user!!.uid)?.update("eatCount", FieldValue.increment(foodcount))
                 }
             }
@@ -855,6 +875,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
             ?.update("updatedAt", dateTime)
+        changeData()
     }
 
     fun foodDelete(foodindex: String) {
@@ -890,10 +911,14 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.update("updatedAt", dateTime)
             ?.addOnSuccessListener { }
             ?.addOnFailureListener { }
+        recyclerview_foodlist.removeAllViewsInLayout()
+        recyclerview_foodlist.adapter = RecyclerviewAdapter()
+        changeData()
     }
 
-    fun countMinus(foodindex: String, count: Int) {
+    fun countMinus(foodindex: String, count: Int, position: Int) {
         if (count > 1) {
+            Log.d("position: ", position.toString())
             val nowTime = System.currentTimeMillis()
             val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
             val dateTime = timeformatter.format(nowTime)
@@ -901,6 +926,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(-1))
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
+                ?.addOnSuccessListener {
+                    recyclerview_foodlist.adapter?.notifyItemChanged(position)
+                }
         }
     }
 
@@ -923,6 +951,67 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         intent.putExtra("foodlistpurchase", foodlistpurchase)
         ContextCompat.startActivity(this, intent, null)
     }
+
+
+    fun changeData() {
+        Log.d("로드데이터 cursor: ", cursor.toString())
+        //if (cursor == 0) {
+        var newdata: ArrayList<FoodList>
+        newdata = arrayListOf<FoodList>()
+        newdata.clear()
+            //recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
+            //recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
+            firestore?.collection("fridge")?.document(index.toString())
+                ?.collection("food")
+                ?.whereEqualTo("status", "active")
+                ?.orderBy("deadline", Query.Direction.ASCENDING)
+                ?.limit(cursor.toLong())
+                ?.addSnapshotListener { value, error ->
+                    if (value != null) {
+                        for (snapshot in value.documents) {
+                            var item = snapshot.toObject(FoodList::class.java)
+                            if (item != null) {
+                                Log.d("cursors: ", item?.foodId.toString())
+                                lastvisible = snapshot
+                                cursors = item.foodId.toString()
+                                newdata.add(item)
+                            }
+
+                            // 유통기한 임박 제품 업데이트
+                            // 비어있는 경우 업데이트가 안되어서 If문으로 수정
+                            // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+                            firestore?.collection("user")?.document(user!!.uid)
+                                ?.collection("myfridge")
+                                ?.document(index.toString())
+                                ?.update("current", newdata.get(0).foodName.toString())
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                            // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+                            firestore?.collection("fridge")?.document(index.toString())
+                                ?.update("current", newdata.get(0).foodName.toString())
+                                ?.addOnSuccessListener { }
+                                ?.addOnFailureListener { }
+                        }
+                        // 음식 개수 세는 부분
+//                        foodcount = foodlist.size
+//                        getfoodCount()
+//                        foodlist.clear()
+//                        foodlist = newdata
+                        //cursor = cursor + pagesize.toInt()
+//                        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+                        foodlist.clear()
+                        //foodlist.addAll(newdata)
+                        foodlist = newdata
+                        foodcount = foodlist.size
+                        cursor = foodcount
+                        getfoodCount()
+                        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+//                        Log.d("newdata 들어감?: ", newdata[1].foodName.toString())
+                        isLoading = false
+                    }
+                }
+        }
+    //}
 }
 
 
