@@ -130,21 +130,16 @@ class AuthActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             // fcm 토큰 발급받기
             if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
 
             // Get new FCM registration token
             token = task.result
 
-            // Log and toast
-            Log.d(TAG, "FCM Token is ${token}")
-
             // fcm 토큰 db에 저장하기
             firestore?.collection("user")?.document(user?.uid.toString())
                 ?.update("fcmToken", token)
                 ?.addOnSuccessListener {
-                    Log.d(TAG, "Success FCM Token is ${token}")
                 }
         })
 
