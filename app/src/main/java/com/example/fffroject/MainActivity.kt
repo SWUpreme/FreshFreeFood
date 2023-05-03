@@ -33,15 +33,15 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        // [minjeong] fcm 토큰 가져오고 저장하기
-        // 파이어베이스 인증 객체
-        auth = FirebaseAuth.getInstance()
-        user = auth!!.currentUser
-        // 파이어스토어 인스턴스 초기화
-        db = FirebaseFirestore.getInstance()
-        // 파이어스토리지 인스턴스 초기화
-        storage = FirebaseStorage.getInstance()
-        getFCMToken()
+//        // [minjeong] fcm 토큰 가져오고 저장하기
+//        // 파이어베이스 인증 객체
+//        auth = FirebaseAuth.getInstance()
+//        user = auth!!.currentUser
+//        // 파이어스토어 인스턴스 초기화
+//        db = FirebaseFirestore.getInstance()
+//        // 파이어스토리지 인스턴스 초기화
+//        storage = FirebaseStorage.getInstance()
+//        getSetFCMToken()
 
         bottom_navigation = findViewById(R.id.bottomNavigationView) //as BottomNavigationView
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // [minjeong] fcm 토큰 가져오기
-    private fun getFCMToken(): String?{
+    private fun getSetFCMToken(): String?{
         var token: String? = null
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -89,13 +89,13 @@ class MainActivity : AppCompatActivity() {
             // Log and toast
             Log.d(TAG, "FCM Token is ${token}")
 
+            // fcm 토큰 db에 저장하기
             db?.collection("user")?.document(user?.uid.toString())
                 ?.update("fcmToken", token)
                 ?.addOnSuccessListener {
                     Log.d(TAG, "Success FCM Token is ${token}")
                 }
         })
-
 
         return token
     }

@@ -1,5 +1,6 @@
 package com.example.fffroject
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +14,14 @@ import com.example.fffroject.databinding.ActivityAuthBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.FirebaseStorage
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -26,6 +30,7 @@ class AuthActivity : AppCompatActivity() {
 
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
+//    var user: FirebaseUser? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +81,7 @@ class AuthActivity : AppCompatActivity() {
                                         }
                                         // 신규 유저일 경우
                                         else{
+                                            getSetFCMToken(user)    // fcm 토큰 발급받고 저장하기
                                             var nowdate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                                             firestore?.collection("user")?.document(user.uid)
                                                 ?.set(hashMapOf("email" to user?.email, "userId" to user?.uid, "nickname" to nickname,
@@ -116,5 +122,32 @@ class AuthActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+    }
+
+    // [minjeong] fcm 토큰 가져오고 db에 저장하기
+    private fun getSetFCMToken(user:FirebaseUser?): String?{
+        var token: String? = null
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            // fcm 토큰 발급받기
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            token = task.result
+
+            // Log and toast
+            Log.d(TAG, "FCM Token is ${token}")
+
+            // fcm 토큰 db에 저장하기
+            firestore?.collection("user")?.document(user?.uid.toString())
+                ?.update("fcmToken", token)
+                ?.addOnSuccessListener {
+                    Log.d(TAG, "Success FCM Token is ${token}")
+                }
+        })
+
+        return token
     }
 }
