@@ -342,7 +342,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         val intent = Intent(applicationContext, WriteActivity::class.java)
         intent.putExtra("index", index)
         startActivity(intent)
-        cursor = 0
+        //cursor = 0
     }
 
     inner class FoodlistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -466,10 +466,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 // 플러스 버튼 클릭시
                 btn_plus.setOnClickListener {
                     var count = foodlist!![position].count
-                    countPlus(food_index, count)
-                    var refresh = intent
-                    finish()
-                    startActivity(refresh)
+                    countPlus(food_index, count, position)
+//                    var refresh = intent
+//                    finish()
+//                    startActivity(refresh)
                 }
 
 
@@ -607,17 +607,17 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
     fun loadData() {
         Log.d("loadData 로드데이터 cursor: ", cursor.toString())
-        if (cursor == 0) {
-            foodlist.clear()
+        //if (cursor == 0) {
+//            foodlist.clear()
             //recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
-            recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
+            //recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")
                 ?.whereEqualTo("status", "active")
                 ?.orderBy("deadline", Query.Direction.ASCENDING)
                 ?.limit(pagesize)
                 ?.addSnapshotListener { value, error ->
-                    //foodlist.clear()
+                    foodlist.clear()
                     if (value != null) {
                         for (snapshot in value.documents) {
 //                        var status = firestore?.collection("fridge")?.document(index.toString())
@@ -651,11 +651,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         // 음식 개수 세는 부분
                         foodcount = foodlist.size
                         getfoodCount()
-                        cursor = cursor + pagesize.toInt()
+                        //cursor = cursor + pagesize.toInt()
+                        cursor = foodcount
                         recyclerview_foodlist.adapter?.notifyDataSetChanged()
                         isLoading = false
                     }
-                }
+               // }
 
         }
 //        else {
@@ -911,8 +912,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.update("updatedAt", dateTime)
             ?.addOnSuccessListener { }
             ?.addOnFailureListener { }
-        recyclerview_foodlist.removeAllViewsInLayout()
-        recyclerview_foodlist.adapter = RecyclerviewAdapter()
         changeData()
     }
 
@@ -932,7 +931,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
     }
 
-    fun countPlus(foodindex: String, count: Int) {
+    fun countPlus(foodindex: String, count: Int, position: Int) {
         val nowTime = System.currentTimeMillis()
         val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
         val dateTime = timeformatter.format(nowTime)
@@ -940,6 +939,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
             ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
+            ?.addOnSuccessListener {
+                recyclerview_foodlist.adapter?.notifyItemChanged(position)
+            }
     }
 
     // 무료 나눔 포스트 작성 페이지로 데이터 전달
