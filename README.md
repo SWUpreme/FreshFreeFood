@@ -21,13 +21,6 @@
 # 🧊 냉장고
 <h3>1. 냉장고 페이지</h3>
 냉장고와 냉장고의 멤버를 추가하고 관리할 수 있는 페이지 
-<p>
-  <img src="https://user-images.githubusercontent.com/63528205/205499555-57332e64-e638-4327-a59d-e209e09a445e.png"  width="410"/>
-  <img src="https://user-images.githubusercontent.com/63528205/205499650-15364473-7421-422d-b269-826f48b495d4.png"  width="410"/>
-</p>
-<p>
-  <img src="https://user-images.githubusercontent.com/63528205/205499960-745dc621-c391-4717-ab0f-81e78fad0225.png"  width="410"/>
-</p>
 
 
 # 🤝 무료나눔
