@@ -294,6 +294,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     if (spinnerhow == 0){
                         scrollData()
                     }
+                    else {
+                        scrollDataDate()
+                    }
                     //scrollData()
                     isLoading = true
                     recyclerview_foodlist.adapter?.notifyItemRangeInserted((page-1) * 7, 7)
@@ -755,6 +758,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     }
 
+    // 유통기한 순으로 정렬했을 때의 스크롤
     fun scrollData() {
         Log.d("cursors: ", cursors)
 //            recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
@@ -812,29 +816,103 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 여기 수정중
     // 냉장고별 식품 리스트 최신등록순
     fun loadDataDate() {
+        // 원래 코드
+//        firestore?.collection("fridge")?.document(index.toString())
+//            ?.collection("food")
+//            ?.whereEqualTo("status", "active")
+//            ?.orderBy("createdAt", Query.Direction.DESCENDING)
+//            ?.addSnapshotListener { value, error ->
+//                foodlist.clear()
+//                if (value != null) {
+//                    for (snapshot in value.documents) {
+////                        var status = firestore?.collection("fridge")?.document(index.toString())
+////                            ?.collection("food")?.document("status")?.get().toString()
+//                        var item = snapshot.toObject(FoodList::class.java)
+//                        if (item != null) {
+//                            foodlist.add(item)
+//                        }
+//                    }
+//                    // 음식 개수 세는 부분
+//                    foodcount = foodlist.size
+//                    getfoodCount()
+//                    recyclerview_foodlist.adapter?.notifyDataSetChanged()
+//                }
+//            }
+
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
             ?.whereEqualTo("status", "active")
             ?.orderBy("createdAt", Query.Direction.DESCENDING)
+            ?.limit(pagesize)
             ?.addSnapshotListener { value, error ->
                 foodlist.clear()
                 if (value != null) {
                     for (snapshot in value.documents) {
-//                        var status = firestore?.collection("fridge")?.document(index.toString())
-//                            ?.collection("food")?.document("status")?.get().toString()
                         var item = snapshot.toObject(FoodList::class.java)
                         if (item != null) {
+                            lastvisible = snapshot
+                            cursors = item.foodId.toString()
                             foodlist.add(item)
                         }
                     }
                     // 음식 개수 세는 부분
                     foodcount = foodlist.size
                     getfoodCount()
+                    //cursor = cursor + pagesize.toInt()
+                    cursor = foodcount
                     recyclerview_foodlist.adapter?.notifyDataSetChanged()
+                    isLoading = false
                 }
             }
 
     }
+
+    fun scrollDataDate() {
+        Log.d("cursors: ", cursors)
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")
+            ?.whereEqualTo("status", "active")
+            ?.orderBy("createdAt", Query.Direction.DESCENDING)
+            ?.startAfter(lastvisible)
+            ?.limit(pagesize)
+            ?.addSnapshotListener { value, error ->
+                if (value != null) {
+                    for (snapshot in value.documents) {
+                        var item = snapshot.toObject(FoodList::class.java)
+                        if (item != null) {
+                            lastvisible = snapshot
+                            foodlist.add(item)
+                        }
+
+                        // 유통기한 임박 제품 업데이트
+                        // 비어있는 경우 업데이트가 안되어서 If문으로 수정
+                        // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
+                        firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
+                            ?.document(index.toString())
+                            ?.update("current", foodlist.get(0).foodName.toString())
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
+                        // 다른 사람의 냉장고를 추가했을 경우 다른 인덱스를 fridge에서 가져와야하므로 최근 목록도 여기에 넣어줘야함(안그럼 업데이트가 안될 것으로 예상)
+                        firestore?.collection("fridge")?.document(index.toString())
+                            ?.update("current", foodlist.get(0).foodName.toString())
+                            ?.addOnSuccessListener { }
+                            ?.addOnFailureListener { }
+                    }
+                    // 음식 개수 세는 부분
+//                        recyclerview_foodlist.adapter?.notifyItemRangeInserted((page) * 7,7)
+                    foodcount = foodlist.size
+                    Log.d("cursors: 여기가 되는건가?", foodcount.toString())
+                    getfoodCount()
+                    cursor = foodcount
+                    recyclerview_foodlist.adapter?.notifyItemRangeInserted((page - 1) * 7, 7)
+                    isLoading = true
+                    //page++
+                }
+            }
+        Log.d("cursor: ", cursor.toString())
+        page++
+    }
+
 
     // 수정완료
     // 식품 먹음 버튼 클릭시
@@ -1014,6 +1092,49 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 }
         }
     //}
+
+
+    fun changeDataDate() {
+        var newdata: ArrayList<FoodList>
+        newdata = arrayListOf<FoodList>()
+        newdata.clear()
+
+        firestore?.collection("fridge")?.document(index.toString())
+            ?.collection("food")
+            ?.whereEqualTo("status", "active")
+            ?.orderBy("createdAt", Query.Direction.DESCENDING)
+            ?.limit(cursor.toLong())
+            ?.addSnapshotListener { value, error ->
+                if (value != null) {
+                    for (snapshot in value.documents) {
+                        var item = snapshot.toObject(FoodList::class.java)
+                        if (item != null) {
+                            Log.d("cursors: ", item?.foodId.toString())
+                            lastvisible = snapshot
+                            cursors = item.foodId.toString()
+                            newdata.add(item)
+                        }
+
+                    }
+                    // 음식 개수 세는 부분
+//                        foodcount = foodlist.size
+//                        getfoodCount()
+//                        foodlist.clear()
+//                        foodlist = newdata
+                    //cursor = cursor + pagesize.toInt()
+//                        recyclerview_foodlist.adapter?.notifyDataSetChanged()
+                    foodlist.clear()
+                    //foodlist.addAll(newdata)
+                    foodlist = newdata
+                    foodcount = foodlist.size
+                    cursor = foodcount
+                    getfoodCount()
+                    recyclerview_foodlist.adapter?.notifyDataSetChanged()
+//                        Log.d("newdata 들어감?: ", newdata[1].foodName.toString())
+                    isLoading = false
+                }
+            }
+    }
 }
 
 
