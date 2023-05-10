@@ -954,7 +954,12 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)
             ?.update("updatedAt", dateTime)
-        changeData()
+        if(spinnerhow == 0){
+            changeData()
+        }
+        else{
+            changeDataDate()
+        }
     }
 
     fun foodDelete(foodindex: String) {
