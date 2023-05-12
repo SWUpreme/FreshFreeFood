@@ -1,6 +1,5 @@
 package com.example.fffroject.keyword
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,18 +10,13 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.fffroject.MainActivity
 import com.example.fffroject.R
-import com.example.fffroject.fragment.KeyWord
-import com.example.fffroject.fragment.ShareFragment
+import com.example.fffroject.share.ShareDetailActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class FireBaseMessagingService : FirebaseMessagingService() {
     var auth: FirebaseAuth? = null
@@ -32,13 +26,17 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
+        if (remoteMessage.data.isNotEmpty()) {
+            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+        }
 
         if (remoteMessage.notification != null){
+            Log.d(TAG, "notification: ${remoteMessage.data}")
             sendNotification(remoteMessage)
         }else{
             Log.d(TAG, "수신 에러")
 
-    }
+        }
 
 
     }
@@ -49,19 +47,27 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
     private fun sendNotification(remoteMessage: RemoteMessage) {
 
+        val post = remoteMessage.data["postId"]
+        val writer = remoteMessage.data["writer"]
         var title = remoteMessage.notification!!.title
         var fridgeName = remoteMessage.notification!!.body
+        Log.d("postId 받아오는지:", "${post}")
+        Log.d("writer 받아오는지:", "${writer}")
 
         val requestCode = 0
-        val intent = Intent(this, KeywordActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val intent = Intent(this, ShareDetailActivity::class.java)
+        intent.putExtra("detailIndex", post)
+        intent.putExtra("detailWriter", writer)
+        intent.putExtra("detailFlag", "false")
+
         val pendingIntent = PendingIntent.getActivity(
             this,
             requestCode,
             intent,
             PendingIntent.FLAG_IMMUTABLE,
         )
-
+        Log.d("postId 넘어가는지:", "${post}")
+        Log.d("writer 넘어가는지:", "${writer}")
 
         val channelId = "my_channel"
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

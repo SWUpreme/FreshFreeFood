@@ -60,9 +60,12 @@ class ShareDetailActivity: AppCompatActivity()  {
         toolbar_sharedetail = findViewById(R.id.toolbSharedetail)
 
         // ShareFragment Intent 연결
+        Log.d("intent 성공:", "${intent.hasExtra("detailWriter")}")
+
         postId = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
         writer = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
         fridgeToss = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
+        Log.d("postId 성공:", "${postId}")
 
         // 메세지 버튼
         toolbSharedetail.setOnMenuItemClickListener {
