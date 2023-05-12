@@ -34,7 +34,6 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
 
         if (remoteMessage.notification != null){
-
             sendNotification(remoteMessage)
         }else{
             Log.d(TAG, "수신 에러")
