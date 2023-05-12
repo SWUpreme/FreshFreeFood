@@ -216,8 +216,9 @@ class UserDeleteActivity : AppCompatActivity() {
                         firestore?.collection("user")?.document(useruid)
                             ?.update("updatedAt", dateTime)
                             ?.addOnSuccessListener {
-                                user?.delete()
+//                                user?.delete()
                                 auth?.signOut()     // 이거 안하면 계정이 걔속 남아있더라
+                                user?.delete()
                                 googleSigninClient!!.revokeAccess()
                                 Toast.makeText(this, "회원탈퇴되셨습니다.", Toast.LENGTH_SHORT).show()
 //                            val intent = Intent(this, AuthActivity::class.java)
