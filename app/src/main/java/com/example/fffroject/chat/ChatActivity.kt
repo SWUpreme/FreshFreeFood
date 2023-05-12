@@ -32,6 +32,10 @@ class ChatActivity : AppCompatActivity() {
     lateinit var chatroomId: String
     lateinit var chatId: String
 
+    // 상대방 닉네임
+    lateinit var oppoentNickname : String
+    // 자신의 닉네임
+    lateinit var myNickname : String
     // 상대방 fcm 토큰
     lateinit var opponentFcmToken : String
     // 자신의 fcm 토큰
@@ -80,10 +84,12 @@ class ChatActivity : AppCompatActivity() {
                                         // 해당유저의 token 받아오기
                                         db?.collection("user")?.document(user?.uid!!)?.get()?.addOnSuccessListener { value ->
                                             myFcmToken = value.data?.get("fcmToken") as String
+                                            myNickname = value.data?.get("nickname") as String
 
                                             // 상대방의 token 받아오기
                                             db?.collection("user")?.document(giver!!)?.get()?.addOnSuccessListener { value ->
                                                 opponentFcmToken = value.data?.get("fcmToken") as String
+                                                oppoentNickname = value.data?.get("nickname") as String
 
                                                 // chatroom에 채팅방 생성
                                                 db?.collection("chatroom")?.document("$chatroomId")
@@ -139,6 +145,7 @@ class ChatActivity : AppCompatActivity() {
                                                             "giver" to giver,
                                                             "opponentId" to giver,
                                                             "opponentFcm" to opponentFcmToken,
+                                                            "oppoentNickname" to oppoentNickname,
                                                             "sendedAt" to simpleTime,
                                                             "createdAt" to fullTime,
                                                             "updatedAt" to fullTime,
@@ -161,6 +168,7 @@ class ChatActivity : AppCompatActivity() {
                                                             "giver" to giver,
                                                             "opponentId" to giver,
                                                             "opponentFcm" to myFcmToken,
+                                                            "oppoentNickname" to myNickname,
                                                             "sendedAt" to simpleTime,
                                                             "createdAt" to fullTime,
                                                             "updatedAt" to fullTime,
