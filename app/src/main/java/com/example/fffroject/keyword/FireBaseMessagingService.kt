@@ -38,9 +38,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         if (remoteMessage.notification != null){
             Log.d(TAG, "notification: ${remoteMessage.data}")
-            //if(remoteMessage.data["writer"] != user!!.uid ) {
+            if(remoteMessage.data["writer"] != user!!.uid ) {
             sendNotification(remoteMessage)
-            // }
+             }
         }else{
             Log.d(TAG, "수신 에러")
 
