@@ -78,7 +78,7 @@ class ChatActivity : AppCompatActivity() {
                                                 hashMapOf(
                                                     "chatroomId" to chatroomId,
                                                     "postId" to postId,
-                                                    "context" to Chatcontent.text.toString(),
+                                                    "contextTxt" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "sendedAt" to simpleTime,
@@ -100,7 +100,7 @@ class ChatActivity : AppCompatActivity() {
                                             ?.set(
                                                 hashMapOf(
                                                     "chatId" to chatId,
-                                                    "context" to Chatcontent.text.toString(),
+                                                    "contextTxt" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "writer" to user?.uid,
@@ -121,7 +121,7 @@ class ChatActivity : AppCompatActivity() {
                                                 hashMapOf(
                                                     "chatroomId" to chatroomId,
                                                     "postId" to postId,
-                                                    "context" to Chatcontent.text.toString(),
+                                                    "contextTxt" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "opponentId" to giver,
@@ -142,7 +142,7 @@ class ChatActivity : AppCompatActivity() {
                                                 hashMapOf(
                                                     "chatroomId" to chatroomId,
                                                     "postId" to postId,
-                                                    "context" to Chatcontent.text.toString(),
+                                                    "contextTxt" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "opponentId" to giver,
@@ -167,7 +167,7 @@ class ChatActivity : AppCompatActivity() {
                                             ?.set(
                                                 hashMapOf(
                                                     "chatId" to chatId,
-                                                    "context" to Chatcontent.text.toString(),
+                                                    "contextTxt" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "writer" to user?.uid,
@@ -187,7 +187,7 @@ class ChatActivity : AppCompatActivity() {
                                         // 나의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
-                                                "context", Chatcontent.text.toString(),
+                                                "contextTxt", Chatcontent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -199,7 +199,7 @@ class ChatActivity : AppCompatActivity() {
                                         // 상대의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
-                                                "context", Chatcontent.text.toString(),
+                                                "contextTxt", Chatcontent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -211,7 +211,7 @@ class ChatActivity : AppCompatActivity() {
                                         // 채팅룸의 최신 채팅/채팅시간 업데이트
                                         db?.collection("chatroom")?.document("$chatroomId")
                                             ?.update(
-                                                "context", Chatcontent.text.toString(),
+                                                "contextTxt", Chatcontent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
