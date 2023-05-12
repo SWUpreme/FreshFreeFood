@@ -32,6 +32,15 @@ class ChatActivity : AppCompatActivity() {
     lateinit var chatroomId: String
     lateinit var chatId: String
 
+    // 상대방 닉네임
+    lateinit var oppoentNickname : String
+    // 자신의 닉네임
+    lateinit var myNickname : String
+    // 상대방 fcm 토큰
+    lateinit var opponentFcmToken : String
+    // 자신의 fcm 토큰
+    lateinit var myFcmToken: String
+
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,88 +81,105 @@ class ChatActivity : AppCompatActivity() {
                                     if (task.result?.size() == 0) {
                                         chatroomId = UUID.randomUUID().toString()
 
-                                        // chatroom에 채팅방 생성
-                                        db?.collection("chatroom")?.document("$chatroomId")
-                                            ?.set(
-                                                hashMapOf(
-                                                    "chatroomId" to chatroomId,
-                                                    "postId" to postId,
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "taker" to user?.uid,
-                                                    "giver" to giver,
-                                                    "sendedAt" to simpleTime,
-                                                    "createdAt" to fullTime,
-                                                    "updatedAt" to fullTime,
-                                                    "status" to "active"
-                                                )
-                                            )
-                                            ?.addOnSuccessListener {
-                                                Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
+                                        // 해당유저의 token 받아오기
+                                        db?.collection("user")?.document(user?.uid!!)?.get()?.addOnSuccessListener { value ->
+                                            myFcmToken = value.data?.get("fcmToken") as String
+                                            myNickname = value.data?.get("nickname") as String
+
+                                            // 상대방의 token 받아오기
+                                            db?.collection("user")?.document(giver!!)?.get()?.addOnSuccessListener { value ->
+                                                opponentFcmToken = value.data?.get("fcmToken") as String
+                                                oppoentNickname = value.data?.get("nickname") as String
+
+                                                // chatroom에 채팅방 생성
+                                                db?.collection("chatroom")?.document("$chatroomId")
+                                                    ?.set(
+                                                        hashMapOf(
+                                                            "chatroomId" to chatroomId,
+                                                            "postId" to postId,
+                                                            "contextTxt" to Chatcontent.text.toString(),
+                                                            "taker" to user?.uid,
+                                                            "giver" to giver,
+                                                            "sendedAt" to simpleTime,
+                                                            "createdAt" to fullTime,
+                                                            "updatedAt" to fullTime,
+                                                            "status" to "active"
+                                                        )
+                                                    )
+                                                    ?.addOnSuccessListener {
+                                                        Toast.makeText(this, "쪽지 전송이 완료됐습니다.", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                    ?.addOnFailureListener {
+                                                        Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                                    }
+
+                                                // chatroom에 새로운 채팅 생성
+                                                db?.collection("chatroom")?.document("$chatroomId")
+                                                    ?.collection("chat")?.document("$chatId")
+                                                    ?.set(
+                                                        hashMapOf(
+                                                            "chatId" to chatId,
+                                                            "contextTxt" to Chatcontent.text.toString(),
+                                                            "taker" to user?.uid,
+                                                            "giver" to giver,
+                                                            "writer" to user?.uid,
+                                                            "sendedAt" to simpleTime,
+                                                            "createdAt" to fullTime,
+                                                            "updatedAt" to fullTime,
+                                                            "status" to "active"
+                                                        )
+                                                    )
+                                                    ?.addOnSuccessListener {}
+                                                    ?.addOnFailureListener {}
+
+                                                // 내 mychat에 새로운 채팅방 생성
+                                                db?.collection("user")?.document(user!!.uid)
+                                                    ?.collection("mychat")
+                                                    ?.document("$chatroomId")
+                                                    ?.set(
+                                                        hashMapOf(
+                                                            "chatroomId" to chatroomId,
+                                                            "postId" to postId,
+                                                            "contextTxt" to Chatcontent.text.toString(),
+                                                            "taker" to user?.uid,
+                                                            "giver" to giver,
+                                                            "opponentId" to giver,
+                                                            "opponentFcm" to opponentFcmToken,
+                                                            "oppoentNickname" to oppoentNickname,
+                                                            "sendedAt" to simpleTime,
+                                                            "createdAt" to fullTime,
+                                                            "updatedAt" to fullTime,
+                                                            "status" to "active"
+                                                        )
+                                                    )
+                                                    ?.addOnSuccessListener {}
+                                                    ?.addOnFailureListener {}
+
+                                                // 상대방 mychat에 새로운 채팅방 생성
+                                                db?.collection("user")?.document(giver.toString())
+                                                    ?.collection("mychat")
+                                                    ?.document("$chatroomId")
+                                                    ?.set(
+                                                        hashMapOf(
+                                                            "chatroomId" to chatroomId,
+                                                            "postId" to postId,
+                                                            "contextTxt" to Chatcontent.text.toString(),
+                                                            "taker" to user?.uid,
+                                                            "giver" to giver,
+                                                            "opponentId" to giver,
+                                                            "opponentFcm" to myFcmToken,
+                                                            "oppoentNickname" to myNickname,
+                                                            "sendedAt" to simpleTime,
+                                                            "createdAt" to fullTime,
+                                                            "updatedAt" to fullTime,
+                                                            "status" to "active"
+                                                        )
+                                                    )
+                                                    ?.addOnSuccessListener {}
+                                                    ?.addOnFailureListener {}
                                             }
-                                            ?.addOnFailureListener {
-                                                Toast.makeText(this, "쪽지 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                                            }
+                                        }
 
-                                        // chatroom에 새로운 채팅 생성
-                                        db?.collection("chatroom")?.document("$chatroomId")
-                                            ?.collection("chat")?.document("$chatId")
-                                            ?.set(
-                                                hashMapOf(
-                                                    "chatId" to chatId,
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "taker" to user?.uid,
-                                                    "giver" to giver,
-                                                    "writer" to user?.uid,
-                                                    "sendedAt" to simpleTime,
-                                                    "createdAt" to fullTime,
-                                                    "updatedAt" to fullTime,
-                                                    "status" to "active"
-                                                )
-                                            )
-                                            ?.addOnSuccessListener {}
-                                            ?.addOnFailureListener {}
-
-                                        // 내 mychat에 새로운 채팅방 생성
-                                        db?.collection("user")?.document(user!!.uid)
-                                            ?.collection("mychat")
-                                            ?.document("$chatroomId")
-                                            ?.set(
-                                                hashMapOf(
-                                                    "chatroomId" to chatroomId,
-                                                    "postId" to postId,
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "taker" to user?.uid,
-                                                    "giver" to giver,
-                                                    "opponentId" to giver,
-                                                    "sendedAt" to simpleTime,
-                                                    "createdAt" to fullTime,
-                                                    "updatedAt" to fullTime,
-                                                    "status" to "active"
-                                                )
-                                            )
-                                            ?.addOnSuccessListener {}
-                                            ?.addOnFailureListener {}
-
-                                        // 상대방 mychat에 새로운 채팅방 생성
-                                        db?.collection("user")?.document(giver.toString())
-                                            ?.collection("mychat")
-                                            ?.document("$chatroomId")
-                                            ?.set(
-                                                hashMapOf(
-                                                    "chatroomId" to chatroomId,
-                                                    "postId" to postId,
-                                                    "context" to Chatcontent.text.toString(),
-                                                    "taker" to user?.uid,
-                                                    "giver" to giver,
-                                                    "opponentId" to giver,
-                                                    "sendedAt" to simpleTime,
-                                                    "createdAt" to fullTime,
-                                                    "updatedAt" to fullTime,
-                                                    "status" to "active"
-                                                )
-                                            )
-                                            ?.addOnSuccessListener {}
-                                            ?.addOnFailureListener {}
 
                                     // 기존에 상대방과의 채팅방이 존재한다면
                                     } else {
@@ -167,7 +193,7 @@ class ChatActivity : AppCompatActivity() {
                                             ?.set(
                                                 hashMapOf(
                                                     "chatId" to chatId,
-                                                    "context" to Chatcontent.text.toString(),
+                                                    "contextTxt" to Chatcontent.text.toString(),
                                                     "taker" to user?.uid,
                                                     "giver" to giver,
                                                     "writer" to user?.uid,
@@ -187,7 +213,7 @@ class ChatActivity : AppCompatActivity() {
                                         // 나의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
-                                                "context", Chatcontent.text.toString(),
+                                                "contextTxt", Chatcontent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -199,7 +225,7 @@ class ChatActivity : AppCompatActivity() {
                                         // 상대의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
-                                                "context", Chatcontent.text.toString(),
+                                                "contextTxt", Chatcontent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -211,7 +237,7 @@ class ChatActivity : AppCompatActivity() {
                                         // 채팅룸의 최신 채팅/채팅시간 업데이트
                                         db?.collection("chatroom")?.document("$chatroomId")
                                             ?.update(
-                                                "context", Chatcontent.text.toString(),
+                                                "contextTxt", Chatcontent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )

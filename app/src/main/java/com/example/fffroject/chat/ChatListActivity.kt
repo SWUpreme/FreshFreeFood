@@ -114,7 +114,7 @@ class ChatListActivity : AppCompatActivity() {
                 }
             }
             // 뷰에 데이터 출력
-            chatContent.text = chatRoomList!![position].context
+            chatContent.text = chatRoomList!![position].contextTxt
             chatTime.text = chatRoomList!![position].sendedAt
 
             // 객체 클릭 이벤트

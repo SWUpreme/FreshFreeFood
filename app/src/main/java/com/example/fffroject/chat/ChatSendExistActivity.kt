@@ -74,7 +74,7 @@ class ChatSendExistActivity : AppCompatActivity() {
                                             ?.set(
                                                 hashMapOf(
                                                     "chatId" to chatid,
-                                                    "context" to binding.ChatContent.text.toString(),
+                                                    "contextTxt" to binding.ChatContent.text.toString(),
                                                     "taker" to takerId,
                                                     "giver" to giverId,
                                                     "writer" to user?.uid,
@@ -94,7 +94,7 @@ class ChatSendExistActivity : AppCompatActivity() {
                                         // 나의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document("$chatroomId")
                                             ?.update(
-                                                "context", binding.ChatContent.text.toString(),
+                                                "contextTxt", binding.ChatContent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -104,7 +104,7 @@ class ChatSendExistActivity : AppCompatActivity() {
                                         // 상대의 최신 채팅/채팅시간 업데이트
                                         db?.collection("user")?.document("$opponentId")?.collection("mychat")?.document("$chatroomId")
                                             ?.update(
-                                                "context", binding.ChatContent.text.toString(),
+                                                "contextTxt", binding.ChatContent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -114,7 +114,7 @@ class ChatSendExistActivity : AppCompatActivity() {
                                         // 채팅룸의 최신 채팅/채팅시간 업데이트
                                         db?.collection("chatroom")?.document("$chatroomId")
                                             ?.update(
-                                                "context", binding.ChatContent.text.toString(),
+                                                "contextTxt", binding.ChatContent.text.toString(),
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )

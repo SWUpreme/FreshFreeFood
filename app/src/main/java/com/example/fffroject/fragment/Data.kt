@@ -61,7 +61,7 @@ data class FoodList(
 // 채팅방
 data class ChatRoom(
     var chatroomId : String? = null,
-    var context :  String? =  null,
+    var contextTxt :  String? =  null,
     var postId :  String? =  null,
     var taker : String? = null,
     var giver : String? = null,
@@ -71,7 +71,7 @@ data class ChatRoom(
 data class ChatDetail(
     var chatId : String? = null,
     var writer :  String? =  null,
-    var context :  String? =  null,
+    var contextTxt :  String? =  null,
     var taker : String? = null,
     var giver : String? = null,
     var sendedAt : String? = null

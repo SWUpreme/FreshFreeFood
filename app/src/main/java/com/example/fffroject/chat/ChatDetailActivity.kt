@@ -177,7 +177,7 @@ class ChatDetailActivity : AppCompatActivity() {
             tfTime = viewHolder.findViewById(R.id.chatDetailTime)
 
             var wroteId = chatDetailList!![position].writer
-            tfContext.text = chatDetailList!![position].context
+            tfContext.text = chatDetailList!![position].contextTxt
             tfTime.text = chatDetailList!![position].sendedAt
 
             // 보낸쪽지=파랑, 받은쪽지=빨강으로 색상 변경하기
