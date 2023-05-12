@@ -89,7 +89,11 @@
             android:exported="true" />
         <activity
             android:name=".share.ShareDetailActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="NOTIFICATION_CLICK"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />

@@ -13,10 +13,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fffroject.R
 import com.example.fffroject.databinding.ActivityKeywordBinding
 import com.example.fffroject.fragment.KeyWord
+import com.example.fffroject.fragment.ShareFragment
 import com.google.android.flexbox.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -56,6 +58,15 @@ class KeywordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityKeywordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        val targetFragment = intent.getStringExtra("Fragment")
+//        if (targetFragment != null) {
+//            if (targetFragment == "ShareFragment") {
+//                saveAndChangeFragment(ShareFragment())
+//            } else {
+//                saveAndChangeFragment(ShareFragment())
+//            }
+//        }
 
         keywordList = arrayListOf<KeyWord>()
         auth = FirebaseAuth.getInstance()
@@ -150,6 +161,14 @@ class KeywordActivity : AppCompatActivity() {
         }
 
     }
+//
+//    fun saveAndChangeFragment(fragment: Fragment) {
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.fr, fragment)
+//            .addToBackStack(null)
+//            .commit()
+//    }
+
 
     // 뷰 홀더
     inner class KeywordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
