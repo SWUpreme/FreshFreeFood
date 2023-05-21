@@ -30,6 +30,7 @@ import com.example.fffroject.share.FoodlistToShareActivity
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_sharepost.*
 import kotlinx.android.synthetic.main.item_foodlist.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -289,7 +290,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     Toast.makeText(this@FoodListActivity, "Loading...", Toast.LENGTH_SHORT).show()
                     //(recyclerview_foodlist.adapter as LoadingViewHolder)
                     //loadData()
-
                     // spinner의 경우의 수 생각
                     if (spinnerhow == 0){
                         scrollData()
