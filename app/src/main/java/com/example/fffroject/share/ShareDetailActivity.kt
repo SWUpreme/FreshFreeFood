@@ -21,7 +21,7 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_sharedetail.*
 
 // 상세 나눔
-class ShareDetailActivity: AppCompatActivity()  {
+class ShareDetailActivity: AppCompatActivity() {
 
     val TAG: String = "로그"
 
@@ -38,9 +38,9 @@ class ShareDetailActivity: AppCompatActivity()  {
     lateinit var toolbar_sharedetail: Toolbar
 
     // 화면 구성 내용
-    lateinit var postId : String
-    lateinit var writer : String
-    lateinit var fridgeToss : String
+    lateinit var postId: String
+    lateinit var writer: String
+    lateinit var fridgeToss: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,24 +62,26 @@ class ShareDetailActivity: AppCompatActivity()  {
         // ShareFragment Intent 연결
         Log.d("intent 성공:", "${intent.hasExtra("detailWriter")}")
 
-        postId = intent.getStringExtra("detailIndex")!!    // 게시글 인덱스
-        writer = intent.getStringExtra("detailWriter")!!    // 게시글 작성자
-        fridgeToss = intent.getStringExtra("detailFlag")!!    // 게시글 냉장고 넘김 여부
+        postId = intent.getStringExtra("detailIndex").orEmpty()    // 게시글 인덱스
+        writer = intent.getStringExtra("detailWriter").orEmpty()    // 게시글 작성자
+        fridgeToss = intent.getStringExtra("detailFlag").orEmpty()    // 게시글 냉장고 넘김 여부
         Log.d("postId 성공:", "${postId}")
+        Log.d("writer 성공:", "${writer}")
+        Log.d("fridgeToss 성공:", "${fridgeToss}")
 
         // 메세지 버튼
         toolbSharedetail.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.btnGotoMessage -> {
                     // 본인 글일 시 , 메시지 버튼 숨기기
-                    if(user != null){
+                    if (user != null) {
                         var userString = user?.uid
-                        if(userString.equals(writer)){
+                        if (userString.equals(writer)) {
                             // 내가 작성한 글이라면
                             Log.d("user", "it's mine")
                             Toast.makeText(this, "자신이 작성한 나눔글입니다.", Toast.LENGTH_SHORT).show()
                             //btnGotoMessage.setVisibility(View.GONE)
-                        }else{
+                        } else {
                             val intent = Intent(applicationContext, ChatActivity::class.java)
                             intent.putExtra("detailIndex", postId)
                             intent.putExtra("detailWriter", writer)
@@ -94,12 +96,12 @@ class ShareDetailActivity: AppCompatActivity()  {
         }
 
         // 냉장고에서 넘기기 여부 확인 후 색상 변경
-        if(fridgeToss=="true"){
+        if (fridgeToss == "true") {
             binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_blue)
             binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_blue)
             binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.white))
             binding.detailLocation.setTextColor(ContextCompat.getColor(this, R.color.white))
-        }else{
+        } else {
             binding.detailRegion.setBackgroundResource(R.drawable.txt_background_round2_white)
             binding.detailLocation.setBackgroundResource(R.drawable.txt_background_round2_white)
             binding.detailRegion.setTextColor(ContextCompat.getColor(this, R.color.blueblack))
@@ -113,20 +115,20 @@ class ShareDetailActivity: AppCompatActivity()  {
     // 세부 게시글 내용 불러오기
     fun loadData() {
         // 유저가 존재한다면
-        if (user != null) {
+        if (user != null && postId.isNotEmpty()) {
             // 해당 인덱스의 게시글 가져오기
-            var detailDocRef = db?.collection("post")?.document(postId.toString())
+            var detailDocRef = db?.collection("post")?.document(postId)
             detailDocRef?.get()
                 ?.addOnSuccessListener { documentSnapshot ->
                     var item = documentSnapshot.toObject(PostDetail::class.java)
-                    binding.detailTitle.text = item?.title!!
-                    binding.detailRegion.text = item?.region!!
-                    binding.detailLocation.text = item?.location!!
-                    binding.detailName.text = item?.foodName!!
-                    binding.detailDeadline.text = item?.deadline!!
-                    binding.detailCreatedAt.text = item?.postedAt!!
-                    binding.detailPurchasedAt.text = item?.purchasedAt!!
-                    binding.detailContent.text = item?.content!!
+                    binding.detailTitle.text = item?.title.orEmpty()
+                    binding.detailRegion.text = item?.region.orEmpty()
+                    binding.detailLocation.text = item?.location.orEmpty()
+                    binding.detailName.text = item?.foodName.orEmpty()
+                    binding.detailDeadline.text = item?.deadline.orEmpty()
+                    binding.detailCreatedAt.text = item?.postedAt.orEmpty()
+                    binding.detailPurchasedAt.text = item?.purchasedAt.orEmpty()
+                    binding.detailContent.text = item?.content.orEmpty()
 
                     Log.d("aaa", writer)
                     // 게시글 작성 유저 정보 가져오기
@@ -134,17 +136,17 @@ class ShareDetailActivity: AppCompatActivity()  {
                         ?.addOnSuccessListener { value ->
                             var dbUserNickname = value.data?.get("nickname") as String
                             var dbEnvLevel = value.data?.get("envlevel").toString()
-                            when (dbEnvLevel){
-                                "1" -> dbEnvLevel="씨앗이"
-                                "2" -> dbEnvLevel="새싹이"
-                                "3" -> dbEnvLevel="세잎이"
-                                "4" -> dbEnvLevel="묘목이"
-                                "5" -> dbEnvLevel="유목이"
-                                "6" -> dbEnvLevel="성목이"
-                                "7" -> dbEnvLevel="꽃잎이"
-                                "8" -> dbEnvLevel="낙옆이"
-                                "9" -> dbEnvLevel="과실이"
-                                else -> dbEnvLevel="씨앗이"
+                            when (dbEnvLevel) {
+                                "1" -> dbEnvLevel = "씨앗이"
+                                "2" -> dbEnvLevel = "새싹이"
+                                "3" -> dbEnvLevel = "세잎이"
+                                "4" -> dbEnvLevel = "묘목이"
+                                "5" -> dbEnvLevel = "유목이"
+                                "6" -> dbEnvLevel = "성목이"
+                                "7" -> dbEnvLevel = "꽃잎이"
+                                "8" -> dbEnvLevel = "낙옆이"
+                                "9" -> dbEnvLevel = "과실이"
+                                else -> dbEnvLevel = "씨앗이"
                             }
                             binding.detailWriter.text = dbUserNickname
                             binding.detailEnvLevel.text = dbEnvLevel
@@ -160,19 +162,18 @@ class ShareDetailActivity: AppCompatActivity()  {
 
     }
 
-    private fun downloadImage(imgId: String){
+    private fun downloadImage(imgId: String) {
         // 스토리지를 참조하는 StorageReference 생성
         val storageRef: StorageReference? = storage?.reference
         // 실제 업로드하는 파일을 참조하는 StorageReference 생성
         val imgRef: StorageReference? = storageRef?.child("images/${imgId}.jpg")
-        val ONE_MEGABYTE: Long = 1024*1024
+        val ONE_MEGABYTE: Long = 1024 * 1024
         imgRef?.getBytes(ONE_MEGABYTE)
             ?.addOnSuccessListener {
-            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
-            binding.detailimageView.setImageBitmap(bitmap)
-        }?.addOnFailureListener{
-            Log.d("download", "fail")
-        }
+                val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                binding.detailimageView.setImageBitmap(bitmap)
+            }?.addOnFailureListener {
+                Log.d("download", "fail")
+            }
     }
-
 }

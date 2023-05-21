@@ -10,6 +10,7 @@ import com.example.fffroject.fragment.EnvlevelFragment
 import com.example.fffroject.fragment.FridgeFragment
 import com.example.fffroject.fragment.MypageFragment
 import com.example.fffroject.fragment.ShareFragment
+import com.example.fffroject.share.ShareDetailActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -62,6 +63,27 @@ class MainActivity : AppCompatActivity() {
         }
         val fridgeFragment = FridgeFragment()
         supportFragmentManager.beginTransaction().add(R.id.main_content, fridgeFragment).commit()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // handle notification click
+        val postId = intent.getStringExtra("postId").orEmpty()
+        val writer = intent.getStringExtra("writer").orEmpty()
+
+        Log.d("MAIN", postId)
+        Log.d("MAIN", writer)
+
+
+        if(postId.isNotEmpty()) {
+            val intent = Intent(this, ShareDetailActivity::class.java)
+            intent.putExtra("detailIndex", postId)
+            intent.putExtra("detailWriter", writer)
+            intent.putExtra("detailFlag", "false")
+            startActivity(intent)
+        }
+
+
     }
 
 }

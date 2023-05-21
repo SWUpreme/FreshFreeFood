@@ -25,6 +25,12 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        // 파이어베이스 인증 객체
+        auth = FirebaseAuth.getInstance()
+        user = auth!!.currentUser
+        // 파이어스토어 인스턴스 초기화
+        firestore = FirebaseFirestore.getInstance()
+
         super.onMessageReceived(remoteMessage)
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
@@ -32,7 +38,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         if (remoteMessage.notification != null){
             Log.d(TAG, "notification: ${remoteMessage.data}")
+            if(remoteMessage.data["writer"] != user!!.uid ) {
             sendNotification(remoteMessage)
+             }
         }else{
             Log.d(TAG, "수신 에러")
 
@@ -49,16 +57,19 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         val post = remoteMessage.data["postId"]
         val writer = remoteMessage.data["writer"]
+        val flag = remoteMessage.data["flag"]
         var title = remoteMessage.notification!!.title
         var fridgeName = remoteMessage.notification!!.body
         Log.d("postId 받아오는지:", "${post}")
         Log.d("writer 받아오는지:", "${writer}")
+        Log.d("flag 받아오는지:", "${flag}")
 
-        val requestCode = 0
+        val timestamp = System.currentTimeMillis() // 현재 시간의 타임스탬프 (고유한 request code를 위해)
+        val requestCode = timestamp.toInt()
         val intent = Intent(this, ShareDetailActivity::class.java)
         intent.putExtra("detailIndex", post)
         intent.putExtra("detailWriter", writer)
-        intent.putExtra("detailFlag", "false")
+        intent.putExtra("detailFlag", flag)
 
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -68,6 +79,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         )
         Log.d("postId 넘어가는지:", "${post}")
         Log.d("writer 넘어가는지:", "${writer}")
+        Log.d("flag 넘어가는지:", "${flag}")
 
         val channelId = "my_channel"
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
