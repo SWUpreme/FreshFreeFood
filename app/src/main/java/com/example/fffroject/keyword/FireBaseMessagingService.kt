@@ -11,6 +11,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.fffroject.R
+import com.example.fffroject.chat.ChatDetailActivity
 import com.example.fffroject.share.ShareDetailActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -46,11 +47,84 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         }
 
+//        if (remoteMessage.data.isNotEmpty()) {
+//            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+//        }
+//
+//        if (remoteMessage.notification != null){
+//            if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
+//                sendNotification(remoteMessage)
+//            }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
+//                sendChatAlarm(remoteMessage)
+//            }
+//
+//        }else{
+//            Log.d(TAG, "수신 에러")
+//
+//        }
 
     }
     override fun onNewToken(token: String) {
         Log.d("mytag", "Refreshed token: $token")
         super.onNewToken(token)
+    }
+
+    private fun sendChatAlarm(remoteMessage: RemoteMessage) {
+        // 서버에서 받아오기
+        val chatroomId = remoteMessage.data["chatroomId"]
+        val postId = remoteMessage.data["postId"]
+        val giverId = remoteMessage.data["giverId"]
+        val takerId = remoteMessage.data["takerId"]
+        val opponentId = remoteMessage.data["opponentId"]
+        val oppoentNickname = remoteMessage.data["oppoentNickname"]
+        var title = remoteMessage.notification!!.title
+        var chatContent = remoteMessage.notification!!.body
+
+        Log.d("chatroomId 받아오는지:", "${chatroomId}")
+        Log.d("postId 받아오는지:", "${postId}")
+        Log.d("giverId 받아오는지:", "${giverId}")
+        Log.d("takerId 받아오는지:", "${takerId}")
+        Log.d("opponentId 받아오는지:", "${opponentId}")
+        Log.d("oppoentNickname 받아오는지:", "${oppoentNickname}")
+
+        // 푸쉬 알림 터치 시 상세 채팅 페이지로 이동
+        val requestCode = 222
+        val intent = Intent(this, ChatDetailActivity::class.java)
+        intent.putExtra("chatroomId", chatroomId)
+        intent.putExtra("postId", postId)
+        intent.putExtra("giverId", giverId)
+        intent.putExtra("takerId", takerId)
+        intent.putExtra("opponentId", opponentId)
+        intent.putExtra("oppoentNickname", oppoentNickname)
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+
+        val channelId = "my_channel"
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(title)
+            .setContentText(chatContent)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId,
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
 
     private fun sendNotification(remoteMessage: RemoteMessage) {
