@@ -33,35 +33,35 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         firestore = FirebaseFirestore.getInstance()
 
         super.onMessageReceived(remoteMessage)
-        if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-        }
-
-        if (remoteMessage.notification != null){
-            Log.d(TAG, "notification: ${remoteMessage.data}")
-            if(remoteMessage.data["writer"] != user!!.uid ) {
-            sendNotification(remoteMessage)
-             }
-        }else{
-            Log.d(TAG, "수신 에러")
-
-        }
-
 //        if (remoteMessage.data.isNotEmpty()) {
 //            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 //        }
 //
 //        if (remoteMessage.notification != null){
-//            if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
-//                sendNotification(remoteMessage)
-//            }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
-//                sendChatAlarm(remoteMessage)
-//            }
-//
+//            Log.d(TAG, "notification: ${remoteMessage.data}")
+//            if(remoteMessage.data["writer"] != user!!.uid ) {
+//            sendNotification(remoteMessage)
+//             }
 //        }else{
 //            Log.d(TAG, "수신 에러")
 //
 //        }
+
+        if (remoteMessage.data.isNotEmpty()) {
+            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+        }
+
+        if (remoteMessage.notification != null){
+            if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
+                sendNotification(remoteMessage)
+            }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
+                sendChatAlarm(remoteMessage)
+            }
+
+        }else{
+            Log.d(TAG, "수신 에러")
+
+        }
 
     }
     override fun onNewToken(token: String) {
