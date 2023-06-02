@@ -39,9 +39,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 //
 //        if (remoteMessage.notification != null){
 //            Log.d(TAG, "notification: ${remoteMessage.data}")
-//            if(remoteMessage.data["writer"] != user!!.uid ) {
+//            ///if(remoteMessage.data["writer"] != user!!.uid ) {
 //            sendNotification(remoteMessage)
-//             }
+//             //}
 //        }else{
 //            Log.d(TAG, "수신 에러")
 //
@@ -54,6 +54,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.notification != null){
             if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
                 sendNotification(remoteMessage)
+                Log.d(TAG, "click 성공: ${remoteMessage.data}")
             }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
                 sendChatAlarm(remoteMessage)
             }

@@ -37,6 +37,7 @@ class AlertReceiver : BroadcastReceiver() {
         // 파이어베이스 인증 객체
         auth = FirebaseAuth.getInstance()
         user = auth!!.currentUser
+
         // 파이어스토어 인스턴스 초기화
         firestore = FirebaseFirestore.getInstance()
 
@@ -47,6 +48,7 @@ class AlertReceiver : BroadcastReceiver() {
         deliverNotification(context)
     }
 
+    // 알림을 위한 채널 생성
     private fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
@@ -64,22 +66,9 @@ class AlertReceiver : BroadcastReceiver() {
         }
     }
 
+    // 알림 생성과 나타내기
     @RequiresApi(Build.VERSION_CODES.O)
     private fun deliverNotification(context: Context) {
-//        val contentIntent = Intent(context, FoodListActivity::class.java)
-//        contentIntent.putExtra("index", fridgeindex)
-//        contentIntent.putExtra("name", fridgename)
-//
-//        val contentPendingIntent = PendingIntent.getActivity(
-//            context,
-//            NOTIFICATION_ID, // requestCode
-//            contentIntent, // 알림 클릭 시 이동할 인텐트
-//            PendingIntent.FLAG_MUTABLE
-//        )
-
-
-
-
         // 내 냉장고에서 status가 true인 것만 불러오기
         firestore?.collection("user")?.document(user!!.uid)?.collection("myfridge")
             ?.whereEqualTo("status", "active")
