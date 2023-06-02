@@ -53,8 +53,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         if (remoteMessage.notification != null){
             if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
-                sendNotification(remoteMessage)
-                Log.d(TAG, "click 성공: ${remoteMessage.data}")
+                if(remoteMessage.data["writer"] != user!!.uid ) {
+                    sendNotification(remoteMessage)
+                }
             }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
                 sendChatAlarm(remoteMessage)
             }
