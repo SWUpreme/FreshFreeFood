@@ -75,10 +75,10 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         // 서버에서 받아오기
         val chatroomId = remoteMessage.data["chatroomId"]
         val postId = remoteMessage.data["postId"]
-        val giverId = remoteMessage.data["giverId"]
-        val takerId = remoteMessage.data["takerId"]
-        val opponentId = remoteMessage.data["opponentId"]
-        val oppoentNickname = remoteMessage.data["oppoentNickname"]
+        val giverId = remoteMessage.data["giver"]
+        val takerId = remoteMessage.data["taker"]
+        val chatSenderId = remoteMessage.data["chatSenderId"]
+        val chatSenderNickname = remoteMessage.data["chatSenderNickname"]
         var title = remoteMessage.notification!!.title
         var chatContent = remoteMessage.notification!!.body
 
@@ -86,18 +86,20 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         Log.d("postId 받아오는지:", "${postId}")
         Log.d("giverId 받아오는지:", "${giverId}")
         Log.d("takerId 받아오는지:", "${takerId}")
-        Log.d("opponentId 받아오는지:", "${opponentId}")
-        Log.d("oppoentNickname 받아오는지:", "${oppoentNickname}")
+        Log.d("chatSenderId 받아오는지:", "${chatSenderId}")
+        Log.d("chatSenderNickname 받아오는지:", "${chatSenderNickname}")
+
 
         // 푸쉬 알림 터치 시 상세 채팅 페이지로 이동
-        val requestCode = 222
+        val timestamp = System.currentTimeMillis() // 현재 시간의 타임스탬프 (고유한 request code를 위해)
+        val requestCode = timestamp.toInt()
         val intent = Intent(this, ChatDetailActivity::class.java)
-        intent.putExtra("chatroomId", chatroomId)
-        intent.putExtra("postId", postId)
+        intent.putExtra("chatroomIndex", chatroomId)
+        intent.putExtra("postIndex", postId)
         intent.putExtra("giverId", giverId)
         intent.putExtra("takerId", takerId)
-        intent.putExtra("opponentId", opponentId)
-        intent.putExtra("oppoentNickname", oppoentNickname)
+        intent.putExtra("opponentId", chatSenderId)
+        intent.putExtra("oppoentNickname", chatSenderNickname)
 
         val pendingIntent = PendingIntent.getActivity(
             this,

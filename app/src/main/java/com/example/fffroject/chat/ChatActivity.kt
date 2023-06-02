@@ -146,6 +146,7 @@ class ChatActivity : AppCompatActivity() {
                                                             "opponentId" to giver,
                                                             "opponentFcm" to opponentFcmToken,
                                                             "oppoentNickname" to oppoentNickname,
+                                                            "lastSender" to user!!.uid,
                                                             "sendedAt" to simpleTime,
                                                             "createdAt" to fullTime,
                                                             "updatedAt" to fullTime,
@@ -166,9 +167,10 @@ class ChatActivity : AppCompatActivity() {
                                                             "contextTxt" to Chatcontent.text.toString(),
                                                             "taker" to user?.uid,
                                                             "giver" to giver,
-                                                            "opponentId" to giver,
+                                                            "opponentId" to user!!.uid,
                                                             "opponentFcm" to myFcmToken,
                                                             "oppoentNickname" to myNickname,
+                                                            "lastSender" to user!!.uid,
                                                             "sendedAt" to simpleTime,
                                                             "createdAt" to fullTime,
                                                             "updatedAt" to fullTime,
@@ -214,6 +216,7 @@ class ChatActivity : AppCompatActivity() {
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
                                                 "contextTxt", Chatcontent.text.toString(),
+                                                "lastSender" to user!!.uid,
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -226,6 +229,7 @@ class ChatActivity : AppCompatActivity() {
                                         db?.collection("user")?.document(giver.toString())?.collection("mychat")?.document(chatroomId!!)
                                             ?.update(
                                                 "contextTxt", Chatcontent.text.toString(),
+                                                "lastSender" to user!!.uid,
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
