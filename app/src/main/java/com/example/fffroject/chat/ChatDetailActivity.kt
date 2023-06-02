@@ -46,6 +46,7 @@ class ChatDetailActivity : AppCompatActivity() {
     var opponentId: String? = null
     var oppoentNickname: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 바인딩
