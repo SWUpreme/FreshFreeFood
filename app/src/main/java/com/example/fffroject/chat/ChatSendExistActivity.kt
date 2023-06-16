@@ -95,6 +95,7 @@ class ChatSendExistActivity : AppCompatActivity() {
                                         db?.collection("user")?.document(user?.uid!!)?.collection("mychat")?.document("$chatroomId")
                                             ?.update(
                                                 "contextTxt", binding.ChatContent.text.toString(),
+                                                "lastSender",  user!!.uid,
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )
@@ -105,6 +106,7 @@ class ChatSendExistActivity : AppCompatActivity() {
                                         db?.collection("user")?.document("$opponentId")?.collection("mychat")?.document("$chatroomId")
                                             ?.update(
                                                 "contextTxt", binding.ChatContent.text.toString(),
+                                                "lastSender", user!!.uid,
                                                 "sendedAt", simpleTime,
                                                 "updatedAt", fullTime
                                             )

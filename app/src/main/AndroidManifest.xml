@@ -63,6 +63,9 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+            <intent-filter>
+                <action android:name="ChatDetailActivity"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".chat.ChatActivity"
