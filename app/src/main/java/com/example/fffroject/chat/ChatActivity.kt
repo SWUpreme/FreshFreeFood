@@ -166,7 +166,7 @@ class ChatActivity : AppCompatActivity() {
                                                             "contextTxt" to Chatcontent.text.toString(),
                                                             "taker" to user?.uid,
                                                             "giver" to giver,
-                                                            "opponentId" to giver,
+                                                            "opponentId" to user!!.uid,
                                                             "opponentFcm" to myFcmToken,
                                                             "oppoentNickname" to myNickname,
                                                             "sendedAt" to simpleTime,
