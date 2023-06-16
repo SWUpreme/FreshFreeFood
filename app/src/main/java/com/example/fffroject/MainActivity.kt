@@ -64,26 +64,26 @@ class MainActivity : AppCompatActivity() {
         val fridgeFragment = FridgeFragment()
         supportFragmentManager.beginTransaction().add(R.id.main_content, fridgeFragment).commit()
     }
-
-    override fun onStart() {
-        super.onStart()
-        // handle notification click
-        val postId = intent.getStringExtra("postId").orEmpty()
-        val writer = intent.getStringExtra("writer").orEmpty()
-
-        Log.d("MAIN", postId)
-        Log.d("MAIN", writer)
-
-
-        if(postId.isNotEmpty()) {
-            val intent = Intent(this, ShareDetailActivity::class.java)
-            intent.putExtra("detailIndex", postId)
-            intent.putExtra("detailWriter", writer)
-            intent.putExtra("detailFlag", "false")
-            startActivity(intent)
-        }
-
-
-    }
+//
+//    override fun onStart() {
+//        super.onStart()
+//        // handle notification click
+//        val postId = intent.getStringExtra("postId").orEmpty()
+//        val writer = intent.getStringExtra("writer").orEmpty()
+//
+//        Log.d("MAIN", postId)
+//        Log.d("MAIN", writer)
+//
+//
+//        if(postId.isNotEmpty()) {
+//            val intent = Intent(this, ShareDetailActivity::class.java)
+//            intent.putExtra("detailIndex", postId)
+//            intent.putExtra("detailWriter", writer)
+//            intent.putExtra("detailFlag", "false")
+//            startActivity(intent)
+//        }
+//
+//
+//    }
 
 }

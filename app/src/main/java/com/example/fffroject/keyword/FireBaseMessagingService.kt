@@ -10,6 +10,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.fffroject.MainActivity
 import com.example.fffroject.R
 import com.example.fffroject.chat.ChatDetailActivity
 import com.example.fffroject.share.ShareDetailActivity
@@ -49,13 +50,20 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+            if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
+                //if(remoteMessage.data["writer"] != user!!.uid ) {
+                 sendNotification(remoteMessage)
+                //}
+            }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
+                sendChatAlarm(remoteMessage)
+            }
         }
 
         if (remoteMessage.notification != null){
             if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
-                if(remoteMessage.data["writer"] != user!!.uid ) {
-                    sendNotification(remoteMessage)
-                }
+                //if(remoteMessage.data["writer"] != user!!.uid ) {
+                   // sendNotification(remoteMessage)
+                //}
             }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
                 sendChatAlarm(remoteMessage)
             }
@@ -134,11 +142,15 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         val post = remoteMessage.data["postId"]
         val writer = remoteMessage.data["writer"]
         val flag = remoteMessage.data["flag"]
-        var title = remoteMessage.notification!!.title
-        var fridgeName = remoteMessage.notification!!.body
+//        var title = remoteMessage.notification!!.title
+//        var fridgeName = remoteMessage.notification!!.body
+        val title = remoteMessage.data["title"]
+        val fridgeName = remoteMessage.data["body"]
+
         Log.d("postId 받아오는지:", "${post}")
         Log.d("writer 받아오는지:", "${writer}")
         Log.d("flag 받아오는지:", "${flag}")
+
 
         val timestamp = System.currentTimeMillis() // 현재 시간의 타임스탬프 (고유한 request code를 위해)
         val requestCode = timestamp.toInt()
