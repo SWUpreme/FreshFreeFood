@@ -52,27 +52,14 @@ class FireBaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
             if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
                 //if(remoteMessage.data["writer"] != user!!.uid ) {
-                 sendNotification(remoteMessage)
+                sendNotification(remoteMessage)
                 //}
             }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
                 sendChatAlarm(remoteMessage)
             }
-        }
-
-        if (remoteMessage.data != null){
-            if (remoteMessage.data["click_action"]=="ShareDetailActivity"){
-                if(remoteMessage.data["writer"] != user!!.uid ) {
-                    sendNotification(remoteMessage)
-                }
-            }else if(remoteMessage.data["click_action"]=="ChatDetailActivity"){
-                sendChatAlarm(remoteMessage)
-            }
-
         }else {
             Log.d(TAG, "수신 에러")
-
         }
-
     }
     override fun onNewToken(token: String) {
         Log.d("mytag", "Refreshed token: $token")
