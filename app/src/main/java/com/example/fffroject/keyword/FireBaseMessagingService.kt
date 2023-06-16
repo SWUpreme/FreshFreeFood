@@ -74,10 +74,10 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         val takerId = remoteMessage.data["taker"]
         val chatSenderId = remoteMessage.data["chatSenderId"]
         val chatSenderNickname = remoteMessage.data["chatSenderNickname"]
-//        var title = remoteMessage.data["title"]
-//        var chatContent = remoteMessage.data["body"]
-        var title = remoteMessage.notification!!.title
-        var chatContent = remoteMessage.notification!!.body
+        var title = remoteMessage.data["title"]
+        var chatContent = remoteMessage.data["body"]
+//        var title = remoteMessage.notification!!.title
+//        var chatContent = remoteMessage.notification!!.body
 
         Log.d("chatroomId 받아오는지:", "${chatroomId}")
         Log.d("postId 받아오는지:", "${postId}")
