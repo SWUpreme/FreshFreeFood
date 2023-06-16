@@ -34,25 +34,12 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         firestore = FirebaseFirestore.getInstance()
 
         super.onMessageReceived(remoteMessage)
-//        if (remoteMessage.data.isNotEmpty()) {
-//            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-//        }
-//
-//        if (remoteMessage.notification != null){
-//            Log.d(TAG, "notification: ${remoteMessage.data}")
-//            ///if(remoteMessage.data["writer"] != user!!.uid ) {
-//            sendNotification(remoteMessage)
-//             //}
-//        }else{
-//            Log.d(TAG, "수신 에러")
-//
-//        }
 
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
             if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
                 if(remoteMessage.data["writer"] != user!!.uid ) {
-                sendNotification(remoteMessage)
+                    sendNotification(remoteMessage)
                 }
             }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
                 sendChatAlarm(remoteMessage)
@@ -68,24 +55,14 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
     private fun sendChatAlarm(remoteMessage: RemoteMessage) {
         // 서버에서 받아오기
+        var title = remoteMessage.data["title"]
+        var chatContent = remoteMessage.data["body"]
         val chatroomId = remoteMessage.data["chatroomId"]
         val postId = remoteMessage.data["postId"]
         val giverId = remoteMessage.data["giver"]
         val takerId = remoteMessage.data["taker"]
         val chatSenderId = remoteMessage.data["chatSenderId"]
         val chatSenderNickname = remoteMessage.data["chatSenderNickname"]
-        var title = remoteMessage.data["title"]
-        var chatContent = remoteMessage.data["body"]
-//        var title = remoteMessage.notification!!.title
-//        var chatContent = remoteMessage.notification!!.body
-
-        Log.d("chatroomId 받아오는지:", "${chatroomId}")
-        Log.d("postId 받아오는지:", "${postId}")
-        Log.d("giverId 받아오는지:", "${giverId}")
-        Log.d("takerId 받아오는지:", "${takerId}")
-        Log.d("chatSenderId 받아오는지:", "${chatSenderId}")
-        Log.d("chatSenderNickname 받아오는지:", "${chatSenderNickname}")
-
 
         // 푸쉬 알림 터치 시 상세 채팅 페이지로 이동
         val timestamp = System.currentTimeMillis() // 현재 시간의 타임스탬프 (고유한 request code를 위해)
