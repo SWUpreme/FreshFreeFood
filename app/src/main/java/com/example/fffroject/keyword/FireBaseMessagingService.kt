@@ -51,19 +51,33 @@ class FireBaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
         }
 
-        if (remoteMessage.notification != null){
-            if (remoteMessage.data["clickActivity"]=="ShareDetailActivity"){
+        if (remoteMessage.data != null){
+            if (remoteMessage.data["click_action"]=="ShareDetailActivity"){
                 if(remoteMessage.data["writer"] != user!!.uid ) {
                     sendNotification(remoteMessage)
                 }
-            }else if(remoteMessage.data["clickActivity"]=="ChatDetailActivity"){
+            }else if(remoteMessage.data["click_action"]=="ChatDetailActivity"){
                 sendChatAlarm(remoteMessage)
             }
 
-        }else{
+        }else {
             Log.d(TAG, "수신 에러")
-
         }
+
+
+//        if (remoteMessage.notification != null){
+//            if (remoteMessage.notification!!.clickAction=="ShareDetailActivity"){
+//                if(remoteMessage.data["writer"] != user!!.uid ) {
+//                    sendNotification(remoteMessage)
+//                }
+//            }else if(remoteMessage.notification!!.clickAction=="ChatDetailActivity"){
+//                sendChatAlarm(remoteMessage)
+//            }
+//
+//        }else{
+//            Log.d(TAG, "수신 에러")
+//
+//        }
 
     }
     override fun onNewToken(token: String) {
@@ -79,6 +93,8 @@ class FireBaseMessagingService : FirebaseMessagingService() {
         val takerId = remoteMessage.data["taker"]
         val chatSenderId = remoteMessage.data["chatSenderId"]
         val chatSenderNickname = remoteMessage.data["chatSenderNickname"]
+//        var title = remoteMessage.data["title"]
+//        var chatContent = remoteMessage.data["body"]
         var title = remoteMessage.notification!!.title
         var chatContent = remoteMessage.notification!!.body
 
