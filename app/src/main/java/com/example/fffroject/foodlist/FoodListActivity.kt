@@ -291,6 +291,14 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     //(recyclerview_foodlist.adapter as LoadingViewHolder)
                     //loadData()
                     // spinner의 경우의 수 생각
+                    //foodlist.add(FoodList(" ", " "))
+
+//                    var last = foodlist.lastIndex
+//                    if(foodlist[last].foodName == " "){
+//                        foodlist.removeAt(last)
+//                        Toast.makeText(this@FoodListActivity, "remove용", Toast.LENGTH_SHORT).show()
+//                        recyclerview_foodlist.adapter?.notifyItemRemoved(last)
+//                    }
                     if (spinnerhow == 0){
                         scrollData()
                     }
@@ -463,7 +471,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     var count = foodlist!![position].count
                     countMinus(food_index, count, position)
                     //changeData()
-                    //recyclerview_foodlist.adapter?.notifyDataSetChanged()
+                    recyclerview_foodlist.adapter?.notifyItemChanged(position)
                 }
 
                 // 플러스 버튼 클릭시
@@ -509,7 +517,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                 }
             } else if (holder is LoadingViewHolder){
                 var viewHolder = (holder as LoadingViewHolder).itemView
-                Toast.makeText(viewHolder.context, "click", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(viewHolder.context, "click", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -605,6 +613,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         }
     }
 
+    fun removeLoading(pos: Int) {
+        recyclerview_foodlist.adapter?.notifyItemRemoved(pos)
+    }
+
 
     // 현재 여기 수정중~ 수정하다 아아쏟음 개빡친다 하... 수정완..
     // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
@@ -651,7 +663,6 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                                 ?.addOnSuccessListener { }
                                 ?.addOnFailureListener { }
                         }
-                        // 음식 개수 세는 부분
                         foodcount = foodlist.size
                         getfoodCount()
                         //cursor = cursor + pagesize.toInt()
@@ -761,6 +772,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 유통기한 순으로 정렬했을 때의 스크롤
     fun scrollData() {
         Log.d("cursors: ", cursors)
+
+        //var last = foodlist.lastIndex
+//        recyclerview_foodlist.adapter?.notifyItemRemoved(last)
 //            recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")
@@ -800,11 +814,21 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     }
                     // 음식 개수 세는 부분
 //                        recyclerview_foodlist.adapter?.notifyItemRangeInserted((page) * 7,7)
+//                    var dif = false
+//                    if (foodcount!=foodlist.size){
+//                        dif = true
+//                    }
                     foodcount = foodlist.size
                     Log.d("cursors: 여기가 되는건가?", foodcount.toString())
                     getfoodCount()
                     cursor = foodcount
+//                    foodlist.removeAt(last)
+//                    recyclerview_foodlist.adapter?.notifyItemRemoved(last)
                     recyclerview_foodlist.adapter?.notifyItemRangeInserted((page - 1) * 7, 7)
+//                    foodlist.add(FoodList(" ", " "))
+//                    if (dif == true){
+//                        foodlist.add(FoodList(" ", " "))
+//                    }
                     isLoading = true
                     //page++
                 }
