@@ -10,7 +10,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
+        android:background="#80000000"
         tools:ignore="MissingClass,SpeakableTextPresentCheck">
 
     </androidx.viewpager.widget.ViewPager>
@@ -45,11 +45,11 @@
             android:visibility="invisible" />
 
         <ImageButton
-            android:id="@+id/btnMemberShowClose"
+            android:id="@+id/btnAdviceClose"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="25dp"
             android:backgroundTint="#00FFFFFF"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"

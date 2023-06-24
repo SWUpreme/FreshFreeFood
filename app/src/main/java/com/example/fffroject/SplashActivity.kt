@@ -9,10 +9,12 @@ import android.text.Html
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.example.fffroject.fragment.MypageFragment
 
 class SplashActivity : AppCompatActivity() {
 
@@ -21,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
     private var dotsLayout : LinearLayout? = null
     private lateinit var dots :Array<TextView?>
     private lateinit var layouts:IntArray
-    private var btnSkip: Button? = null
+    private var backBtn: ImageButton? = null
     private var btnNext: Button? = null
     //private var prefManager : PrefManger? = null
 
@@ -48,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
 
         viewPager = findViewById<ViewPager>(R.id.view_pager)
         dotsLayout = findViewById(R.id.layout_dots)
-//        btnSkip = findViewById(R.id.btn_skip)
+        backBtn = findViewById<ImageButton>(R.id.btnAdviceClose)
 //        btnNext = findViewById(R.id.btn_next)
 
         //layout 화면(추가 가능)
@@ -84,7 +86,14 @@ class SplashActivity : AppCompatActivity() {
 //            }
 //        }
 
+        //x버튼 누르면 main 화면으로 이동
+        backBtn!!.setOnClickListener {
+            finish()
+        }
+
     }
+
+
 
     private fun getItem(i: Int): Int {
         return viewPager!!.currentItem +i
