@@ -41,6 +41,7 @@ class MypageFragment : Fragment() {
     lateinit var btn_mypage_alarm: Button
     lateinit var btn_mypage_nickname: Button
     lateinit var btn_mypage_keyalarm: Button //임시
+    lateinit var btn_mypage_advice: Button
     lateinit var btn_delete: Button
 
     lateinit var btn_nickname_close: ImageButton
@@ -74,6 +75,7 @@ class MypageFragment : Fragment() {
         btn_mypage_alarm = view.findViewById(R.id.btnMypageAlarm)
         btn_mypage_nickname = view.findViewById(R.id.btnMypageNickname)
         btn_mypage_keyalarm = view.findViewById(R.id.btnMypageKeyword)
+        btn_mypage_advice = view.findViewById(R.id.btnMypageAdvice)
         btn_delete = view.findViewById(R.id.btnDelete)
 
 
@@ -250,9 +252,15 @@ class MypageFragment : Fragment() {
             ContextCompat.startActivity(view.context, intent, null)
         }
 
-        // 임시 - 도움말 버튼을 눌렀을 경우 키워드 알람 페이지로 이동
+        // 키워드 버튼을 눌렀을 경우
         btn_mypage_keyalarm.setOnClickListener {
             val intent = Intent(view.context, KeywordActivity::class.java)
+            ContextCompat.startActivity(view.context, intent, null)
+        }
+
+        //도움말 버튼을 눌렀을 경우
+        btn_mypage_advice.setOnClickListener {
+            val intent = Intent(view.context, SplashActivity::class.java)
             ContextCompat.startActivity(view.context, intent, null)
         }
 
