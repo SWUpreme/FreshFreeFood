@@ -471,7 +471,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     var count = foodlist!![position].count
                     countMinus(food_index, count, position)
                     //changeData()
-                    recyclerview_foodlist.adapter?.notifyItemChanged(position)
+                    //recyclerview_foodlist.adapter?.notifyItemChanged(position)
                 }
 
                 // 플러스 버튼 클릭시
@@ -481,6 +481,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //                    var refresh = intent
 //                    finish()
 //                    startActivity(refresh)
+                    //recyclerview_foodlist.adapter?.notifyItemChanged(position)
                 }
 
 
@@ -621,7 +622,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 현재 여기 수정중~ 수정하다 아아쏟음 개빡친다 하... 수정완..
     // 냉장고별 식품 리스트 불러오기 (유통기한 임박 순)
     fun loadData() {
-        Log.d("loadData 로드데이터 cursor: ", cursor.toString())
+        Log.d("미친것도 아니고 여기가 되는거임설마? ", "로드데이터요")
         //if (cursor == 0) {
 //            foodlist.clear()
             //recyclerview_foodlist.adapter?.notifyItemInserted(foodlist.size - 1)
@@ -642,8 +643,9 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //                        if (item != null && status == "active") {
 //                            foodlist.add(item)
 //                        }
+                            Log.d("어이없어 그럼 여기도 됨? ", item?.foodId.toString())
                             if (item != null) {
-                                Log.d("cursors: ", item?.foodId.toString())
+                                Log.d("설마 로드데이터 이거임? cursors: ", item?.foodId.toString())
                                 lastvisible = snapshot
                                 cursors = item.foodId.toString()
                                 foodlist.add(item)
@@ -670,7 +672,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                         recyclerview_foodlist.adapter?.notifyDataSetChanged()
                         isLoading = false
                     }
-               // }
+                //}
 
         }
 //        else {
@@ -771,6 +773,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     // 유통기한 순으로 정렬했을 때의 스크롤
     fun scrollData() {
+        Log.d("스크롤 실행", "here")
         Log.d("cursors: ", cursors)
 
         //var last = foodlist.lastIndex
@@ -789,7 +792,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //                            ?.collection("food")?.document("count")?.get().toString()
 //                        Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
                         var item = snapshot.toObject(FoodList::class.java)
-                        Log.d("cursors: ", item?.foodId.toString())
+                        Log.d("암니면 설마 이거? cursors: ", item?.foodId.toString())
 //                        if (item != null && status == "active") {
 //                            foodlist.add(item)
 //                        }
@@ -819,9 +822,10 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 //                        dif = true
 //                    }
                     foodcount = foodlist.size
-                    Log.d("cursors: 여기가 되는건가?", foodcount.toString())
+//                    Log.d("cursors: 로드데이터 여기가 되는건가?", foodcount.toString())
                     getfoodCount()
                     cursor = foodcount
+                    Log.d("스크롤데이터 커서 사이즈", cursor.toString())
 //                    foodlist.removeAt(last)
 //                    recyclerview_foodlist.adapter?.notifyItemRemoved(last)
                     recyclerview_foodlist.adapter?.notifyItemRangeInserted((page - 1) * 7, 7)
@@ -833,7 +837,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
                     //page++
                 }
             }
-        Log.d("cursor: ", cursor.toString())
+        Log.d("설마 이거? cursor: ", cursor.toString())
         page++
     }
 
@@ -942,7 +946,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
     // 식품 먹음 버튼 클릭시
     fun eatDone(foodindex: String) {
         val nowTime = System.currentTimeMillis()
-        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
         val dateTime = timeformatter.format(nowTime)
         firestore?.collection("fridge")?.document(index.toString())?.collection("food")
             ?.document(foodindex)?.get()
@@ -988,7 +992,7 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     fun foodDelete(foodindex: String) {
         val nowTime = System.currentTimeMillis()
-        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
         val dateTime = timeformatter.format(nowTime)
         if (foodcount == 1) {
             // 유저가 갖고 있는 냉장고 리스트에 넣어줘야 FridgeFragment에서 한번에 리사이클러뷰의 카드에 넣을 수 있음(개별 소팅으로 가져오는거 안됨)
@@ -1026,29 +1030,44 @@ class FoodListActivity : AppCompatActivity(), MyCustomDialogInterface {
         if (count > 1) {
             Log.d("position: ", position.toString())
             val nowTime = System.currentTimeMillis()
-            val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+            val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
             val dateTime = timeformatter.format(nowTime)
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(-1))
             firestore?.collection("fridge")?.document(index.toString())
                 ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
                 ?.addOnSuccessListener {
-                    recyclerview_foodlist.adapter?.notifyItemChanged(position)
+                    //recyclerview_foodlist.adapter?.notifyItemChanged(position)
                 }
+            // 일단 오류나서 임시방편으로 이걸 해놨는데... 코루틴을 사용해야 해결될거같기는 함..아마
+            if(spinnerhow == 0){
+                changeData()
+            }
+            else{
+                changeDataDate()
+            }
+
         }
     }
 
     fun countPlus(foodindex: String, count: Int, position: Int) {
         val nowTime = System.currentTimeMillis()
-        val timeformatter = SimpleDateFormat("yyyy.MM.dd.hh.mm.ss")
+        val timeformatter = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
         val dateTime = timeformatter.format(nowTime)
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("count", FieldValue.increment(1))
         firestore?.collection("fridge")?.document(index.toString())
             ?.collection("food")?.document(foodindex)?.update("updatedAt", dateTime)
             ?.addOnSuccessListener {
-                recyclerview_foodlist.adapter?.notifyItemChanged(position)
+                //recyclerview_foodlist.adapter?.notifyItemChanged(position)
             }
+        // 일단 오류나서 임시방편으로 이걸 해놨는데... 코루틴을 사용해야 해결될거같기는 함..아마
+        if(spinnerhow == 0){
+            changeData()
+        }
+        else{
+            changeDataDate()
+        }
     }
 
     // 무료 나눔 포스트 작성 페이지로 데이터 전달
