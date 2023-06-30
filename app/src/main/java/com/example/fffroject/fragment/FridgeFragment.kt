@@ -688,7 +688,7 @@ class FridgeFragment : Fragment() {
 
         var text_owner = showmemview.findViewById<TextView>(R.id.textOwner)
         var text_member = showmemview.findViewById<TextView>(R.id.textMember)
-        var btn_member_close = showmemview.findViewById<ImageButton>(R.id.btnMemberShowClose)
+        var btn_member_close = showmemview.findViewById<ImageButton>(R.id.btnAdviceClose)
 
         text_owner.setText("")
         text_member.setText("")

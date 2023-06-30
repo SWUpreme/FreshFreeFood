@@ -88,6 +88,9 @@
             android:name=".ExRecyclerView"
             android:exported="true" />
         <activity
+            android:name=".SplashActivity"
+            android:exported="true" />
+        <activity
             android:name=".share.SharePostActivity"
             android:exported="true" />
         <activity

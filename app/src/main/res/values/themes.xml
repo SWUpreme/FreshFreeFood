@@ -14,5 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
+        //초기로딩시 검은 화면 없애기
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+
     </style>
 </resources>

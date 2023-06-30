@@ -307,7 +307,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/button7"
+                    android:id="@+id/btnMypageAdvice"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginTop="4dp"
@@ -322,9 +322,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="25dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/button7"
-                    app:layout_constraintStart_toStartOf="@+id/button7"
-                    app:layout_constraintTop_toTopOf="@+id/button7"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnMypageAdvice"
+                    app:layout_constraintStart_toStartOf="@+id/btnMypageAdvice"
+                    app:layout_constraintTop_toTopOf="@+id/btnMypageAdvice"
                     app:srcCompat="@drawable/btn_mypage_quest" />
 
                 <ImageView
@@ -333,8 +333,8 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/button7"
-                    app:layout_constraintTop_toTopOf="@+id/button7"
+                    app:layout_constraintEnd_toEndOf="@+id/btnMypageAdvice"
+                    app:layout_constraintTop_toTopOf="@+id/btnMypageAdvice"
                     app:srcCompat="@drawable/btn_mypage_arrow" />
 
                 <TextView
@@ -346,9 +346,9 @@
                     android:text="도움말"
                     android:textColor="#30353D"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/button7"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnMypageAdvice"
                     app:layout_constraintStart_toEndOf="@+id/imageView15"
-                    app:layout_constraintTop_toTopOf="@+id/button7" />
+                    app:layout_constraintTop_toTopOf="@+id/btnMypageAdvice" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
